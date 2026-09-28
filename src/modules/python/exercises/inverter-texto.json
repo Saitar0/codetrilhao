@@ -1,0 +1,50 @@
+{
+  "id": "inverter-texto",
+  "tipo": "codigo",
+  "titulo": "Inverter texto",
+  "topico": "Strings",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "def inverter_texto(s):\n    return s[::-1]\n\nprint(inverter_texto(\"python\"))",
+  "tags": [
+    "string",
+    "fatiamento",
+    "invertido"
+  ],
+  "aulaRelacionada": "strings",
+  "enunciado": "Faça inverter_texto(s) usando fatiamento. Exemplo: inverter_texto(\"python\") -> \"nohtyp\".",
+  "starterCode": "def inverter_texto(s):\n    return s\n\nprint(inverter_texto(\"python\"))",
+  "nomeFuncao": "inverter_texto",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "nohtyp",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "nohtyp",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "nohtyp",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "nohtyp",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "nohtyp",
+      "oculto": true
+    }
+  ]
+}

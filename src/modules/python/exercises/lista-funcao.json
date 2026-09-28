@@ -1,0 +1,44 @@
+{
+  "id": "lista-funcao",
+  "tipo": "multipla-escolha",
+  "titulo": "Lista dentro de função",
+  "topico": "Listas",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Analise a ordem de execução do código.",
+    "Observe como a estrutura de dados muda ao longo da execução.",
+    "Escolha a alternativa que descreve o efeito real do programa."
+  ],
+  "solucao": "A lista original é modificada.",
+  "tags": [
+    "lista",
+    "referência",
+    "mutável"
+  ],
+  "aulaRelacionada": "listas",
+  "enunciado": "O que acontece ao modificar uma lista dentro de uma função?",
+  "pergunta": "def adicionar_item(valor, itens):\n    itens.append(valor)\n\nlista = [1, 2]\nadicionar_item(3, lista)\nprint(lista)",
+  "alternativas": [
+    {
+      "texto": "A lista original é modificada.",
+      "correta": true,
+      "explicacao": "Listas são mutáveis e a função recebe a mesma referência."
+    },
+    {
+      "texto": "A lista original não muda.",
+      "correta": false,
+      "explicacao": "Isso só acontece com objetos imutáveis."
+    },
+    {
+      "texto": "A função cria uma cópia automática.",
+      "correta": false,
+      "explicacao": "Python não cria cópia automática de listas."
+    },
+    {
+      "texto": "O código gera erro.",
+      "correta": false,
+      "explicacao": "append em lista é uma operação válida."
+    }
+  ]
+}

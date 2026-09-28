@@ -1,0 +1,50 @@
+{
+  "id": "fila",
+  "tipo": "codigo",
+  "titulo": "Classe Fila",
+  "topico": "POO",
+  "dificuldade": "difícil",
+  "xp": 40,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "class Fila:\n    def __init__(self, itens=None):\n        self.itens = itens or []\n\n    def __len__(self):\n        return len(self.itens)\n\n    def __iter__(self):\n        return iter(self.itens)\n\n    def __bool__(self):\n        return bool(self.itens)\n\nfilas = Fila([1, 2])\nprint(len(filas))\nprint(bool(filas))",
+  "tags": [
+    "classe",
+    "iterável",
+    "bool"
+  ],
+  "aulaRelacionada": "classes-e-objetos",
+  "enunciado": "Crie a classe Fila com __len__, __iter__ e __bool__.",
+  "starterCode": "class Fila:\n    def __init__(self, itens=None):\n        self.itens = itens or []\n\n    def __len__(self):\n        return 0\n\n    def __iter__(self):\n        return iter(self.itens)\n\n    def __bool__(self):\n        return False\n\nfilas = Fila([1, 2])\nprint(len(filas))\nprint(bool(filas))",
+  "nomeFuncao": "fila",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "2\nTrue",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "2\nTrue",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "2\nTrue",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "2\nTrue",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "2\nTrue",
+      "oculto": true
+    }
+  ]
+}

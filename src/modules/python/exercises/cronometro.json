@@ -1,0 +1,50 @@
+{
+  "id": "cronometro",
+  "tipo": "codigo",
+  "titulo": "Decorador cronômetro",
+  "topico": "Decoradores",
+  "dificuldade": "difícil",
+  "xp": 40,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "import time\n\ndef cronometro(func):\n    def wrapper(*args, **kwargs):\n        inicio = time.perf_counter()\n        resultado = func(*args, **kwargs)\n        fim = time.perf_counter()\n        print(f\"Tempo: {fim - inicio:.6f}s\")\n        return resultado\n    return wrapper\n\n@cronometro\ndef saudacao():\n    return \"ok\"\n\nprint(saudacao())",
+  "tags": [
+    "decorador",
+    "tempo",
+    "função"
+  ],
+  "aulaRelacionada": "decoradores",
+  "enunciado": "Crie um decorador cronometro que mede o tempo de execução de uma função.",
+  "starterCode": "import time\n\ndef cronometro(func):\n    def wrapper(*args, **kwargs):\n        return func(*args, **kwargs)\n    return wrapper\n\n@cronometro\ndef saudacao():\n    return \"ok\"\n\nprint(saudacao())",
+  "nomeFuncao": "cronometro",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "ok",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "ok",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "ok",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "ok",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "ok",
+      "oculto": true
+    }
+  ]
+}

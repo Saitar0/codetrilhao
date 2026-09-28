@@ -1,0 +1,43 @@
+---
+titulo: "Tipagem"
+descricao: "Comunique melhor o tipo de suas entradas e saídas com type hints."
+secao: "Python intermediário e avançado"
+ordem: 32
+tempo: 9
+nivel: "intermediario"
+palavrasChave: ['typing', 'tipos', 'annotations']
+exercicios: ['soma-rapida']
+---
+
+# Tipagem
+
+Comunique melhor o tipo de suas entradas e saídas com type hints.
+
+<Callout type="importante" title="Objetivo da aula">
+  Neste bloco, você vai entender o conceito principal, ver exemplos práticos e testar a lógica em pequenos passos.
+</Callout>
+
+<CodeBlock title="exemplo_1.py" code={`def soma(a: int, b: int) -> int:
+    return a + b
+print(soma(2, 3))`} />
+<CodeBlock title="exemplo_2.py" code={`from typing import Optional
+def nome_usuario(nome: str | None) -> str:
+    return nome or "anônimo"
+print(nome_usuario(None))`} />
+<CodeBlock title="exemplo_3.py" code={`from typing import TypedDict
+class Cliente(TypedDict):
+    nome: str
+    idade: int
+print(Cliente(nome="Ana", idade=30))`} />
+
+<Quiz questions={[{ question: "Qual é a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prática", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensão e aplicação prática." }, { question: "Qual hábito é mais útil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o código"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prática em Python?", options: ["clareza e execução", "complexidade por padrão", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execução objetiva." }]} />
+
+<Resumo>
+  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
+  <li>Teste pequenos exemplos e avalie o resultado.</li>
+  <li>Aplica a ideia em cenários reais para fixar o conhecimento.</li>
+</Resumo>
+
+<Desafio>
+  Aplique esse tema em um mini cenário do dia a dia e confirme o resultado com um código simples e legível.
+</Desafio>

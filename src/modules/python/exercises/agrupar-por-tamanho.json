@@ -1,0 +1,50 @@
+{
+  "id": "agrupar-por-tamanho",
+  "tipo": "codigo",
+  "titulo": "Agrupar por tamanho",
+  "topico": "Dicionários",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "def agrupar_por_tamanho(palavras):\n    grupos = {}\n    for palavra in palavras:\n        grupos.setdefault(len(palavra), []).append(palavra)\n    return grupos\n\nprint(agrupar_por_tamanho([\"lua\", \"sol\", \"casa\"]))",
+  "tags": [
+    "dicionário",
+    "lista",
+    "tamanho"
+  ],
+  "aulaRelacionada": "dicionarios",
+  "enunciado": "Crie agrupar_por_tamanho(palavras) para agrupar por tamanho da palavra. Exemplo: agrupar_por_tamanho([\"lua\", \"sol\", \"casa\"]) -> {3: [\"lua\", \"sol\"], 4: [\"casa\"]}.",
+  "starterCode": "def agrupar_por_tamanho(palavras):\n    return {}\n\nprint(agrupar_por_tamanho([\"lua\", \"sol\", \"casa\"]))",
+  "nomeFuncao": "agrupar_por_tamanho",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "{3: ['lua', 'sol'], 4: ['casa']}",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "{3: ['lua', 'sol'], 4: ['casa']}",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "{3: ['lua', 'sol'], 4: ['casa']}",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "{3: ['lua', 'sol'], 4: ['casa']}",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "{3: ['lua', 'sol'], 4: ['casa']}",
+      "oculto": true
+    }
+  ]
+}

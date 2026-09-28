@@ -1,0 +1,50 @@
+{
+  "id": "validar-senha",
+  "tipo": "codigo",
+  "titulo": "Validar senha",
+  "topico": "Strings",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "def validar_senha(s):\n    if len(s) < 8:\n        return False\n    return any(letra.isupper() for letra in s) and any(letra.islower() for letra in s) and any(letra.isdigit() for letra in s)\n\nprint(validar_senha(\"Abc12345\"))",
+  "tags": [
+    "senha",
+    "validação",
+    "string"
+  ],
+  "aulaRelacionada": "strings",
+  "enunciado": "Crie validar_senha(s) para checar se a senha tem 8+ caracteres, maiúscula, minúscula e dígito.",
+  "starterCode": "def validar_senha(s):\n    return False\n\nprint(validar_senha(\"Abc12345\"))",
+  "nomeFuncao": "validar_senha",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "True",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "True",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "True",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "True",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "True",
+      "oculto": true
+    }
+  ]
+}

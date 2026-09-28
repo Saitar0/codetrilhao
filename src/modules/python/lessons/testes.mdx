@@ -1,0 +1,41 @@
+---
+titulo: "Testes"
+descricao: "Valide o comportamento da sua aplicação com testes automatizados."
+secao: "Qualidade e boas práticas"
+ordem: 35
+tempo: 10
+nivel: "intermediario"
+palavrasChave: ['testes', 'pytest', 'assert']
+exercicios: ['ordem-prints']
+---
+
+# Testes
+
+Valide o comportamento da sua aplicação com testes automatizados.
+
+<Callout type="importante" title="Objetivo da aula">
+  Neste bloco, você vai entender o conceito principal, ver exemplos práticos e testar a lógica em pequenos passos.
+</Callout>
+
+<CodeBlock title="exemplo_1.py" code={`def soma(a, b):
+    return a + b
+assert soma(2, 3) == 5
+print("ok")`} />
+<CodeBlock title="exemplo_2.py" code={`import unittest
+class Teste(unittest.TestCase):
+    def test_ok(self):
+        self.assertEqual(2 + 2, 4)
+print("teste ok")`} />
+<CodeBlock title="exemplo_3.py" code={`assert abs(-5) == 5`} />
+
+<Quiz questions={[{ question: "Qual é a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prática", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensão e aplicação prática." }, { question: "Qual hábito é mais útil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o código"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prática em Python?", options: ["clareza e execução", "complexidade por padrão", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execução objetiva." }]} />
+
+<Resumo>
+  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
+  <li>Teste pequenos exemplos e avalie o resultado.</li>
+  <li>Aplica a ideia em cenários reais para fixar o conhecimento.</li>
+</Resumo>
+
+<Desafio>
+  Aplique esse tema em um mini cenário do dia a dia e confirme o resultado com um código simples e legível.
+</Desafio>

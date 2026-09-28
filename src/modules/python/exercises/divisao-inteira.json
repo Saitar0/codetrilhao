@@ -1,0 +1,23 @@
+{
+  "id": "divisao-inteira",
+  "tipo": "prever-saida",
+  "titulo": "Operações com inteiros",
+  "topico": "Operadores",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Acompanhe a execução linha por linha.",
+    "Observe a precedência de operadores e reatribuições.",
+    "Confirme a sequência final de impressão."
+  ],
+  "solucao": "3\n1\n8",
+  "tags": [
+    "divisão",
+    "módulo",
+    "potência"
+  ],
+  "aulaRelacionada": "operadores",
+  "enunciado": "Qual será a saída do código abaixo?",
+  "codigo": "print(7 // 2)\nprint(7 % 2)\nprint(2 ** 3)",
+  "respostaEsperada": "3\n1\n8"
+}

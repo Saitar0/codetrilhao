@@ -1,0 +1,50 @@
+{
+  "id": "top-n-palavras",
+  "tipo": "codigo",
+  "titulo": "Top N palavras",
+  "topico": "Contadores",
+  "dificuldade": "difícil",
+  "xp": 40,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "from collections import Counter\n\ndef top_n_palavras(texto, n):\n    frequencia = Counter(texto.lower().split())\n    return sorted(frequencia.items(), key=lambda item: (-item[1], item[0]))[:n]\n\nprint(top_n_palavras(\"um dois um tres trei tres\", 2))",
+  "tags": [
+    "Counter",
+    "frequência",
+    "texto"
+  ],
+  "aulaRelacionada": "dicionarios",
+  "enunciado": "Crie top_n_palavras(texto, n) usando Counter e desempate alfabético.",
+  "starterCode": "from collections import Counter\n\ndef top_n_palavras(texto, n):\n    return []\n\nprint(top_n_palavras(\"um dois um tres trei tres\", 2))",
+  "nomeFuncao": "top_n_palavras",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "[('tres', 2), ('um', 2)]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[('tres', 2), ('um', 2)]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[('tres', 2), ('um', 2)]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[('tres', 2), ('um', 2)]",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "[('tres', 2), ('um', 2)]",
+      "oculto": true
+    }
+  ]
+}

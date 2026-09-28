@@ -1,0 +1,50 @@
+{
+  "id": "remover-duplicatas",
+  "tipo": "codigo",
+  "titulo": "Remover duplicatas",
+  "topico": "Listas",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "def remover_duplicatas(lista):\n    resultado = []\n    for item in lista:\n        if item not in resultado:\n            resultado.append(item)\n    return resultado\n\nprint(remover_duplicatas([3, 1, 3, 2, 1]))",
+  "tags": [
+    "lista",
+    "duplicata",
+    "ordem"
+  ],
+  "aulaRelacionada": "listas",
+  "enunciado": "Escreva remover_duplicatas(lista) preservando a ordem. Exemplo: remover_duplicatas([3, 1, 3, 2, 1]) -> [3, 1, 2].",
+  "starterCode": "def remover_duplicatas(lista):\n    return []\n\nprint(remover_duplicatas([3, 1, 3, 2, 1]))",
+  "nomeFuncao": "remover_duplicatas",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "[3, 1, 2]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[3, 1, 2]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[3, 1, 2]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[3, 1, 2]",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "[3, 1, 2]",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "id": "media-3-notas",
+  "tipo": "completar",
+  "titulo": "Média de 3 notas",
+  "topico": "Operadores",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Reescreva a expressão em etapas para conferir a lógica.",
+    "Use as variáveis do problema e mantenha a ordem correta.",
+    "Confira se a saída final segue o formato pedido."
+  ],
+  "solucao": "nota1 = 7\nnota2 = 8\nnota3 = 9\nmedia = (nota1 + nota2 + nota3) / 3\nprint(media)",
+  "tags": [
+    "média",
+    "notas",
+    "cálculo"
+  ],
+  "aulaRelacionada": "operadores",
+  "enunciado": "Preencha os espaços para calcular a média de 3 notas. Exemplo: 7, 8 e 9 -> 8.0.",
+  "starterCode": "nota1 = 7\nnota2 = 8\nnota3 = 9\nmedia = (nota1 + nota2 + nota3) / 3\nprint(media)",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "8.0",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "8.0",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "8.0",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "8.0",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "8.0",
+      "oculto": true
+    }
+  ]
+}

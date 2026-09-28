@@ -1,0 +1,50 @@
+{
+  "id": "contagem-regressiva",
+  "tipo": "codigo",
+  "titulo": "Contagem regressiva",
+  "topico": "Geradores",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "def contagem_regressiva(n):\n    while n > 0:\n        yield n\n        n -= 1\n\nprint(list(contagem_regressiva(3)))",
+  "tags": [
+    "yield",
+    "gerador",
+    "contador"
+  ],
+  "aulaRelacionada": "iteradores-e-geradores",
+  "enunciado": "Crie um gerador contagem_regressiva(n) com yield. Exemplo: list(contagem_regressiva(3)) -> [3, 2, 1].",
+  "starterCode": "def contagem_regressiva(n):\n    yield 0\n\nprint(list(contagem_regressiva(3)))",
+  "nomeFuncao": "contagem_regressiva",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "[3, 2, 1]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[3, 2, 1]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[3, 2, 1]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[3, 2, 1]",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "[3, 2, 1]",
+      "oculto": true
+    }
+  ]
+}

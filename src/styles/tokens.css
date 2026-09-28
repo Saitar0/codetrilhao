@@ -1,0 +1,90 @@
+:root {
+  color-scheme: dark;
+
+  --font-sans: 'Inter', 'Segoe UI', sans-serif;
+  --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', monospace;
+
+  --radius-xs: 0.5rem;
+  --radius-sm: 0.75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.5rem;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  --shadow-soft: 0 20px 50px rgba(10, 18, 30, 0.25);
+  --shadow-glow: 0 0 0 1px rgba(125, 211, 252, 0.15), 0 0 30px rgba(55, 118, 171, 0.22);
+  --shadow-card: 0 12px 30px rgba(15, 23, 42, 0.18);
+
+  --duration-fast: 150ms;
+  --duration-md: 250ms;
+  --duration-slow: 500ms;
+
+  --bg-root: #07131d;
+  --bg-surface: rgba(11, 20, 32, 0.72);
+  --bg-surface-strong: #0d1b2a;
+  --bg-panel: #101f2d;
+  --bg-muted: #132639;
+  --text-primary: #edf6ff;
+  --text-secondary: #b7c7d4;
+  --text-tertiary: #8aa6bb;
+  --border: rgba(148, 163, 184, 0.2);
+  --border-strong: rgba(148, 163, 184, 0.35);
+  --brand: #3776ab;
+  --brand-accent: #ffd43b;
+  --brand-contrast: #0e1723;
+  --success: #34d399;
+  --warning: #fbbf24;
+  --danger: #f87171;
+
+  --grid-line: rgba(148, 163, 184, 0.08);
+  --backdrop: rgba(5, 10, 18, 0.54);
+  --focus-ring: rgba(125, 211, 252, 0.9);
+
+  --breakpoint-xs: 360px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --bg-root: #f3f8ff;
+  --bg-surface: rgba(255, 255, 255, 0.82);
+  --bg-surface-strong: #eef6ff;
+  --bg-panel: #ffffff;
+  --bg-muted: #eaf1f8;
+  --text-primary: #101827;
+  --text-secondary: #475569;
+  --text-tertiary: #64748b;
+  --border: rgba(15, 23, 42, 0.1);
+  --border-strong: rgba(15, 23, 42, 0.15);
+  --brand: #3776ab;
+  --brand-accent: #ffd43b;
+  --brand-contrast: #0a1020;
+  --grid-line: rgba(15, 23, 42, 0.06);
+  --backdrop: rgba(148, 163, 184, 0.15);
+  --focus-ring: rgba(37, 99, 235, 0.8);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

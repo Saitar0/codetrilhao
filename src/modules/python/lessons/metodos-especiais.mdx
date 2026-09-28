@@ -1,0 +1,49 @@
+---
+titulo: "Métodos especiais"
+descricao: "Ajuste a representação de objetos com métodos especiais."
+secao: "Programação orientada a objetos"
+ordem: 26
+tempo: 10
+nivel: "intermediario"
+palavrasChave: ['__str__', '__repr__', 'dunder']
+exercicios: ['lista-valor']
+---
+
+# Métodos especiais
+
+Ajuste a representação de objetos com métodos especiais.
+
+<Callout type="importante" title="Objetivo da aula">
+  Neste bloco, você vai entender o conceito principal, ver exemplos práticos e testar a lógica em pequenos passos.
+</Callout>
+
+<CodeBlock title="exemplo_1.py" code={`class Produto:
+    def __init__(self, nome):
+        self.nome = nome
+    def __str__(self):
+        return self.nome
+print(str(Produto("Mouse")))`} />
+<CodeBlock title="exemplo_2.py" code={`class Caixa:
+    def __init__(self, valor):
+        self.valor = valor
+    def __len__(self):
+        return self.valor
+print(len(Caixa(3)))`} />
+<CodeBlock title="exemplo_3.py" code={`class Lista:
+    def __init__(self, itens):
+        self.itens = itens
+    def __getitem__(self, index):
+        return self.itens[index]
+print(Lista([1,2,3])[1])`} />
+
+<Quiz questions={[{ question: "Qual é a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prática", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensão e aplicação prática." }, { question: "Qual hábito é mais útil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o código"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prática em Python?", options: ["clareza e execução", "complexidade por padrão", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execução objetiva." }]} />
+
+<Resumo>
+  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
+  <li>Teste pequenos exemplos e avalie o resultado.</li>
+  <li>Aplica a ideia em cenários reais para fixar o conhecimento.</li>
+</Resumo>
+
+<Desafio>
+  Aplique esse tema em um mini cenário do dia a dia e confirme o resultado com um código simples e legível.
+</Desafio>

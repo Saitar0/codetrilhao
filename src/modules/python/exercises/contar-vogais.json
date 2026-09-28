@@ -1,0 +1,50 @@
+{
+  "id": "contar-vogais",
+  "tipo": "codigo",
+  "titulo": "Contar vogais",
+  "topico": "Strings",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "def contar_vogais(s):\n    return sum(1 for letra in s.lower() if letra in \"aeiou\")\n\nprint(contar_vogais(\"banana\"))",
+  "tags": [
+    "vogais",
+    "string",
+    "contagem"
+  ],
+  "aulaRelacionada": "strings",
+  "enunciado": "Escreva contar_vogais(s) para devolver quantas vogais existem na palavra. Exemplo: contar_vogais(\"banana\") -> 3.",
+  "starterCode": "def contar_vogais(s):\n    return 0\n\nprint(contar_vogais(\"banana\"))",
+  "nomeFuncao": "contar_vogais",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "3",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "3",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "3",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "3",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "3",
+      "oculto": true
+    }
+  ]
+}

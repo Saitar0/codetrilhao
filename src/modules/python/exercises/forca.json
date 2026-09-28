@@ -1,0 +1,50 @@
+{
+  "id": "forca",
+  "tipo": "codigo",
+  "titulo": "Jogo da forca",
+  "topico": "Funções",
+  "dificuldade": "difícil",
+  "xp": 40,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "def jogo_da_forca(palavra, tentativas):\n    letras_descobertas = set()\n    for letra in tentativas:\n        if letra in palavra:\n            letras_descobertas.add(letra)\n    mascara = \"\".join(letra if letra in letras_descobertas else \"_\" for letra in palavra)\n    vidas = 6 - sum(1 for letra in tentativas if letra not in palavra)\n    return {\"mascara\": mascara, \"vidas\": max(0, vidas), \"venceu\": mascara == palavra, \"perdeu\": vidas <= 0}\n\nprint(jogo_da_forca(\"python\", [\"p\", \"y\"]))",
+  "tags": [
+    "jogo",
+    "estado",
+    "função"
+  ],
+  "aulaRelacionada": "projeto-final",
+  "enunciado": "Crie a função jogo_da_forca(palavra, tentativas) que devolve máscara, vidas, venceu e perdeu.",
+  "starterCode": "def jogo_da_forca(palavra, tentativas):\n    return {\"mascara\": \"\", \"vidas\": 0, \"venceu\": False, \"perdeu\": False}\n\nprint(jogo_da_forca(\"python\", [\"p\", \"y\"]))",
+  "nomeFuncao": "forca",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "{'mascara': 'py_____', 'vidas': 6, 'venceu': False, 'perdeu': False}",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "{'mascara': 'py_____', 'vidas': 6, 'venceu': False, 'perdeu': False}",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "{'mascara': 'py_____', 'vidas': 6, 'venceu': False, 'perdeu': False}",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "{'mascara': 'py_____', 'vidas': 6, 'venceu': False, 'perdeu': False}",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "{'mascara': 'py_____', 'vidas': 6, 'venceu': False, 'perdeu': False}",
+      "oculto": true
+    }
+  ]
+}

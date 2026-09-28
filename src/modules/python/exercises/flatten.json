@@ -1,0 +1,50 @@
+{
+  "id": "flatten",
+  "tipo": "codigo",
+  "titulo": "Achatar lista",
+  "topico": "Listas",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "def flatten(lista_aninhada):\n    resultado = []\n    for item in lista_aninhada:\n        if isinstance(item, list):\n            resultado.extend(item)\n        else:\n            resultado.append(item)\n    return resultado\n\nprint(flatten([[1, 2], [3, 4]]))",
+  "tags": [
+    "lista",
+    "aninhada",
+    "flatten"
+  ],
+  "aulaRelacionada": "listas",
+  "enunciado": "Crie flatten(lista_aninhada) para achatar até 2 níveis. Exemplo: flatten([[1, 2], [3, 4]]) -> [1, 2, 3, 4].",
+  "starterCode": "def flatten(lista_aninhada):\n    return []\n\nprint(flatten([[1, 2], [3, 4]]))",
+  "nomeFuncao": "flatten",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "[1, 2, 3, 4]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[1, 2, 3, 4]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[1, 2, 3, 4]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[1, 2, 3, 4]",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "[1, 2, 3, 4]",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "area-retangulo",
+  "tipo": "codigo",
+  "titulo": "Área do retângulo",
+  "topico": "Funções",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "def area_retangulo(base, altura):\n    return base * altura\n\nprint(area_retangulo(6, 4))",
+  "tags": [
+    "matemática",
+    "função",
+    "área"
+  ],
+  "aulaRelacionada": "funcoes",
+  "enunciado": "Escreva a função area_retangulo(base, altura) para calcular a área. Exemplo: area_retangulo(6, 4) -> 24.",
+  "starterCode": "def area_retangulo(base, altura):\n    return 0\n\nprint(area_retangulo(6, 4))",
+  "nomeFuncao": "area_retangulo",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "24",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "24",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "24",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "24",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "24",
+      "oculto": true
+    }
+  ]
+}

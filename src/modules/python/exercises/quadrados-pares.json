@@ -1,0 +1,49 @@
+{
+  "id": "quadrados-pares",
+  "tipo": "completar",
+  "titulo": "Quadrados dos pares",
+  "topico": "Comprehensions",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Reescreva a expressão em etapas para conferir a lógica.",
+    "Use as variáveis do problema e mantenha a ordem correta.",
+    "Confira se a saída final segue o formato pedido."
+  ],
+  "solucao": "quadrados = [x ** 2 for x in range(1, 21) if x % 2 == 0]\nprint(quadrados)",
+  "tags": [
+    "comprehension",
+    "lista",
+    "pares"
+  ],
+  "aulaRelacionada": "comprehensions",
+  "enunciado": "Complete a list comprehension para gerar os quadrados dos pares de 1 a 20.",
+  "starterCode": "quadrados = [x ** 2 for x in range(1, 21) if x % 2 == 0]\nprint(quadrados)",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "[4, 16, 36, 64, 100, 144, 196, 256, 324, 400]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[4, 16, 36, 64, 100, 144, 196, 256, 324, 400]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[4, 16, 36, 64, 100, 144, 196, 256, 324, 400]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[4, 16, 36, 64, 100, 144, 196, 256, 324, 400]",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "[4, 16, 36, 64, 100, 144, 196, 256, 324, 400]",
+      "oculto": true
+    }
+  ]
+}

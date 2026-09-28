@@ -1,0 +1,51 @@
+---
+titulo: "Escopo"
+descricao: "Entenda como as variáveis são acessadas em diferentes blocos."
+secao: "Funções e organização"
+ordem: 17
+tempo: 10
+nivel: "intermediario"
+palavrasChave: ['escopo', 'global', 'local', 'LEGB']
+exercicios: ['corrigir-idade']
+---
+
+# Escopo
+
+Entenda como as variáveis são acessadas em diferentes blocos.
+
+<Callout type="importante" title="Objetivo da aula">
+  Neste bloco, você vai entender o conceito principal, ver exemplos práticos e testar a lógica em pequenos passos.
+</Callout>
+
+<CodeBlock title="exemplo_1.py" code={`valor = "global"
+
+def mostrar():
+    valor = "local"
+    print(valor)
+
+mostrar()
+print(valor)`} />
+<CodeBlock title="exemplo_2.py" code={`contador = 5
+
+def aumentar():
+    global contador
+    contador += 1
+    print(contador)
+
+aumentar()`} />
+<CodeBlock title="exemplo_3.py" code={`def teste():
+    x = 10
+    return x
+print(teste())`} />
+
+<Quiz questions={[{ question: "Qual é a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prática", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensão e aplicação prática." }, { question: "Qual hábito é mais útil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o código"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prática em Python?", options: ["clareza e execução", "complexidade por padrão", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execução objetiva." }]} />
+
+<Resumo>
+  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
+  <li>Teste pequenos exemplos e avalie o resultado.</li>
+  <li>Aplica a ideia em cenários reais para fixar o conhecimento.</li>
+</Resumo>
+
+<Desafio>
+  Aplique esse tema em um mini cenário do dia a dia e confirme o resultado com um código simples e legível.
+</Desafio>

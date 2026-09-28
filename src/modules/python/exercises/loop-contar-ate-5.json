@@ -1,0 +1,49 @@
+{
+  "id": "loop-contar-ate-5",
+  "tipo": "bug",
+  "titulo": "Corrigir loop",
+  "topico": "Loops",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Observe a condição que controla a repetição.",
+    "Compare o código com o intervalo esperado no problema.",
+    "Teste o comportamento em um caso mínimo antes de concluir."
+  ],
+  "solucao": "contador = 1\nwhile contador <= 5:\n    print(contador)\n    contador = contador + 1",
+  "tags": [
+    "loop",
+    "while",
+    "contador"
+  ],
+  "aulaRelacionada": "loops",
+  "enunciado": "Corrija a condição para contar de 1 a 5 sem travar o programa.",
+  "starterCode": "contador = 1\nwhile contador <= 5:\n    print(contador)\n    contador = contador + 1",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "1\n2\n3\n4\n5",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "1\n2\n3\n4\n5",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "1\n2\n3\n4\n5",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "1\n2\n3\n4\n5",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "1\n2\n3\n4\n5",
+      "oculto": true
+    }
+  ]
+}

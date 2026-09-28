@@ -1,0 +1,50 @@
+{
+  "id": "eh-palindromo",
+  "tipo": "codigo",
+  "titulo": "Palíndromo",
+  "topico": "Strings",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "def eh_palindromo(texto):\n    texto_limpo = \"\".join(letra.lower() for letra in texto if letra != \" \")\n    return texto_limpo == texto_limpo[::-1]\n\nprint(eh_palindromo(\"Ame a ema\"))",
+  "tags": [
+    "palíndromo",
+    "string",
+    "comparação"
+  ],
+  "aulaRelacionada": "strings",
+  "enunciado": "Crie eh_palindromo(texto) ignorando espaços e maiúsculas. Exemplo: eh_palindromo(\"Ame a ema\") -> True.",
+  "starterCode": "def eh_palindromo(texto):\n    return False\n\nprint(eh_palindromo(\"Ame a ema\"))",
+  "nomeFuncao": "eh_palindromo",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "True",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "True",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "True",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "True",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "True",
+      "oculto": true
+    }
+  ]
+}

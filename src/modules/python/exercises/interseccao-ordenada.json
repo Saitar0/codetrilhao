@@ -1,0 +1,50 @@
+{
+  "id": "interseccao-ordenada",
+  "tipo": "codigo",
+  "titulo": "Interseção ordenada",
+  "topico": "Sets",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "def interseccao(a, b):\n    return sorted(set(a) & set(b))\n\nprint(interseccao([5, 1, 8], [8, 1, 3]))",
+  "tags": [
+    "set",
+    "lista",
+    "ordenação"
+  ],
+  "aulaRelacionada": "sets",
+  "enunciado": "Crie interseccao(a, b) usando sets e devolva uma lista ordenada. Exemplo: interseccao([5, 1, 8], [8, 1, 3]) -> [1, 8].",
+  "starterCode": "def interseccao(a, b):\n    return []\n\nprint(interseccao([5, 1, 8], [8, 1, 3]))",
+  "nomeFuncao": "interseccao_ordenada",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "[1, 8]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[1, 8]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[1, 8]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[1, 8]",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "[1, 8]",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+---
+titulo: "Depuração"
+descricao: "Leia tracebacks e use ferramentas de observação para corrigir problemas."
+secao: "Qualidade e boas práticas"
+ordem: 36
+tempo: 9
+nivel: "intermediario"
+palavrasChave: ['debug', 'traceback', 'logging']
+exercicios: ['corrigir-idade']
+---
+
+# Depuração
+
+Leia tracebacks e use ferramentas de observação para corrigir problemas.
+
+<Callout type="importante" title="Objetivo da aula">
+  Neste bloco, você vai entender o conceito principal, ver exemplos práticos e testar a lógica em pequenos passos.
+</Callout>
+
+<CodeBlock title="exemplo_1.py" code={`def dividir(a, b):
+    return a / b
+print(dividir(10, 2))`} />
+<CodeBlock title="exemplo_2.py" code={`itens = [1, 2, 3]
+print(f"itens: {itens}")`} />
+<CodeBlock title="exemplo_3.py" code={`import logging
+logging.basicConfig(level=logging.INFO)
+logging.info("Execução iniciada")`} />
+
+<Quiz questions={[{ question: "Qual é a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prática", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensão e aplicação prática." }, { question: "Qual hábito é mais útil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o código"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prática em Python?", options: ["clareza e execução", "complexidade por padrão", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execução objetiva." }]} />
+
+<Resumo>
+  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
+  <li>Teste pequenos exemplos e avalie o resultado.</li>
+  <li>Aplica a ideia em cenários reais para fixar o conhecimento.</li>
+</Resumo>
+
+<Desafio>
+  Aplique esse tema em um mini cenário do dia a dia e confirme o resultado com um código simples e legível.
+</Desafio>

@@ -1,0 +1,45 @@
+---
+titulo: "Projeto final guiado"
+descricao: "Integre vários conceitos em um projeto guiado de gerenciador de tarefas."
+secao: "Qualidade e boas práticas"
+ordem: 39
+tempo: 15
+nivel: "avancado"
+palavrasChave: ['projeto', 'persistência', 'json']
+exercicios: ['ordem-prints']
+---
+
+# Projeto final guiado
+
+Integre vários conceitos em um projeto guiado de gerenciador de tarefas.
+
+<Callout type="importante" title="Objetivo da aula">
+  Neste bloco, você vai entender o conceito principal, ver exemplos práticos e testar a lógica em pequenos passos.
+</Callout>
+
+<CodeBlock title="exemplo_1.py" code={`import json
+from pathlib import Path
+
+ARQUIVO = Path("tarefas.json")
+print(ARQUIVO)`} />
+<CodeBlock title="exemplo_2.py" code={`def menu():
+    print("1. Adicionar")
+    print("2. Listar")
+menu()`} />
+<CodeBlock title="exemplo_3.py" code={`def validar(texto):
+    if not texto.strip():
+        raise ValueError("Texto vazio")
+    return texto.strip()
+print(validar(" Estudar "))`} />
+
+<Quiz questions={[{ question: "Qual é a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prática", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensão e aplicação prática." }, { question: "Qual hábito é mais útil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o código"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prática em Python?", options: ["clareza e execução", "complexidade por padrão", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execução objetiva." }]} />
+
+<Resumo>
+  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
+  <li>Teste pequenos exemplos e avalie o resultado.</li>
+  <li>Aplica a ideia em cenários reais para fixar o conhecimento.</li>
+</Resumo>
+
+<Desafio>
+  Aplique esse tema em um mini cenário do dia a dia e confirme o resultado com um código simples e legível.
+</Desafio>

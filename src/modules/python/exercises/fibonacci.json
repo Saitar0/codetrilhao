@@ -1,0 +1,50 @@
+{
+  "id": "fibonacci",
+  "tipo": "codigo",
+  "titulo": "Fibonacci",
+  "topico": "Loops",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "def fibonacci(n):\n    sequencia = []\n    a, b = 0, 1\n    for _ in range(n):\n        sequencia.append(a)\n        a, b = b, a + b\n    return sequencia\n\nprint(fibonacci(5))",
+  "tags": [
+    "sequência",
+    "lista",
+    "matemática"
+  ],
+  "aulaRelacionada": "iteradores-e-geradores",
+  "enunciado": "Crie fibonacci(n) para devolver os n primeiros termos da sequência. Exemplo: fibonacci(5) -> [0, 1, 1, 2, 3].",
+  "starterCode": "def fibonacci(n):\n    return []\n\nprint(fibonacci(5))",
+  "nomeFuncao": "fibonacci",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "[0, 1, 1, 2, 3]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[0, 1, 1, 2, 3]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[0, 1, 1, 2, 3]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[0, 1, 1, 2, 3]",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "[0, 1, 1, 2, 3]",
+      "oculto": true
+    }
+  ]
+}

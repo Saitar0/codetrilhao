@@ -1,0 +1,50 @@
+{
+  "id": "celsius-para-fahrenheit",
+  "tipo": "codigo",
+  "titulo": "Converter para Fahrenheit",
+  "topico": "Funções",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "def celsius_para_fahrenheit(c):\n    return (c * 9 / 5) + 32\n\nprint(celsius_para_fahrenheit(0))",
+  "tags": [
+    "temperatura",
+    "conversão",
+    "matemática"
+  ],
+  "aulaRelacionada": "funcoes",
+  "enunciado": "Crie celsius_para_fahrenheit(c) com a fórmula (c * 9/5) + 32. Exemplo: 0 -> 32.0.",
+  "starterCode": "def celsius_para_fahrenheit(c):\n    return 0\n\nprint(celsius_para_fahrenheit(0))",
+  "nomeFuncao": "celsius_para_fahrenheit",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "32.0",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "32.0",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "32.0",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "32.0",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "32.0",
+      "oculto": true
+    }
+  ]
+}

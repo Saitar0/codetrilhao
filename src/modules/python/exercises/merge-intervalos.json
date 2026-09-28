@@ -1,0 +1,50 @@
+{
+  "id": "merge-intervalos",
+  "tipo": "codigo",
+  "titulo": "Mesclar intervalos",
+  "topico": "Algoritmos",
+  "dificuldade": "difícil",
+  "xp": 40,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "def merge_intervalos(intervalos):\n    if not intervalos:\n        return []\n    ordenados = sorted(intervalos)\n    mesclados = [list(ordenados[0])]\n    for inicio, fim in ordenados[1:]:\n        if inicio <= mesclados[-1][1]:\n            mesclados[-1][1] = max(mesclados[-1][1], fim)\n        else:\n            mesclados.append([inicio, fim])\n    return [tuple(item) for item in mesclados]\n\nprint(merge_intervalos([(1, 3), (2, 6), (8, 10)]))",
+  "tags": [
+    "intervalo",
+    "algoritmo",
+    "lista"
+  ],
+  "aulaRelacionada": "listas",
+  "enunciado": "Implemente merge_intervalos(intervalos) para unir intervalos sobrepostos.",
+  "starterCode": "def merge_intervalos(intervalos):\n    return []\n\nprint(merge_intervalos([(1, 3), (2, 6), (8, 10)]))",
+  "nomeFuncao": "merge_intervalos",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "[(1, 6), (8, 10)]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[(1, 6), (8, 10)]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[(1, 6), (8, 10)]",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "[(1, 6), (8, 10)]",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "[(1, 6), (8, 10)]",
+      "oculto": true
+    }
+  ]
+}

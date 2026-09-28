@@ -1,0 +1,23 @@
+{
+  "id": "closure-contador",
+  "tipo": "prever-saida",
+  "titulo": "Closure contador",
+  "topico": "Escopo",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Acompanhe a execução linha por linha.",
+    "Observe a precedência de operadores e reatribuições.",
+    "Confirme a sequência final de impressão."
+  ],
+  "solucao": "1\n2\n3",
+  "tags": [
+    "closure",
+    "escopo",
+    "nonlocal"
+  ],
+  "aulaRelacionada": "escopo",
+  "enunciado": "Qual será a saída do código abaixo?",
+  "codigo": "def contador():\n    total = 0\n    def adicionar():\n        nonlocal total\n        total += 1\n        return total\n    return adicionar\n\ninc = contador()\nprint(inc())\nprint(inc())\nprint(inc())",
+  "respostaEsperada": "1\n2\n3"
+}

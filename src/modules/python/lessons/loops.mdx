@@ -1,0 +1,41 @@
+---
+titulo: "Loops"
+descricao: "Repita trechos do código com loops de forma controlada."
+secao: "Fundamentos"
+ordem: 9
+tempo: 12
+nivel: "iniciante"
+palavrasChave: ['loop', 'for', 'while', 'repetição']
+exercicios: ['ordem-prints']
+---
+
+# Loops
+
+Repita trechos do código com loops de forma controlada.
+
+<Callout type="importante" title="Objetivo da aula">
+  Neste bloco, você vai entender o conceito principal, ver exemplos práticos e testar a lógica em pequenos passos.
+</Callout>
+
+<CodeBlock title="exemplo_1.py" code={`for i in range(3):
+    print(i)`} />
+<CodeBlock title="exemplo_2.py" code={`contador = 0
+while contador < 3:
+    print(contador)
+    contador += 1`} />
+<CodeBlock title="exemplo_3.py" code={`for numero in range(1, 6):
+    if numero % 2 == 0:
+        continue
+    print(numero)`} />
+
+<Quiz questions={[{ question: "Qual é a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prática", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensão e aplicação prática." }, { question: "Qual hábito é mais útil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o código"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prática em Python?", options: ["clareza e execução", "complexidade por padrão", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execução objetiva." }]} />
+
+<Resumo>
+  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
+  <li>Teste pequenos exemplos e avalie o resultado.</li>
+  <li>Aplica a ideia em cenários reais para fixar o conhecimento.</li>
+</Resumo>
+
+<Desafio>
+  Aplique esse tema em um mini cenário do dia a dia e confirme o resultado com um código simples e legível.
+</Desafio>

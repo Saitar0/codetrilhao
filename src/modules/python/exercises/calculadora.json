@@ -1,0 +1,50 @@
+{
+  "id": "calculadora",
+  "tipo": "codigo",
+  "titulo": "Calculadora sem eval",
+  "topico": "Algoritmos",
+  "dificuldade": "difícil",
+  "xp": 40,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "def calculadora(expressao):\n    tokens = expressao.replace(\" \", \"\")\n    numero = 0\n    operador = \"+\"\n    for token in tokens:\n        if token in \"+-*/\":\n            operador = token\n        else:\n            valor = int(token)\n            if operador == \"+\":\n                numero += valor\n            elif operador == \"-\":\n                numero -= valor\n            elif operador == \"*\":\n                numero *= valor\n            elif operador == \"/\":\n                numero /= valor\n    return numero\n\nprint(calculadora(\"3 + 4 * 2\"))",
+  "tags": [
+    "calculadora",
+    "expressão",
+    "algoritmo"
+  ],
+  "aulaRelacionada": "operadores",
+  "enunciado": "Crie calculadora(expressao) sem usar eval, resolvendo expressões simples como 3 + 4 * 2.",
+  "starterCode": "def calculadora(expressao):\n    return 0\n\nprint(calculadora(\"3 + 4 * 2\"))",
+  "nomeFuncao": "calculadora",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "11",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "11",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "11",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "11",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "11",
+      "oculto": true
+    }
+  ]
+}

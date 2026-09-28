@@ -1,0 +1,44 @@
+{
+  "id": "is-vs-igualdade",
+  "tipo": "multipla-escolha",
+  "titulo": "Diferença entre is e ==",
+  "topico": "Objetos",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Analise a ordem de execução do código.",
+    "Observe como a estrutura de dados muda ao longo da execução.",
+    "Escolha a alternativa que descreve o efeito real do programa."
+  ],
+  "solucao": "== compara valor; is compara identidade.",
+  "tags": [
+    "objetos",
+    "comparação",
+    "identidade"
+  ],
+  "aulaRelacionada": "metodos-especiais",
+  "enunciado": "Qual afirmação está correta?",
+  "pergunta": "a = [1, 2]\nb = [1, 2]\nprint(a == b)\nprint(a is b)",
+  "alternativas": [
+    {
+      "texto": "== compara valor; is compara identidade.",
+      "correta": true,
+      "explicacao": "== usa __eq__ e is compara se duas variáveis apontam para o mesmo objeto."
+    },
+    {
+      "texto": "== compara identidade; is compara valor.",
+      "correta": false,
+      "explicacao": "Essa ordem está invertida."
+    },
+    {
+      "texto": "Ambos comparam apenas endereço de memória.",
+      "correta": false,
+      "explicacao": "== geralmente compara conteúdo."
+    },
+    {
+      "texto": "A expressão sempre é False.",
+      "correta": false,
+      "explicacao": "Listas com mesmo conteúdo retornam True em ==."
+    }
+  ]
+}

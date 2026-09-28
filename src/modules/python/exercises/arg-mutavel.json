@@ -1,0 +1,49 @@
+{
+  "id": "arg-mutavel",
+  "tipo": "bug",
+  "titulo": "Parâmetro mutável",
+  "topico": "Funções",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Observe a condição que controla a repetição.",
+    "Compare o código com o intervalo esperado no problema.",
+    "Teste o comportamento em um caso mínimo antes de concluir."
+  ],
+  "solucao": "def registrar(nome, itens=None):\n    if itens is None:\n        itens = []\n    itens.append(nome)\n    return itens\n\nprint(registrar(\"Ana\"))",
+  "tags": [
+    "argumento",
+    "lista",
+    "mutável"
+  ],
+  "aulaRelacionada": "funcoes-avancadas",
+  "enunciado": "Corrija a função que usa uma lista como argumento padrão e acumula dados entre chamadas.",
+  "starterCode": "def registrar(nome, itens=[]):\n    itens.append(nome)\n    return itens\n\nprint(registrar(\"Ana\"))",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "['Ana']",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "['Ana']",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "['Ana']",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "['Ana']",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "['Ana']",
+      "oculto": true
+    }
+  ]
+}

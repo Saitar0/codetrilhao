@@ -1,0 +1,50 @@
+{
+  "id": "produto-dataclass",
+  "tipo": "codigo",
+  "titulo": "Dataclass Produto",
+  "topico": "Dataclasses",
+  "dificuldade": "difícil",
+  "xp": 40,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "from dataclasses import dataclass\n\n@dataclass(order=True)\nclass Produto:\n    nome: str\n    preco: float\n    quantidade: int\n\n    def __post_init__(self):\n        if self.preco <= 0:\n            raise ValueError(\"Preço deve ser maior que zero\")\n        if self.quantidade < 0:\n            raise ValueError(\"Quantidade não pode ser negativa\")\n\nproduto = Produto(\"Mouse\", 50, 2)\nprint(produto.preco)",
+  "tags": [
+    "dataclass",
+    "validação",
+    "ordenação"
+  ],
+  "aulaRelacionada": "dataclasses-e-enums",
+  "enunciado": "Crie Produto com dataclass, validação em __post_init__ e ordenação por preço.",
+  "starterCode": "from dataclasses import dataclass\n\n@dataclass\nclass Produto:\n    nome: str\n    preco: float\n    quantidade: int\n\n    def __post_init__(self):\n        pass\n\nproduto = Produto(\"Mouse\", 50, 2)\nprint(produto.preco)",
+  "nomeFuncao": "produto_dataclass",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "50",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "50",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "50",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "50",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "50",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "ola-nome",
+  "tipo": "codigo",
+  "titulo": "Olá, nome!",
+  "topico": "Funções",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "def ola_nome(nome):\n    return f\"Olá, {nome}!\"\n\nprint(ola_nome(\"Ana\"))",
+  "tags": [
+    "função",
+    "saída",
+    "iniciante"
+  ],
+  "aulaRelacionada": "funcoes",
+  "enunciado": "Crie uma função chamada ola_nome(nome) que retorna a mensagem \"Olá, <nome>!\". Exemplo: ola_nome(\"Ana\") -> \"Olá, Ana!\".",
+  "starterCode": "def ola_nome(nome):\n    return \"\"\n\nprint(ola_nome(\"Ana\"))",
+  "nomeFuncao": "ola_nome",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "Olá, Ana!",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "Olá, Ana!",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "Olá, Ana!",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "Olá, Ana!",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "Olá, Ana!",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+---
+titulo: "Encapsulamento e propriedades"
+descricao: "Proteja o estado interno e exponha acesso controlado."
+secao: "Programação orientada a objetos"
+ordem: 24
+tempo: 10
+nivel: "intermediario"
+palavrasChave: ['property', 'encapsulamento', 'privado']
+exercicios: ['corrigir-idade']
+---
+
+# Encapsulamento e propriedades
+
+Proteja o estado interno e exponha acesso controlado.
+
+<Callout type="importante" title="Objetivo da aula">
+  Neste bloco, você vai entender o conceito principal, ver exemplos práticos e testar a lógica em pequenos passos.
+</Callout>
+
+<CodeBlock title="exemplo_1.py" code={`class Conta:
+    def __init__(self, saldo):
+        self._saldo = saldo
+
+    @property
+    def saldo(self):
+        return self._saldo
+
+conta = Conta(100)
+print(conta.saldo)`} />
+<CodeBlock title="exemplo_2.py" code={`class Pessoa:
+    def __init__(self, nome):
+        self._nome = nome
+
+    @property
+    def nome(self):
+        return self._nome
+
+print(Pessoa("Lia").nome)`} />
+<CodeBlock title="exemplo_3.py" code={`class Numero:
+    def __init__(self, valor):
+        self._valor = valor
+
+    @property
+    def valor(self):
+        return self._valor`} />
+
+<Quiz questions={[{ question: "Qual é a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prática", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensão e aplicação prática." }, { question: "Qual hábito é mais útil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o código"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prática em Python?", options: ["clareza e execução", "complexidade por padrão", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execução objetiva." }]} />
+
+<Resumo>
+  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
+  <li>Teste pequenos exemplos e avalie o resultado.</li>
+  <li>Aplica a ideia em cenários reais para fixar o conhecimento.</li>
+</Resumo>
+
+<Desafio>
+  Aplique esse tema em um mini cenário do dia a dia e confirme o resultado com um código simples e legível.
+</Desafio>

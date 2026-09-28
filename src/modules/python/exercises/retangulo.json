@@ -1,0 +1,50 @@
+{
+  "id": "retangulo",
+  "tipo": "codigo",
+  "titulo": "Retângulo",
+  "topico": "POO",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Leia o problema e identifique a entrada esperada.",
+    "Teste a lógica em casos simples antes de generalizar.",
+    "Verifique a saída final e os tipos de dados envolvidos."
+  ],
+  "solucao": "class Retangulo:\n    def __init__(self, largura, altura):\n        self.largura = largura\n        self.altura = altura\n\n    @property\n    def area(self):\n        return self.largura * self.altura\n\n    def __str__(self):\n        return f\"Retangulo({self.largura}, {self.altura})\"\n\n    def __eq__(self, outro):\n        return isinstance(outro, Retangulo) and self.largura == outro.largura and self.altura == outro.altura\n\nprint(Retangulo(2, 3).area)\nprint(Retangulo(2, 3))",
+  "tags": [
+    "poo",
+    "propriedade",
+    "comparação"
+  ],
+  "aulaRelacionada": "classes-e-objetos",
+  "enunciado": "Crie a classe Retangulo com __str__, __eq__ e propriedade area.",
+  "starterCode": "class Retangulo:\n    def __init__(self, largura, altura):\n        self.largura = largura\n        self.altura = altura\n\n    @property\n    def area(self):\n        return 0\n\n    def __str__(self):\n        return \"\"\n\n    def __eq__(self, outro):\n        return False\n\nprint(Retangulo(2, 3).area)\nprint(Retangulo(2, 3))",
+  "nomeFuncao": "retangulo",
+  "testes": [
+    {
+      "entrada": "",
+      "esperado": "6\nRetangulo(2, 3)",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "6\nRetangulo(2, 3)",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "6\nRetangulo(2, 3)",
+      "oculto": false
+    },
+    {
+      "entrada": "",
+      "esperado": "6\nRetangulo(2, 3)",
+      "oculto": true
+    },
+    {
+      "entrada": "",
+      "esperado": "6\nRetangulo(2, 3)",
+      "oculto": true
+    }
+  ]
+}
