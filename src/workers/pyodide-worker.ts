@@ -28,10 +28,12 @@ const normalizeInput = (source: string, provided: string) => {
 const ensurePyodide = async () => {
   if (pyodideReady && pyodide) return pyodide
 
+  // Resolve to public assets path; worker runs under same origin
+  const base = new URL('/', import.meta.url).toString()
+  const indexURL = `${base}assets/pyodide/`
+
   const { loadPyodide } = await import('pyodide')
-  pyodide = await loadPyodide({
-    indexURL: new URL('../node_modules/pyodide/', import.meta.url).toString(),
-  })
+  pyodide = await loadPyodide({ indexURL })
   pyodideReady = true
   return pyodide
 }
@@ -40,12 +42,17 @@ self.onmessage = async (event: MessageEvent<WorkerMessage>) => {
   const message = event.data
 
   if (message.type === 'terminate') {
-    self.close()
+    try {
+      // allow graceful shutdown
+      self.close()
+    } catch {
+      // ignore
+    }
     return
   }
 
   if (message.type !== 'run') {
-    self.postMessage({ type: 'error', message: 'Mensagem não reconhecida.' })
+    self.postMessage({ type: 'result', stdout: '', stderr: 'Mensagem não reconhecida.', ok: false })
     return
   }
 
@@ -59,24 +66,26 @@ self.onmessage = async (event: MessageEvent<WorkerMessage>) => {
     const stdout: string[] = []
     const stderr: string[] = []
 
+    // attach batched handlers
     instance.setStdout({ batched: (text: string) => stdout.push(String(text)) })
     instance.setStderr({ batched: (text: string) => stderr.push(String(text)) })
 
-    await instance.runPythonAsync(sanitizedCode)
+    // run with a safe timeout guard inside worker
+    const runPromise = instance.runPythonAsync(sanitizedCode)
+    const timeoutMs = 20_000
+    const race = await Promise.race([
+      runPromise.then(() => ({ ok: true })),
+      new Promise((res) => setTimeout(() => res({ ok: false, reason: 'timeout' }), timeoutMs)),
+    ])
 
-    self.postMessage({
-      type: 'result',
-      stdout: stdout.join(''),
-      stderr: stderr.join(''),
-      ok: true,
-    })
+    if ((race as any).ok !== true) {
+      self.postMessage({ type: 'result', stdout: stdout.join(''), stderr: 'Execução excedeu o tempo limite.', ok: false })
+      return
+    }
+
+    self.postMessage({ type: 'result', stdout: stdout.join(''), stderr: stderr.join(''), ok: true })
   } catch (error) {
     const messageText = error instanceof Error ? error.message : 'Erro ao executar o código.'
-    self.postMessage({
-      type: 'result',
-      stdout: '',
-      stderr: messageText,
-      ok: false,
-    })
+    self.postMessage({ type: 'result', stdout: '', stderr: messageText, ok: false })
   }
 }

@@ -41,12 +41,18 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     }
 
     if (window.location.hash !== hash) {
-      window.history.pushState(null, '', hash)
+      // use replaceState to avoid creating extra history entries when navigating within the page
+      window.history.replaceState(null, '', hash)
     }
 
     requestAnimationFrame(() => {
       const anchor = document.getElementById(target)
-      anchor?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      if (anchor) {
+        anchor.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        // move focus for accessibility after scroll
+        anchor.setAttribute('tabindex', '-1')
+        anchor.focus({ preventScroll: true })
+      }
     })
   }
 

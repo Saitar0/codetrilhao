@@ -20,9 +20,19 @@ export function useCodeRunner({ timeoutMs = 5000, onError }: UseCodeRunnerOption
   const ensureWorker = useCallback(() => {
     if (workerRef.current) return workerRef.current
 
-    const worker = new Worker(new URL('../workers/pyodide-worker.ts', import.meta.url), { type: 'module' })
-    workerRef.current = worker
-    return worker
+    try {
+      const worker = new Worker(new URL('../workers/pyodide-worker.ts', import.meta.url), { type: 'module' })
+      // setup basic health handlers
+      worker.onerror = (ev) => {
+        console.error('Worker error', ev)
+      }
+
+      workerRef.current = worker
+      return worker
+    } catch (err) {
+      onError?.('Falha ao iniciar o worker de execução de código.')
+      throw err
+    }
   }, [])
 
   const terminateWorker = useCallback(() => {
@@ -39,7 +49,9 @@ export function useCodeRunner({ timeoutMs = 5000, onError }: UseCodeRunnerOption
     setStderr('')
 
     const timer = window.setTimeout(() => {
-      worker.terminate()
+      try {
+        workerRef.current?.terminate()
+      } catch {}
       workerRef.current = null
       const fallbackMessage = 'Tempo limite excedido. O código demorou demais para responder.'
       setStderr(fallbackMessage)
@@ -48,38 +60,45 @@ export function useCodeRunner({ timeoutMs = 5000, onError }: UseCodeRunnerOption
     }, timeoutMs)
 
     return new Promise((resolve) => {
-      worker.onmessage = (event) => {
-        const payload = event.data as { stdout?: string; stderr?: string; ok?: boolean }
+      const cleanup = () => {
         window.clearTimeout(timer)
+        setLoading(false)
+      }
+
+      const handleMessage = (event: MessageEvent) => {
+        const payload = (event.data ?? {}) as { stdout?: string; stderr?: string; ok?: boolean }
+        cleanup()
 
         const nextStdout = payload.stdout ?? ''
         const nextStderr = payload.stderr ?? ''
         setStdout(nextStdout)
         setStderr(nextStdout ? '' : nextStderr)
-        setLoading(false)
 
-        const result = {
+        const result: CodeRunResult = {
           stdout: nextStdout,
           stderr: nextStderr,
           ok: payload.ok ?? false,
         }
 
-        if (result.ok === false && nextStderr) {
-          onError?.(nextStderr)
-        }
+        if (!result.ok && nextStderr) onError?.(nextStderr)
 
+        // keep worker alive for subsequent runs; don't terminate here
         resolve(result)
       }
 
-      worker.onerror = () => {
-        window.clearTimeout(timer)
-        const message = 'Erro ao executar o código no worker.'
+      const handleError = (ev: ErrorEvent) => {
+        cleanup()
+        const message = ev?.message ?? 'Erro ao executar o código no worker.'
         setStderr(message)
-        setLoading(false)
         onError?.(message)
         resolve({ stdout: '', stderr: message, ok: false })
       }
 
+      // attach listeners
+      worker.addEventListener('message', handleMessage)
+      worker.addEventListener('error', handleError)
+
+      // post request
       worker.postMessage({ type: 'run', code, input })
     })
   }, [ensureWorker, onError, timeoutMs])
@@ -88,7 +107,13 @@ export function useCodeRunner({ timeoutMs = 5000, onError }: UseCodeRunnerOption
     setStdout('')
     setStderr('')
     setLoading(false)
-    terminateWorker()
+    // terminate worker gracefully and clear ref
+    try {
+      workerRef.current?.postMessage({ type: 'terminate' })
+    } catch {
+      // fallback
+      terminateWorker()
+    }
   }, [terminateWorker])
 
   return {

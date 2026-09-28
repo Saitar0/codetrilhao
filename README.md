@@ -25,8 +25,35 @@ A aplicação fica disponível em http://localhost:5173.
 npm run dev
 npm run build
 npm run lint
+npm run test
 npm run validar:exercicios
 ```
+
+## Pyodide local / assets
+
+The project expects Pyodide assets under `public/assets/pyodide/`. When running `vite` the `public` folder is served as-is. If you need to include a local copy of Pyodide for offline testing, place the `pyodide` folder at `public/assets/pyodide/`.
+
+If network issues occur, the loader has retry logic and the demo UI shows friendly errors and a retry button.
+
+### Quick verification steps
+
+1. Install and run dev server:
+
+```bash
+npm ci
+npm run dev
+```
+
+2. Open http://localhost:5173 and go to the Demo section.
+3. If Pyodide fails to load, click "Tentar novamente" in the demo panel.
+
+## PR checklist (maintainers)
+
+- [ ] npm ci completes successfully.
+- [ ] npm run build finishes without errors.
+- [ ] npm run lint returns 0 errors.
+- [ ] Demo executes example code and shows output.
+
 
 ## Estrutura principal
 

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "lint": "eslint . --ext .ts,.tsx --max-warnings=0",
+    "test": "vitest",
     "preview": "vite preview",
     "validar:exercicios": "node scripts/validar_exercicios_python.mjs"
   },
@@ -39,6 +40,9 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "@testing-library/react": "^15.0.0",
+    "@testing-library/jest-dom": "^6.0.0",
+    "vitest": "^1.4.2",
     "@eslint/js": "^10.0.1",
     "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^24.19.0",
