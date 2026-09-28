@@ -243,6 +243,7 @@ export default function HomePage() {
       } catch {
         if (!ignore) {
           setPyodideState('error')
+          setDemoOutput('Não foi possível carregar o ambiente Python. Verifique sua conexão e tente novamente.')
         }
       }
     })()
@@ -254,6 +255,19 @@ export default function HomePage() {
 
   const activeExample = codeExamples.find((example) => example.id === selectedExample) ?? codeExamples[0]
   const activeCode = editorCode[activeExample.id] ?? activeExample.code
+
+  const loadDemoPyodide = async () => {
+    try {
+      setPyodideState('loading')
+      const pyodide = await loadPyodideInstance()
+      pyodideRef.current = pyodide
+      setPyodideState('ready')
+      setDemoOutput('')
+    } catch {
+      setPyodideState('error')
+      setDemoOutput('Não foi possível carregar o ambiente Python. Verifique sua conexão e tente novamente.')
+    }
+  }
 
   const executeDemoCode = async () => {
     if (!pyodideRef.current) return
@@ -424,7 +438,18 @@ export default function HomePage() {
             </div>
           )}
 
-          {pyodideState !== 'loading' && (
+          {pyodideState === 'error' && (
+            <div className="exercise-result is-error" role="alert">
+              O ambiente Python falhou ao carregar. Verifique sua conexão e tente novamente.
+              <div className="exercise-actions" style={{ marginTop: '0.8rem' }}>
+                <button type="button" className="button button--secondary" onClick={() => void loadDemoPyodide()}>
+                  Tentar novamente
+                </button>
+              </div>
+            </div>
+          )}
+
+          {pyodideState !== 'loading' && pyodideState !== 'error' && (
             <Editor
               height="220px"
               language="python"
@@ -454,7 +479,7 @@ export default function HomePage() {
             </button>
           </div>
 
-          <div className="demo-output">
+          <div className="demo-output" aria-live="polite" aria-atomic="true">
             <span className="output-label">saída</span>
             <pre>{demoOutput || 'A saída aparece aqui ao executar o código.'}</pre>
           </div>

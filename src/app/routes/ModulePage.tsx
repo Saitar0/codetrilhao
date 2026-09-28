@@ -7,12 +7,30 @@ import { useProgressStore } from '../../store/progress'
 export default function ModulePage() {
   const { modulo } = useParams()
   const module = getModuleById(modulo ?? '')
-  const lessons = getAllModuleLessons()[modulo ?? ''] ?? []
+  const lessons = useMemo(() => getAllModuleLessons()[modulo ?? ''] ?? [], [modulo])
   const completedLessons = useProgressStore((state) => state.completedLessons)
   const [notified, setNotified] = useState<boolean>(() => {
     if (typeof window === 'undefined') return false
     return Boolean(window.localStorage.getItem(`codetrilha-notify:${modulo}`))
   })
+
+  const continueLesson = useMemo(() => {
+    if (typeof window === 'undefined') return lessons[0]?.id ?? 'introducao'
+
+    const raw = window.localStorage.getItem('codetrilha-last-lesson')
+    if (!raw) return lessons[0]?.id ?? 'introducao'
+
+    try {
+      const parsed = JSON.parse(raw) as { moduleId?: string; lessonId?: string }
+      if (parsed.moduleId === modulo && parsed.lessonId && lessons.some((lesson) => lesson.id === parsed.lessonId)) {
+        return parsed.lessonId
+      }
+    } catch {
+      return lessons[0]?.id ?? 'introducao'
+    }
+
+    return lessons[0]?.id ?? 'introducao'
+  }, [lessons, modulo])
 
   const progress = useMemo(() => {
     if (!module || !module.trilha.length) return 0
@@ -23,6 +41,17 @@ export default function ModulePage() {
 
   if (!module) {
     return <div className="empty-state glass">Módulo não encontrado.</div>
+  }
+
+  if (lessons.length === 0) {
+    return (
+      <section className="empty-state glass">
+        <div>
+          <h1>Este módulo ainda está sendo preparado.</h1>
+          <p>As aulas e exercícios deste módulo aparecerão aqui assim que forem publicados.</p>
+        </div>
+      </section>
+    )
   }
 
   if (module.status === 'coming-soon') {
@@ -64,7 +93,7 @@ export default function ModulePage() {
       </div>
 
       <div className="module-actions">
-        <Link to={`/${module.id}/${lessons[0]?.id ?? 'introducao'}`} className="button button--primary">
+        <Link to={`/${module.id}/${continueLesson}`} className="button button--primary">
           Continuar de onde parou
         </Link>
       </div>

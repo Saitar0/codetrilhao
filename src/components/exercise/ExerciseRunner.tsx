@@ -1,6 +1,6 @@
 import Editor from '@monaco-editor/react'
-import { DndContext, PointerSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core'
-import { SortableContext, arrayMove, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { DndContext, KeyboardSensor, PointerSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core'
+import { SortableContext, arrayMove, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import confetti from 'canvas-confetti'
 import { useEffect, useState } from 'react'
@@ -65,6 +65,8 @@ function SortableLine({ id, text }: { id: string; text: string }) {
       className="exercise-sort__item"
       {...attributes}
       {...listeners}
+      aria-label={`Item para ordenar: ${text}`}
+      role="button"
     >
       {text}
     </div>
@@ -83,7 +85,14 @@ function ExerciseRunner({ moduleId, exerciseId }: { moduleId: string; exerciseId
   const [completed, setCompleted] = useState(false)
   const [sortOrder, setSortOrder] = useState<string[]>(() => (exercise?.tipo === 'ordenar' ? exercise.linhas : []))
   const [resultMessage, setResultMessage] = useState('')
-  const { stdout, stderr, loading, run, terminateWorker } = useCodeRunner({ timeoutMs: 5000 })
+  const [isPyodideError, setIsPyodideError] = useState(false)
+  const { stdout, stderr, loading, run, terminateWorker } = useCodeRunner({
+    timeoutMs: 5000,
+    onError: (message) => {
+      setIsPyodideError(true)
+      setResultMessage(message)
+    },
+  })
 
   const status = useProgressStore((state) => state.exerciseStatuses[exerciseId] ?? 'nao-iniciado')
   const attempts = useProgressStore((state) => state.exerciseAttempts[exerciseId] ?? 0)
@@ -91,7 +100,10 @@ function ExerciseRunner({ moduleId, exerciseId }: { moduleId: string; exerciseId
   const completeExercise = useProgressStore((state) => state.completeExercise)
   const spendHintXp = useProgressStore((state) => state.spendHintXp)
 
-  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
+  )
 
   useEffect(() => {
     if (document.body.dataset.theme === 'light') {
@@ -108,11 +120,14 @@ function ExerciseRunner({ moduleId, exerciseId }: { moduleId: string; exerciseId
 
   const runCode = async () => {
     setResultMessage('')
+    setIsPyodideError(false)
     const result = await run(code, inputValue)
 
     if (result.ok === false) {
+      const nextMessage = translatePythonError(result.stderr || 'Erro ao executar o código.')
       markExerciseAttempt(exerciseId)
-      setResultMessage(translatePythonError(result.stderr || 'Erro ao executar o código.'))
+      setResultMessage(nextMessage)
+      setIsPyodideError(true)
       return
     }
 
@@ -356,23 +371,31 @@ function ExerciseRunner({ moduleId, exerciseId }: { moduleId: string; exerciseId
                   {loading ? 'Executando...' : 'Executar'}
                 </button>
               </div>
-              <Editor
-                height="260px"
-                language="python"
-                theme={document.body.dataset.theme === 'light' ? 'vs-light' : 'vs-dark'}
-                value={code}
-                options={{
-                  minimap: { enabled: false },
-                  fontSize: 14,
-                  padding: { top: 16, bottom: 16 },
-                  scrollBeyondLastLine: false,
-                  wordWrap: 'on',
-                  lineNumbers: 'on',
-                  automaticLayout: true,
-                  fontFamily: 'JetBrains Mono, monospace',
-                }}
-                onChange={(value) => setCode(value ?? '')}
-              />
+              {loading ? (
+                <div className="editor-skeleton" aria-live="polite" aria-label="Carregando editor do exercício">
+                  <div className="skeleton-line w-80" />
+                  <div className="skeleton-line w-72" />
+                  <div className="skeleton-line w-60" />
+                </div>
+              ) : (
+                <Editor
+                  height="260px"
+                  language="python"
+                  theme={document.body.dataset.theme === 'light' ? 'vs-light' : 'vs-dark'}
+                  value={code}
+                  options={{
+                    minimap: { enabled: false },
+                    fontSize: 14,
+                    padding: { top: 16, bottom: 16 },
+                    scrollBeyondLastLine: false,
+                    wordWrap: 'on',
+                    lineNumbers: 'on',
+                    automaticLayout: true,
+                    fontFamily: 'JetBrains Mono, monospace',
+                  }}
+                  onChange={(value) => setCode(value ?? '')}
+                />
+              )}
               <div className="exercise-input-row">
                 <label htmlFor="exercise-input">Entrada do usuário</label>
                 <input id="exercise-input" value={inputValue} onChange={(event) => setInputValue(event.target.value)} placeholder="Ex.: 10" />
@@ -385,12 +408,23 @@ function ExerciseRunner({ moduleId, exerciseId }: { moduleId: string; exerciseId
             </>
           )}
 
-          <div className="exercise-output">
+          <div className="exercise-output" aria-live="polite" aria-atomic="true">
             <h3>Saída</h3>
             <pre>{stderr || stdout || 'A execução aparecerá aqui.'}</pre>
           </div>
 
-          {resultMessage && <div className={`exercise-result ${completed ? 'is-success' : 'is-error'}`}>{resultMessage}</div>}
+          {isPyodideError && (
+            <div className="exercise-result is-error" role="alert">
+              O ambiente Python falhou ao carregar. Verifique a conexão e tente novamente.
+              <div className="exercise-actions" style={{ marginTop: '0.8rem' }}>
+                <button type="button" className="button button--secondary" onClick={() => { setIsPyodideError(false); terminateWorker(); void runCode(); }}>
+                  Tentar novamente
+                </button>
+              </div>
+            </div>
+          )}
+
+          {resultMessage && !isPyodideError && <div className={`exercise-result ${completed ? 'is-success' : 'is-error'}`} aria-live="polite" aria-atomic="true">{resultMessage}</div>}
         </div>
       </div>
     </section>

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { ArrowLeft, ArrowRight, Check, ChevronRight, Menu, PanelRightClose, Search, X } from 'lucide-react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
+import { getExercisesByModule } from '../../lib/exercises'
 import { useProgressStore } from '../../store/progress'
 import { getModuleById, getAllModuleLessons } from '../../lib/module-content'
 
@@ -57,15 +58,37 @@ export function StudyLayout({ children, title, currentLessonId }: {
     const term = query.trim().toLowerCase()
     if (!term) return []
 
-    return Object.values(lessonMap)
+    const lessonsResults = Object.values(lessonMap)
       .flat()
       .filter((item) =>
         item.title.toLowerCase().includes(term) ||
         item.description.toLowerCase().includes(term) ||
         item.keywords.some((word) => word.toLowerCase().includes(term)),
       )
-      .slice(0, 10)
-  }, [query])
+      .map((item) => ({
+        id: item.id,
+        title: item.title,
+        text: item.description,
+        section: item.section,
+        path: item.path,
+        type: 'aula',
+      }))
+
+    const exerciseResults = getExercisesByModule(modulo ?? '').filter((item) =>
+      item.titulo.toLowerCase().includes(term) ||
+      item.topico.toLowerCase().includes(term) ||
+      item.tags.some((tag) => tag.toLowerCase().includes(term)),
+    ).map((item) => ({
+      id: item.id,
+      title: item.titulo,
+      text: item.topico,
+      section: item.dificuldade,
+      path: `/${modulo}/exercicios/${item.id}`,
+      type: 'exercício',
+    }))
+
+    return [...lessonsResults, ...exerciseResults].slice(0, 10)
+  }, [modulo, query])
 
   const renderSections = () => {
     if (!module) return null
@@ -85,7 +108,10 @@ export function StudyLayout({ children, title, currentLessonId }: {
               <li key={lesson.id} className={isActive ? 'is-active' : ''}>
                 <button
                   type="button"
-                  onClick={() => navigate(`/${module.id}/${lesson.id}`)}
+                  onClick={() => {
+                    localStorage.setItem('codetrilha-last-lesson', JSON.stringify({ moduleId: module.id, lessonId: lesson.id }))
+                    navigate(`/${module.id}/${lesson.id}`)
+                  }}
                   className="study-lesson"
                 >
                   <span className="study-lesson__status">
@@ -156,7 +182,10 @@ export function StudyLayout({ children, title, currentLessonId }: {
             className="complete-button"
             onClick={() => {
               const lessonSlug = currentLessonId ?? aula
-              if (lessonSlug) completeLesson(`${module.id}:${lessonSlug}`)
+              if (lessonSlug) {
+                completeLesson(`${module.id}:${lessonSlug}`)
+                localStorage.setItem('codetrilha-last-lesson', JSON.stringify({ moduleId: module.id, lessonId: lessonSlug }))
+              }
             }}
           >
             <Check size={16} /> Marcar como concluída
@@ -218,7 +247,7 @@ export function StudyLayout({ children, title, currentLessonId }: {
                 filteredResults.map((result) => (
                   <button key={`${result.path}-${result.id}`} type="button" onClick={() => { navigate(result.path); setIsSearchOpen(false); setQuery(''); }}>
                     <span>{result.title}</span>
-                    <small>{result.section}</small>
+                    <small>{result.type} · {result.section}</small>
                   </button>
                 ))
               ) : (

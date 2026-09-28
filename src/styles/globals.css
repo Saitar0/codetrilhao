@@ -37,6 +37,28 @@ body[data-theme='light'] {
     linear-gradient(180deg, var(--bg-root) 0%, #eaf3ff 100%);
 }
 
+body[data-theme='light'] .terminal-shell,
+body[data-theme='light'] .demo-output,
+body[data-theme='light'] .exercise-output,
+body[data-theme='light'] .exercise-tests-panel,
+body[data-theme='light'] .exercise-solution,
+body[data-theme='light'] .exercise-card,
+body[data-theme='light'] .resource-card,
+body[data-theme='light'] .module-card,
+body[data-theme='light'] .step-card,
+body[data-theme='light'] .timeline-card,
+body[data-theme='light'] .faq-item {
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--text-primary);
+}
+
+body[data-theme='light'] .terminal-code,
+body[data-theme='light'] .terminal-output,
+body[data-theme='light'] .demo-output pre,
+body[data-theme='light'] .exercise-output pre {
+  color: var(--text-primary);
+}
+
 #root {
   min-height: 100vh;
 }

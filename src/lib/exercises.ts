@@ -5,16 +5,23 @@ const exerciseFiles = import.meta.glob('../modules/**/exercises/*.json', { eager
   { default?: ExerciseDefinition } | ExerciseDefinition | undefined
 >
 
-export function getExercisesByModule(moduleId: string): ExerciseDefinition[] {
+export function getAllExercises(): ExerciseDefinition[] {
   return Object.entries(exerciseFiles)
     .map(([filepath, imported]) => {
       const exercise = imported && 'default' in imported ? imported.default : imported
       if (!exercise) return null
-      const currentModule = filepath.split('/modules/')[1]?.split('/')[0]
-      return currentModule === moduleId ? exercise : null
+      if (!filepath.includes('/modules/')) return null
+      return exercise
     })
     .filter((exercise): exercise is ExerciseDefinition => Boolean(exercise))
     .sort((left, right) => left.titulo.localeCompare(right.titulo))
+}
+
+export function getExercisesByModule(moduleId: string): ExerciseDefinition[] {
+  return getAllExercises().filter((exercise) => {
+    const moduleSegment = exercise.id.split(':')[0]
+    return moduleSegment === moduleId || exercise.id.startsWith(`${moduleId}:`)
+  })
 }
 
 export function getExerciseByModuleAndId(moduleId: string, exerciseId: string): ExerciseDefinition | undefined {
