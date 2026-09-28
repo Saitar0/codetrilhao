@@ -145,7 +145,7 @@ function ExerciseRunner({ moduleId, exerciseId }: { moduleId: string; exerciseId
     }
 
     const evaluations: Array<{ ok: boolean; label: string; input: string; expected: string; actual: string; hidden: boolean }> = []
-    let allVisiblePassed = true
+    let allTestsPassed = true
 
     for (let index = 0; index < testsToCheck.length; index += 1) {
       const test = testsToCheck[index]
@@ -155,9 +155,7 @@ function ExerciseRunner({ moduleId, exerciseId }: { moduleId: string; exerciseId
       const ok = actual === expected
       const hidden = Boolean(test.oculto)
 
-      if (!hidden) {
-        allVisiblePassed = allVisiblePassed && ok
-      }
+      allTestsPassed = allTestsPassed && ok
 
       evaluations.push({
         ok,
@@ -172,7 +170,7 @@ function ExerciseRunner({ moduleId, exerciseId }: { moduleId: string; exerciseId
     setTests(evaluations)
     markExerciseAttempt(exerciseId)
 
-    if (allVisiblePassed) {
+    if (allTestsPassed) {
       setCompleted(true)
       setResultMessage('Parabéns! Você resolveu este exercício.')
       confetti({ particleCount: 130, spread: 70, origin: { y: 0.7 } })
