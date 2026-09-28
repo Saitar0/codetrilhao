@@ -28,12 +28,9 @@ const normalizeInput = (source: string, provided: string) => {
 const ensurePyodide = async () => {
   if (pyodideReady && pyodide) return pyodide
 
-  // @ts-expect-error pyodide global is provided by the CDN script loaded below
-  await import('https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js')
-
-  // @ts-expect-error pyodide is global after import
-  pyodide = await globalThis.loadPyodide({
-    indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/',
+  const { loadPyodide } = await import('pyodide')
+  pyodide = await loadPyodide({
+    indexURL: new URL('../node_modules/pyodide/', import.meta.url).toString(),
   })
   pyodideReady = true
   return pyodide

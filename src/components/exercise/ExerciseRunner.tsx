@@ -1,12 +1,14 @@
+import Editor from '@monaco-editor/react'
 import { DndContext, PointerSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, arrayMove, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import confetti from 'canvas-confetti'
-import { useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { useNavigate } from 'react-router-dom'
 
+import { useCodeRunner } from '../../hooks/useCodeRunner'
 import { getExerciseByModuleAndId } from '../../lib/exercises'
 import { useProgressStore } from '../../store/progress'
 import type { ExerciseDefinition, ExerciseStatus } from '../../types/exercise'
@@ -74,17 +76,14 @@ function ExerciseRunner({ moduleId, exerciseId }: { moduleId: string; exerciseId
   const exercise = getExerciseByModuleAndId(moduleId, exerciseId)
   const [code, setCode] = useState(exercise?.tipo === 'codigo' || exercise?.tipo === 'bug' || exercise?.tipo === 'completar' ? exercise.starterCode : '')
   const [inputValue, setInputValue] = useState('')
-  const [stdout, setStdout] = useState('')
-  const [stderr, setStderr] = useState('')
   const [tests, setTests] = useState<Array<{ ok: boolean; label: string; input: string; expected: string; actual: string; hidden: boolean }>>([])
-  const [loading, setLoading] = useState(false)
   const [showSolution, setShowSolution] = useState(false)
   const [hintIndex, setHintIndex] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
   const [completed, setCompleted] = useState(false)
   const [sortOrder, setSortOrder] = useState<string[]>(() => (exercise?.tipo === 'ordenar' ? exercise.linhas : []))
   const [resultMessage, setResultMessage] = useState('')
-  const workerRef = useRef<Worker | null>(null)
+  const { stdout, stderr, loading, run, terminateWorker } = useCodeRunner({ timeoutMs: 5000 })
 
   const status = useProgressStore((state) => state.exerciseStatuses[exerciseId] ?? 'nao-iniciado')
   const attempts = useProgressStore((state) => state.exerciseAttempts[exerciseId] ?? 0)
@@ -94,6 +93,12 @@ function ExerciseRunner({ moduleId, exerciseId }: { moduleId: string; exerciseId
 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
 
+  useEffect(() => {
+    if (document.body.dataset.theme === 'light') {
+      document.body.dataset.theme = 'light'
+    }
+  }, [])
+
   if (!exercise) {
     return <div className="empty-state glass">Exercício não encontrado.</div>
   }
@@ -102,66 +107,57 @@ function ExerciseRunner({ moduleId, exerciseId }: { moduleId: string; exerciseId
   const canSeeSolution = attempts >= 3 || showSolution
 
   const runCode = async () => {
-    if (!workerRef.current) return
-
-    setLoading(true)
-    setStdout('')
-    setStderr('')
     setResultMessage('')
+    const result = await run(code, inputValue)
 
-    const timer = setTimeout(() => {
-      workerRef.current?.terminate()
-      const replacement = new Worker(new URL('../../workers/pyodide-worker.ts', import.meta.url), { type: 'module' })
-      workerRef.current = replacement
-      setStderr('Tempo limite excedido. O código demorou demais para responder.')
-      setLoading(false)
-    }, 5000)
-
-    workerRef.current.onmessage = (event) => {
-      clearTimeout(timer)
-      const payload = event.data as { stdout?: string; stderr?: string; ok?: boolean; message?: string }
-
-      if (payload.stderr) {
-        setStderr(translatePythonError(payload.stderr))
-      } else {
-        setStderr('')
-      }
-
-      setStdout(payload.stdout ?? '')
-      setLoading(false)
-
-      if (payload.ok === false) {
-        markExerciseAttempt(exerciseId)
-      }
+    if (result.ok === false) {
+      markExerciseAttempt(exerciseId)
+      setResultMessage(translatePythonError(result.stderr || 'Erro ao executar o código.'))
+      return
     }
 
-    workerRef.current.postMessage({ type: 'run', code, input: inputValue })
+    setResultMessage('Código executado com sucesso.')
   }
 
-  const verifySolution = () => {
+  const verifySolution = async () => {
     if (!exercise) return
 
-    markExerciseAttempt(exerciseId)
-
     const testsToCheck = 'testes' in exercise ? exercise.testes ?? [] : []
-    const results = testsToCheck.map((test, index) => {
-      const output = stdout || ''
-      const expected = test.esperado
-      const actual = output
-      const ok = actual.trim() === expected.trim()
-      return {
+    if (!testsToCheck.length) {
+      markExerciseAttempt(exerciseId)
+      setResultMessage('Este exercício não possui testes automatizados.')
+      return
+    }
+
+    const evaluations: Array<{ ok: boolean; label: string; input: string; expected: string; actual: string; hidden: boolean }> = []
+    let allVisiblePassed = true
+
+    for (let index = 0; index < testsToCheck.length; index += 1) {
+      const test = testsToCheck[index]
+      const result = await run(code, test.entrada)
+      const actual = (result.ok ? result.stdout : result.stderr || result.stdout).trim()
+      const expected = test.esperado.trim()
+      const ok = actual === expected
+      const hidden = Boolean(test.oculto)
+
+      if (!hidden) {
+        allVisiblePassed = allVisiblePassed && ok
+      }
+
+      evaluations.push({
         ok,
         label: `Caso ${index + 1}`,
         input: test.entrada,
         expected: test.esperado,
         actual,
-        hidden: Boolean(test.oculto),
-      }
-    })
+        hidden,
+      })
+    }
 
-    const allPassed = results.some((test) => !test.hidden) ? results.filter((test) => !test.hidden).every((test) => test.ok) : true
+    setTests(evaluations)
+    markExerciseAttempt(exerciseId)
 
-    if (allPassed) {
+    if (allVisiblePassed) {
       setCompleted(true)
       setResultMessage('Parabéns! Você resolveu este exercício.')
       confetti({ particleCount: 130, spread: 70, origin: { y: 0.7 } })
@@ -171,14 +167,12 @@ function ExerciseRunner({ moduleId, exerciseId }: { moduleId: string; exerciseId
     }
 
     setResultMessage('Ainda há alguns casos faltando.')
-    setTests(results)
   }
 
   const resetCode = () => {
     const baseCode = exercise.tipo === 'codigo' || exercise.tipo === 'bug' || exercise.tipo === 'completar' ? exercise.starterCode : ''
     setCode(baseCode)
-    setStdout('')
-    setStderr('')
+    terminateWorker()
   }
 
   const currentHint = exercise.dicas[hintIndex] ?? exercise.dicas[exercise.dicas.length - 1]
@@ -362,12 +356,22 @@ function ExerciseRunner({ moduleId, exerciseId }: { moduleId: string; exerciseId
                   {loading ? 'Executando...' : 'Executar'}
                 </button>
               </div>
-              <textarea
-                className="exercise-editor"
+              <Editor
+                height="260px"
+                language="python"
+                theme={document.body.dataset.theme === 'light' ? 'vs-light' : 'vs-dark'}
                 value={code}
-                onChange={(event) => setCode(event.target.value)}
-                spellCheck={false}
-                style={{ fontFamily: 'JetBrains Mono, monospace' }}
+                options={{
+                  minimap: { enabled: false },
+                  fontSize: 14,
+                  padding: { top: 16, bottom: 16 },
+                  scrollBeyondLastLine: false,
+                  wordWrap: 'on',
+                  lineNumbers: 'on',
+                  automaticLayout: true,
+                  fontFamily: 'JetBrains Mono, monospace',
+                }}
+                onChange={(value) => setCode(value ?? '')}
               />
               <div className="exercise-input-row">
                 <label htmlFor="exercise-input">Entrada do usuário</label>

@@ -1,0 +1,347 @@
+.exercise-list,
+.exercise-page,
+.exercise-panel,
+.exercise-exec-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.exercise-list {
+  padding-top: 1rem;
+}
+
+.exercise-list__header,
+.exercise-list__toolbar,
+.exercise-page,
+.exercise-tests-panel,
+.exercise-output,
+.exercise-result {
+  border-radius: var(--radius-xl);
+}
+
+.exercise-list__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1rem;
+  padding: 1.3rem 1.4rem;
+}
+
+.exercise-list__header h1 {
+  margin: 0.3rem 0 0;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  letter-spacing: -0.06em;
+}
+
+.exercise-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  min-width: 260px;
+}
+
+.exercise-summary div {
+  display: grid;
+  gap: 0.2rem;
+  text-align: center;
+  padding: 0.7rem 0.5rem;
+  border-radius: var(--radius-md);
+  background: rgba(148, 163, 184, 0.04);
+}
+
+.exercise-summary strong {
+  font-size: 1.4rem;
+}
+
+.exercise-summary span {
+  color: var(--text-secondary);
+}
+
+.exercise-list__toolbar {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.exercise-list__toolbar input,
+.exercise-list__toolbar select,
+.exercise-predict input,
+.exercise-input-row input {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.28);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  padding: 0.8rem 0.9rem;
+}
+
+.exercise-list__grid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.exercise-card {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  color: inherit;
+}
+
+.exercise-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.exercise-card__xp {
+  font-weight: 700;
+  color: var(--brand-accent);
+}
+
+.exercise-card__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+}
+
+.exercise-page {
+  padding: 1.2rem;
+}
+
+.exercise-page__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1rem;
+}
+
+.exercise-page__header h1 {
+  margin: 0.35rem 0 0;
+  font-size: clamp(2rem, 3vw, 3rem);
+  letter-spacing: -0.06em;
+}
+
+.exercise-page__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  border: 1px solid var(--border);
+  background: rgba(55, 118, 171, 0.14);
+  color: var(--text-primary);
+}
+
+.pill--muted {
+  color: var(--text-secondary);
+  background: rgba(148, 163, 184, 0.06);
+}
+
+.exercise-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  gap: 1.25rem;
+}
+
+.exercise-panel,
+.exercise-exec-panel {
+  padding: 1rem;
+}
+
+.exercise-panel {
+  grid-template-columns: 1fr;
+}
+
+.exercise-panel > * {
+  margin: 0;
+}
+
+.exercise-panel p,
+.exercise-panel li,
+.exercise-panel code {
+  color: var(--text-secondary);
+}
+
+.exercise-choices {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.choice {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.22);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.choice.is-selected {
+  border-color: rgba(55, 118, 171, 0.6);
+  background: rgba(55, 118, 171, 0.12);
+}
+
+.exercise-sort,
+.exercise-predict,
+.exercise-hints {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.exercise-sort__item {
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.2);
+  border-radius: var(--radius-md);
+  padding: 0.8rem 0.9rem;
+  cursor: grab;
+}
+
+.exercise-tests-panel {
+  padding: 1rem;
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.24);
+}
+
+.test-row {
+  display: grid;
+  gap: 0.25rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
+  padding-top: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.test-row.is-pass {
+  color: var(--success);
+}
+
+.test-row.is-fail {
+  color: var(--danger);
+}
+
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.8rem;
+}
+
+.editor-toolbar button,
+.exercise-actions button,
+.exercise-hints button,
+.exercise-predict button,
+.exercise-sort button,
+.exercise-panel button {
+  cursor: pointer;
+}
+
+.exercise-editor {
+  width: 100%;
+  min-height: 260px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.exercise-input-row {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.8rem;
+}
+
+.exercise-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.exercise-output {
+  padding: 1rem;
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.26);
+}
+
+.exercise-output h3 {
+  margin: 0 0 0.75rem;
+  letter-spacing: -0.04em;
+}
+
+.exercise-output pre,
+.exercise-solution {
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: var(--font-mono);
+  color: #d7f7ff;
+}
+
+.exercise-result {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+}
+
+.exercise-result.is-success {
+  color: var(--success);
+  background: rgba(52, 211, 153, 0.08);
+}
+
+.exercise-result.is-error {
+  color: var(--danger);
+  background: rgba(248, 113, 113, 0.08);
+}
+
+.exercise-solution {
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  background: rgba(15, 23, 42, 0.28);
+}
+
+.empty-state {
+  display: grid;
+  place-items: center;
+  min-height: 180px;
+  padding: 1.75rem;
+  text-align: center;
+  color: var(--text-secondary);
+  border-radius: var(--radius-xl);
+}
+
+@media (max-width: 940px) {
+  .exercise-layout,
+  .exercise-list__header,
+  .exercise-page__header {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+
+  .exercise-list__toolbar {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .exercise-list__toolbar,
+  .exercise-summary,
+  .exercise-layout {
+    grid-template-columns: 1fr;
+  }
+}

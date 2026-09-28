@@ -5,6 +5,6 @@ export async function loadPyodideInstance() {
 
   const { loadPyodide } = await import('pyodide')
   return loadPyodide({
-    indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/',
+    indexURL: new URL('./assets/pyodide/', import.meta.url).toString(),
   })
 }

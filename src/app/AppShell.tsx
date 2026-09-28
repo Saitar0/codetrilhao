@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Menu, X } from 'lucide-react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 
 import { siteConfig } from '../config/site'
 import { getLevelInfo, useProgressStore } from '../store/progress'
@@ -10,6 +10,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const xp = useProgressStore((state) => state.xp)
   const setTheme = useProgressStore((state) => state.setTheme)
   const resetProgress = useProgressStore((state) => state.resetProgress)
+  const navigate = useNavigate()
+  const location = useLocation()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
@@ -23,11 +25,30 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }, [])
 
   const navItems = [
-    { label: 'Módulos', href: '#modulos' },
-    { label: 'Recursos', href: '#recursos' },
-    { label: 'Demo', href: '#demo' },
-    { label: 'FAQ', href: '#faq' },
+    { label: 'Módulos', hash: '#modulos' },
+    { label: 'Recursos', hash: '#recursos' },
+    { label: 'Demo', hash: '#demo' },
+    { label: 'FAQ', hash: '#faq' },
   ]
+
+  const handleNavClick = (hash: string) => {
+    setIsMenuOpen(false)
+    const target = hash.replace(/^#/, '')
+
+    if (location.pathname !== '/') {
+      navigate({ pathname: '/', hash: `#${target}` })
+      return
+    }
+
+    if (window.location.hash !== hash) {
+      window.history.pushState(null, '', hash)
+    }
+
+    requestAnimationFrame(() => {
+      const anchor = document.getElementById(target)
+      anchor?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  }
 
   const levelInfo = getLevelInfo(xp)
 
@@ -42,9 +63,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
           <nav aria-label="Navegação principal" className={`main-nav ${isMenuOpen ? 'is-open' : ''}`}>
             {navItems.map((item) => (
-              <a key={item.href} href={item.href} onClick={() => setIsMenuOpen(false)}>
+              <button key={item.hash} type="button" className="nav-link" onClick={() => handleNavClick(item.hash)}>
                 {item.label}
-              </a>
+              </button>
             ))}
             <NavLink to="/python" className="nav-link route-link">
               Python
@@ -95,9 +116,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
 
-            <a href="#cta" className="button button--primary navbar-cta">
+            <button type="button" className="button button--primary navbar-cta" onClick={() => handleNavClick('#cta')}>
               Começar agora
-            </a>
+            </button>
           </div>
         </div>
 
@@ -117,10 +138,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <div className="container app-footer__inner">
           <p>© 2026 {siteConfig.name}. Aprenda programação com ritmo e clareza.</p>
           <div className="app-footer__links">
-            <a href="#modulos">Módulos</a>
-            <a href="#recursos">Recursos</a>
-            <a href="#demo">Demo</a>
-            <a href="#faq">FAQ</a>
+            <button type="button" className="footer-link" onClick={() => handleNavClick('#modulos')}>Módulos</button>
+            <button type="button" className="footer-link" onClick={() => handleNavClick('#recursos')}>Recursos</button>
+            <button type="button" className="footer-link" onClick={() => handleNavClick('#demo')}>Demo</button>
+            <button type="button" className="footer-link" onClick={() => handleNavClick('#faq')}>FAQ</button>
           </div>
           <button
             type="button"

@@ -2,7 +2,7 @@ import { isValidElement, useEffect, useMemo, useState } from 'react'
 import { codeToHtml } from 'shiki'
 import { Check, Info, Lightbulb, TriangleAlert, X } from 'lucide-react'
 
-import { loadPyodideInstance } from '../../lib/pyodide'
+import { useCodeRunner } from '../../hooks/useCodeRunner'
 
 export type MdxComponentProps = {
   title?: string
@@ -27,9 +27,8 @@ export type MdxComponentProps = {
 
 export function CodeBlock({ title, language = 'python', code, highlight = [], children }: MdxComponentProps & { highlight?: number[] }) {
   const [copied, setCopied] = useState(false)
-  const [output, setOutput] = useState('')
-  const [loading, setLoading] = useState(false)
   const [html, setHtml] = useState('')
+  const { stdout, stderr, loading, run } = useCodeRunner({ timeoutMs: 5000 })
 
   const source = useMemo(() => {
     if (typeof code === 'string') return code
@@ -58,17 +57,9 @@ export function CodeBlock({ title, language = 'python', code, highlight = [], ch
   }
 
   const handleExecute = async () => {
-    try {
-      setLoading(true)
-      const pyodide = await loadPyodideInstance()
-      setOutput('')
-      pyodide.setStdout({ batched: (value: string) => setOutput((current) => `${current}${value}\n`) })
-      pyodide.setStderr({ batched: (value: string) => setOutput((current) => `${current}${value}\n`) })
-      await pyodide.runPythonAsync(source)
-    } catch (error) {
-      setOutput(error instanceof Error ? error.message : 'Erro ao executar o código.')
-    } finally {
-      setLoading(false)
+    const result = await run(source)
+    if (!result.ok) {
+      return
     }
   }
 
@@ -100,10 +91,10 @@ export function CodeBlock({ title, language = 'python', code, highlight = [], ch
         )}
       </div>
 
-      {output && (
+      {(stdout || stderr) && (
         <div className="code-block__output">
           <span>Saída</span>
-          <pre>{output}</pre>
+          <pre>{stderr || stdout}</pre>
         </div>
       )}
     </div>
@@ -155,21 +146,10 @@ export function CodeTabs({ children }: MdxComponentProps) {
 
 export function Playground({ title = 'Playground', code = 'print("Experimente!")' }: MdxComponentProps) {
   const [value, setValue] = useState(code)
-  const [output, setOutput] = useState('')
-  const [loading, setLoading] = useState(false)
+  const { stdout, stderr, loading, run } = useCodeRunner({ timeoutMs: 5000 })
 
   const handleRun = async () => {
-    try {
-      setLoading(true)
-      const pyodide = await loadPyodideInstance()
-      pyodide.setStdout({ batched: (text: string) => setOutput((current) => `${current}${text}\n`) })
-      pyodide.setStderr({ batched: (text: string) => setOutput((current) => `${current}${text}\n`) })
-      await pyodide.runPythonAsync(value)
-    } catch (error) {
-      setOutput(error instanceof Error ? error.message : 'Erro ao executar.')
-    } finally {
-      setLoading(false)
-    }
+    await run(value)
   }
 
   return (
@@ -181,7 +161,7 @@ export function Playground({ title = 'Playground', code = 'print("Experimente!")
       <textarea value={value} onChange={(event) => setValue(event.target.value)} spellCheck={false} />
       <div className="playground__output">
         <span>Saída</span>
-        <pre>{output || 'A saída vai aparecer aqui.'}</pre>
+        <pre>{stderr || stdout || 'A saída vai aparecer aqui.'}</pre>
       </div>
     </div>
   )
