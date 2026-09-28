@@ -78,7 +78,7 @@ self.onmessage = async (event: MessageEvent<WorkerMessage>) => {
       new Promise((res) => setTimeout(() => res({ ok: false, reason: 'timeout' }), timeoutMs)),
     ])
 
-    if ((race as any).ok !== true) {
+    if ((race as { ok?: boolean }).ok !== true) {
       self.postMessage({ type: 'result', stdout: stdout.join(''), stderr: 'Execução excedeu o tempo limite.', ok: false })
       return
     }

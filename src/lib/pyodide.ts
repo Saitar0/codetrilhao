@@ -1,4 +1,10 @@
-export async function loadPyodideInstance() {
+export type PyodideLike = {
+  setStdout: (handler: { batched: (value: string) => void }) => void
+  setStderr: (handler: { batched: (value: string) => void }) => void
+  runPythonAsync: (code: string) => Promise<void>
+}
+
+export async function loadPyodideInstance(): Promise<PyodideLike> {
   if (typeof window === 'undefined') {
     throw new Error('Pyodide só pode ser carregado no navegador.')
   }
@@ -7,11 +13,13 @@ export async function loadPyodideInstance() {
   const indexURL = `${base}assets/pyodide/`
 
   // Dynamic import with retry logic for transient network failures
-  const tryLoad = async (attempt = 1): Promise<any> => {
+  const tryLoad = async (attempt = 1): Promise<PyodideLike> => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
+       
       const { loadPyodide } = await import('pyodide')
-      return await loadPyodide({ indexURL })
+      // loadPyodide returns a runtime instance; cast it to our minimal shape
+      const inst = await loadPyodide({ indexURL })
+      return inst as unknown as PyodideLike
     } catch (err) {
       if (attempt < 3) {
         // exponential backoff

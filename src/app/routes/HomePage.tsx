@@ -240,10 +240,12 @@ export default function HomePage() {
           pyodideRef.current = pyodide
           setPyodideState('ready')
         }
-      } catch {
+      } catch (err) {
         if (!ignore) {
           setPyodideState('error')
           setDemoOutput('Não foi possível carregar o ambiente Python. Verifique sua conexão e tente novamente.')
+           
+          console.error('Pyodide load error', err)
         }
       }
     })()

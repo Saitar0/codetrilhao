@@ -33,7 +33,7 @@ export function useCodeRunner({ timeoutMs = 5000, onError }: UseCodeRunnerOption
       onError?.('Falha ao iniciar o worker de execução de código.')
       throw err
     }
-  }, [])
+  }, [onError])
 
   const terminateWorker = useCallback(() => {
     if (workerRef.current) {
@@ -51,7 +51,11 @@ export function useCodeRunner({ timeoutMs = 5000, onError }: UseCodeRunnerOption
     const timer = window.setTimeout(() => {
       try {
         workerRef.current?.terminate()
-      } catch {}
+      } catch (e) {
+        // ignore termination errors
+         
+        console.warn('Worker termination failed', e)
+      }
       workerRef.current = null
       const fallbackMessage = 'Tempo limite excedido. O código demorou demais para responder.'
       setStderr(fallbackMessage)
