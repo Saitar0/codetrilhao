@@ -1,39 +1,300 @@
 ﻿---
-titulo: "VariÃ¡veis e tipos"
-descricao: "Descubra variÃ¡veis, tipos bÃ¡sicos e como armazenar informaÃ§Ã£o com clareza."
+titulo: "Variáveis e tipos de dados"
+descricao: "Entenda como guardar dados em Python, converter valores e evitar erros comuns de tipo e formatação."
 secao: "A. Fundamentos"
-ordem: 4
-tempo: 10
+ordem: 5
+topico: 2
+fase: "A"
+tempo: 28
 nivel: "iniciante"
-palavrasChave: ['variÃ¡veis', 'tipos', 'int', 'float']
+palavrasChave: ['variáveis', 'tipos', 'int', 'float', 'f-string', 'Decimal']
 exercicios: []
 ---
 
-# VariÃ¡veis e tipos
+# Variáveis e tipos de dados
 
-Descubra variÃ¡veis, tipos bÃ¡sicos e como armazenar informaÃ§Ã£o com clareza.
+Quando você escreve um programa, ele precisa guardar informações: nome de usuário, idade, preço, status de login, saldo bancário e muito mais. Em Python, isso acontece por meio de <Glossario termo="variáveis" definition="Nomes usados para armazenar valores em memória durante a execução do programa." />. Já o tipo de dado diz o que aquela informação representa: número, texto, verdadeiro/falso ou ausência de valor.
 
-<Callout type="importante" title="Objetivo da aula">
-  Neste bloco, vocÃª vai entender o conceito principal, ver exemplos prÃ¡ticos e testar a lÃ³gica em pequenos passos.
+Imagine que você está montando um formulário de cadastro. O nome é texto, a idade é número inteiro, a altura pode ser decimal e a conta ativa pode ser `True` ou `False`. Saber escolher o tipo certo evita erros e faz o código ser muito mais claro.
+
+<Callout type="importante" title="O que você vai aprender">
+  - Entender o que é uma variável e como ela guarda valores.
+  - Reconhecer os tipos básicos do Python: `int`, `float`, `str`, `bool` e `None`.
+  - Converter valores com segurança entre tipos.
+  - Usar f-strings para formatar saídas de forma clara.
+  - Entender por que `0.1 + 0.2` parece estranho e como `Decimal` ajuda.
 </Callout>
 
-<CodeBlock title="exemplo_1.py" code={`idade = 28
-print(type(idade))`} />
-<CodeBlock title="exemplo_2.py" code={`nome = "JoÃ£o"
-peso = 72.5
-print(nome, peso)`} />
-<CodeBlock title="exemplo_3.py" code={`ativo = True
-print(type(ativo))`} />
+## 1. Variável: um nome para um valor
 
-<Quiz questions={[{ question: "Qual Ã© a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prÃ¡tica", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensÃ£o e aplicaÃ§Ã£o prÃ¡tica." }, { question: "Qual hÃ¡bito Ã© mais Ãºtil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o cÃ³digo"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prÃ¡tica em Python?", options: ["clareza e execuÃ§Ã£o", "complexidade por padrÃ£o", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execuÃ§Ã£o objetiva." }]} />
+Uma variável é como uma caixa com um nome. Você guarda um valor dentro dela e, depois, pode usar esse valor várias vezes. A sintaxe é simples:
+
+<CodeBlock title="variavel_basica.py" code={`nome = "Ana"
+idade = 28
+altura = 1.67
+print(nome)
+print(idade)
+print(altura)`} />
+
+```text
+Ana
+28
+1.67
+```
+
+Observe que o Python não exige que você declare o tipo antes. A variável recebe o valor e, a partir dali, o Python entende seu tipo. Isso é uma enorme vantagem quando você está explorando ideias e construindo programas rapidamente.
+
+O nome da variável também importa. Em Python, a convenção mais comum é o `snake_case`: palavras minúsculas separadas por sublinhado. Isso deixa o código legível. Por exemplo:
+
+<CodeBlock title="nomes_variaveis.py" code={`nome_completo = "Maria da Silva"
+valor_total = 125.40
+esta_ativo = True
+print(nome_completo)
+print(valor_total)
+print(esta_ativo)`} />
+
+```text
+Maria da Silva
+125.4
+True
+```
+
+A regra principal é: não comece nomes com número e evite palavras reservadas, como `for`, `if`, `class` e `True`. Em Python, nomes claros são parte da qualidade do código.
+
+## 2. Tipos básicos: o que cada valor representa
+
+O Python oferece vários tipos embutidos. Os mais comuns no início são:
+
+- `int`: números inteiros, como `10`, `-3`, `0`.
+- `float`: números com casas decimais, como `3.14`, `0.5`.
+- `str`: texto, como `"Python"` e `'Ana'`.
+- `bool`: verdadeiro ou falso, representado por `True` e `False`.
+- `None`: ausência de valor. É usado quando você ainda não definiu algo.
+
+Você pode verificar o tipo com `type()` e testar se um valor pertence a um tipo específico com `isinstance()`.
+
+<CodeBlock title="tipos_basicos.py" code={`idade = 25
+peso = 68.5
+nome = "Bruno"
+ativo = True
+vazio = None
+
+print(type(idade))
+print(type(peso))
+print(type(nome))
+print(type(ativo))
+print(type(vazio))
+print(isinstance(idade, int))` } />
+
+```text
+<class 'int'>
+<class 'float'>
+<class 'str'>
+<class 'bool'>
+<class 'NoneType'>
+True
+```
+
+<Tabela data={[
+  ['Tipo', 'Exemplo', 'Uso comum'],
+  ['int', '42', 'idade, contadores, quantidade'],
+  ['float', '3.14', 'preço, altura, medidas'],
+  ['str', '"Olá"', 'nomes, endereços, mensagens'],
+  ['bool', 'True', 'status, comparação, decisões'],
+  ['None', 'None', 'valor ainda não definido'],
+]} />
+
+<Glossario termo="Tipo" definition="Classe de valor que define como o Python interpreta e opera com ele." />
+<Glossario termo="`int`" definition="Tipo usado para representar números inteiros sem casas decimais." />
+<Glossario termo="`float`" definition="Tipo usado para representar números com casas decimais." />
+
+## 3. Conversão de tipos: transformar um valor em outro
+
+Muita gente acha que Python faz “mágica”, mas o que acontece é uma conversão intencional. Você pode transformar um valor em outro quando isso faz sentido. Por exemplo, um texto de número pode virar inteiro; um número pode virar texto; uma variável booleana pode virar número, embora nem sempre seja a melhor escolha.
+
+<CodeBlock title="conversao_tipos.py" code={`texto = "42"
+valor_inteiro = int(texto)
+valor_float = float(texto)
+texto_2 = str(valor_inteiro)
+
+print(valor_inteiro + 8)
+print(valor_float)
+print("Idade: " + texto_2)`} />
+
+```text
+50
+42.0
+Idade: 42
+```
+
+Você também pode usar `bool()` para verificar se algo é verdadeiro ou falso. Isso aparece muito em testes e condições, mas é importante entender que strings vazias e números zero costumam virar `False`, enquanto strings com conteúdo e números diferentes de zero viram `True`.
+
+<CodeBlock title="bool_e_none.py" code={`print(bool("False"))
+print(bool(""))
+print(bool(0))
+print(bool(12))
+print(bool(None))` } />
+
+```text
+True
+False
+False
+True
+False
+```
+
+Nesse caso, `bool("False")` é `True` porque a string tem conteúdo. O texto "False" não é um booleano em si; é apenas uma string. Essa diferença costuma confundir programadores iniciantes, e por isso vale reforçar.
+
+## 4. `input()` e conversão em prática
+
+No tópico anterior, você viu que `input()` lê texto. Isso significa que, se a pessoa digitar `20`, o valor continua sendo string, não inteiro. Para usar essa informação como número, você precisa converter.
+
+<CodeBlock title="input_e_conversao.py" code={`idade_texto = input("Qual a sua idade? ")
+idade = int(idade_texto)
+print(f"No próximo ano você terá {idade + 1} anos.")` } />
+
+```text
+Qual a sua idade? 20
+No próximo ano você terá 21 anos.
+```
+
+Essa conversão é tão importante que aparece em praticamente todo programa que lê dados do usuário. Sem ela, você pode acabar misturando texto e número e gerar erros no meio da execução.
+
+## 5. Nomeando variáveis com clareza
+
+Em Python, você não precisa memorizar nomes complexos. O ideal é escolher nomes que explicam a intenção. Isso ajuda a entender o código meses depois e facilita a colaboração com outras pessoas.
+
+<CodeBlock title="nomeacao_clara.py" code={`preco_unitario = 19.90
+quantidade = 3
+valor_total = preco_unitario * quantidade
+print(f"Valor total: R$ {valor_total:.2f}")` } />
+
+```text
+Valor total: R$ 59.70
+```
+
+Observe que `preco_unitario`, `quantidade` e `valor_total` são nomes muito mais claros do que `p`, `q` e `x`. Isso é um detalhe simples, mas que separa código fácil de manter de código difícil de ler.
+
+## 6. f-strings: escrever valores dentro de texto
+
+A forma mais comum de combinar texto e variáveis em Python é a f-string. O prefixo `f` indica que o texto terá expressões embutidas dentro de chaves `{}`.
+
+<CodeBlock title="f_strings.py" code={`nome = "Camila"
+idade = 24
+altura = 1.68
+print(f"{nome} tem {idade} anos e mede {altura:.2f} m.")` } />
+
+```text
+Camila tem 24 anos e mede 1.68 m.
+```
+
+A f-string deixa o código mais legível do que concatenar strings manualmente. Você também pode formatar números com especificadores: `:.2f` para duas casas decimais, `:,` para milhar e `:>10` para alinhamento em largura fixa.
+
+<Playground title="Experimente uma f-string" code={`nome = "Rafael"
+preco = 1299.5
+print(f"Cliente: {nome}\nTotal: R$ {preco:,.2f}")`} />
+
+## 7. Ponto flutuante e Decimal
+
+Agora chegamos a um ponto que costuma surpreender: `0.1 + 0.2` em Python não resulta em `0.3` como muita gente espera. Isso acontece porque `float` usa uma representação binária que não consegue representar alguns decimais com precisão absoluta.
+
+<CodeBlock title="ponto_flutuante.py" code={`print(0.1 + 0.2)
+print(round(0.1 + 0.2, 2))` } />
+
+```text
+0.30000000000000004
+0.3
+```
+
+Esse comportamento é normal e não é “bug” do Python. Ele acontece por causa da forma como o computador representa números reais em memória. Quando você trabalha com dinheiro, a melhor prática é usar `Decimal`, que foi criado justamente para evitar imprecisão em cálculos monetários.
+
+<CodeBlock title="decimal_dinheiro.py" code={`from decimal import Decimal
+
+preco = Decimal("19.90")
+quantidade = Decimal("3")
+print(preco * quantidade)
+print((Decimal("0.1") + Decimal("0.2")))` } />
+
+```text
+59.70
+0.3
+```
+
+A diferença é enorme: com `float`, você pode ter ruído de arredondamento; com `Decimal`, a representação é mais previsível e adequada para valores financeiros. Em sistemas que cuidam de contas, impostos, pagamentos e saldos, esse detalhe é crucial.
+
+<Playground title="Teste a regra do ponto flutuante" code={`valor = 0.1 + 0.2
+print(valor)
+print(repr(valor))
+print(round(valor, 2))`} />
+
+<StepThrough>
+  <div>
+    <p>Primeiro, você salva um valor em uma variável: <strong>saldo = 100</strong>.</p>
+  </div>
+  <div>
+    <p>Depois, você adiciona uma compra: <strong>saldo = saldo - 35</strong>. Agora o saldo vale 65.</p>
+  </div>
+  <div>
+    <p>Por fim, você aplica um bônus: <strong>saldo = saldo + 20</strong>. O resultado final é 85.</p>
+  </div>
+</StepThrough>
+
+## Erros comuns
+
+<Callout type="erro-comum" title='TypeError: can only concatenate str (not "int")'>
+  <CodeBlock title="erro_tipo.py" code={`nome = "Ana"
+idade = 28
+print("Nome: " + nome + " | Idade: " + idade)`} />
+  <p>Esse erro acontece quando você tenta somar texto com número diretamente. O Python não entende isso como “colocar os dois juntos”.</p>
+  <p>Correção: use f-string ou converta o número para string antes da concatenação.</p>
+  <CodeBlock title="erro_tipo_corrigido.py" code={`nome = "Ana"
+idade = 28
+print(f"Nome: {nome} | Idade: {idade}")`} />
+</Callout>
+
+<Callout type="erro-comum" title='ValueError: invalid literal for int()'>
+  <CodeBlock title="erro_int.py" code={`idade = int("vinte")
+print(idade)`} />
+  <p>Esse erro aparece quando você tenta converter texto que não representa um número inteiro válido.</p>
+  <p>Correção: validando a entrada antes da conversão ou usando texto numérico correto.</p>
+  <CodeBlock title="erro_int_corrigido.py" code={`idade_texto = "20"
+idade = int(idade_texto)
+print(idade + 1)`} />
+</Callout>
+
+<Callout type="erro-comum" title='Idade digitada "20" somada como "2020"'>
+  <CodeBlock title="erro_input.py" code={`idade = input("Qual a sua idade? ")
+print(idade + 20)`} />
+  <p>Quando você usa `input()`, o valor vem como texto. Por isso, `"20" + 20` não funciona da forma que você imagina.</p>
+  <p>Correção: converta a entrada antes de operar matematicamente.</p>
+  <CodeBlock title="erro_input_corrigido.py" code={`idade = int(input("Qual a sua idade? "))
+print(idade + 20)`} />
+</Callout>
+
+## No mercado de trabalho
+
+Em qualquer projeto que envolva cadastro, orçamento, vendas, relatórios ou dados financeiros, você vai lidar com variáveis e tipos. Em sistemas de e-commerce, por exemplo, o valor do produto é um número decimal, a quantidade é inteiro e o status do pedido é booleano. Em ferramentas de RH, a idade, o salário e o tempo de experiência também aparecem em tipos diferentes.
+
+Essa é uma parte essencial de qualquer aplicação: escolher o tipo e a estrutura correta para representar uma informação do mundo real. Quando isso é feito com cuidado, o código fica mais confiável, mais simples de testar e menos sujeito a bugs difíceis de rastrear.
+
+<Quiz questions={[
+  { question: 'Qual é a diferença principal entre `int` e `float`?', options: ['`int` serve para texto e `float` para números', '`int` representa valores inteiros e `float` representa valores com casas decimais', '`int` é usado só para saldos e `float` para nomes', '`int` e `float` são iguais em Python'], correctIndex: 1, explanation: 'Inteiros são números sem decimais; floats representam números com parte decimal.' },
+  { question: 'O que acontece quando você faz `input()` e depois soma `20` sem converter?', options: ['O Python soma texto e número automaticamente', 'O Python mostra uma mensagem de sucesso', 'O valor é convertido para float sozinho', 'O resultado pode dar erro porque `input()` retorna string'], correctIndex: 3, explanation: 'A entrada do usuário vem como texto; em muitos casos, você precisa converter com `int()` ou `float()`.' },
+  { question: 'Qual resultado da expressão `0.1 + 0.2`?', options: ['0.3', '0.30000000000000004', '0.20', 'Erro'], correctIndex: 1, explanation: 'Esse é um comportamento comum de `float` por causa da representação binária de números reais na memória.' },
+  { question: 'Qual é a melhor opção para representar valores financeiros com precisão alta?', options: ['`str`', '`float`', '`Decimal`', '`bool`'], correctIndex: 2, explanation: 'O `Decimal` foi criado para cálculos monetários, evitando imprecisões comuns de ponto flutuante.' },
+  { question: 'Qual dessas é uma boa convenção de nome de variável em Python?', options: ['NomeCompleto', 'nome_completo', '1nome', 'for'], correctIndex: 1, explanation: 'O `snake_case` é a convenção padrão em Python e deixa o código mais legível.' }
+]} />
 
 <Resumo>
-  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
-  <li>Teste pequenos exemplos e avalie o resultado.</li>
-  <li>Aplica a ideia em cenÃ¡rios reais para fixar o conhecimento.</li>
+  <li>Variáveis guardam valores em memória e recebem nomes claros.</li>
+  <li>Os tipos básicos são `int`, `float`, `str`, `bool` e `None`.</li>
+  <li>`type()` e `isinstance()` ajudam a verificar o tipo do valor.</li>
+  <li>Conversões como `int()`, `float()` e `str()` são essenciais na entrada de dados.</li>
+  <li>F-strings deixam o texto e os valores muito mais legíveis.</li>
+  <li>Float pode ter imprecisão, então `Decimal` é melhor para dinheiro.</li>
 </Resumo>
 
 <Desafio>
-  Aplique esse tema em um mini cenÃ¡rio do dia a dia e confirme o resultado com um cÃ³digo simples e legÃ­vel.
+  Crie um pequeno script que leia o nome, a idade e o salário de uma pessoa e imprima uma mensagem formatada com f-string. Depois, teste com um valor decimal e veja como ele aparece na tela. Se quiser ir além, repita o teste com `Decimal` para perceber a diferença na precisão.
 </Desafio>
 
