@@ -1,0 +1,27 @@
+{
+  "id": "t02-v3-04-soma-float-vs-decimal",
+  "tipo": "completar",
+  "titulo": "Somar 100 valores: float vs Decimal",
+  "topico": "Variáveis e tipos de dados",
+  "topicoNumero": 2,
+  "variacao": "V3",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Mostre `0.1 + 0.2` com `float` para evidenciar a imprecisão antes de somar 100 vezes.",
+    "Use `Decimal('0.1')` e `sum()` para a versão precisa; não construa Decimal a partir de float.",
+    "A função deve retornar uma tupla com duas strings: (soma_float, soma_decimal)."
+  ],
+  "solucao": "from decimal import Decimal, getcontext, ROUND_HALF_UP\n\ndef soma_100_vezes():\n    # soma 100 vezes o valor 0.1 usando float e Decimal, retorna strings formatadas\n    f = 0.1 * 100\n    dec = sum(Decimal('0.1') for _ in range(100))\n    # formata com 2 casas para comparação simples\n    return (format(round(f, 10), 'f'), format(dec.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP), 'f'))\n",
+  "tags": ["python", "decimal", "float"],
+  "aulaRelacionada": "variaveis-e-tipos",
+  "enunciado": "Implemente `soma_100_vezes()` que retorna uma tupla com duas strings: primeira é a soma de 100 vezes `0.1` usando `float`, e a segunda é a soma de 100 vezes `Decimal('0.1')`. Mostre a diferença na precisão.",
+  "starterCode": "from decimal import Decimal\n\ndef soma_100_vezes():\n    # retornar (soma_float_str, soma_decimal_str)\n    pass\n",
+  "testes": [
+    { "chamada": "soma_100_vezes()[0]", "esperado": "10.000000", "oculto": false },
+    { "chamada": "soma_100_vezes()[1]", "esperado": "10.00", "oculto": false },
+    { "chamada": "soma_100_vezes()", "esperado": "('10.000000', '10.00')", "oculto": false },
+    { "chamada": "len(soma_100_vezes())", "esperado": "2", "oculto": true },
+    { "chamada": "'10.00' in soma_100_vezes()", "esperado": "True", "oculto": true }
+  ]
+}

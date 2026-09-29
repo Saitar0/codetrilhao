@@ -1,0 +1,27 @@
+{
+  "id": "t02-v1-03-fstring-cadastro",
+  "tipo": "codigo",
+  "titulo": "Ficha com f-string",
+  "topico": "Variáveis e tipos de dados",
+  "topicoNumero": 2,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Use f-strings para montar a saída e formate números com `:.2f` quando necessário.",
+    "Trate altura como `float` e idade como `int` se a entrada vier de `input()` na prática." ,
+    "Retorne a string formatada completa (não imprimir). Ex.: 'Ana, 30 anos, 1.70m'"
+  ],
+  "solucao": "def ficha(nome, idade, altura):\n    # monta a ficha usando f-string e retorna a string formatada\n    return f\"{nome}, {int(idade)} anos, {float(altura):.2f}m\"\n",
+  "tags": ["python", "f-string", "formatacao"],
+  "aulaRelacionada": "variaveis-e-tipos",
+  "enunciado": "Implemente `ficha(nome, idade, altura)` que retorna uma única string formatada com o nome, idade (inteiro) e altura com duas casas. Ex.: `ficha('Ana', '30', '1.7')` → 'Ana, 30 anos, 1.70m'.",
+  "starterCode": "def ficha(nome, idade, altura):\n    # Converta idade e altura e devolva a string formatada\n    pass\n",
+  "testes": [
+    { "chamada": "ficha('Ana','30','1.7')", "esperado": "Ana, 30 anos, 1.70m", "oculto": false },
+    { "chamada": "ficha('Bia','20','1.6')", "esperado": "Bia, 20 anos, 1.60m", "oculto": false },
+    { "chamada": "ficha('Joao','0','0')", "esperado": "Joao, 0 anos, 0.00m", "oculto": false },
+    { "chamada": "ficha('Luzia','45','1.655')", "esperado": "Luzia, 45 anos, 1.66m", "oculto": true },
+    { "chamada": "ficha('Carlos','-1','1.8')", "esperado": "Carlos, -1 anos, 1.80m", "oculto": true }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "t02-v2-04-ponto-flutuante-decimal",
+  "tipo": "bug",
+  "titulo": "Imprecisão de float e correção com Decimal",
+  "topico": "Variáveis e tipos de dados",
+  "topicoNumero": 2,
+  "variacao": "V2",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Mostre o resultado de `0.1 + 0.2` para o aluno ver a imprecisão do float.",
+    "Use `Decimal('0.1') + Decimal('0.2')` para corrigir; evite construir Decimal a partir de float.",
+    "A função deve receber duas strings representando decimais e retornar a soma como string exata via `Decimal` (ex.: '0.3')."
+  ],
+  "solucao": "from decimal import Decimal\n\ndef soma_decimal(a, b):\n    # recebe strings e soma com Decimal para evitar imprecisões\n    da = Decimal(str(a)) if not isinstance(a, Decimal) else a\n    db = Decimal(str(b)) if not isinstance(b, Decimal) else b\n    return str(da + db)\n",
+  "tags": ["python", "decimal", "float"],
+  "aulaRelacionada": "variaveis-e-tipos",
+  "enunciado": "O código abaixo imprime `0.1 + 0.2` usando floats e mostra uma imprecisão. Corrija a função `soma_decimal(a, b)` que recebe duas strings representando números decimais e retorna a soma exata como string usando `Decimal`. Além disso, mostre na saída do enunciado qual é o resultado de `0.1 + 0.2` usando `float` (para o aluno ver).",
+  "starterCode": "from decimal import Decimal\n\n# Exemplo de comportamento esperado (visível ao aluno):\n# print(0.1 + 0.2)  -> 0.30000000000000004\n# A função abaixo deve somar valores decimais corretamente\\ndef soma_decimal(a, b):\n    pass\n",
+  "testes": [
+    { "chamada": "soma_decimal('0.1','0.2')", "esperado": "0.3", "oculto": false },
+    { "chamada": "soma_decimal('19.90','3')", "esperado": "22.90", "oculto": false },
+    { "chamada": "soma_decimal('0','0')", "esperado": "0", "oculto": false },
+    { "chamada": "soma_decimal('0.333','0.333')", "esperado": "0.666", "oculto": true },
+    { "chamada": "soma_decimal('1000000.01','0.99')", "esperado": "1000001.00", "oculto": true }
+  ]
+}

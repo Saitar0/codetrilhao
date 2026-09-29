@@ -1,0 +1,27 @@
+{
+  "id": "t02-v1-01-tipos-basicos",
+  "tipo": "codigo",
+  "titulo": "Tipos básicos e `type()`",
+  "topico": "Variáveis e tipos de dados",
+  "topicoNumero": 2,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Pense nos tipos pedidos: `int`, `float`, `str`, `bool` e `None` — e como representá-los.",
+    "Use `type()` e depois converta o resultado para nome de tipo com `.__name__` para comparar em testes.",
+    "Retorne os nomes dos tipos em uma lista na ordem: int, float, str, bool, NoneType (ex.: ['int', 'float', ...])."
+  ],
+  "solucao": "def tipos_basicos():\n    # Cria uma variável de cada tipo e devolve a lista com os nomes dos tipos\n    inteiro = 7\n    flutuante = 3.14\n    texto = 'ola'\n    booleano = True\n    vazio = None\n    return [type(inteiro).__name__, type(flutuante).__name__, type(texto).__name__, type(booleano).__name__, type(vazio).__name__]\n",
+  "tags": ["python", "tipos", "type"],
+  "aulaRelacionada": "variaveis-e-tipos",
+  "enunciado": "Crie a função `tipos_basicos()` que cria uma variável de cada tipo primitivo (`int`, `float`, `str`, `bool`, `None`) e retorna uma lista com os nomes dos tipos (strings) nessa ordem. Exemplo de retorno: ['int', 'float', 'str', 'bool', 'NoneType'].",
+  "starterCode": "def tipos_basicos():\n    pass\n",
+  "testes": [
+    { "chamada": "len(tipos_basicos())", "esperado": "5", "oculto": false },
+    { "chamada": "tipos_basicos()[0]", "esperado": "int", "oculto": false },
+    { "chamada": "tipos_basicos()", "esperado": "['int', 'float', 'str', 'bool', 'NoneType']", "oculto": false },
+    { "chamada": "tipos_basicos()[3]", "esperado": "bool", "oculto": true },
+    { "chamada": "'NoneType' in tipos_basicos()", "esperado": "True", "oculto": true }
+  ]
+}

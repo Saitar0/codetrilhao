@@ -1,0 +1,27 @@
+{
+  "id": "t02-v2-01-trocar-sem-temporaria",
+  "tipo": "codigo",
+  "titulo": "Trocar valores sem variável temporária",
+  "topico": "Variáveis e tipos de dados",
+  "topicoNumero": 2,
+  "variacao": "V2",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Pense em atribuição múltipla: `a, b = b, a` é uma solução Pythonic.",
+    "O `starterCode` deve definir a função que recebe `a` e `b` e retorna a tupla com a nova ordem.",
+    "Garanta que tipos diferentes (int/str) continuem intactos após a troca." 
+  ],
+  "solucao": "def troca(a, b):\n    # retorna os valores na ordem trocada sem variável temporária\n    return (b, a)\n",
+  "tags": ["python", "atribuição", "tupla"],
+  "aulaRelacionada": "variaveis-e-tipos",
+  "enunciado": "Implemente `troca(a, b)` que retorna uma tupla com os valores trocados sem usar uma variável temporária. Ex.: `troca(1, 2)` → (2, 1).",
+  "starterCode": "def troca(a, b):\n    pass\n",
+  "testes": [
+    { "chamada": "troca(1,2)", "esperado": "(2, 1)", "oculto": false },
+    { "chamada": "troca('x','y')", "esperado": "('y', 'x')", "oculto": false },
+    { "chamada": "troca(0,0)", "esperado": "(0, 0)", "oculto": false },
+    { "chamada": "troca(3.5, 2)", "esperado": "(2, 3.5)", "oculto": true },
+    { "chamada": "troca(None, True)", "esperado": "(True, None)", "oculto": true }
+  ]
+}

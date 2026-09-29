@@ -1,0 +1,27 @@
+{
+  "id": "t02-v3-03-centavos-para-reais",
+  "tipo": "codigo",
+  "titulo": "Converter centavos (int) para reais formatados",
+  "topico": "Variáveis e tipos de dados",
+  "topicoNumero": 2,
+  "variacao": "V3",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Receba um inteiro que representa centavos e converta para `Decimal` em reais (dividindo por 100).",
+    "Formate o resultado com separador decimal ponto e sempre duas casas, retornando string.",
+    "Trate números negativos como possível sinal de débito e formate mantendo o sinal." 
+  ],
+  "solucao": "from decimal import Decimal, ROUND_HALF_UP\n\ndef centavos_para_reais(centavos):\n    c = int(centavos)\n    reais = Decimal(c) / Decimal('100')\n    reais = reais.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)\n    # format as plain string with two decimals\n    return format(reais, 'f')\n",
+  "tags": ["python", "decimal", "formatacao"],
+  "aulaRelacionada": "variaveis-e-tipos",
+  "enunciado": "Implemente `centavos_para_reais(centavos)` que recebe um inteiro de centavos e retorna uma string com o valor em reais formatado com duas casas decimais. Ex.: 599 -> '5.99'.",
+  "starterCode": "from decimal import Decimal\n\ndef centavos_para_reais(centavos):\n    pass\n",
+  "testes": [
+    { "chamada": "centavos_para_reais(599)", "esperado": "5.99", "oculto": false },
+    { "chamada": "centavos_para_reais(100)", "esperado": "1.00", "oculto": false },
+    { "chamada": "centavos_para_reais(0)", "esperado": "0.00", "oculto": false },
+    { "chamada": "centavos_para_reais(-150)", "esperado": "-1.50", "oculto": true },
+    { "chamada": "centavos_para_reais(123456)", "esperado": "1234.56", "oculto": true }
+  ]
+}

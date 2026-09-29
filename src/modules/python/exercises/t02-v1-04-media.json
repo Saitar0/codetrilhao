@@ -1,0 +1,27 @@
+{
+  "id": "t02-v1-04-media",
+  "tipo": "codigo",
+  "titulo": "Média de dois números",
+  "topico": "Variáveis e tipos de dados",
+  "topicoNumero": 2,
+  "variacao": "V1",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Converta as entradas para `float` antes de calcular a média.",
+    "A média é (a + b) / 2; formate com uma casa decimal usando f-string ou `round`.",
+    "Retorne uma string com a média formatada, ex.: 'Média = 3.5'"
+  ],
+  "solucao": "def media(a, b):\n    a_f = float(a)\n    b_f = float(b)\n    m = (a_f + b_f) / 2\n    return f\"Média = {m:.1f}\"\n",
+  "tags": ["python", "media", "float"],
+  "aulaRelacionada": "variaveis-e-tipos",
+  "enunciado": "Implemente `media(a, b)` que recebe dois números (ou strings numéricas), calcula a média e retorna a string 'Média = X.Y' com uma casa decimal.",
+  "starterCode": "def media(a, b):\n    # calcule a média e retorne string formatada\n    pass\n",
+  "testes": [
+    { "chamada": "media('3','4')", "esperado": "Média = 3.5", "oculto": false },
+    { "chamada": "media(2,2)", "esperado": "Média = 2.0", "oculto": false },
+    { "chamada": "media('0','1')", "esperado": "Média = 0.5", "oculto": false },
+    { "chamada": "media('1.25','2.25')", "esperado": "Média = 1.8", "oculto": true },
+    { "chamada": "media('-1','1')", "esperado": "Média = 0.0", "oculto": true }
+  ]
+}

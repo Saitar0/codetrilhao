@@ -1,0 +1,27 @@
+{
+  "id": "t02-v2-02-prever-expressoes",
+  "tipo": "codigo",
+  "titulo": "Prever saída de expressões misturadas",
+  "topico": "Variáveis e tipos de dados",
+  "topicoNumero": 2,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Avalie a ordem das operações e os tipos envolvidos (`int` vs `str`).",
+    "Lembre que `+` concatena strings e soma números; `*` repete strings quando um operando é `str`.",
+    "Para conferir, execute mentalmente cada operação ou use `type()` se ainda tiver dúvida." 
+  ],
+  "solucao": "def prever():\n    # Retorna as saídas previstas como strings\n    return ['23', '5', 'aaa', '51']\n",
+  "tags": ["python", "tipos", "expressões"],
+  "aulaRelacionada": "variaveis-e-tipos",
+  "enunciado": "Para cada expressão abaixo, preveja a saída como string exata. Retorne as respostas numa lista de 4 strings na ordem das expressões. Expressões: 1) '2' + '3'  2) 2 + 3  3) 'a' * 3  4) '5' + str(1)",
+  "starterCode": "def prever():\n    # devolva lista com as saídas previstas: ['23', '5', 'aaa', '51']\n    pass\n",
+  "testes": [
+    { "chamada": "prever()", "esperado": "['23', '5', 'aaa', '51']", "oculto": false },
+    { "chamada": "prever()[0]", "esperado": "23", "oculto": false },
+    { "chamada": "prever()[2]", "esperado": "aaa", "oculto": false },
+    { "chamada": "len(prever())", "esperado": "4", "oculto": true },
+    { "chamada": "'51' in prever()", "esperado": "True", "oculto": true }
+  ]
+}

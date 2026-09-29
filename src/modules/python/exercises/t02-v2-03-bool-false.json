@@ -1,0 +1,27 @@
+{
+  "id": "t02-v2-03-bool-false",
+  "tipo": "multipla-escolha",
+  "titulo": "Por que `bool('False')` é True?",
+  "topico": "Variáveis e tipos de dados",
+  "topicoNumero": 2,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Considere o que o construtor `bool()` avalia como Falsy (vazio, zero, None).",
+    "Strings não vazias são Truthy, independentemente do texto que contêm.",
+    "Pense em `bool('')` versus `bool('False')` para diferenciar os casos." 
+  ],
+  "solucao": "Resposta correta: porque strings não vazias são avaliadas como True. Explicação: `bool()` verifica 'falsiness', e apenas strings vazias são False.",
+  "tags": ["python", "bool", "conceitos"],
+  "aulaRelacionada": "variaveis-e-tipos",
+  "enunciado": "Escolha a alternativa que explica corretamente por que `bool('False')` devolve `True` em Python.",
+  "pergunta": "Por que `bool('False')` é `True`?",
+  "alternativas": [
+    { "texto": "Porque a palavra 'False' é reconhecida como booleano True", "explicacao": "Incorreta: a palavra 'False' é apenas texto, não um literal booleano." },
+    { "texto": "Porque `bool()` converte o texto 'False' para True automaticamente", "explicacao": "Incorreta: `bool()` avalia truthiness, não interpreta o conteúdo textual como booleano." },
+    { "texto": "Porque qualquer string não vazia é avaliada como True em Python", "explicacao": "Correta: strings não vazias são truthy; apenas string vazia é False." , "correta": true },
+    { "texto": "Porque 'False' contém caracteres e por isso vira True", "explicacao": "Incorreta: conter caracteres não é a regra; é a não-vacuidade que importa." }
+  ],
+  "respostaEsperada": "Porque qualquer string não vazia é avaliada como True"
+}
