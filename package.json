@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "postinstall": "node scripts/copiar-pyodide.mjs",
+    "predev": "node scripts/copiar-pyodide.mjs",
+    "prebuild": "node scripts/copiar-pyodide.mjs",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint . --ext .ts,.tsx --max-warnings=0",

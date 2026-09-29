@@ -3,7 +3,8 @@ export type ExerciseStatus = 'nao-iniciado' | 'tentado' | 'resolvido'
 export type ExerciseKind = 'codigo' | 'completar' | 'bug' | 'multipla-escolha' | 'ordenar' | 'prever-saida'
 
 export type ExerciseTestCase = {
-  entrada: string
+  entrada?: string
+  chamada?: string
   esperado: string
   oculto?: boolean
 }

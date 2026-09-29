@@ -31,9 +31,9 @@ npm run validar:exercicios
 
 ## Pyodide local / assets
 
-The project expects Pyodide assets under `public/assets/pyodide/`. When running `vite` the `public` folder is served as-is. If you need to include a local copy of Pyodide for offline testing, place the `pyodide` folder at `public/assets/pyodide/`.
-
-If network issues occur, the loader has retry logic and the demo UI shows friendly errors and a retry button.
+A pasta `public/assets/pyodide/` é gerada automaticamente a partir do pacote `pyodide` e é servida como asset estático do app.
+O script `scripts/copiar-pyodide.mjs` roda no `postinstall`, `predev` e `prebuild` para garantir que os arquivos necessários existam.
+Se o ambiente precisar de revisão, basta rodar `node scripts/copiar-pyodide.mjs`.
 
 ### Quick verification steps
 

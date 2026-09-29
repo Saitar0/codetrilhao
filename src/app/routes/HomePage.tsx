@@ -163,7 +163,7 @@ export default function HomePage() {
   const pyodideRef = useRef<{
     setStdout: (handler: { batched: (value: string) => void }) => void
     setStderr: (handler: { batched: (value: string) => void }) => void
-    runPythonAsync: (code: string) => Promise<void>
+    runPythonAsync: (code: string) => Promise<unknown>
   } | null>(null)
   const [activeFaq, setActiveFaq] = useState<number | null>(0)
 

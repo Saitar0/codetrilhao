@@ -149,7 +149,7 @@ function ExerciseRunner({ moduleId, exerciseId }: { moduleId: string; exerciseId
 
     for (let index = 0; index < testsToCheck.length; index += 1) {
       const test = testsToCheck[index]
-      const result = await run(code, test.entrada)
+      const result = await run(code, test.entrada ?? '', test.chamada)
       const actual = (result.ok ? result.stdout : result.stderr || result.stdout).trim()
       const expected = test.esperado.trim()
       const ok = actual === expected
@@ -160,7 +160,7 @@ function ExerciseRunner({ moduleId, exerciseId }: { moduleId: string; exerciseId
       evaluations.push({
         ok,
         label: `Caso ${index + 1}`,
-        input: test.entrada,
+        input: test.entrada ?? '',
         expected: test.esperado,
         actual,
         hidden,

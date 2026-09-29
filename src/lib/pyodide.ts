@@ -1,28 +1,36 @@
 export type PyodideLike = {
   setStdout: (handler: { batched: (value: string) => void }) => void
   setStderr: (handler: { batched: (value: string) => void }) => void
-  runPythonAsync: (code: string) => Promise<void>
+  loadPackagesFromImports: (code: string) => Promise<unknown>
+  runPythonAsync: (code: string) => Promise<unknown>
+}
+
+export function buildPyodideRunnerScript(code: string, input = '', chamada?: string): string {
+  const codeLiteral = JSON.stringify(code)
+  const inputLiteral = JSON.stringify(input)
+  const chamadaLiteral = chamada === undefined ? 'None' : JSON.stringify(chamada)
+
+  return [
+    'result = run_test(codigo=' + codeLiteral + ', entrada=' + inputLiteral + ', chamada=' + chamadaLiteral + ')',
+    'result',
+  ].join('\n')
 }
 
 export async function loadPyodideInstance(): Promise<PyodideLike> {
   if (typeof window === 'undefined') {
     throw new Error('Pyodide só pode ser carregado no navegador.')
   }
-  // Explicit indexURL pointing to public assets. Ensure vite copies public/assets/pyodide
+
   const base = new URL('/', import.meta.url).toString()
   const indexURL = `${base}assets/pyodide/`
 
-  // Dynamic import with retry logic for transient network failures
   const tryLoad = async (attempt = 1): Promise<PyodideLike> => {
     try {
-       
       const { loadPyodide } = await import('pyodide')
-      // loadPyodide returns a runtime instance; cast it to our minimal shape
       const inst = await loadPyodide({ indexURL })
       return inst as unknown as PyodideLike
     } catch (err) {
       if (attempt < 3) {
-        // exponential backoff
         await new Promise((res) => setTimeout(res, 300 * Math.pow(2, attempt)))
         return tryLoad(attempt + 1)
       }
