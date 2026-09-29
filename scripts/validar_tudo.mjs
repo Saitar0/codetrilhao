@@ -1,9 +1,10 @@
 import { spawnSync } from 'node:child_process'
 
+const passthroughArgs = process.argv.slice(2)
 const commands = [
-  ['node', ['scripts/validar_exercicios_python.mjs']],
-  ['node', ['scripts/validar_aulas.mjs']],
-  ['node', ['scripts/validar_projetos.mjs']],
+  ['node', ['scripts/validar_exercicios_python.mjs', ...passthroughArgs]],
+  ['node', ['scripts/validar_aulas.mjs', ...passthroughArgs]],
+  ['node', ['scripts/validar_projetos.mjs', ...passthroughArgs]],
 ]
 
 let failed = false

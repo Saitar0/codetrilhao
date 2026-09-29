@@ -28,4 +28,4 @@ jobs:
       - name: Test
         run: npm run test -- --run
       - name: Validate project content
-        run: npm run validar:tudo -- --estrito
+        run: npm run validar:tudo

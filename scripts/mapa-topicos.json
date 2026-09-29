@@ -1,0 +1,43 @@
+{
+  "1": [
+    "o-que-e-python",
+    "instalando-e-rodando",
+    "sintaxe-basica",
+    "entrada-e-saida"
+  ],
+  "2": ["variaveis-e-tipos"],
+  "3": ["operadores"],
+  "4": ["strings"],
+  "5": ["condicionais"],
+  "6": ["loops"],
+  "7": ["listas"],
+  "8": ["tuplas", "sets"],
+  "9": ["dicionarios"],
+  "10": ["funcoes", "funcoes-avancadas", "escopo"],
+  "11": ["comprehensions", "funcoes-embutidas", "iteradores-e-geradores"],
+  "12": ["excecoes"],
+  "13": ["arquivos"],
+  "14": ["modulos-e-pacotes", "ambientes-e-projetos", "datas-e-tempo"],
+  "15": ["algoritmos-busca-e-ordenacao", "recursao-e-complexidade"],
+  "16": [
+    "classes-e-objetos",
+    "encapsulamento-e-propriedades",
+    "heranca-e-polimorfismo",
+    "metodos-especiais",
+    "dataclasses-e-enums"
+  ],
+  "17": ["testes", "depuracao", "boas-praticas", "git-basico"],
+  "18": ["apis-e-requests", "sqlite-basico"],
+  "99": [
+    "projeto-final"
+  ],
+  "aprofundamento": [
+    "expressoes-regulares",
+    "decoradores",
+    "context-managers",
+    "tipagem",
+    "programacao-funcional",
+    "concorrencia",
+    "classes-abstratas-e-protocolos"
+  ]
+}

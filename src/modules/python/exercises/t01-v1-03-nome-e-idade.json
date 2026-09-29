@@ -1,0 +1,52 @@
+{
+  "id": "t01-v1-03-nome-e-idade",
+  "tipo": "codigo",
+  "titulo": "Nome e idade",
+  "topico": "Sintaxe e primeiros passos",
+  "topicoNumero": 1,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "O `input()` retorna texto, então converta a idade antes de fazer qualquer cálculo.",
+    "Use `int()` para transformar a idade em inteiro.",
+    "No final, monte a frase com `f-string` para deixar a saída mais legível."
+  ],
+  "solucao": "nome = input()\nidade = int(input())\nprint(f'{nome} tem {idade} anos')\n",
+  "tags": [
+    "python",
+    "input",
+    "int",
+    "saída"
+  ],
+  "aulaRelacionada": "entrada-e-saida",
+  "enunciado": "Leia o nome e a idade de uma pessoa e imprima uma mensagem no formato `Fulano tem X anos`. O programa deve aceitar valores de idade em números inteiros.",
+  "starterCode": "nome = input()\nidade = input()\nprint(f'{nome} tem {idade + 1} anos')\n",
+  "testes": [
+    {
+      "entrada": "Ana\n30\n",
+      "esperado": "Ana tem 30 anos",
+      "oculto": false
+    },
+    {
+      "entrada": "Bruno\n18\n",
+      "esperado": "Bruno tem 18 anos",
+      "oculto": false
+    },
+    {
+      "entrada": "Clara\n12\n",
+      "esperado": "Clara tem 12 anos",
+      "oculto": false
+    },
+    {
+      "entrada": "Davi\n25\n",
+      "esperado": "Davi tem 25 anos",
+      "oculto": true
+    },
+    {
+      "entrada": "Eva\n41\n",
+      "esperado": "Eva tem 41 anos",
+      "oculto": true
+    }
+  ]
+}

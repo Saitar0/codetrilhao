@@ -1,0 +1,52 @@
+{
+  "id": "t01-v2-01-indentacao-correcao",
+  "tipo": "bug",
+  "titulo": "Corrigir indentação",
+  "topico": "Sintaxe e primeiros passos",
+  "topicoNumero": 1,
+  "variacao": "V2",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "O bloco do `if` deve estar recuado em 4 espaços para ficar dentro da condição.",
+    "Compare o código que quebra com a estrutura correta do `if`.",
+    "Teste um valor maior e outro menor de idade para confirmar que a lógica está consistente."
+  ],
+  "solucao": "idade = int(input())\nif idade >= 18:\n    print('Você é maior de idade')\n    print('Pode entrar')\nelse:\n    print('Você é menor de idade')\n",
+  "tags": [
+    "python",
+    "indentacao",
+    "if",
+    "depuração"
+  ],
+  "aulaRelacionada": "sintaxe-basica",
+  "enunciado": "Um código com `IndentationError` foi escrito por engano. Corrija a indentação do bloco e faça o programa imprimir a mensagem correta para idades maiores ou menores que 18.",
+  "starterCode": "idade = int(input())\nif idade >= 18:\nprint('Você é maior de idade')\nprint('Pode entrar')\nelse:\nprint('Você é menor de idade')\n",
+  "testes": [
+    {
+      "entrada": "18\n",
+      "esperado": "Você é maior de idade\nPode entrar",
+      "oculto": false
+    },
+    {
+      "entrada": "17\n",
+      "esperado": "Você é menor de idade",
+      "oculto": false
+    },
+    {
+      "entrada": "21\n",
+      "esperado": "Você é maior de idade\nPode entrar",
+      "oculto": false
+    },
+    {
+      "entrada": "0\n",
+      "esperado": "Você é menor de idade",
+      "oculto": true
+    },
+    {
+      "entrada": "100\n",
+      "esperado": "Você é maior de idade\nPode entrar",
+      "oculto": true
+    }
+  ]
+}

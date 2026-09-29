@@ -1,0 +1,26 @@
+{
+  "id": "t01-v2-04-somar-inputs-sem-conversao",
+  "tipo": "prever-saida",
+  "titulo": "Somar dois inputs sem converter",
+  "topico": "Sintaxe e primeiros passos",
+  "topicoNumero": 1,
+  "variacao": "V2",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Lembre-se de que `input()` retorna texto, não número.",
+    "Em Python, texto e texto são concatenados com `+`.",
+    "A explicação correta está na diferença entre `str` e `int`."
+  ],
+  "solucao": "numero1 = '10'\nnumero2 = '30'\nprint(numero1 + numero2)\n# Saída: 1030\n",
+  "tags": [
+    "python",
+    "input",
+    "str",
+    "tipo"
+  ],
+  "aulaRelacionada": "entrada-e-saida",
+  "enunciado": "Preveja a saída do programa abaixo quando o usuário digitar 10 e 30. Depois explique por quê o resultado não é 40.",
+  "codigo": "numero1 = '10'\nnumero2 = '30'\nprint(numero1 + numero2)\n",
+  "respostaEsperada": "1030"
+}

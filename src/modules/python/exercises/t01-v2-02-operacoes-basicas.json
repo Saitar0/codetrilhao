@@ -1,0 +1,52 @@
+{
+  "id": "t01-v2-02-operacoes-basicas",
+  "tipo": "codigo",
+  "titulo": "Operações básicas",
+  "topico": "Sintaxe e primeiros passos",
+  "topicoNumero": 1,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Converta os valores de entrada para `float` para aceitar números com casa decimal.",
+    "Faça as quatro operações em sequência e imprima cada resultado em uma linha.",
+    "Use `:.2f` para manter a saída mais limpa e consistente."
+  ],
+  "solucao": "a = float(input())\nb = float(input())\nprint(f'Soma: {a + b:.2f}')\nprint(f'Diferença: {a - b:.2f}')\nprint(f'Produto: {a * b:.2f}')\nprint(f'Divisão: {a / b:.2f}')\n",
+  "tags": [
+    "python",
+    "matematica",
+    "float",
+    "operadores"
+  ],
+  "aulaRelacionada": "entrada-e-saida",
+  "enunciado": "Leia dois números e imprima a soma, a diferença, o produto e a divisão entre eles. Os valores podem ser decimais, então converta a entrada para `float` e formate a saída com duas casas decimais.",
+  "starterCode": "a = float(input())\nb = float(input())\nprint(f'Soma: {a + b}')\nprint(f'Diferença: {a - b}')\nprint(f'Produto: {a * b}')\n",
+  "testes": [
+    {
+      "entrada": "10\n4\n",
+      "esperado": "Soma: 14.00\nDiferença: 6.00\nProduto: 40.00\nDivisão: 2.50",
+      "oculto": false
+    },
+    {
+      "entrada": "7.5\n2\n",
+      "esperado": "Soma: 9.50\nDiferença: 5.50\nProduto: 15.00\nDivisão: 3.75",
+      "oculto": false
+    },
+    {
+      "entrada": "9\n-3\n",
+      "esperado": "Soma: 6.00\nDiferença: 12.00\nProduto: -27.00\nDivisão: -3.00",
+      "oculto": false
+    },
+    {
+      "entrada": "5\n0.5\n",
+      "esperado": "Soma: 5.50\nDiferença: 4.50\nProduto: 2.50\nDivisão: 10.00",
+      "oculto": true
+    },
+    {
+      "entrada": "4\n8\n",
+      "esperado": "Soma: 12.00\nDiferença: -4.00\nProduto: 32.00\nDivisão: 0.50",
+      "oculto": true
+    }
+  ]
+}

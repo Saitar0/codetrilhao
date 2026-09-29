@@ -1,0 +1,52 @@
+{
+  "id": "t01-v3-04-recibo-de-compra",
+  "tipo": "codigo",
+  "titulo": "Recibo de compra",
+  "topico": "Sintaxe e primeiros passos",
+  "topicoNumero": 1,
+  "variacao": "V3",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Leia três itens separadamente e calcule o subtotal usando multiplicação.",
+    "Cada linha do recibo pode mostrar nome, quantidade, preço unitário e total do item.",
+    "No final, some todos os itens e mostre o total com duas casas decimais."
+  ],
+  "solucao": "nome1 = input()\nqtd1 = int(input())\npreco1 = float(input())\nnome2 = input()\nqtd2 = int(input())\npreco2 = float(input())\nnome3 = input()\nqtd3 = int(input())\npreco3 = float(input())\nsubtotal = (qtd1 * preco1) + (qtd2 * preco2) + (qtd3 * preco3)\nprint('RECIBO')\nprint('-' * 24)\nprint(f'{nome1:<10} {qtd1:>2} x {preco1:>6.2f} = {qtd1 * preco1:>7.2f}')\nprint(f'{nome2:<10} {qtd2:>2} x {preco2:>6.2f} = {qtd2 * preco2:>7.2f}')\nprint(f'{nome3:<10} {qtd3:>2} x {preco3:>6.2f} = {qtd3 * preco3:>7.2f}')\nprint('-' * 24)\nprint(f'TOTAL: R$ {subtotal:.2f}')\n",
+  "tags": [
+    "python",
+    "recibo",
+    "financeiro",
+    "print"
+  ],
+  "aulaRelacionada": "entrada-e-saida",
+  "enunciado": "Receba três itens de compra com nome, quantidade e preço unitário, calcule o subtotal e imprima um recibo com cabeçalho, três linhas de itens e o total final.",
+  "starterCode": "nome1 = input()\nqtd1 = int(input())\npreco1 = float(input())\nprint('RECIBO')\nprint('-' * 24)\nprint(f'{nome1} {qtd1} {preco1}')\n",
+  "testes": [
+    {
+      "entrada": "Lapis\n2\n3.50\nCaneta\n3\n2.00\nCaderno\n1\n12.00\n",
+      "esperado": "RECIBO\n------------------------\nLapis       2 x   3.50 =    7.00\nCaneta      3 x   2.00 =    6.00\nCaderno     1 x  12.00 =   12.00\n------------------------\nTOTAL: R$ 25.00",
+      "oculto": false
+    },
+    {
+      "entrada": "Borracha\n4\n1.25\nEstojo\n2\n8.00\nRegua\n1\n6.50\n",
+      "esperado": "RECIBO\n------------------------\nBorracha    4 x   1.25 =    5.00\nEstojo      2 x   8.00 =   16.00\nRegua       1 x   6.50 =    6.50\n------------------------\nTOTAL: R$ 27.50",
+      "oculto": false
+    },
+    {
+      "entrada": "Apontador\n1\n2.00\nMochila\n1\n89.90\nLivro\n2\n15.25\n",
+      "esperado": "RECIBO\n------------------------\nApontador   1 x   2.00 =    2.00\nMochila     1 x  89.90 =   89.90\nLivro       2 x  15.25 =   30.50\n------------------------\nTOTAL: R$ 122.40",
+      "oculto": false
+    },
+    {
+      "entrada": "Giz\n5\n1.00\nPapel\n2\n3.10\nTesoura\n1\n4.75\n",
+      "esperado": "RECIBO\n------------------------\nGiz         5 x   1.00 =    5.00\nPapel       2 x   3.10 =    6.20\nTesoura     1 x   4.75 =    4.75\n------------------------\nTOTAL: R$ 15.95",
+      "oculto": true
+    },
+    {
+      "entrada": "Caneta\n2\n5.00\nPasta\n1\n12.50\nAgenda\n3\n4.00\n",
+      "esperado": "RECIBO\n------------------------\nCaneta      2 x   5.00 =   10.00\nPasta       1 x  12.50 =   12.50\nAgenda      3 x   4.00 =   12.00\n------------------------\nTOTAL: R$ 34.50",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "t01-v2-03-total-do-produto",
+  "tipo": "codigo",
+  "titulo": "Total do produto",
+  "topico": "Sintaxe e primeiros passos",
+  "topicoNumero": 1,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "A quantidade deve entrar como inteiro e o preço como decimal.",
+    "A multiplicação do preço pela quantidade gera o total.",
+    "Formate com `:.2f` para mostrar o valor monetário corretamente."
+  ],
+  "solucao": "preco = float(input())\nquantidade = int(input())\ntotal = preco * quantidade\nprint(f'Total: R$ {total:.2f}')\n",
+  "tags": [
+    "python",
+    "float",
+    "int",
+    "matematica"
+  ],
+  "aulaRelacionada": "entrada-e-saida",
+  "enunciado": "Leia o preço unitário de um produto e a quantidade comprada. Calcule o total pago e imprima o valor em reais com duas casas decimais.",
+  "starterCode": "preco = float(input())\nquantidade = int(input())\nprint(f'Total: R$ {preco + quantidade:.2f}')\n",
+  "testes": [
+    {
+      "entrada": "12.50\n3\n",
+      "esperado": "Total: R$ 37.50",
+      "oculto": false
+    },
+    {
+      "entrada": "9.99\n4\n",
+      "esperado": "Total: R$ 39.96",
+      "oculto": false
+    },
+    {
+      "entrada": "2.50\n10\n",
+      "esperado": "Total: R$ 25.00",
+      "oculto": false
+    },
+    {
+      "entrada": "0.75\n8\n",
+      "esperado": "Total: R$ 6.00",
+      "oculto": true
+    },
+    {
+      "entrada": "15\n1\n",
+      "esperado": "Total: R$ 15.00",
+      "oculto": true
+    }
+  ]
+}

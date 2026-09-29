@@ -1,0 +1,52 @@
+{
+  "id": "t01-v3-02-cabecalho-relatorio",
+  "tipo": "codigo",
+  "titulo": "Cabeçalho de relatório",
+  "topico": "Sintaxe e primeiros passos",
+  "topicoNumero": 1,
+  "variacao": "V3",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "O método `.center()` ajuda a centralizar o texto em uma largura fixa.",
+    "A largura do cabeçalho deve ser maior que o nome da empresa para dar espaço em volta.",
+    "Uma linha decorativa ajuda a destacar o começo do relatório."
+  ],
+  "solucao": "empresa = input()\ntitulo = input()\nprint(empresa.center(28))\nprint('=' * 28)\nprint(titulo.center(28))\n",
+  "tags": [
+    "python",
+    "relatorio",
+    "center",
+    "print"
+  ],
+  "aulaRelacionada": "sintaxe-basica",
+  "enunciado": "Crie um cabeçalho de relatório em que o nome da empresa e o título do relatório fiquem centralizados em uma linha com largura fixa. A aparência deve ser limpa e profissional.",
+  "starterCode": "empresa = input()\ntitulo = input()\nprint(empresa.ljust(28))\nprint('=' * 28)\nprint(titulo.ljust(28))\n",
+  "testes": [
+    {
+      "entrada": "Luna Tech\nRELATÓRIO DIÁRIO\n",
+      "esperado": "Luna Tech          \n============================\n      RELATÓRIO DIÁRIO",
+      "oculto": false
+    },
+    {
+      "entrada": "Delta Labs\nRELATÓRIO SEMANAL\n",
+      "esperado": "Delta Labs         \n============================\n     RELATÓRIO SEMANAL",
+      "oculto": false
+    },
+    {
+      "entrada": "Nexa\nPANORAMA DO MÊS\n",
+      "esperado": "Nexa            \n============================\n      PANORAMA DO MÊS",
+      "oculto": false
+    },
+    {
+      "entrada": "BlueCore\nRESUMO FINANCEIRO\n",
+      "esperado": "BlueCore          \n============================\n     RESUMO FINANCEIRO",
+      "oculto": true
+    },
+    {
+      "entrada": "Solear\nMETAS DA EQUIPE\n",
+      "esperado": "Solear           \n============================\n      METAS DA EQUIPE",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "t01-v1-02-separador-e-quebra-linha",
+  "tipo": "codigo",
+  "titulo": "Separador e quebra de linha",
+  "topico": "Sintaxe e primeiros passos",
+  "topicoNumero": 1,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "O `sep` altera o texto entre os argumentos do `print`.",
+    "O `end` define o que vai aparecer ao final da linha, como uma quebra ou uma string vazia.",
+    "Teste valores diferentes para confirmar que o separador e o fim da linha funcionam em todas as entradas."
+  ],
+  "solucao": "nome = input()\nprint('Olá', nome, '!', sep=' | ')\nprint('Fim', end='!!!')\n",
+  "tags": [
+    "python",
+    "print",
+    "sep",
+    "end"
+  ],
+  "aulaRelacionada": "sintaxe-basica",
+  "enunciado": "Escreva um programa que leia um nome e imprima uma saudação com `sep=' | '` e termine a segunda linha com `!!!`. Exemplo: se o nome for `Ana`, a saída deve aparecer como `Olá | Ana | !` na primeira linha e `Fim!!!` na segunda.",
+  "starterCode": "nome = input()\nprint('Olá', nome, '!', sep=' | ')\nprint('Fim')\n",
+  "testes": [
+    {
+      "entrada": "Ana\n",
+      "esperado": "Olá | Ana | !\nFim!!!",
+      "oculto": false
+    },
+    {
+      "entrada": "Beto\n",
+      "esperado": "Olá | Beto | !\nFim!!!",
+      "oculto": false
+    },
+    {
+      "entrada": "Lia\n",
+      "esperado": "Olá | Lia | !\nFim!!!",
+      "oculto": false
+    },
+    {
+      "entrada": "Nina\n",
+      "esperado": "Olá | Nina | !\nFim!!!",
+      "oculto": true
+    },
+    {
+      "entrada": "Zoe\n",
+      "esperado": "Olá | Zoe | !\nFim!!!",
+      "oculto": true
+    }
+  ]
+}

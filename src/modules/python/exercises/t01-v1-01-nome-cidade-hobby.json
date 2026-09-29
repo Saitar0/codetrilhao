@@ -1,0 +1,52 @@
+{
+  "id": "t01-v1-01-nome-cidade-hobby",
+  "tipo": "codigo",
+  "titulo": "Nome, cidade e hobby",
+  "topico": "Sintaxe e primeiros passos",
+  "topicoNumero": 1,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Use um `input()` para cada dado e guarde cada valor em uma variável separada.",
+    "A saída deve respeitar a ordem: nome, cidade e hobby.",
+    "Teste com valores diferentes para confirmar que a cada linha aparece o dado correto."
+  ],
+  "solucao": "nome = input()\ncidade = input()\nhobby = input()\nprint(f'Nome: {nome}')\nprint(f'Cidade: {cidade}')\nprint(f'Hobby: {hobby}')\n",
+  "tags": [
+    "python",
+    "print",
+    "input",
+    "sintaxe"
+  ],
+  "aulaRelacionada": "sintaxe-basica",
+  "enunciado": "Escreva um programa que leia o nome, a cidade e o hobby de uma pessoa e imprima cada informação em uma linha separada. Exemplo: se a pessoa digitar Ana, São Paulo e ler, a saída deve mostrar as três linhas com esses valores.",
+  "starterCode": "nome = input()\ncidade = input()\nhobby = input()\nprint(f'Nome: {nome}')\nprint(f'Cidade: {cidade}')\n",
+  "testes": [
+    {
+      "entrada": "Ana\nSão Paulo\nler\n",
+      "esperado": "Nome: Ana\nCidade: São Paulo\nHobby: ler",
+      "oculto": false
+    },
+    {
+      "entrada": "Beto\nRecife\nvideo-game\n",
+      "esperado": "Nome: Beto\nCidade: Recife\nHobby: video-game",
+      "oculto": false
+    },
+    {
+      "entrada": "Lia\nSalvador\ncorrer\n",
+      "esperado": "Nome: Lia\nCidade: Salvador\nHobby: correr",
+      "oculto": false
+    },
+    {
+      "entrada": "Pedro\nFortaleza\ncinema\n",
+      "esperado": "Nome: Pedro\nCidade: Fortaleza\nHobby: cinema",
+      "oculto": true
+    },
+    {
+      "entrada": "Joana\nCuritiba\ncozinhar\n",
+      "esperado": "Nome: Joana\nCidade: Curitiba\nHobby: cozinhar",
+      "oculto": true
+    }
+  ]
+}

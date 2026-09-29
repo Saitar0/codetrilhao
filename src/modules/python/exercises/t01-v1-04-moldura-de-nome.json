@@ -1,0 +1,52 @@
+{
+  "id": "t01-v1-04-moldura-de-nome",
+  "tipo": "codigo",
+  "titulo": "Moldura de nome",
+  "topico": "Sintaxe e primeiros passos",
+  "topicoNumero": 1,
+  "variacao": "V1",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "A largura da moldura depende do tamanho do nome.",
+    "Use repetição de caracteres com `*` para montar a linha superior e inferior.",
+    "A linha do meio precisa ter o mesmo comprimento para ficar simétrica."
+  ],
+  "solucao": "nome = input().strip()\nlargura = len(nome) + 4\nprint('*' * largura)\nprint(f'* {nome} *')\nprint('*' * largura)\n",
+  "tags": [
+    "python",
+    "print",
+    "formatacao",
+    "sintaxe"
+  ],
+  "aulaRelacionada": "sintaxe-basica",
+  "enunciado": "Leia um nome e desenhe uma moldura de asteriscos ao redor dele, com a linha superior e inferior repetindo `*` e a linha central no formato `* nome *`. Exemplo: se o nome for `Ana`, a saída deve mostrar uma moldura com largura adequada para o texto.",
+  "starterCode": "nome = input().strip()\nprint('*' * 5)\nprint(f'* {nome} *')\nprint('*' * 5)\n",
+  "testes": [
+    {
+      "entrada": "Ana\n",
+      "esperado": "*******\n* Ana *\n*******",
+      "oculto": false
+    },
+    {
+      "entrada": "Luan\n",
+      "esperado": "********\n* Luan *\n********",
+      "oculto": false
+    },
+    {
+      "entrada": "Mirela\n",
+      "esperado": "**********\n* Mirela *\n**********",
+      "oculto": false
+    },
+    {
+      "entrada": "Bruno\n",
+      "esperado": "*********\n* Bruno *\n*********",
+      "oculto": true
+    },
+    {
+      "entrada": "Iza\n",
+      "esperado": "*******\n* Iza *\n*******",
+      "oculto": true
+    }
+  ]
+}

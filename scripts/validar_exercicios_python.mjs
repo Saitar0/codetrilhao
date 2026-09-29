@@ -12,7 +12,6 @@ const prohibitedPhrases = [
   'Qual é a ideia central desta aula?',
   'Teste a lógica em casos simples antes de generalizar',
 ]
-
 const difficultyXp = {
   fácil: 10,
   médio: 20,
@@ -20,7 +19,7 @@ const difficultyXp = {
 }
 
 function parseArgs(argv) {
-  const args = { topico: null, estrito: false }
+  const args = { topico: null, estrito: false, global: false }
 
   for (let index = 0; index < argv.length; index += 1) {
     const current = argv[index]
@@ -28,9 +27,16 @@ function parseArgs(argv) {
       args.estrito = true
       continue
     }
+    if (current === '--global') {
+      args.global = true
+      continue
+    }
     if (current === '--topico') {
-      args.topico = Number(argv[index + 1])
-      index += 1
+      const nextValue = argv[index + 1]
+      if (nextValue !== undefined) {
+        args.topico = Number(nextValue)
+        index += 1
+      }
       continue
     }
     if (current.startsWith('--topico=')) {
@@ -45,8 +51,12 @@ function normalizeOutput(value) {
   return String(value ?? '').replace(/\r/g, '').trim()
 }
 
-function listExerciseFiles(topicoFilter = null) {
+function listExerciseFiles({ rootDir = root, topic = null, global = false } = {}) {
   const files = []
+  const modulesRoot = path.join(rootDir, 'src', 'modules')
+  if (!fs.existsSync(modulesRoot)) {
+    return files
+  }
 
   function walk(currentDir) {
     for (const entry of fs.readdirSync(currentDir, { withFileTypes: true })) {
@@ -58,8 +68,8 @@ function listExerciseFiles(topicoFilter = null) {
       if (!entry.isFile() || !fullPath.endsWith('.json')) continue
       if (!fullPath.includes(path.join('src', 'modules')) || !fullPath.includes(path.join('exercises'))) continue
       const name = path.basename(fullPath, '.json')
-      if (topicoFilter !== null) {
-        const expectedPrefix = `t${String(topicoFilter).padStart(2, '0')}`
+      if (topic !== null && !global) {
+        const expectedPrefix = `t${String(topic).padStart(2, '0')}`
         if (!name.startsWith(expectedPrefix) && !name.startsWith(`${expectedPrefix}-`)) {
           continue
         }
@@ -68,7 +78,7 @@ function listExerciseFiles(topicoFilter = null) {
     }
   }
 
-  walk(modulesDir)
+  walk(modulesRoot)
   files.sort()
   return files
 }
@@ -400,15 +410,11 @@ function validateExerciseFile(filePath, { strict = false } = {}) {
     }
   }
 
-  return {
-    file: fileName,
-    errors,
-    warnings: [],
-  }
+  return { file: fileName, errors, warnings: [] }
 }
 
-export function validateExerciseSet({ strict = false, topico = null } = {}) {
-  const files = listExerciseFiles(topico)
+export function validateExerciseSet({ rootDir = root, strict = false, topic = null, global = false } = {}) {
+  const files = listExerciseFiles({ rootDir, topic, global })
   const results = files.map((file) => validateExerciseFile(file, { strict }))
   const errors = results.flatMap((result) => result.errors)
 
@@ -422,35 +428,25 @@ export function validateExerciseSet({ strict = false, topico = null } = {}) {
     ids.set(currentId, file)
   }
 
-  return {
-    files,
-    errors,
-  }
+  return { files, errors }
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const args = parseArgs(process.argv.slice(2))
-  const files = listExerciseFiles(args.topico)
-  const results = files.map((file) => validateExerciseFile(file, { strict: args.estrito }))
-  const errors = results.flatMap((result) => result.errors)
+  const result = validateExerciseSet({
+    rootDir: process.cwd(),
+    strict: args.estrito,
+    topic: args.global ? null : args.topico,
+    global: args.global,
+  })
 
-  const ids = new Map()
-  for (const file of files) {
-    const parsed = JSON.parse(fs.readFileSync(file, 'utf8'))
-    const currentId = parsed.id || path.basename(file, '.json')
-    if (ids.has(currentId)) {
-      errors.push(`${file}: id duplicado: ${currentId}`)
-    }
-    ids.set(currentId, file)
-  }
-
-  if (errors.length) {
-    console.error(`Validação de exercícios falhou: ${files.length} arquivo(s) analisado(s).`)
-    for (const error of errors) {
+  if (result.errors.length) {
+    console.error(`Validação de exercícios falhou: ${result.files.length} arquivo(s) analisado(s).`)
+    for (const error of result.errors) {
       console.error(`- ${error}`)
     }
     process.exit(1)
   }
 
-  console.log(`Validação OK: ${files.length} exercício(s) válidos.`)
+  console.log(`Validação OK: ${result.files.length} exercício(s) válidos.`)
 }
