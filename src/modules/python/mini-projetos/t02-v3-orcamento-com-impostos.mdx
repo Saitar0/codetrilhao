@@ -1,0 +1,167 @@
+---
+titulo: "Orçamento com impostos"
+descricao: "Crie uma calculadora de orçamento que combina subtotal, imposto, desconto e total final com precisão monetária."
+topico: "variaveis-e-tipos"
+topicoNome: "Variáveis e tipos de dados"
+variacao: "V3"
+tempo: 30
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "decimal", "f-string", "imposto", "orcamento", "dinheiro"]
+---
+
+# Orçamento com impostos
+
+## Contexto
+Um cliente de uma loja digital quer uma ferramenta para calcular o valor de uma venda com imposto e desconto em uma única tela. A regra é simples: mostrar o subtotal, o imposto, o desconto e o total final com precisão e sem erros de arredondamento.
+
+## O que você vai construir
+Um programa que recebe descrição do produto, valor unitário, quantidade, percentual de imposto e percentual de desconto. Depois, calcula e imprime o subtotal, imposto, desconto e total final com o formato de moeda brasileira.
+
+Exemplo de execução real:
+
+```text
+Descrição do produto: Mouse gamer
+Valor unitário: 120.50
+Quantidade: 3
+Percentual de imposto (%): 12.5
+Percentual de desconto (%): 5
+Subtotal: R$ 361,50
+Imposto: R$ 45,19
+Desconto: R$ 18,08
+Total final: R$ 388,61
+```
+
+## Requisitos
+1. Ler a descrição do produto, o valor unitário, a quantidade e os percentuais.
+2. Calcular o subtotal, o imposto e o desconto.
+3. Usar `Decimal` para não perder precisão em operações monetárias.
+4. Formatar a saída no padrão brasileiro: `R$ 1.234,56`.
+5. Mostrar o valor final com clareza para o cliente.
+
+## Critérios de aceite
+- [ ] O programa usa `Decimal` para dinheiro.
+- [ ] O subtotal, imposto e desconto são calculados em separado.
+- [ ] O total final considera desconto e imposto corretamente.
+- [ ] A saída usa o formato brasileiro de moeda.
+- [ ] O programa trata entradas inválidas e percentuais negativos com mensagens claras.
+
+## Histórias de usuário
+- Como vendedor, quero inserir o valor do produto e a quantidade para calcular rapidamente a venda.
+- Como cliente, quero ver o total final com impostos e desconto antes de fechar a compra.
+- Como gestor, quero garantir que os valores monetários estão corretos e não sofrem arredondamento errático.
+
+## Arquitetura sugerida
+- `formata_moeda(valor)` para converter `Decimal` em string com `R$` e casas decimais.
+- `calcula_subtotal(valor_unitario, quantidade)` para gerar o subtotal.
+- `calcula_imposto(subtotal, percentual)` para aplicar o imposto.
+- `calcula_desconto(subtotal, percentual)` para aplicar o desconto.
+- `main()` para coordenar a leitura e a impressão final.
+
+## Casos de teste de aceitação
+- Entrada com 1 unidade, 10% de imposto e 0% de desconto.
+- Entrada com 3 unidades, 12,5% de imposto e 5% de desconto.
+- Entrada com quantidade zero, que deve gerar aviso.
+- Entrada com valor unitário negativo, que deve ser rejeitada.
+- Entrada com percentual de desconto maior que 100%, que deve ser tratada.
+
+## Riscos
+- Arredondamento incorreto em valores monetários pode causar prejuízos reais e problemas financeiros.
+- Usar `float` em operações de dinheiro em sistemas financeiros é um risco conhecido.
+- Faltas de validação em percentuais e quantidade podem gerar orçamentos inconsistentes.
+
+## Guia
+### História do cliente
+O cliente pediu uma ferramenta que ainda seja simples, mas que respeite a regra do dinheiro real. Ele quer ver o valor bruto, o imposto e o desconto separados para comparar a proposta antes de fechar a venda.
+
+### Marcos do projeto
+1. Defina o que entra no programa: descrição, valor unitário, quantidade, imposto e desconto.
+2. Calcule o subtotal primeiro, antes de aplicar os percentuais.
+3. Aplique o imposto sobre o subtotal e o desconto sobre o subtotal também.
+4. Formate a saída em reais com casas decimais e separador de milhar.
+5. Revise os casos de borda: zero, valor negativo e percentual incomum.
+
+### Dicas
+- Se usar `float`, o erro de precisão do Python pode aparecer na conta final.
+- `Decimal` transforma dinheiro em algo previsível e seguro.
+- Sempre use `quantize` para manter duas casas decimais no valor financeiro.
+
+<Callout type="importante" title="Risco real de float">
+A expressão `0.1 + 0.2` em Python normalmente resulta em `0.30000000000000004`. Isso acontece porque o tipo `float` não representa todos os valores decimais com exatidão.
+</Callout>
+
+<Playground title="Ponto de partida" code={`from decimal import Decimal, ROUND_HALF_UP
+
+# veja a diferença entre float e Decimal
+print(0.1 + 0.2)
+print(Decimal('0.1') + Decimal('0.2'))
+
+# agora escreva o restante do programa: subtotal, imposto, desconto e total final
+`} />
+
+## Desafio extra
+Adicione uma segunda etapa que mostre o valor do imposto em separado e também a margem líquida da venda em relação ao subtotal.
+
+## Visão de mercado
+Sistemas de orçamento, faturamento, e-commerce e contabilidade dependem de cálculos financeiros precisos. Quando o arredondamento falha, o erro não fica só no console: ele vira prejuízo, cobrança errada ou problema com cliente.
+
+## Autoavaliação
+- [ ] Usei `Decimal` para todas as operações financeiras.
+- [ ] Separei subtotal, imposto e desconto em variáveis distintas.
+- [ ] Formatei a saída em reais com `R$` e duas casas decimais.
+- [ ] Testei ao menos um caso com imposto e um com desconto.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+from decimal import Decimal, ROUND_HALF_UP
+
+
+def formata_moeda(valor: Decimal) -> str:
+    valor = valor.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    return f"R$ {valor:,.2f}".replace('.', '|').replace(',', '.').replace('|', ',')
+
+
+def main():
+    print(0.1 + 0.2)
+
+    descricao = input("Descrição do produto: ")
+    valor_unitario = Decimal(input("Valor unitário: "))
+    quantidade = int(input("Quantidade: "))
+    imposto_percentual = Decimal(input("Percentual de imposto (%): ")) / Decimal('100')
+    desconto_percentual = Decimal(input("Percentual de desconto (%): ")) / Decimal('100')
+
+    if quantidade <= 0:
+        print("A quantidade deve ser maior que zero.")
+        return
+
+    subtotal = valor_unitario * Decimal(quantidade)
+    imposto = subtotal * imposto_percentual
+    desconto = subtotal * desconto_percentual
+    total = subtotal + imposto - desconto
+
+    print(f"Subtotal: {formata_moeda(subtotal)}")
+    print(f"Imposto: {formata_moeda(imposto)}")
+    print(f"Desconto: {formata_moeda(desconto)}")
+    print(f"Total final: {formata_moeda(total)}")
+
+
+main()
+```
+
+Saída real com entrada:
+
+```text
+0.30000000000000004
+Descrição do produto: Mouse gamer
+Valor unitário: 120.50
+Quantidade: 3
+Percentual de imposto (%): 12.5
+Percentual de desconto (%): 5
+Subtotal: R$ 361,50
+Imposto: R$ 45,19
+Desconto: R$ 18,08
+Total final: R$ 388,61
+```
+</details>

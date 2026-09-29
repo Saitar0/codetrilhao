@@ -1,0 +1,137 @@
+---
+titulo: "Ficha de cadastro"
+descricao: "Coletando dados pessoais e formatando uma ficha completa em Python."
+topico: "variaveis-e-tipos"
+topicoNome: "Variáveis e tipos de dados"
+variacao: "V1"
+tempo: 20
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "variaveis", "f-string", "input", "bool"]
+---
+
+# Ficha de cadastro
+
+## Contexto
+Você foi contratado para montar uma ficha simples de cadastro de clientes para uma campanha interna. O objetivo é coletar dados básicos em um terminal e mostrar uma ficha organizada, sem perder nenhum campo importante.
+
+## O que você vai construir
+Um programa que lê nome, idade, altura, cidade e se a pessoa é estudante. Depois, imprime uma ficha formatada com cada detalhe em um campo legível.
+
+Exemplo de execução real:
+
+```text
+Nome: Ana
+Idade: 28
+Altura em metros: 1.68
+Cidade: São Paulo
+Você é estudante? (sim/não): sim
+=== Ficha de cadastro ===
+Nome: Ana
+Idade: 28 anos
+Altura: 1.68 m
+Cidade: São Paulo
+Estudante: True
+```
+
+## Requisitos
+1. Ler cada dado em uma variável separada.
+2. Converter `idade` para inteiro e `altura` para `float`.
+3. Converter a resposta de estudante para `bool`.
+4. Usar `f-strings` para mostrar a ficha com boa leitura.
+5. Mostrar a informação final em uma estrutura clara.
+
+## Critérios de aceite
+- [ ] Nome, idade, altura, cidade e estudante ficam em variáveis corretas.
+- [ ] O programa converte `input()` para os tipos certos antes de calcular ou exibir.
+- [ ] A saída usa uma ficha limpa, com textos e valores claros.
+- [ ] O aluno consegue distinguir `str`, `int`, `float` e `bool` no contexto do problema.
+- [ ] O programa funciona para um valor de altura decimal e uma resposta de estudante simples.
+
+## Guia
+### Etapa 1: coletar os dados
+- Peça o nome em texto.
+- Peça a idade em texto e converta para `int`.
+- Peça a altura em texto e converta para `float`.
+- Peça a cidade em texto.
+- Peça a resposta de estudante e converta para `bool` com comparação.
+
+### Etapa 2: organizar a saída
+- Crie um título como `=== Ficha de cadastro ===`.
+- Use `print()` e `f-string` para cada campo.
+- A altura precisa mostrar duas casas decimais no texto final.
+
+### Etapa 3: cuidar da resposta booleana
+- `sim` vira `True` e `não` vira `False`.
+- Use `.strip().lower()` para evitar erro por caixa ou espaço extra.
+
+### Etapa 4: testar o fluxo
+- Teste com um nome com acento.
+- Teste com uma altura decimal, como `1.68`.
+- Teste com resposta `sim` e `nao` para verificar a conversão.
+
+### Etapa 5: revisar legibilidade
+- Cada linha da ficha deve ter um rótulo claro.
+- A estrutura final deve parecer uma ficha de cadastro, não apenas uma sequência de entradas.
+
+<Callout type="importante" title="Dica de tipos">
+`input()` sempre entrega texto. Se você vai somar, comparar ou formatar como número, é preciso converter antes de usar.
+</Callout>
+
+<Playground title="Estrutura inicial" code={`nome = input("Nome: ")
+idade = int(input("Idade: "))
+altura = float(input("Altura em metros: "))
+cidade = input("Cidade: ")
+estudante = input("Você é estudante? (sim/não): ").strip().lower() == "sim"
+
+print("=== Ficha de cadastro ===")
+print(f"Nome: {nome}")
+# complete a ficha com os outros campos
+`} />
+
+## Desafio extra
+Adicione um campo de e-mail e mostre também o tipo de cada valor ao lado da descrição, como `Nome: str`.
+
+## Visão de mercado
+Cadastro de clientes e perfis de usuários são muito comuns em sistemas de vendas, RH, educação e atendimento. O detalhe importante é que cada dado tem um tipo correto e a conversão precisa acontecer na hora certa para evitar erros na interface e no processamento.
+
+## Autoavaliação
+- [ ] Separei cada dado em uma variável apropriada.
+- [ ] Converto texto para `int`, `float` e `bool` quando preciso.
+- [ ] Usei `f-strings` para formatar a saída.
+- [ ] Testei pelo menos um caso com resposta `sim` e um com `nao`.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+nome = input("Nome: ")
+idade = int(input("Idade: "))
+altura = float(input("Altura em metros: "))
+cidade = input("Cidade: ")
+estudante = input("Você é estudante? (sim/não): ").strip().lower() == "sim"
+
+print("=== Ficha de cadastro ===")
+print(f"Nome: {nome}")
+print(f"Idade: {idade} anos")
+print(f"Altura: {altura:.2f} m")
+print(f"Cidade: {cidade}")
+print(f"Estudante: {estudante}")
+```
+
+Saída real com entrada:
+
+```text
+Nome: Ana
+Idade: 28
+Altura em metros: 1.68
+Cidade: São Paulo
+Você é estudante? (sim/não): sim
+=== Ficha de cadastro ===
+Nome: Ana
+Idade: 28 anos
+Altura: 1.68 m
+Cidade: São Paulo
+Estudante: True
+```
+</details>

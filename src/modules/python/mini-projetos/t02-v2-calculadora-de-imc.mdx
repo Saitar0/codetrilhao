@@ -1,0 +1,129 @@
+---
+titulo: "Calculadora de IMC"
+descricao: "Calcule o Índice de Massa Corporal e classifique o resultado com precisão e clareza."
+topico: "variaveis-e-tipos"
+topicoNome: "Variáveis e tipos de dados"
+variacao: "V2"
+tempo: 25
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "imc", "float", "f-string", "classificacao"]
+---
+
+# Calculadora de IMC
+
+## Contexto
+Você foi pedido para criar uma ferramenta rápida para ajudar pessoas a entenderem seu peso em relação à altura. A ideia é mostrar um resultado claro, com uma classificação simples e útil.
+
+## O que você vai construir
+Um programa que lê peso e altura, calcula o IMC e mostra o valor com 1 casa decimal, além da classificação.
+
+Exemplo de execução real:
+
+```text
+Peso em kg: 72.5
+Altura em metros: 1.78
+IMC: 22.9
+Classificação: Peso normal
+```
+
+## Requisitos
+1. Ler `peso` e `altura` a partir de entrada do usuário.
+2. Converter a entrada para `float`.
+3. Calcular o IMC com a fórmula `peso / altura ** 2`.
+4. Mostrar o valor com 1 casa decimal.
+5. Classificar o resultado em faixas simples e legíveis.
+
+## Critérios de aceite
+- [ ] O programa usa `float` para peso e altura.
+- [ ] A fórmula do IMC está correta.
+- [ ] A classificação aparece junto com o valor.
+- [ ] O resultado usa apenas 1 casa decimal na saída.
+- [ ] Os casos especiais, como peso zero ou altura inválida, são tratados.
+
+## Guia
+### Marco 1: definir a regra do cálculo
+- O IMC é calculado como `peso / altura ** 2`.
+- Mantenha a fórmula em uma variável clara, como `imc`.
+- Registre a classificação antes de montar a mensagem final.
+
+### Marco 2: validar entrada
+- Use `float(input(...))` para pegar peso e altura.
+- Se o usuário digitar um valor zero ou negativo, mostre uma mensagem clara.
+- Se a altura for muito baixa para ser real, reclame também.
+
+### Marco 3: montar a lógica da classificação
+- Use faixas simples: abaixo do peso, peso normal, sobrepeso e obesidade.
+- A regra importa mais do que o cálculo em si.
+- Faça a classificação em variável separada para deixar a leitura mais fácil.
+
+### Marco 4: formatar a saída
+- Use `f"IMC: {imc:.1f}"` para 1 casa decimal.
+- A mensagem final deve comunicar o valor e a classificação em uma linha só.
+
+### Marco 5: revisar cenários
+- Teste um caso normal, como `72.5` e `1.78`.
+- Teste um caso abaixo do peso.
+- Teste uma altura inválida ou zero.
+
+<Callout type="importante" title="Observação de arredondamento">
+Em Python, `0.1 + 0.2` pode resultar em `0.30000000000000004` porque o tipo `float` não representa todos os decimais com exatidão. Isso não é um erro no seu código; é a natureza do tipo de ponto flutuante.
+</Callout>
+
+<Playground title="Estrutura inicial" code={`peso = float(input("Peso em kg: "))
+altura = float(input("Altura em metros: "))
+
+# calcule o IMC e depois classifique a faixa do resultado
+# exiba a mensagem final com f-string
+`} />
+
+## Desafio extra
+Permita que o programa receba também a idade e mostre uma mensagem diferente para adolescentes, adultos e idosos.
+
+## Visão de mercado
+Calculadoras de IMC aparecem em aplicativos de saúde, clínicas, academias e plataformas de bem-estar. Mesmo sendo simples, elas ajudam a transformar uma fórmula matemática em informação útil para tomada de decisão.
+
+## Autoavaliação
+- [ ] Converto entrada para `float` antes de calcular.
+- [ ] Usei a fórmula correta do IMC.
+- [ ] Classifiquei o resultado em faixas claras.
+- [ ] Testei pelo menos um caso normal e um caso inválido.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+peso = float(input("Peso em kg: "))
+altura = float(input("Altura em metros: "))
+
+if peso <= 0 or altura <= 0:
+    print("Peso e altura devem ser maiores que zero.")
+else:
+    imc = peso / (altura ** 2)
+
+    if imc < 18.5:
+        classificacao = "Abaixo do peso"
+    elif imc < 25:
+        classificacao = "Peso normal"
+    elif imc < 30:
+        classificacao = "Sobrepeso"
+    elif imc < 35:
+        classificacao = "Obesidade leve"
+    elif imc < 40:
+        classificacao = "Obesidade moderada"
+    else:
+        classificacao = "Obesidade grave"
+
+    print(f"IMC: {imc:.1f}")
+    print(f"Classificação: {classificacao}")
+```
+
+Saída real com entrada:
+
+```text
+Peso em kg: 72.5
+Altura em metros: 1.78
+IMC: 22.9
+Classificação: Peso normal
+```
+</details>
