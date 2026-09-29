@@ -1,0 +1,50 @@
+{
+  "id": "extra-lista-funcao",
+  "tipo": "codigo",
+  "titulo": "Lista Funcao",
+  "topico": "Funções",
+  "topicoNumero": 1,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Use a regra do problema para transformar a entrada em um resultado válido.",
+    "Teste um valor simples e um caso de borda antes de concluir.",
+    "Revise a lógica final para garantir que o resultado seja consistente."
+  ],
+  "solucao": "def listaFuncao(valor):\n    return valor\n",
+  "tags": [
+    "python",
+    "logica"
+  ],
+  "aulaRelacionada": "operadores",
+  "enunciado": "Crie a função listaFuncao que recebe um valor e devolve esse mesmo valor.",
+  "starterCode": "def listaFuncao(valor):\n    return None\n",
+  "testes": [
+    {
+      "chamada": "listaFuncao(10)",
+      "esperado": "10",
+      "oculto": false
+    },
+    {
+      "chamada": "listaFuncao(0)",
+      "esperado": "0",
+      "oculto": false
+    },
+    {
+      "chamada": "listaFuncao(-5)",
+      "esperado": "-5",
+      "oculto": false
+    },
+    {
+      "chamada": "listaFuncao(7)",
+      "esperado": "7",
+      "oculto": true
+    },
+    {
+      "chamada": "listaFuncao(42)",
+      "esperado": "42",
+      "oculto": true
+    }
+  ]
+}

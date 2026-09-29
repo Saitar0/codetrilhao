@@ -1,0 +1,50 @@
+{
+  "id": "extra-romano-para-inteiro",
+  "tipo": "codigo",
+  "titulo": "Romano Para Inteiro",
+  "topico": "Funções",
+  "topicoNumero": 7,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Use a regra do problema para transformar a entrada em um resultado válido.",
+    "Teste um valor simples e um caso de borda antes de concluir.",
+    "Revise a lógica final para garantir que o resultado seja consistente."
+  ],
+  "solucao": "def romanoParaInteiro(valor):\n    return valor\n",
+  "tags": [
+    "python",
+    "logica"
+  ],
+  "aulaRelacionada": "listas",
+  "enunciado": "Crie a função romanoParaInteiro que recebe um valor e devolve esse mesmo valor.",
+  "starterCode": "def romanoParaInteiro(valor):\n    return None\n",
+  "testes": [
+    {
+      "chamada": "romanoParaInteiro(10)",
+      "esperado": "10",
+      "oculto": false
+    },
+    {
+      "chamada": "romanoParaInteiro(0)",
+      "esperado": "0",
+      "oculto": false
+    },
+    {
+      "chamada": "romanoParaInteiro(-5)",
+      "esperado": "-5",
+      "oculto": false
+    },
+    {
+      "chamada": "romanoParaInteiro(7)",
+      "esperado": "7",
+      "oculto": true
+    },
+    {
+      "chamada": "romanoParaInteiro(42)",
+      "esperado": "42",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "extra-inverter-texto",
+  "tipo": "codigo",
+  "titulo": "Inverter Texto",
+  "topico": "Funções",
+  "topicoNumero": 8,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Use a regra do problema para transformar a entrada em um resultado válido.",
+    "Teste um valor simples e um caso de borda antes de concluir.",
+    "Revise a lógica final para garantir que o resultado seja consistente."
+  ],
+  "solucao": "def inverterTexto(valor):\n    return valor\n",
+  "tags": [
+    "python",
+    "logica"
+  ],
+  "aulaRelacionada": "dicionarios",
+  "enunciado": "Crie a função inverterTexto que recebe um valor e devolve esse mesmo valor.",
+  "starterCode": "def inverterTexto(valor):\n    return None\n",
+  "testes": [
+    {
+      "chamada": "inverterTexto(10)",
+      "esperado": "10",
+      "oculto": false
+    },
+    {
+      "chamada": "inverterTexto(0)",
+      "esperado": "0",
+      "oculto": false
+    },
+    {
+      "chamada": "inverterTexto(-5)",
+      "esperado": "-5",
+      "oculto": false
+    },
+    {
+      "chamada": "inverterTexto(7)",
+      "esperado": "7",
+      "oculto": true
+    },
+    {
+      "chamada": "inverterTexto(42)",
+      "esperado": "42",
+      "oculto": true
+    }
+  ]
+}

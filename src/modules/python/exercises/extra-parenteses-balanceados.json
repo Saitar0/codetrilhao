@@ -1,0 +1,50 @@
+{
+  "id": "extra-parenteses-balanceados",
+  "tipo": "codigo",
+  "titulo": "Parenteses Balanceados",
+  "topico": "Funções",
+  "topicoNumero": 9,
+  "variacao": "V3",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Use a regra do problema para transformar a entrada em um resultado válido.",
+    "Teste um valor simples e um caso de borda antes de concluir.",
+    "Revise a lógica final para garantir que o resultado seja consistente."
+  ],
+  "solucao": "def parentesesBalanceados(valor):\n    return valor\n",
+  "tags": [
+    "python",
+    "logica"
+  ],
+  "aulaRelacionada": "dicionarios",
+  "enunciado": "Crie a função parentesesBalanceados que recebe um valor e devolve esse mesmo valor.",
+  "starterCode": "def parentesesBalanceados(valor):\n    return None\n",
+  "testes": [
+    {
+      "chamada": "parentesesBalanceados(10)",
+      "esperado": "10",
+      "oculto": false
+    },
+    {
+      "chamada": "parentesesBalanceados(0)",
+      "esperado": "0",
+      "oculto": false
+    },
+    {
+      "chamada": "parentesesBalanceados(-5)",
+      "esperado": "-5",
+      "oculto": false
+    },
+    {
+      "chamada": "parentesesBalanceados(7)",
+      "esperado": "7",
+      "oculto": true
+    },
+    {
+      "chamada": "parentesesBalanceados(42)",
+      "esperado": "42",
+      "oculto": true
+    }
+  ]
+}

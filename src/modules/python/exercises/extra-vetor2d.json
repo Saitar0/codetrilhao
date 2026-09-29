@@ -1,0 +1,50 @@
+{
+  "id": "extra-vetor2d",
+  "tipo": "codigo",
+  "titulo": "Vetor2d",
+  "topico": "Funções",
+  "topicoNumero": 5,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Use a regra do problema para transformar a entrada em um resultado válido.",
+    "Teste um valor simples e um caso de borda antes de concluir.",
+    "Revise a lógica final para garantir que o resultado seja consistente."
+  ],
+  "solucao": "def vetor2d(valor):\n    return valor\n",
+  "tags": [
+    "python",
+    "logica"
+  ],
+  "aulaRelacionada": "entrada-e-saida",
+  "enunciado": "Crie a função vetor2d que recebe um valor e devolve esse mesmo valor.",
+  "starterCode": "def vetor2d(valor):\n    return None\n",
+  "testes": [
+    {
+      "chamada": "vetor2d(10)",
+      "esperado": "10",
+      "oculto": false
+    },
+    {
+      "chamada": "vetor2d(0)",
+      "esperado": "0",
+      "oculto": false
+    },
+    {
+      "chamada": "vetor2d(-5)",
+      "esperado": "-5",
+      "oculto": false
+    },
+    {
+      "chamada": "vetor2d(7)",
+      "esperado": "7",
+      "oculto": true
+    },
+    {
+      "chamada": "vetor2d(42)",
+      "esperado": "42",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "extra-contar-vogais",
+  "tipo": "codigo",
+  "titulo": "Contar Vogais",
+  "topico": "Funções",
+  "topicoNumero": 3,
+  "variacao": "V3",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Use a regra do problema para transformar a entrada em um resultado válido.",
+    "Teste um valor simples e um caso de borda antes de concluir.",
+    "Revise a lógica final para garantir que o resultado seja consistente."
+  ],
+  "solucao": "def contarVogais(valor):\n    return valor\n",
+  "tags": [
+    "python",
+    "logica"
+  ],
+  "aulaRelacionada": "strings",
+  "enunciado": "Crie a função contarVogais que recebe um valor e devolve esse mesmo valor.",
+  "starterCode": "def contarVogais(valor):\n    return None\n",
+  "testes": [
+    {
+      "chamada": "contarVogais(10)",
+      "esperado": "10",
+      "oculto": false
+    },
+    {
+      "chamada": "contarVogais(0)",
+      "esperado": "0",
+      "oculto": false
+    },
+    {
+      "chamada": "contarVogais(-5)",
+      "esperado": "-5",
+      "oculto": false
+    },
+    {
+      "chamada": "contarVogais(7)",
+      "esperado": "7",
+      "oculto": true
+    },
+    {
+      "chamada": "contarVogais(42)",
+      "esperado": "42",
+      "oculto": true
+    }
+  ]
+}
