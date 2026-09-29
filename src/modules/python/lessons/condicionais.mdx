@@ -1,45 +1,326 @@
 ﻿---
 titulo: "Condicionais"
-descricao: "Tome decisÃµes em seu cÃ³digo com if, elif e else."
+descricao: "Decida o fluxo do programa com if, elif, else e match/case."
 secao: "A. Fundamentos"
 ordem: 8
-tempo: 11
+topico: 5
+fase: "A"
+tempo: 28
 nivel: "iniciante"
-palavrasChave: ['if', 'elif', 'else', 'condiÃ§Ãµes']
+palavrasChave: ['condicionais', 'if', 'elif', 'else', 'match', 'case']
 exercicios: []
 ---
 
 # Condicionais
 
-Tome decisÃµes em seu cÃ³digo com if, elif e else.
+Você já aprendeu a armazenar dados e a montar expressões. Agora a próxima pergunta é: o que o programa deve fazer com esse dado? Em sistemas reais, cada decisão pode mudar o resultado: permitir acesso, calcular desconto, validar entrada, mostrar mensagem de erro ou escolher uma rota diferente no fluxo. Em Python, isso fica claro com condicionais.
 
-<Callout type="importante" title="Objetivo da aula">
-  Neste bloco, vocÃª vai entender o conceito principal, ver exemplos prÃ¡ticos e testar a lÃ³gica em pequenos passos.
+Quando o código precisa responder a uma pergunta como "a idade é maior ou igual a 18?" ou "o valor está dentro do intervalo esperado?", você usa `if`, `elif` e `else`. Essa estrutura é a base da lógica de decisão e aparece em quase tudo: validação de formulário, regras de negócios, filtros, autenticação, relatórios e jogos.
+
+<Callout type="importante" title="O que você vai aprender">
+  - Como escrever a estrutura `if`, `elif` e `else` com indentação correta.
+  - Quando usar condições compostas e quando evitar aninhamento excessivo.
+  - Como reconhecer valores verdadeiros e falsos em Python.
+  - Quando o operador ternário ajuda a deixar o código mais enxuto.
+  - Como usar `match/case` para múltiplas opções em vez de muitos `elif`.
 </Callout>
 
-<CodeBlock title="exemplo_1.py" code={`idade = 20
+## 1. Estrutura básica: `if`, `elif` e `else`
+
+A ideia central é simples: o Python avalia uma condição e decide qual bloco executar. Se a condição for verdadeira, entra no bloco do `if`; se não for, tenta o `elif`; se nada for verdadeiro, vai para o `else`.
+
+<CodeBlock title="decisao_basica.py" code={`idade = 18
+
 if idade >= 18:
     print("Pode entrar")
 else:
-    print("NÃ£o pode")`} />
-<CodeBlock title="exemplo_2.py" code={`nota = 7
-if nota >= 7:
-    print("Aprovado")
-else:
-    print("Reprovado")`} />
-<CodeBlock title="exemplo_3.py" code={`opcao = "s"
-if opcao == "s":
-    print("Sim")`} />
+    print("Não pode entrar")`} />
 
-<Quiz questions={[{ question: "Qual Ã© a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prÃ¡tica", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensÃ£o e aplicaÃ§Ã£o prÃ¡tica." }, { question: "Qual hÃ¡bito Ã© mais Ãºtil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o cÃ³digo"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prÃ¡tica em Python?", options: ["clareza e execuÃ§Ã£o", "complexidade por padrÃ£o", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execuÃ§Ã£o objetiva." }]} />
+```text
+Pode entrar
+```
+
+A indentação é parte da sintaxe. Em Python, os blocos ficam recuados com 4 espaços. Se você escrever um `if` e alinhar o `print` de forma diferente, o interpretador vai alegar um `IndentationError`. A estrutura ficou clara: uma decisão, um bloco verdadeiro e um bloco falso.
+
+Agora veja um exemplo com três caminhos:
+
+<CodeBlock title="media_final.py" code={`nota = 7.8
+
+if nota >= 7:
+    situacao = "Aprovado"
+elif nota >= 5:
+    situacao = "Recuperação"
+else:
+    situacao = "Reprovado"
+
+print(situacao)`} />
+
+```text
+Aprovado
+```
+
+Esse padrão aparece muito em avaliação, regras de negócio e regras de acesso. A ordem das condições importa. Se a primeira condição for muito ampla, ela pode ficar no caminho das mais específicas, e o programa vai tomar a decisão errada antes mesmo de testar o restante.
+
+## 2. Condições compostas e a vantagem das guard clauses
+
+Além do `if` simples, você pode combinar condições com `and`, `or` e `not`. Isso é útil quando uma decisão depende de mais de um critério ao mesmo tempo.
+
+<CodeBlock title="condicoes_compostas.py" code={`idade = 22
+cpf_validado = True
+
+if idade >= 18 and cpf_validado:
+    print("Cadastro permitido")
+else:
+    print("Cadastro bloqueado")`} />
+
+```text
+Cadastro permitido
+```
+
+Quando a lógica cresce, muitos `if` aninhados deixam o código mais difícil de ler. Uma estratégia útil é o uso de <Glossario termo="guard clause" definition="Uma condição que interrompe a execução cedo quando uma regra de negação ou validade não é atendida." />. Em vez de escrever várias camadas de `if` dentro de `if`, você testa primeiro o caso que cancela a ação e sai mais cedo.
+
+<StepThrough>
+  <div>
+    <p>Primeiro, o programa lê a idade e verifica se a pessoa é maior de idade.</p>
+  </div>
+  <div>
+    <p>Depois, ele confronta essa condição com outra: o CPF precisa estar validado.</p>
+  </div>
+  <div>
+    <p>Se qualquer critério falhar, a decisão final é de bloqueio. Isso deixa a regra clara e evita aninhamento desnecessário.</p>
+  </div>
+</StepThrough>
+
+Veja um exemplo de guard clause:
+
+<CodeBlock title="guard_clause.py" code={`def pode_acessar(idade, tem_permicao):
+    if idade < 18:
+        return "Sem acesso: menor de idade"
+    if not tem_permicao:
+        return "Sem acesso: permissão negada"
+    return "Acesso liberado"
+
+print(pode_acessar(20, True))
+print(pode_acessar(17, True))
+print(pode_acessar(20, False))`} />
+
+```text
+Acesso liberado
+Sem acesso: menor de idade
+Sem acesso: permissão negada
+```
+
+Essa abordagem deixa o programa mais fácil de manter e mais próximo de uma leitura em linguagem natural: “se esta regra falha, não continue”.
+
+## 3. Truthy e falsy: quando Python trata valores como verdadeiros ou falsos
+
+Python não avalia apenas `True` e `False`. Em muitos contextos, ele considera certos valores como “verdadeiros” ou “falsos” automaticamente. Isso é chamado de <Glossario termo="truthy" definition="Valor que é tratado como verdadeiro em uma condição, mesmo que não seja um booleano literal." /> e <Glossario termo="falsy" definition="Valor que é tratado como falso em uma condição, mesmo que não seja explicitamente False." />.
+
+Valores falsy comuns são:
+
+- `0`
+- `0.0`
+- `""` (string vazia)
+- `[]` (lista vazia)
+- `None`
+- `False`
+
+Qualquer outro valor, na maioria das vezes, é truthy.
+
+<Playground title="Experimente truthy e falsy" code={`valores = [0, '', [], None, False, 'Python', 42]
+
+for valor in valores:
+    if valor:
+        print(repr(valor), '-> truthy')
+    else:
+        print(repr(valor), '-> falsy')`} />
+
+O que isso significa na prática? Quando você faz `if nome:` e a pessoa digita um texto vazio, a condição falha sem precisar comparar diretamente com `""`. Isso é útil em validações de formulários, filtros e verificações rápidas.
+
+## 4. Operador ternário: decisão em uma linha
+
+Quando a decisão é curta e direta, Python permite escrever a condição em uma única linha com o operador ternário:
+
+<CodeBlock title="ternario.py" code={`idade = 16
+status = "adulto" if idade >= 18 else "menor"
+print(status)`} />
+
+```text
+menor
+```
+
+A estrutura `valor_se_verdadeiro if condição else valor_se_falso` é legível quando a decisão é simples. Ela deixa o código mais enxuto, mas pode piorar a legibilidade se a expressão estiver muito complexa. Em lógica mais longa, o `if` tradicional continua sendo a melhor escolha.
+
+## 5. `match/case` para múltiplas alternativas
+
+A partir do Python 3.10, você pode usar `match/case` para comparar um valor com várias opções em vez de empilhar muitos `elif`. Isso deixa o código mais organizado quando você tem uma variável com uma lista de rótulos fixos, por exemplo: `"admin"`, `"editor"`, `"leitor"`, `"visitante"`.
+
+<CodeTabs>
+  <div label="if/elif">
+    <CodeBlock title="if_elif.py" code={`perfil = "editor"
+
+if perfil == "admin":
+    print("Acesso total")
+elif perfil == "editor":
+    print("Pode editar")
+elif perfil == "leitor":
+    print("Pode ver")
+else:
+    print("Perfil desconhecido")`} />
+  </div>
+  <div label="match/case">
+    <CodeBlock title="match_case.py" code={`perfil = "editor"
+
+match perfil:
+    case "admin":
+        print("Acesso total")
+    case "editor":
+        print("Pode editar")
+    case "leitor":
+        print("Pode ver")
+    case _:
+        print("Perfil desconhecido")`} />
+  </div>
+</CodeTabs>
+
+```text
+Pode editar
+Pode editar
+```
+
+A diferença prática é que `match/case` deixa a lógica de múltiplas opções mais legível para quem lê o código. O `_` funciona como “qualquer outro valor” e é muito útil como caso padrão.
+
+## 6. Ordem das condições e o cuidado com regras gerais
+
+Uma regra importante em condicionais é: condições mais específicas devem vir antes das mais gerais. Se você testar uma regra geral primeiro, ela vai capturar casos que deveriam passar para uma condição mais específica.
+
+<CodeBlock title="ordem_condicoes.py" code={`idade = 67
+
+if 18 <= idade < 65:
+    print("Trabalhando")
+elif idade >= 65:
+    print("Aposentado")
+else:
+    print("Menor de idade")`} />
+
+```text
+Aposentado
+```
+
+Essa ordem faz sentido porque a faixa “de 18 a 64” é específica o suficiente para não engolir o caso de aposentado. Em regras reais de crédito, acesso, permissões e classificação, essa clareza evita bugs silenciosos que só aparecem em produção.
+
+<Playground title="Teste condições em diferentes valores" code={`def faixa(idade):
+    if idade >= 65:
+        return "idoso"
+    if 18 <= idade < 65:
+        return "adulto"
+    if 12 <= idade < 18:
+        return "adolescente"
+    return "criança"
+
+for idade in [8, 14, 20, 70]:
+    print(idade, '->', faixa(idade))`} />
+
+## 7. Comparando `if` e `match/case` em cenários reais
+
+Uma boa forma de pensar em condicionais é esta: quando a decisão depende de uma variável limitada e conhecida, como uma opção de menu, um status, uma categoria ou uma ação de usuário, `match/case` costuma ser mais expressivo. Quando a decisão depende de comparação numérica, intervalo, validação ou combinações mais complexas, `if/elif/else` continua sendo a melhor ferramenta.
+
+<Tabela data={[
+  ['Situação', 'Melhor escolha', 'Por quê'],
+  ['Perfil do usuário', 'match/case', 'Há opções fixas como admin, editor e leitor.'],
+  ['Nota de aluno', 'if/elif/else', 'A avaliação depende de faixas numéricas.'],
+  ['Validação de acesso', 'if/elif/else', 'Combina idade, permissão e status.'],
+  ['Menu de opções', 'match/case', 'Valores discretos e claros.'],
+]} />
+
+## 8. Erros comuns em condicionais
+
+<Callout type="erro-comum" title="Sempre cai no primeiro if">
+  <CodeBlock title="ordem_errada.py" code={`idade = 70
+
+if 18 <= idade < 65:
+    print("Trabalhando")
+elif idade >= 65:
+    print("Aposentado")
+else:
+    print("Menor de idade")`} />
+  <p>O problema aqui é a ordem das condições. A primeira regra era mais geral e acabou pegando o caso de aposentado antes da regra específica. Em Python, a primeira condição verdadeira vence.</p>
+  <CodeBlock title="ordem_correta.py" code={`idade = 70
+
+if idade >= 65:
+    print("Aposentado")
+elif 18 <= idade < 65:
+    print("Trabalhando")
+else:
+    print("Menor de idade")`} />
+</Callout>
+
+<Callout type="erro-comum" title="Uso de atribuição em vez de comparação">
+  <CodeBlock title="atribui_em_lugar_de_compara.py" code={`x = 5
+
+if x = 5:
+    print("Igual")`} />
+  ```text
+  File "<stdin>", line 3
+      if x = 5:
+           ^
+  SyntaxError: invalid syntax
+  ```
+  <p>Esse código gera um erro porque `=` é atribuição, não comparação. Para testar igualdade, use `==`.</p>
+  <CodeBlock title="comparacao_correta.py" code={`x = 5
+
+if x == 5:
+    print("Igual")`} />
+</Callout>
+
+<Callout type="erro-comum" title="else sem par">
+  <CodeBlock title="else_sem_par.py" code={`idade = 20
+if idade >= 18:
+    print("Maior de idade")
+    print("Pode entrar")
+else:
+print("Menor de idade")`} />
+  ```text
+  File "<stdin>", line 6
+      else:
+      ^
+  SyntaxError: invalid syntax
+  ```
+  <p>O `else` está com a indentação errada. Em Python, ele precisa estar alinhado com o `if` que o acompanha. O bloco dentro do `else` deve ter a mesma profundidade de recuo.</p>
+  <CodeBlock title="else_com_indentacao_correta.py" code={`idade = 20
+if idade >= 18:
+    print("Maior de idade")
+    print("Pode entrar")
+else:
+    print("Menor de idade")`} />
+</Callout>
+
+Além desses erros, é comum esquecer que `==` compara valores, enquanto `=` atribui valores. Essa diferença parece simples, mas é a origem de muitos bugs assustadores em qualquer projeto.
+
+## No mercado de trabalho
+
+Em ambientes profissionais, as condicionais aparecem em todo lugar. Sistemas de crédito usam regras como “se renda for alta e dívidas forem baixas, aprova”; sistemas de RH validam presença, vínculo e turno; lojas calculam descontos por categoria, região e estoque; e plataformas de busca filtram produtos por preço, status e reputação. Em outras palavras, a lógica de decisão é o coração de muitos programas de negócio.
+
+Uma boa decisão não é apenas “se isso, então aquilo”: ela deve ser legível, fácil de testar e fácil de corrigir. Quando a regra de negócio muda, o código precisa ser simples de ajustar sem quebrar outras condições. Por isso, muitas equipes preferem separar regras em pequenas funções, organizar a ordem das condições e escrever testes simples para validar cenários.
+
+<Quiz questions={[
+  { question: "O que este código imprime?\n\n```python\nidade = 16\nif idade >= 18:\n    print('adulto')\nelse:\n    print('menor')\n```", options: ['adulto', 'menor', 'erro', 'nada'], correctIndex: 1, explanation: "Como 16 é menor que 18, a condição do if falha e o bloco do else executa." },
+  { question: "Qual é a vantagem principal do `match/case` em relação a vários `elif`?", options: ['Ele é mais rápido em todas as situações', 'Ele deixa opções fixas mais legíveis', 'Ele substitui completamente if/else', 'Ele não exige indentação'], correctIndex: 1, explanation: "Quando há várias alternativas fixas, a estrutura fica mais clara e direta para leitura." },
+  { question: "O que acontece quando a condição `if idade >= 18 and cpf_validado` é avaliada?", options: ['Só precisa de uma parte ser verdadeira', 'Precisa que as duas partes sejam verdadeiras', 'Apenas compara strings', 'Ignora a variável cpf_validado'], correctIndex: 1, explanation: "O operador `and` exige que ambas as condições sejam verdadeiras para a expressão inteira ser verdadeira." },
+  { question: "Qual é o problema neste código?\n\n```python\nvalor = 0\nif valor:\n    print('truthy')\nelse:\n    print('falsy')\n```", options: ["0 é considerado verdadeiro", "A condição não pode receber número", "0 é falsy e imprime 'falsy'", "O código gera um erro"], correctIndex: 2, explanation: "Em Python, 0 é um valor falsy, então o bloco else executa." },
+  { question: "Qual deve ser a ordem correta da regra?\n\n```python\nif idade >= 65:\n    print('idoso')\nelif 18 <= idade < 65:\n    print('adulto')\nelse:\n    print('criança')\n```", options: ['Está correta', 'Precisa inverter para adulto antes de idoso', 'Precisa trocar `>=` por `=`', 'Não pode usar `elif` nessa situação'], correctIndex: 0, explanation: "A condição mais específica para idosos vem antes da faixa geral de adultos, e a ordem está correta." }
+]} />
 
 <Resumo>
-  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
-  <li>Teste pequenos exemplos e avalie o resultado.</li>
-  <li>Aplica a ideia em cenÃ¡rios reais para fixar o conhecimento.</li>
+  <li>Você aprendeu a escrever decisões com `if`, `elif` e `else`.</li>
+  <li>Entendeu como condições compostas usam `and`, `or` e `not`.</li>
+  <li>Reconheceu que valores como `0`, `""` e `None` são falsy.</li>
+  <li>Viu quando o operador ternário é útil e quando o `if` tradicional é melhor.</li>
+  <li>Aprendeu `match/case` para alternativas fixas e legíveis.</li>
+  <li>Entendeu que a ordem das condições pode mudar completamente o resultado.</li>
 </Resumo>
 
-<Desafio>
-  Aplique esse tema em um mini cenÃ¡rio do dia a dia e confirme o resultado com um cÃ³digo simples e legÃ­vel.
+<Desafio title="Desafio do tópico">
+  Relembre os exercícios e os mini projetos do tópico 5 e escreva uma função que classifique uma pessoa por faixa etária, por nota de aprovação e por perfil de acesso. Depois, teste pelo menos 3 cenários com saída diferente para conferir que a lógica está consistente.
 </Desafio>
 
