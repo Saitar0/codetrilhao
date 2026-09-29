@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { getExercisesByModule } from '../../lib/exercises'
-import { useProgressStore } from '../../store/progress'
+import { canUnlockExerciseVariation, useProgressStore } from '../../store/progress'
 
 const difficultyOrder = { fácil: 1, médio: 2, difícil: 3 }
 
@@ -14,10 +14,36 @@ export default function ExerciseListPage() {
   const [difficulty, setDifficulty] = useState('todas')
   const [topic, setTopic] = useState('todos')
   const [status, setStatus] = useState('todos')
+  const [manualUnlocks, setManualUnlocks] = useState<Record<'V1' | 'V2' | 'V3', boolean>>({
+    V1: true,
+    V2: false,
+    V3: false,
+  })
   const exerciseStatuses = useProgressStore((state) => state.exerciseStatuses)
+
+  const variationCounts = useMemo(() => {
+    const counts = { V1: 0, V2: 0, V3: 0 }
+
+    for (const exercise of exercises) {
+      const variation = exercise.variacao ?? 'V1'
+      if ((exerciseStatuses[exercise.id] ?? 'nao-iniciado') === 'resolvido') {
+        counts[variation] += 1
+      }
+    }
+
+    return counts
+  }, [exerciseStatuses, exercises])
+
+  const isV2Unlocked = canUnlockExerciseVariation('V2', variationCounts) || manualUnlocks.V2
+  const isV3Unlocked = canUnlockExerciseVariation('V3', variationCounts) || manualUnlocks.V3
 
   const visibleExercises = useMemo(() => {
     return exercises.filter((exercise) => {
+      const variation = exercise.variacao ?? 'V1'
+      const isUnlocked = variation === 'V1' || (variation === 'V2' ? isV2Unlocked : variation === 'V3' ? isV3Unlocked : true)
+
+      if (!isUnlocked) return false
+
       const matchesText =
         !query ||
         exercise.titulo.toLowerCase().includes(query.toLowerCase()) ||
@@ -31,7 +57,7 @@ export default function ExerciseListPage() {
 
       return matchesText && matchesDifficulty && matchesTopic && matchesStatus
     })
-  }, [difficulty, exerciseStatuses, exercises, query, status, topic])
+  }, [difficulty, exerciseStatuses, exercises, isV2Unlocked, isV3Unlocked, query, status, topic])
 
   const completedCount = exercises.filter((exercise) => (exerciseStatuses[exercise.id] ?? 'nao-iniciado') === 'resolvido').length
   const totalXp = exercises.reduce((sum, exercise) => sum + exercise.xp, 0)
@@ -81,6 +107,24 @@ export default function ExerciseListPage() {
           <option value="resolvido">Resolvido</option>
         </select>
       </div>
+
+      {!isV2Unlocked && (
+        <div className="empty-state glass">
+          <p>V2 está travada até 3 de 4 exercícios V1 estarem resolvidos.</p>
+          <button type="button" className="button button--primary" onClick={() => setManualUnlocks((prev) => ({ ...prev, V2: true }))}>
+            desbloquear mesmo assim
+          </button>
+        </div>
+      )}
+
+      {!isV3Unlocked && (
+        <div className="empty-state glass">
+          <p>V3 está travada até 3 de 4 exercícios V2 estarem resolvidos.</p>
+          <button type="button" className="button button--primary" onClick={() => setManualUnlocks((prev) => ({ ...prev, V3: true }))}>
+            desbloquear mesmo assim
+          </button>
+        </div>
+      )}
 
       {visibleExercises.length ? (
         <div className="exercise-list__grid">

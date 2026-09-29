@@ -12,7 +12,10 @@
     "lint": "eslint . --ext .ts,.tsx --max-warnings=0",
     "test": "vitest",
     "preview": "vite preview",
-    "validar:exercicios": "node scripts/validar_exercicios_python.mjs"
+    "validar:exercicios": "node scripts/validar_exercicios_python.mjs",
+    "validar:aulas": "node scripts/validar_aulas.mjs",
+    "validar:projetos": "node scripts/validar_projetos.mjs",
+    "validar:tudo": "node scripts/validar_tudo.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

@@ -1,0 +1,74 @@
+---
+titulo: "Adivinhe o número"
+descricao: "Crie um jogo que sorteia um número e dá dicas ao jogador."
+topico: "loops"
+topicoNome: "Loops"
+variacao: "V2"
+tempo: 25
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "loops", "random", "jogo"]
+---
+
+# Adivinhe o número
+
+## Contexto
+Você quer criar um jogo simples em que o computador escolhe um número e o jogador tenta descobrir com dicas ao longo das tentativas.
+
+## O que você vai construir
+Um mini jogo de adivinhação com sorteio aleatório, comparação de valores e feedback para o jogador.
+
+## Requisitos
+- Gerar um número aleatório.
+- Receber a tentativa do jogador.
+- Dar dicas do tipo "maior" ou "menor".
+- Encerrar quando o jogador acertar.
+
+## Critérios de aceite
+- O programa sempre gera um valor dentro do intervalo esperado.
+- A cada tentativa, o jogador recebe uma dica útil.
+- O jogo termina corretamente ao acertar.
+
+## Guia
+1. Use `random.randint` para sortear o número.
+2. Armazene a quantidade de tentativas.
+3. Compare a tentativa com o valor sorteado.
+4. Mostre uma mensagem final ao encerrar.
+
+<Playground title="Estrutura inicial" code={`import random
+numero = random.randint(1, 10)
+print(numero)`} />
+
+## Desafio extra
+Adicione pontuação e um limite de tentativas para deixar o jogo mais interessante.
+
+## Visão de mercado
+Jogos simples de lógica ajudam a praticar condicionais e laços em um contexto divertido e interativo.
+
+## Autoavaliação
+- [ ] Usei aleatoriedade corretamente.
+- [ ] Organizei as dicas por comparação.
+- [ ] Testei o fluxo completo do jogo.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+import random
+
+numero = random.randint(1, 10)
+tentativas = 0
+
+while True:
+    tentativa = int(input("Adivinhe o número: "))
+    tentativas += 1
+
+    if tentativa == numero:
+        print(f"Acertou em {tentativas} tentativas!")
+        break
+    elif tentativa < numero:
+        print("O número é maior.")
+    else:
+        print("O número é menor.")
+```
+</details>

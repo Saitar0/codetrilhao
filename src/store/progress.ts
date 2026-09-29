@@ -3,6 +3,19 @@ import { persist } from 'zustand/middleware'
 
 export type ExerciseStatus = 'nao-iniciado' | 'tentado' | 'resolvido'
 
+export function canUnlockExerciseVariation(
+  variation: 'V1' | 'V2' | 'V3',
+  solvedByVariation: Partial<Record<'V1' | 'V2' | 'V3', number>> = { V1: 0, V2: 0, V3: 0 },
+): boolean {
+  const counts = { V1: 0, V2: 0, V3: 0, ...solvedByVariation }
+
+  if (variation === 'V1') return true
+  if (variation === 'V2') return counts.V1 >= 3
+  if (variation === 'V3') return counts.V2 >= 3
+
+  return false
+}
+
 export type ProgressState = {
   xp: number
   streak: number
@@ -72,11 +85,28 @@ export const useProgressStore = create<ProgressState>()(
           }
         }),
       getModuleProgress: (moduleId) => {
-        const completed = get().completedLessons.filter((lesson) =>
-          lesson.startsWith(`${moduleId}:`),
-        )
+        const moduleConfig = (() => {
+          const modules = import.meta.glob('../modules/**/config.ts', { eager: true }) as Record<string, { [key: string]: unknown }>
+          for (const entry of Object.values(modules)) {
+            const maybe = Object.values(entry).find((value) => {
+              if (typeof value !== 'object' || value === null) return false
+              const candidate = value as { id?: string }
+              return candidate.id === moduleId
+            }) as { id?: string; trilha?: Array<{ lessons: string[] }> } | undefined
 
-        return completed.length > 0 ? Math.min(100, completed.length * 25) : 0
+            if (maybe?.id === moduleId && Array.isArray(maybe.trilha)) {
+              return maybe
+            }
+          }
+
+          return undefined
+        })()
+
+        const totalLessons = moduleConfig?.trilha?.reduce((sum, section) => sum + section.lessons.length, 0) ?? 0
+        const completed = get().completedLessons.filter((lesson) => lesson.startsWith(`${moduleId}:`)).length
+
+        if (!totalLessons) return 0
+        return Math.round((completed / totalLessons) * 100)
       },
       markExerciseAttempt: (exerciseId) =>
         set((state) => ({

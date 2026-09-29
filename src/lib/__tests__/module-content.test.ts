@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { getAllModuleLessons } from '../module-content'
+import { canUnlockExerciseVariation, useProgressStore } from '../../store/progress'
 
 const lessonFiles = import.meta.glob('../../modules/**/*.mdx', { eager: true }) as Record<
   string,
@@ -50,5 +51,21 @@ describe('module-content', () => {
     expect(new Set(lessons.map((lesson) => lesson.id)).size).toBe(lessons.length)
     expect(lessons.every((lesson) => lesson.title.trim().length > 0)).toBe(true)
     expect(lessons.every((lesson) => lesson.section.trim().length > 0)).toBe(true)
+  })
+
+  it('keeps V2 blocked until 3 of 4 V1 exercises are solved and unlocks V3 from V2', () => {
+    expect(canUnlockExerciseVariation('V2', { V1: 2, V2: 0, V3: 0 })).toBe(false)
+    expect(canUnlockExerciseVariation('V2', { V1: 3, V2: 0, V3: 0 })).toBe(true)
+    expect(canUnlockExerciseVariation('V3', { V1: 4, V2: 2, V3: 0 })).toBe(false)
+    expect(canUnlockExerciseVariation('V3', { V1: 4, V2: 3, V3: 0 })).toBe(true)
+  })
+
+  it('calculates module progress from completed lessons over the full trilha', () => {
+    const progressStore = useProgressStore.getState()
+    progressStore.resetProgress()
+    progressStore.completeLesson('python:o-que-e-python')
+    progressStore.completeLesson('python:instalando-e-rodando')
+
+    expect(progressStore.getModuleProgress('python')).toBe(4)
   })
 })

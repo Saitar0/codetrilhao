@@ -1,0 +1,73 @@
+---
+titulo: "Agenda de contatos"
+descricao: "Crie uma agenda com dicionários, busca e persistência em JSON."
+topico: "dicionarios"
+topicoNome: "Dicionários"
+variacao: "V1"
+tempo: 25
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "dicionarios", "json", "agenda"]
+---
+
+# Agenda de contatos
+
+## Contexto
+Você precisa registrar contatos e consultá-los rapidamente sem perder as informações entre execuções.
+
+## O que você vai construir
+Uma agenda simples com cadastro, busca por nome e armazenamento em JSON.
+
+## Requisitos
+- Adicionar um contato com nome e telefone.
+- Listar todos os contatos cadastrados.
+- Buscar um contato por nome.
+- Persistir os dados em JSON.
+
+## Critérios de aceite
+- O usuário consegue navegar por ações simples.
+- O dicionário representa corretamente cada contato.
+- O programa continua funcionando após uma nova execução.
+
+## Guia
+1. Crie um dicionário para cada contato.
+2. Guarde a lista em memória e depois em arquivo JSON.
+3. Implemente funções para adicionar, listar e buscar.
+4. Teste diferentes cenários de busca.
+
+<Playground title="Modelo inicial" code={`contatos = {"Ana": "9999-0000"}
+print(contatos)`} />
+
+## Desafio extra
+Permita remover contatos e validar se o nome já existe antes de cadastrar.
+
+## Visão de mercado
+Agendas pessoais são um dos formatos mais comuns de pequenas aplicações de gestão de dados.
+
+## Autoavaliação
+- [ ] Organizei os dados em dicionários.
+- [ ] Usei JSON para persistência.
+- [ ] Testei busca e listagem corretamente.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+import json
+
+try:
+    with open("contatos.json", "r", encoding="utf-8") as arquivo:
+        contatos = json.load(arquivo)
+except FileNotFoundError:
+    contatos = {}
+
+nome = input("Nome: ")
+telefone = input("Telefone: ")
+contatos[nome] = telefone
+
+with open("contatos.json", "w", encoding="utf-8") as arquivo:
+    json.dump(contatos, arquivo, ensure_ascii=False, indent=2)
+
+print("Contato salvo!")
+```
+</details>

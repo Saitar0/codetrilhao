@@ -15,9 +15,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Install
         run: npm ci --legacy-peer-deps
       - name: Lint
         run: npm run lint
       - name: Build
         run: npm run build
+      - name: Test
+        run: npm run test -- --run
+      - name: Validate project content
+        run: npm run validar:tudo -- --estrito

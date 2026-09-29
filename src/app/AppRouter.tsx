@@ -6,6 +6,7 @@ const ModulePage = lazy(() => import('./routes/ModulePage'))
 const LessonPage = lazy(() => import('./routes/LessonPage'))
 const ExercisePage = lazy(() => import('./routes/ExercisePage'))
 const ExerciseListPage = lazy(() => import('./routes/ExerciseListPage'))
+const MiniProjectPage = lazy(() => import('./routes/MiniProjectPage'))
 
 export function AppRouter() {
   return (
@@ -13,6 +14,7 @@ export function AppRouter() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/:modulo" element={<ModulePage />} />
+        <Route path="/:modulo/projeto/:slug" element={<MiniProjectPage />} />
         <Route path="/:modulo/:aula" element={<LessonPage />} />
         <Route path="/:modulo/exercicios" element={<ExerciseListPage />} />
         <Route path="/:modulo/exercicios/:id" element={<ExercisePage />} />

@@ -1,0 +1,66 @@
+---
+titulo: "Conversor de moedas"
+descricao: "Crie conversões entre moedas com tratamento de erro."
+topico: "entrada-e-saida"
+topicoNome: "Entrada e saída"
+variacao: "V2"
+tempo: 20
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "entrada", "conversao", "validacao"]
+---
+
+# Conversor de moedas
+
+## Contexto
+Você precisa converter um valor informado pelo usuário para outra moeda, sem quebrar o programa quando a entrada for inválida.
+
+## O que você vai construir
+Um conversor simples com validação de entrada, cálculo com taxa fixa e mensagem final clara para o usuário.
+
+## Requisitos
+- Ler o valor e a moeda origem/destino.
+- Validar entradas numéricas.
+- Calcular o valor convertido com uma taxa fixa.
+- Tratar erros com mensagens amigáveis.
+
+## Critérios de aceite
+- O programa aceita valores válidos e rejeita valores inválidos.
+- A saída mostra o resultado final em um formato legível.
+- A lógica está dividida em funções pequenas e claras.
+
+## Guia
+1. Crie uma função para validar o valor digitado.
+2. Defina uma taxa de conversão fixa.
+3. Faça a operação e mostre o resultado com texto amigável.
+4. Teste entradas válidas e inválidas.
+
+<Playground title="Primeiro protótipo" code={`valor = float(input("Digite um valor em reais: "))
+print(f"Valor digitado: {valor}")`} />
+
+## Desafio extra
+Adicione uma segunda moeda e permita que o usuário escolha entre diferentes pares de conversão.
+
+## Visão de mercado
+Pequenos utilitários de conversão são muito úteis em ferramentas pessoais e aplicativos de educação financeira.
+
+## Autoavaliação
+- [ ] Validei entradas inválidas.
+- [ ] Separei a lógica em funções.
+- [ ] Testei o comportamento com exemplos reais.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+def converter(valor, taxa):
+    return valor * taxa
+
+try:
+    valor = float(input("Valor em reais: "))
+    taxa = 4.8
+    print(f"Resultado: R${converter(valor, taxa):.2f}")
+except ValueError:
+    print("Digite um valor numérico válido.")
+```
+</details>

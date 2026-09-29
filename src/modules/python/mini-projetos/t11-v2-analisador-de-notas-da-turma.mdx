@@ -1,0 +1,66 @@
+---
+titulo: "Analisador de notas da turma"
+descricao: "Calcule média, mediana, maior e menor nota da turma."
+topico: "comprehensions"
+topicoNome: "Comprehensions"
+variacao: "V2"
+tempo: 30
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "estatistica", "listas", "media"]
+---
+
+# Analisador de notas da turma
+
+## Contexto
+Você precisa interpretar um conjunto de notas e resumir o desempenho da turma em apenas alguns cálculos úteis.
+
+## O que você vai construir
+Um pequeno analisador estatístico que calcula média, mediana, menor e maior nota.
+
+## Requisitos
+- Receber uma lista de notas.
+- Calcular a média.
+- Encontrar a maior e menor nota.
+- Exibir a mediana final.
+
+## Critérios de aceite
+- Os cálculos estão corretos para números positivos.
+- A lógica é clara e reutilizável.
+- A saída final ajuda a interpretar o desempenho.
+
+## Guia
+1. Armazene as notas em uma lista.
+2. Faça operações sobre a lista com funções auxiliares.
+3. Ordene a lista para calcular a mediana.
+4. Exiba todos os resultados em uma mensagem final.
+
+<Playground title="Lista inicial" code={`notas = [8, 7, 9, 10, 6]
+print(notas)`} />
+
+## Desafio extra
+Adicione uma opção para mostrar a quantidade de alunos acima da média e a distribuição por faixa de notas.
+
+## Visão de mercado
+Ferramentas simples de análise de desempenho ajudam professores e gestores a entender padrões rapidamente.
+
+## Autoavaliação
+- [ ] Calculei a média corretamente.
+- [ ] Ordenei os dados para mediana.
+- [ ] Apresentei uma saída clara da turma.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+notas = [7, 8, 9, 10, 6, 5]
+notas_ordenadas = sorted(notas)
+media = sum(notas) / len(notas)
+mediana = notas_ordenadas[len(notas_ordenadas) // 2]
+
+print(f"Média: {media:.2f}")
+print(f"Maior: {max(notas)}")
+print(f"Menor: {min(notas)}")
+print(f"Mediana: {mediana}")
+```
+</details>

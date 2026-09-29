@@ -14,6 +14,8 @@ export type BaseExercise = {
   tipo: ExerciseKind
   titulo: string
   topico: string
+  topicoNumero?: number
+  variacao?: 'V1' | 'V2' | 'V3'
   dificuldade: ExerciseDifficulty
   xp: number
   dicas: string[]
