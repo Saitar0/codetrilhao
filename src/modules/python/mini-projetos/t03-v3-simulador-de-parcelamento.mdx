@@ -1,0 +1,158 @@
+---
+titulo: "Simulador de parcelamento"
+descricao: "Compare pagamento à vista e parcelado usando juros compostos, taxas e expressões matemáticas."
+topico: "operadores-e-expressoes"
+topicoNome: "Operadores e expressões"
+variacao: "V3"
+tempo: 30
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "juros-compostos", "parcelamento", "taxa", "financeiro"]
+---
+
+# Simulador de parcelamento
+
+## Contexto
+Uma fintech quer mostrar ao cliente o custo real de parcelar uma compra. O diferencial é comparar o valor à vista com o valor final em parcelas, deixando explícito quanto de juros foi pago ao longo do período.
+
+## O que você vai construir
+Um programa que recebe o valor do produto, a quantidade de parcelas e a taxa mensal de juros. Ele calcula o valor total do parcelamento, a parcela mensal e o total de juros pagos, além de comparar com o valor à vista.
+
+Exemplo de execução real:
+
+```text
+Valor do produto: 1000.00
+Número de parcelas: 6
+Taxa mensal (%): 2.5
+Valor da parcela: R$ 193.28
+Total pago: R$ 1,159.69
+Juros pagos: R$ 159.69
+Pagamento à vista: R$ 1,000.00
+```
+
+### Tabela de precedência
+| Ordem | Operadores | Como entrar no cálculo |
+|---|---|---|
+| 1 | `**` | juros compostos em `valor * (1 + taxa) ** parcelas` |
+| 2 | `*`, `/`, `//`, `%` | cálculo de parcela e de taxa |
+| 3 | `+`, `-` | soma do valor total e comparação com o à vista |
+| 4 | `==`, `!=`, `<`, `>`, `<=`, `>=` | comparar valores e regras de decisão |
+| 5 | `not` | inverter uma condição |
+| 6 | `and` | juntar condições em uma regra |
+| 7 | `or` | aceitar mais de uma condição |
+
+## Requisitos
+1. Ler o valor do produto, o número de parcelas e a taxa mensal.
+2. Calcular o valor final com juros compostos.
+3. Dividir o total pago pelo número de parcelas.
+4. Calcular o custo dos juros como diferença entre o total final e o valor inicial.
+5. Comparar com o pagamento à vista para mostrar a diferença.
+
+## Critérios de aceite
+- [ ] O programa usa a fórmula correta de juros compostos.
+- [ ] A parcela mensal considera o total final dividido pelas parcelas.
+- [ ] O valor de juros é calculado corretamente como diferença entre total e valor inicial.
+- [ ] O programa compara o parcelado com o valor à vista.
+- [ ] A saída mostra valores monetários com clareza e duas casas decimais.
+
+## Histórias de usuário
+- Como cliente, quero ver o valor da parcela antes de confirmar a compra.
+- Como atendente, quero comparar o custo do parcelamento com o pagamento à vista.
+- Como gestor, quero saber quanto de juros foi cobrado no total da operação.
+
+## Arquitetura sugerida
+- `calcula_total_com_juros(valor, parcelas, taxa)` para aplicar a fórmula de juros compostos.
+- `calcula_parcela(total, parcelas)` para dividir o valor final em parcelas iguais.
+- `calcula_juros(total, valor_inicial)` para medir o custo financeiro real.
+- `formatar_moeda(valor)` para manter a saída em padrão monetário.
+- `main()` para coletar dados e mostrar o painel do cliente.
+
+## Casos de teste de aceitação
+- Valor de 1.000, 6 parcelas e taxa de 2,5% ao mês.
+- Valor de 500, 12 parcelas e taxa de 0% ao mês.
+- Valor zero, que deve ser tratado como operação inválida.
+- Quantidade de parcelas negativa, que deve ser rejeitada.
+- Taxa negativa, que deve sinalizar erro de entrada.
+
+## Riscos
+- Erros na taxa podem distorcer toda a análise do cliente.
+- Usar a fórmula errada para juros compostos produz valor final muito diferente do real.
+- Não mostrar a comparação com o pagamento à vista pode esconder o custo efetivo da operação.
+- Arredondamento inconsistente em dinheiro gera decisões ruins e conflitos com cliente.
+
+## Guia
+### História do cliente
+A equipe do produto quer um simulador simples, mas com saída profissional. O cliente precisa entender, em poucos segundos, o custo do parcelamento e a diferença para pagar tudo de uma vez.
+
+### Marcos do projeto
+1. Defina a entrada: valor do produto, número de parcelas e taxa mensal.
+2. Calcule o total com juros compostos antes de dividir em parcelas.
+3. Separe o cálculo da parcela, do total pago e do valor de juros.
+4. Compare o total parcelado com o valor à vista em uma linha clara.
+5. Revise as entradas inválidas e os casos extremos.
+
+### Dicas
+- A fórmula de juros compostos deve ser escrita em etapas, com parênteses para clareza.
+- Use `**` para o crescimento em cada mês, não apenas multiplicação simples.
+- Após calcular, compare o resultado com a alternativa à vista e destaque o custo real.
+
+<Callout type="importante" title="Fórmula central">
+O cálculo do valor final em parcelas com juros compostos é: `valor_final = valor_inicial * (1 + taxa) ** parcelas`.
+</Callout>
+
+<Playground title="Ponto de partida" code={`valor_produto = float(input("Valor do produto: "))
+parcelas = int(input("Número de parcelas: "))
+taxa_mensal = float(input("Taxa mensal (%): "))
+
+# calcule o valor total com juros compostos
+# divida pelo número de parcelas
+# mostre o total pago e os juros
+# compare com o pagamento à vista
+`} />
+
+## Desafio extra
+Adicione uma análise de comparação: mostre em porcentagem quanto o parcelamento ficou mais caro do que o pagamento à vista.
+
+## Visão de mercado
+Simuladores de financiamento e cartão são produtos comuns em bancos, fintechs e lojas de eletronics. Eles ajudam o cliente a tomar decisão informada e reduzem dúvidas sobre o custo real de uma operação financeira.
+
+## Autoavaliação
+- [ ] Entendi a fórmula de juros compostos e a usei corretamente.
+- [ ] Separei cálculo de parcela, total e juros em etapas claras.
+- [ ] Comparei o parcelado com o valor à vista.
+- [ ] Testei ao menos um caso com taxa e um caso com valor zero.
+- [ ] A saída ficou clara e profissional.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+valor_produto = float(input("Valor do produto: "))
+parcelas = int(input("Número de parcelas: "))
+taxa_mensal = float(input("Taxa mensal (%): ")) / 100
+
+if valor_produto <= 0 or parcelas <= 0:
+    print("Valor do produto e número de parcelas devem ser maiores que zero.")
+else:
+    valor_final = valor_produto * (1 + taxa_mensal) ** parcelas
+    valor_parcela = valor_final / parcelas
+    juros_total = valor_final - valor_produto
+
+    print(f"Valor da parcela: R$ {valor_parcela:.2f}")
+    print(f"Total pago: R$ {valor_final:.2f}")
+    print(f"Juros pagos: R$ {juros_total:.2f}")
+    print(f"Pagamento à vista: R$ {valor_produto:.2f}")
+```
+
+Saída real com entrada:
+
+```text
+Valor do produto: 1000.00
+Número de parcelas: 6
+Taxa mensal (%): 2.5
+Valor da parcela: R$ 193.28
+Total pago: R$ 1159.69
+Juros pagos: R$ 159.69
+Pagamento à vista: R$ 1000.00
+```
+</details>

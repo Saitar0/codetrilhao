@@ -1,0 +1,141 @@
+---
+titulo: "Validador de elegibilidade"
+descricao: "Avalie regras de idade e elegibilidade usando expressões lógicas bem organizadas."
+topico: "operadores-e-expressoes"
+topicoNome: "Operadores e expressões"
+variacao: "V2"
+tempo: 25
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "operadores-logicos", "idade", "comparacao", "eligibilidade"]
+---
+
+# Validador de elegibilidade
+
+## Contexto
+Uma pequena empresa precisa verificar rapidamente se uma pessoa atende a critérios de idade para diferentes benefícios e liberdades. A ideia é usar regras simples, claras e separadas, em vez de misturar tudo em uma única expressão complicada.
+
+## O que você vai construir
+Um programa que recebe a idade de uma pessoa e retorna `True` ou `False` para votar, dirigir, aposentar e ter direito a meia-entrada. O resultado precisa ficar organizado em uma tabela simples de decisões.
+
+Exemplo de execução real:
+
+```text
+Idade: 25
+Pode votar: True
+Pode dirigir: True
+Pode aposentar: False
+Meia-entrada: False
+```
+
+### Tabela de precedência
+| Ordem | Operadores | Exemplo |
+|---|---|---|
+| 1 | `**` | `2 ** 3` |
+| 2 | `*`, `/`, `//`, `%` | `10 % 2` |
+| 3 | `+`, `-` | `8 + 2` |
+| 4 | `==`, `!=`, `<`, `>`, `<=`, `>=` | `18 <= idade` |
+| 5 | `not` | `not adulto` |
+| 6 | `and` | `idade >= 18 and idade <= 70` |
+| 7 | `or` | `idade < 18 or idade >= 60` |
+
+## Requisitos
+1. Ler uma idade inteira.
+2. Criar uma expressão lógica para cada regra separada.
+3. Mostrar o resultado de cada regra com nome claro.
+4. Tratar idade inválida, como valores negativos ou zero.
+5. Apresentar a decisão final em uma estrutura legível.
+
+## Critérios de aceite
+- [ ] Cada regra tem uma expressão lógica própria.
+- [ ] A idade é comparada com limites claros e separados.
+- [ ] `and`, `or` e `not` são usados de forma correta e legível.
+- [ ] O programa trata valores negativos e zero como dados inválidos.
+- [ ] A saída mostra `True` e `False` de maneira clara para cada regra.
+
+## Guia
+### Marco 1: definir as regras
+- Escolha as faixas de idade que cada regra usa.
+- Mantenha cada regra em uma expressão separada, como `pode_votar = ...`.
+- Evite misturar decisões em uma única sequência complexa.
+
+### Marco 2: validar a idade
+- Se a idade for negativa, o dado é inválido.
+- Se a idade for zero, pense se esse valor faz sentido para o programa.
+- A mensagem de erro precisa ser direta e fácil de entender.
+
+### Marco 3: escrever cada expressão lógica
+- `pode_votar` pode ser uma comparação com `>=` e `<=`.
+- `pode_dirigir` normalmente usa uma regra simples de maioridade.
+- `pode_aposentar` usa outro limite, que deve ser explícito.
+- `meia_entrada` pode combinar mais de uma faixa, como menor de idade e idoso.
+
+### Marco 4: exibir a tabela final
+- Mostre cada resultado em uma linha com o nome da regra.
+- Use `print(f"Pode votar: {pode_votar}")` para manter a leitura clara.
+- Evite ficar repetindo textos longos.
+
+### Marco 5: revisar casos especiais
+- Teste `idade = 17`, `idade = 18`, `idade = 65` e `idade = -1`.
+- Confirme se cada regra responde como esperado.
+- Verifique que o programa não usa `=` em lugar de `==`.
+
+<Callout type="importante" title="Regra de condição">
+Em Python, o operador de comparação é `==`, enquanto o operador de atribuição é `=`. Misturar os dois gera erro de lógica e também de sintaxe.
+</Callout>
+
+<Playground title="Estrutura inicial" code={`idade = int(input("Idade: "))
+
+# defina cada regra em uma variável separada
+# pode_votar = ...
+# pode_dirigir = ...
+# pode_aposentar = ...
+# meia_entrada = ...
+
+# mostre cada resultado em uma linha clara
+`} />
+
+## Desafio extra
+Crie uma segunda etapa que mostre uma tabela final com todos os resultados e uma observação de risco, como `Atende a regra` ou `Fora da faixa`. 
+
+## Visão de mercado
+Regras de elegibilidade, acesso a benefícios e validações de negócio aparecem em sistemas de RH, educação, clientes de cartão, transporte e serviços públicos. A lógica precisa estar separada, fácil de testar e clara para quem vai manter o código depois.
+
+## Autoavaliação
+- [ ] Separei cada regra em uma variável lógica.
+- [ ] Usei comparações e operadores lógicos corretamente.
+- [ ] Tratei valores negativos e zero como entrada inválida.
+- [ ] Testei ao menos um caso em cada faixa importante da regra.
+- [ ] A saída final ficou clara e fácil de ler.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+idade = int(input("Idade: "))
+
+if idade < 0:
+    print("Idade inválida: informe um número maior ou igual a zero.")
+else:
+    pode_votar = idade >= 18 and idade <= 70
+    pode_dirigir = idade >= 18
+    pode_aposentar = idade >= 65
+    meia_entrada = idade < 18 or idade >= 60
+
+    print(f"Idade: {idade}")
+    print(f"Pode votar: {pode_votar}")
+    print(f"Pode dirigir: {pode_dirigir}")
+    print(f"Pode aposentar: {pode_aposentar}")
+    print(f"Meia-entrada: {meia_entrada}")
+```
+
+Saída real com entrada:
+
+```text
+Idade: 25
+Pode votar: True
+Pode dirigir: True
+Pode aposentar: False
+Meia-entrada: False
+```
+</details>

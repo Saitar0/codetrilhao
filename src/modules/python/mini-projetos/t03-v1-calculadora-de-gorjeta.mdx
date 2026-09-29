@@ -1,0 +1,142 @@
+---
+titulo: "Calculadora de gorjeta"
+descricao: "Calcule gorjeta, total da conta e valor por pessoa usando operadores e precedência."
+topico: "operadores-e-expressoes"
+topicoNome: "Operadores e expressões"
+variacao: "V1"
+tempo: 20
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "operadores", "precedencia", "gorjeta", "f-string"]
+---
+
+# Calculadora de gorjeta
+
+## Contexto
+Você foi contratado para ajudar um restaurante a simplificar o fechamento de contas. O objetivo é calcular a gorjeta e dividir o total entre as pessoas da mesa sem confundir os valores nem esquecer de mostrar o total final.
+
+## O que você vai construir
+Um programa que lê o valor da conta, o percentual da gorjeta e o número de pessoas. Em seguida, calcula a gorjeta, o total da conta e o valor por pessoa.
+
+Exemplo de execução real:
+
+```text
+Valor da conta: 250.00
+Percentual da gorjeta (%): 10
+Número de pessoas: 4
+Gorjeta: R$ 25.00
+Total: R$ 275.00
+Valor por pessoa: R$ 68.75
+```
+
+### Tabela de precedência
+| Ordem | Operadores | Observação |
+|---|---|---|
+| 1 | `**` | potenciação |
+| 2 | `*`, `/`, `//`, `%` | multiplicação, divisão, divisão inteira e resto |
+| 3 | `+`, `-` | adição e subtração |
+| 4 | `==`, `!=`, `<`, `>`, `<=`, `>=` | comparação |
+| 5 | `not` | negação lógica |
+| 6 | `and` | conjunção |
+| 7 | `or` | disjunção |
+
+## Requisitos
+1. Ler o valor da conta em `float`.
+2. Ler o percentual da gorjeta em `float`.
+3. Ler o número de pessoas em `int`.
+4. Calcular a gorjeta como `valor_conta * percentual / 100`.
+5. Calcular o total e dividir pelo número de pessoas.
+6. Mostrar o resultado com duas casas decimais.
+
+## Critérios de aceite
+- [ ] O programa usa `float` para valores monetários e `int` para quantidade de pessoas.
+- [ ] A gorjeta é calculada usando a regra correta de percentual.
+- [ ] O total final inclui a gorjeta.
+- [ ] O valor por pessoa é calculado depois do total final.
+- [ ] A saída mostra valores com duas casas decimais e está legível.
+
+## Guia
+### Etapa 1: receber os dados
+- Leia o valor da conta.
+- Leia o percentual da gorjeta.
+- Leia quantas pessoas dividirão a conta.
+- Converta os valores que precisam ser numéricos antes de operar.
+
+### Etapa 2: calcular a gorjeta
+- Use o percentual como fração decimal ou como percentual em relação ao valor.
+- A operação principal é multiplicação seguida de divisão.
+- Verifique a ordem das operações para não dividir antes de multiplicar.
+
+### Etapa 3: somar o total
+- O total da conta é `valor_conta + gorjeta`.
+- Faça isso em uma variável separada para ficar mais legível.
+- Se o valor da conta for zero, o programa ainda pode funcionar, mas vale testar.
+
+### Etapa 4: dividir por pessoa
+- O valor por pessoa é `total / pessoas`.
+- Tenha atenção: a divisão exige que a quantidade de pessoas seja maior que zero.
+- Em casos de entrada inválida, a mensagem deve ser clara.
+
+### Etapa 5: formatar a saída
+- Use `f-string` para imprimir `R$` e duas casas decimais.
+- A saída deve parecer uma conta final, não apenas contas isoladas.
+- Teste com um valor arredondado e outro decimal.
+
+<Callout type="importante" title="Dica da precedência">
+Em expressões com vários operadores, o Python calcula primeiro a multiplicação e a divisão e só depois a adição e a subtração. Quando você misturar isso com porcentagem, vale usar parênteses para deixar a regra clara.
+</Callout>
+
+<Playground title="Estrutura inicial" code={`valor_conta = float(input("Valor da conta: "))
+percentual_gorjeta = float(input("Percentual da gorjeta (%): "))
+pessoas = int(input("Número de pessoas: "))
+
+# calcule a gorjeta
+# some o total
+# divida pelo número de pessoas
+# mostre o resultado final com duas casas decimais
+`} />
+
+## Desafio extra
+Arredonde a gorjeta para cima ao centavo quando o resultado não for um valor exato, como em contas de 7,25% ou 5 pessoas.
+
+## Visão de mercado
+Cálculos de gorjeta, divisão de contas e fechamento de pedidos aparecem em restaurantes, delivery e sistemas de pagamentos. O que parece simples na prática exige organização de regra, arredondamento e clareza na saída.
+
+## Autoavaliação
+- [ ] Entendi a ordem de precedência do cálculo.
+- [ ] Converto a entrada para os tipos certos antes das operações.
+- [ ] Calculei gorjeta, total e valor por pessoa em variáveis separadas.
+- [ ] Formatei a saída com duas casas decimais.
+- [ ] Testei pelo menos um caso com mais de uma pessoa na mesa.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+valor_conta = float(input("Valor da conta: "))
+percentual_gorjeta = float(input("Percentual da gorjeta (%): "))
+pessoas = int(input("Número de pessoas: "))
+
+if pessoas <= 0:
+    print("O número de pessoas deve ser maior que zero.")
+else:
+    gorjeta = valor_conta * percentual_gorjeta / 100
+    total = valor_conta + gorjeta
+    valor_por_pessoa = total / pessoas
+
+    print(f"Gorjeta: R$ {gorjeta:.2f}")
+    print(f"Total: R$ {total:.2f}")
+    print(f"Valor por pessoa: R$ {valor_por_pessoa:.2f}")
+```
+
+Saída real com entrada:
+
+```text
+Valor da conta: 250.00
+Percentual da gorjeta (%): 10
+Número de pessoas: 4
+Gorjeta: R$ 25.00
+Total: R$ 275.00
+Valor por pessoa: R$ 68.75
+```
+</details>
