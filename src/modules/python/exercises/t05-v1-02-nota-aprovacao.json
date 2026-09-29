@@ -1,0 +1,27 @@
+{
+  "id": "t05-v1-02-nota-aprovacao",
+  "tipo": "bug",
+  "titulo": "Nota: aprovado ou reprovado",
+  "topico": "Condicionais",
+  "topicoNumero": 5,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "A regra correta é: nota >= 7 é aprovado; nota >= 5 é recuperação; demais casos são reprovados.",
+    "A ordem das comparações importa: a regra mais específica deve vir antes da mais geral.",
+    "Verifique os limites 5, 6 e 7 para confirmar o fluxo das condições."
+  ],
+  "solucao": "def situacao_nota(nota):\n    if nota >= 7:\n        return \"Aprovado\"\n    elif nota >= 5:\n        return \"Recuperacao\"\n    return \"Reprovado\"\n",
+  "tags": ["python", "condicionais", "bug"],
+  "aulaRelacionada": "condicionais",
+  "enunciado": "Corrija a função `situacao_nota(nota)` para classificar corretamente a nota em `Aprovado`, `Recuperacao` ou `Reprovado`. A regra é: 7 ou mais aprova, 5 a 6.9 fica em recuperação e abaixo de 5 reprova.",
+  "starterCode": "def situacao_nota(nota):\n    if nota >= 5:\n        return \"Aprovado\"\n    elif nota >= 7:\n        return \"Recuperacao\"\n    return \"Reprovado\"\n",
+  "testes": [
+    { "chamada": "situacao_nota(9)", "esperado": "Aprovado", "oculto": false },
+    { "chamada": "situacao_nota(6)", "esperado": "Recuperacao", "oculto": false },
+    { "chamada": "situacao_nota(4)", "esperado": "Reprovado", "oculto": false },
+    { "chamada": "situacao_nota(7)", "esperado": "Aprovado", "oculto": true },
+    { "chamada": "situacao_nota(5)", "esperado": "Recuperacao", "oculto": true }
+  ]
+}

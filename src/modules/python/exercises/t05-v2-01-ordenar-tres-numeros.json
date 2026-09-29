@@ -1,0 +1,27 @@
+{
+  "id": "t05-v2-01-ordenar-tres-numeros",
+  "tipo": "codigo",
+  "titulo": "Ordenar três números",
+  "topico": "Condicionais",
+  "topicoNumero": 5,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Ordene em pares: primeiro coloque os menores à esquerda e depois ajuste o meio e o maior.",
+    "Trocas temporárias com `a, b = b, a` ajudam a manter o código simples.",
+    "Teste com números repetidos e com ordem invertida para garantir a lógica."
+  ],
+  "solucao": "def ordenar_tres(a, b, c):\n    if a > b:\n        a, b = b, a\n    if a > c:\n        a, c = c, a\n    if b > c:\n        b, c = c, b\n    return [a, b, c]\n",
+  "tags": ["python", "condicionais", "ordem"],
+  "aulaRelacionada": "condicionais",
+  "enunciado": "Implemente `ordenar_tres(a, b, c)` para devolver a lista em ordem crescente sem usar `sort()`. A função deve funcionar em qualquer sequência de três números inteiros.",
+  "starterCode": "def ordenar_tres(a, b, c):\n    pass\n",
+  "testes": [
+    { "chamada": "ordenar_tres(9, 1, 5)", "esperado": "[1, 5, 9]", "oculto": false },
+    { "chamada": "ordenar_tres(4, 4, 2)", "esperado": "[2, 4, 4]", "oculto": false },
+    { "chamada": "ordenar_tres(3, 8, 1)", "esperado": "[1, 3, 8]", "oculto": false },
+    { "chamada": "ordenar_tres(-2, -8, -5)", "esperado": "[-8, -5, -2]", "oculto": true },
+    { "chamada": "ordenar_tres(5, 2, 2)", "esperado": "[2, 2, 5]", "oculto": true }
+  ]
+}

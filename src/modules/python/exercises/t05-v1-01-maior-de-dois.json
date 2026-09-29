@@ -1,0 +1,27 @@
+{
+  "id": "t05-v1-01-maior-de-dois",
+  "tipo": "codigo",
+  "titulo": "Maior de dois números",
+  "topico": "Condicionais",
+  "topicoNumero": 5,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Compare os dois valores com `>` e trate o empate como um caso válido.",
+    "Se o primeiro for maior, devolva `a`; caso contrário, devolva `b`.",
+    "Teste com números negativos e valores iguais para validar a borda do empate."
+  ],
+  "solucao": "def maior_de_dois(a, b):\n    if a > b:\n        return a\n    return b\n",
+  "tags": ["python", "condicionais", "comparacao"],
+  "aulaRelacionada": "condicionais",
+  "enunciado": "Implemente `maior_de_dois(a, b)` que devolve o maior dos dois números. Se forem iguais, retorne qualquer um dos valores, pois o problema considera o empate válido.",
+  "starterCode": "def maior_de_dois(a, b):\n    pass\n",
+  "testes": [
+    { "chamada": "maior_de_dois(3, 7)", "esperado": "7", "oculto": false },
+    { "chamada": "maior_de_dois(8, 8)", "esperado": "8", "oculto": false },
+    { "chamada": "maior_de_dois(-5, -2)", "esperado": "-2", "oculto": false },
+    { "chamada": "maior_de_dois(10, -1)", "esperado": "10", "oculto": true },
+    { "chamada": "maior_de_dois(0, 0)", "esperado": "0", "oculto": true }
+  ]
+}

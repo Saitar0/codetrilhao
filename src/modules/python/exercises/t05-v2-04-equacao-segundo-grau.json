@@ -1,0 +1,27 @@
+{
+  "id": "t05-v2-04-equacao-segundo-grau",
+  "tipo": "codigo",
+  "titulo": "Resolver equação de 2º grau",
+  "topico": "Condicionais",
+  "topicoNumero": 5,
+  "variacao": "V2",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Calcule o discriminante primeiro: `b**2 - 4*a*c`.",
+    "Se o discriminante for menor que zero, não há raiz real; zero gera uma raiz dupla; maior que zero gera duas.",
+    "Use `math.sqrt` e cuidado com a ordem das condições para cobrir todos os casos."
+  ],
+  "solucao": "import math\n\ndef raizes_reais(a, b, c):\n    if a == 0:\n        return []\n\n    delta = b ** 2 - 4 * a * c\n\n    if delta < 0:\n        return []\n    elif delta == 0:\n        return [-b / (2 * a)]\n    else:\n        raiz_delta = math.sqrt(delta)\n        x1 = (-b + raiz_delta) / (2 * a)\n        x2 = (-b - raiz_delta) / (2 * a)\n        return sorted([x1, x2])\n",
+  "tags": ["python", "condicionais", "equacao"],
+  "aulaRelacionada": "condicionais",
+  "enunciado": "Implemente `raizes_reais(a, b, c)` para devolver uma lista com as raízes reais da equação quadrática `ax² + bx + c = 0`. O retorno deve ser `[]` quando não houver raiz real, uma lista com um único valor quando houver raiz dupla e duas raízes em ordem crescente quando houver duas raízes reais.",
+  "starterCode": "import math\n\ndef raizes_reais(a, b, c):\n    pass\n",
+  "testes": [
+    { "chamada": "raizes_reais(1, -3, 2)", "esperado": "[1.0, 2.0]", "oculto": false },
+    { "chamada": "raizes_reais(1, 2, 1)", "esperado": "[-1.0]", "oculto": false },
+    { "chamada": "raizes_reais(1, 0, 1)", "esperado": "[]", "oculto": false },
+    { "chamada": "raizes_reais(0, 2, 3)", "esperado": "[]", "oculto": true },
+    { "chamada": "raizes_reais(2, 5, -3)", "esperado": "[-3.0, 0.5]", "oculto": true }
+  ]
+}

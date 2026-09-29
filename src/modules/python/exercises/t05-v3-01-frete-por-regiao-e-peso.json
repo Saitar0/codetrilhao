@@ -1,0 +1,27 @@
+{
+  "id": "t05-v3-01-frete-por-regiao-e-peso",
+  "tipo": "codigo",
+  "titulo": "Calcular frete por região e faixa de peso",
+  "topico": "Condicionais",
+  "topicoNumero": 5,
+  "variacao": "V3",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Primeiro defina a região e depois a faixa de peso; cada regra combina duas condições.",
+    "Se a região for diferente das previstas, retorne 'regiao invalida'.",
+    "Teste cada região com valores nos limites das faixas para evitar erros de fronteira."
+  ],
+  "solucao": "def calcular_frete(regiao, peso_kg):\n    if regiao not in {\"norte\", \"sul\", \"leste\", \"oeste\"}:\n        return \"regiao invalida\"\n\n    if regiao == \"norte\":\n        if peso_kg <= 5:\n            return 12.5\n        elif peso_kg <= 10:\n            return 18.0\n        return 25.0\n\n    if regiao == \"sul\":\n        if peso_kg <= 5:\n            return 10.0\n        elif peso_kg <= 10:\n            return 15.5\n        return 22.0\n\n    if regiao == \"leste\":\n        if peso_kg <= 5:\n            return 11.0\n        elif peso_kg <= 10:\n            return 16.5\n        return 24.0\n\n    if peso_kg <= 5:\n        return 13.0\n    elif peso_kg <= 10:\n        return 19.0\n    return 27.0\n",
+  "tags": ["python", "condicionais", "frete"],
+  "aulaRelacionada": "condicionais",
+  "enunciado": "Implemente `calcular_frete(regiao, peso_kg)` que retorna o valor do frete conforme a região e a faixa de peso. Regiões válidas: `norte`, `sul`, `leste` e `oeste`. Para cada região, a regra é: até 5 kg paga valor baixo, até 10 kg paga valor médio e acima de 10 kg paga valor alto; caso a região seja inválida, devolva `regiao invalida`.",
+  "starterCode": "def calcular_frete(regiao, peso_kg):\n    pass\n",
+  "testes": [
+    { "chamada": "calcular_frete('norte', 4)", "esperado": "12.5", "oculto": false },
+    { "chamada": "calcular_frete('sul', 8)", "esperado": "15.5", "oculto": false },
+    { "chamada": "calcular_frete('oeste', 12)", "esperado": "27.0", "oculto": false },
+    { "chamada": "calcular_frete('centro', 2)", "esperado": "regiao invalida", "oculto": true },
+    { "chamada": "calcular_frete('leste', 6)", "esperado": "16.5", "oculto": true }
+  ]
+}

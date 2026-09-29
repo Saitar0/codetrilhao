@@ -1,0 +1,27 @@
+{
+  "id": "t05-v3-04-aprovar-pedido",
+  "tipo": "codigo",
+  "titulo": "Aprovar pedido com regras combinadas",
+  "topico": "Condicionais",
+  "topicoNumero": 5,
+  "variacao": "V3",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "A regra final costuma ser uma combinação de condições: valor, estoque e reputação do cliente.",
+    "Use `and`/`or` para combinar regras e não acumule condições redundantes.",
+    "Teste um caso aprovado, um caso negado por estoque e um caso negado por valor."
+  ],
+  "solucao": "def aprovar_pedido(valor_total, estoque_disponivel, cliente_reputacao):\n    if valor_total >= 200 and estoque_disponivel >= 1 and cliente_reputacao == \"bom\":\n        return \"aprovado\"\n    if valor_total < 100 or estoque_disponivel == 0:\n        return \"negado\"\n    if cliente_reputacao == \"ruim\":\n        return \"negado\"\n    return \"analise\"\n",
+  "tags": ["python", "condicionais", "regras"],
+  "aulaRelacionada": "condicionais",
+  "enunciado": "Implemente `aprovar_pedido(valor_total, estoque_disponivel, cliente_reputacao)` para retornar `aprovado`, `analise` ou `negado` segundo estas regras: o pedido é aprovado apenas se o valor for pelo menos 200, houver estoque e a reputação do cliente for `bom`; é negado se o valor for menor que 100, se não houver estoque ou se a reputação for `ruim`; em qualquer outro caso, devolve `analise`.",
+  "starterCode": "def aprovar_pedido(valor_total, estoque_disponivel, cliente_reputacao):\n    pass\n",
+  "testes": [
+    { "chamada": "aprovar_pedido(250, 2, 'bom')", "esperado": "aprovado", "oculto": false },
+    { "chamada": "aprovar_pedido(90, 2, 'bom')", "esperado": "negado", "oculto": false },
+    { "chamada": "aprovar_pedido(150, 0, 'bom')", "esperado": "negado", "oculto": false },
+    { "chamada": "aprovar_pedido(180, 3, 'ruim')", "esperado": "negado", "oculto": true },
+    { "chamada": "aprovar_pedido(180, 2, 'medio')", "esperado": "analise", "oculto": true }
+  ]
+}

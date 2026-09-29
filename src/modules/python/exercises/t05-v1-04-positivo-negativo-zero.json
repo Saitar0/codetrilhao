@@ -1,0 +1,27 @@
+{
+  "id": "t05-v1-04-positivo-negativo-zero",
+  "tipo": "codigo",
+  "titulo": "Classificar sinal do número",
+  "topico": "Condicionais",
+  "topicoNumero": 5,
+  "variacao": "V1",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Use três ramos bem definidos: `> 0`, `== 0` e `< 0`.",
+    "Uma condição simples basta para o caso zero.",
+    "Teste com positivos, negativos e zero para fechar os três caminhos."
+  ],
+  "solucao": "def sinal(numero):\n    if numero > 0:\n        return \"positivo\"\n    elif numero == 0:\n        return \"zero\"\n    return \"negativo\"\n",
+  "tags": ["python", "condicionais", "sinal"],
+  "aulaRelacionada": "condicionais",
+  "enunciado": "Implemente `sinal(numero)` que devolve `positivo`, `zero` ou `negativo` de acordo com o valor informado.",
+  "starterCode": "def sinal(numero):\n    pass\n",
+  "testes": [
+    { "chamada": "sinal(5)", "esperado": "positivo", "oculto": false },
+    { "chamada": "sinal(0)", "esperado": "zero", "oculto": false },
+    { "chamada": "sinal(-3)", "esperado": "negativo", "oculto": false },
+    { "chamada": "sinal(12)", "esperado": "positivo", "oculto": true },
+    { "chamada": "sinal(-10)", "esperado": "negativo", "oculto": true }
+  ]
+}
