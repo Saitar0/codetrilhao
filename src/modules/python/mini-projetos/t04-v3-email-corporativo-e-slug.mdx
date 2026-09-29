@@ -1,0 +1,161 @@
+---
+titulo: "E-mail corporativo e slug"
+descricao: "Padronize nomes de funcionários e títulos de artigos em e-mails e slugs de URL usando strings, Unicode e limpeza de texto."
+topico: "strings"
+topicoNome: "Strings"
+variacao: "V3"
+tempo: 30
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "slug", "email-corporativo", "unicode", "dados-limpos"]
+---
+
+# E-mail corporativo e slug
+
+## Contexto
+Uma empresa de tecnologia precisa padronizar cadastro de colaboradores e artigos do blog. O time de RH quer criar e-mails corporativos no padrão `nome.sobrenome@empresa.com`, enquanto o time de marketing precisa converter títulos para slugs de URL para campanhas, páginas e SEO.
+
+## O que você vai construir
+Um programa que recebe o nome completo de um funcionário e o título de um artigo, limpa o texto, remove acentos e gera duas saídas: o e-mail corporativo e o slug da URL.
+
+Exemplo de execução real:
+
+```text
+Nome do funcionário:  María José da Silva 
+Título do artigo: Aprenda Python Rápido!
+Email corporativo: maria.jose@empresa.com
+Slug: aprenda-python-rapido
+```
+
+## Requisitos
+1. Ler o nome completo do funcionário.
+2. Remover espaços duplicados e acentos do nome.
+3. Normalizar o texto para minúsculas.
+4. Criar o e-mail no formato `nome.sobrenome@empresa.com`.
+5. Ler um título de artigo.
+6. Transformar texto em slug: minúsculas, sem acentos, sem pontuação e com hífens entre palavras.
+7. Tratar nomes compostos e textos com múltiplos espaços.
+
+## Critérios de aceite
+- [ ] O nome do funcionário é limpo e normalizado antes do e-mail.
+- [ ] O programa remove acentos corretamente.
+- [ ] O e-mail usa o padrão da empresa e não deixa espaços ou caracteres inválidos.
+- [ ] O slug abrevia o texto para um padrão legível de URL.
+- [ ] O código trata nomes compostos e títulos com pontuação.
+
+## Histórias de usuário
+- Como RH, quero gerar e-mails corporativos sem depender de digitação manual.
+- Como marketing, quero criar slugs automáticos para artigos e campanhas.
+- Como analista, quero padronizar textos para evitar inconsistências em dados, relatórios e URLs.
+
+## Arquitetura sugerida
+- `normalizar_texto(texto)` para remover acentos, espaços duplicados e pontuação.
+- `gerar_email(nome_completo, dominio)` para produzir o formato de e-mail da empresa.
+- `gerar_slug(titulo)` para transformar texto em URL amigável.
+- `main()` para ler entradas, chamar as funções e imprimir os resultados.
+
+## Casos de teste de aceitação
+- Nome: `José da Silva` → e-mail `jose.da@empresa.com` ou `jose.silva@empresa.com` dependendo do padrão da empresa.
+- Nome: `  Ana   Maria  Costa  ` → espaços duplicados removidos.
+- Título: `Aprenda Python Rápido!` → slug `aprenda-python-rapido`.
+- Título: `Como usar o Python 3.11?` → slug `como-usar-o-python-311`.
+- Nome com acentos: `Marta Ísis` → texto sem acentos antes do e-mail.
+
+## Riscos
+- Acentos e caracteres especiais podem quebrar a padronização e gerar e-mails inválidos.
+- Não normalizar espaços duplicados cria nomes inconsistentes em cadastros.
+- Usar para slug caracteres não esperados pode produzir URLs quebradas e pouco amigáveis.
+- Não remover pontuação do título gera slugs confusos em SEO e links.
+
+## Guia
+### História do cliente
+A empresa precisa de um processo simples para criar e-mails corporativos e slugs de URL a partir de textos reais, que frequentemente chegam com acentos, espaços extras e pontuação.
+
+### Marcos do projeto
+1. Normalizar o nome do funcionário: remover espaços extras e acentos.
+2. Transformar o nome em uma estrutura adequada para gerar o e-mail.
+3. Criar uma função para remover pontuação e transformar espaços em hífen.
+4. Validar a saída limpa para URL.
+5. Mostrar o resultado final em um painel simples.
+
+### Dicas
+- Use `unicodedata.normalize()` para remover acentos antes de montar qualquer texto final.
+- `split()` ajuda a separar palavras e depois montar o e-mail ou o slug.
+- `replace()` e `join()` ajudam a transformar espaços e pontuação em um formato uniforme.
+
+<Callout type="importante" title="Padronização de texto">
+Limpeza de texto é uma atividade central em dados e automatização de negócios. Regra simples e consistente reduce erro humano, inconsistência e duplicidade em sistemas.
+</Callout>
+
+<Playground title="Ponto de partida" code={`import unicodedata
+
+nome = input("Nome do funcionário: ")
+titulo = input("Título do artigo: ")
+
+# normalize o nome e remova acentos
+# monte o email corporativo no padrão nome.sobrenome@empresa.com
+# normalize o título e gere um slug em minúsculas com hífens
+# imprima o resultado final
+`} />
+
+## Desafio extra
+Adicione uma validação para nomes com apóstrofos ou hífens, como `Ana-Lúcia` ou `Joãozinho Pereira`, e converta isso para um e-mail consistente sem quebrar o padrão.
+
+## Visão de mercado
+Limpeza e padronização de texto aparecem em CRM, e-mail marketing, SEO, integrações de dados e migração de sistemas. Em empresas, a maior parte do trabalho de dados não é criar código sofisticado, mas deixar cada texto em um padrão útil e previsível.
+
+## Autoavaliação
+- [ ] Entendi a diferença entre normalizar texto e somente formatar a saída.
+- [ ] Removi acentos e espaços extras antes de gerar e-mail e slug.
+- [ ] Usei funções separadas para cada responsabilidade.
+- [ ] Testei um nome composto e um título com pontuação.
+- [ ] A saída final ficou consistente e pronta para uso.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+import unicodedata
+
+
+def remover_acentos(texto):
+    texto = unicodedata.normalize("NFKD", texto)
+    return texto.encode("ascii", "ignore").decode("ascii")
+
+
+def limpar_nome(nome):
+    nome = remover_acentos(nome).strip()
+    nome = " ".join(nome.split())
+    return nome.lower()
+
+
+def gerar_email(nome_completo, dominio="empresa.com"):
+    partes = limpar_nome(nome_completo).split()
+    if len(partes) >= 2:
+        return f"{partes[0]}.{partes[-1]}@{dominio}"
+    return f"{partes[0]}@{dominio}"
+
+
+def gerar_slug(titulo):
+    texto = remover_acentos(titulo).lower()
+    texto = "".join(car if car.isalnum() or car.isspace() else " " for car in texto)
+    texto = " ".join(texto.split())
+    return texto.replace(" ", "-")
+
+
+nome = input("Nome do funcionário: ")
+titulo = input("Título do artigo: ")
+
+print(f"Email corporativo: {gerar_email(nome)}")
+print(f"Slug: {gerar_slug(titulo)}")
+```
+
+Saída real com entrada:
+
+```text
+Nome do funcionário:  María José da Silva 
+Título do artigo: Aprenda Python Rápido!
+Email corporativo: maria.jose@empresa.com
+Slug: aprenda-python-rapido
+```
+</details>

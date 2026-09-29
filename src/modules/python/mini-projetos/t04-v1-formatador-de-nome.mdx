@@ -1,0 +1,131 @@
+---
+titulo: "Formatador de nome"
+descricao: "Limpe, padronize e abrevie nomes usando strings, fatiamento e remoção de acentos."
+topico: "strings"
+topicoNome: "Strings"
+variacao: "V1"
+tempo: 20
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "strings", "formatacao", "acentos", "fatiamento"]
+---
+
+# Formatador de nome
+
+## Contexto
+Você entrou em um processo seletivo para uma empresa de dados e precisa preparar a lista de candidatos para um sistema interno. Antes de enviar nomes para o cadastro, o sistema exige que o texto esteja limpo, padronizado e fácil de ler.
+
+## O que você vai construir
+Um programa que recebe um nome digitado de forma bagunçada, remove espaços extras, elimina acentos, coloca o texto em formato correto e cria uma versão abreviada para uso em documentos internos.
+
+Exemplo de execução real:
+
+```text
+Digite o nome completo:   jOÃO   da silva 
+Nome limpo: Joao da Silva
+Nome abreviado: J. da Silva
+Iniciais: J.D.S
+```
+
+## Requisitos
+1. Ler um nome completo digitado pelo usuário.
+2. Remover espaços extras no começo e no fim.
+3. Remover acentos para manter o texto em formato simples.
+4. Padronizar o texto com a primeira letra em maiúscula e o restante em minúsculo.
+5. Criar uma versão abreviada com a primeira letra do primeiro nome e o restante sem abreviar.
+6. Exibir as iniciais do nome completo.
+
+## Critérios de aceite
+- [ ] O programa remove espaços duplicados e acentos.
+- [ ] O texto final fica em formato legível e consistente.
+- [ ] A versão abreviada segue um padrão claro.
+- [ ] O código usa métodos de string em vez de concatenação manual desnecessária.
+- [ ] O programa funciona mesmo com entrada com excesso de espaços e caixa diferente.
+
+## Guia
+### Etapa 1: limpar a entrada
+- Use `strip()` para remover espaços vazios no começo e no fim.
+- Depois, normalize a string para remover acentos.
+- A função `split()` ajuda a separar palavras corretamente.
+
+### Etapa 2: padronizar o nome
+- Aplique `title()` para deixar cada palavra em caixa adequada.
+- Repare que `title()` transforma "joao da silva" em "Joao Da Silva".
+- Se quiser, passe por `split()` para montar a frase manualmente.
+
+### Etapa 3: gerar a versão abreviada
+- Pegue a primeira palavra e a primeira letra dela.
+- Concatene com `.` e com o restante do nome a partir da segunda palavra.
+- Exemplo: `Joao da Silva` vira `J. da Silva`.
+
+### Etapa 4: criar as iniciais
+- Use uma lista de palavras para coletar a primeira letra de cada palavra.
+- Depois, junte as iniciais com `.` e um espaço final.
+- Em `Joao da Silva`, a sequência fica `J.D.S`.
+
+### Etapa 5: formatar a saída
+- Mostre cada resultado em uma linha clara.
+- Evite misturar "nome limpo" e "nome formatado" em uma única frase.
+- Faça a saída parecer um cadastro pronto para ser usado.
+
+<Callout type="importante" title="Dica de strings">
+Strings são imutáveis, então cada transformação gera uma nova string. Em vez de tentar modificar uma parte no lugar, você cria uma versão nova e a guarda em outra variável.
+</Callout>
+
+<Playground title="Estrutura inicial" code={`import unicodedata
+
+nome = input("Digite o nome completo: ")
+
+# 1) remova espaços extras
+# 2) remova acentos com unicodedata
+# 3) padronize o nome em formato de título
+# 4) crie uma versão abreviada
+# 5) mostre as iniciais
+`} />
+
+## Desafio extra
+Adicione uma segunda regra: se o nome tiver apenas um sobrenome, mostre também a primeira letra do sobrenome no formato `J. S.`.
+
+## Visão de mercado
+Limpadores de texto e normalizadores de nome são usados em cadastros, CRM, marketing digital e integração entre sistemas. Mesmo uma tarefa simples de nome exige padronização para evitar duplicidade e falhas em busca e relatórios.
+
+## Autoavaliação
+- [ ] Entendi que strings são imutáveis e sempre geram nova string.
+- [ ] Removi espaços extras e acentos antes de formatar o nome.
+- [ ] Usei métodos de string sem depender de lógica complicada.
+- [ ] Produzi uma versão abreviada legível.
+- [ ] Testei com entrada em caixa diferente e com excesso de espaços.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+import unicodedata
+
+nome = input("Digite o nome completo: ")
+
+nome = " ".join(nome.strip().split())
+nome_sem_acento = unicodedata.normalize("NFKD", nome).encode("ascii", "ignore").decode("ascii")
+nome_formatado = nome_sem_acento.title()
+partes = nome_formatado.split()
+
+if not partes:
+    print("Nome inválido.")
+else:
+    nome_abreviado = f"{partes[0][0].upper()}. { ' '.join(partes[1:]) if len(partes) > 1 else ''}".strip()
+    iniciais = ".".join(p[0].upper() for p in partes) + "."
+
+    print(f"Nome limpo: {nome_formatado}")
+    print(f"Nome abreviado: {nome_abreviado}")
+    print(f"Iniciais: {iniciais}")
+```
+
+Saída real com entrada:
+
+```text
+Digite o nome completo:   jOÃO   da silva 
+Nome limpo: Joao da Silva
+Nome abreviado: J. da Silva
+Iniciais: J.D.S.
+```
+</details>

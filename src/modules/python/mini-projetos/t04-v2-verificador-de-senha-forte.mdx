@@ -1,0 +1,149 @@
+---
+titulo: "Verificador de senha forte"
+descricao: "Valide senhas com regras de segurança e mostre quais critérios foram atendidos ou faltaram."
+topico: "strings"
+topicoNome: "Strings"
+variacao: "V2"
+tempo: 25
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "senha", "validacao", "string", "seguranca"]
+---
+
+# Verificador de senha forte
+
+## Contexto
+Uma startup de tecnologia precisa validar senhas em um formulário de cadastro. O problema não é apenas dizer se a senha é "fraca" ou "forte": a equipe quer saber exatamente o que faltou para o usuário corrigir a senha antes de continuar.
+
+## O que você vai construir
+Um programa que recebe uma senha e verifica se ela atende às regras mínimas de segurança. O programa mostra os critérios atendidos, os que faltaram e uma pontuação de força.
+
+Exemplo de execução real:
+
+```text
+Digite a senha: Senha#123
+Senha atende: 5/5 critérios
+Força: forte
+Critérios atendidos: minúscula, maiúscula, número, símbolo, tamanho
+Faltaram: nenhum
+```
+
+## Requisitos
+1. Ler uma senha digitada pelo usuário.
+2. Verificar se a senha tem pelo menos 8 caracteres.
+3. Confirmar se há letra minúscula.
+4. Confirmar se há letra maiúscula.
+5. Confirmar se há número.
+6. Confirmar se há símbolo especial.
+7. Mostrar uma lista de critérios atendidos e de critérios faltantes.
+8. Exibir uma classificação de força, como fraca, média ou forte.
+
+## Critérios de aceite
+- [ ] O programa verifica todos os critérios mínimos listados.
+- [ ] A mensagem mostra quais regras faltaram e não apenas uma resposta genérica.
+- [ ] A pontuação e a classificação fazem sentido com a senha digitada.
+- [ ] A senha com menos de 8 caracteres é rejeitada ou marcada como fraca.
+- [ ] O código separa a validação dos critérios da etapa de apresentação.
+
+## Guia
+### Marco 1: definir as regras
+- A senha deve ter no mínimo 8 caracteres.
+- Deve haver pelo menos uma letra minúscula.
+- Deve haver pelo menos uma letra maiúscula.
+- Deve haver pelo menos um número.
+- Deve haver pelo menos um símbolo, como `!`, `@`, `#`, `$` ou `%`.
+
+### Marco 2: validar itens específicos
+- Use `isalpha()`, `isdigit()` e comparações com caracteres específicos.
+- Você também pode percorrer cada caractere com `for` e contar o que aparece.
+- Lembre-se de tratar todos os critérios de forma separada para facilitar o diagnóstico.
+
+### Marco 3: cadastrar os resultados
+- Crie variáveis booleanas, como `tem_minuscula`, `tem_maiuscula` e `tem_numero`.
+- Some os critérios atendidos para montar a pontuação.
+- Armazene a lista de critérios faltantes para impressa na saída.
+
+### Marco 4: classificar a senha
+- 0 a 2 critérios atendidos: fraca.
+- 3 a 4 critérios atendidos: média.
+- 5 critérios atendidos: forte.
+- Se a senha for muito curta ou muito simples, mostre a mensagem com clareza.
+
+### Marco 5: revisar casos especiais
+- Teste `senha123`, `Senha123`, `Senha#123` e `12345678`.
+- Confirme que os critérios faltantes são reportados corretamente.
+- Verifique se o programa não considera apenas a quantidade de caracteres como suficiente.
+
+<Callout type="importante" title="Regra de segurança">
+Uma senha forte não é apenas longa; ela precisa combinar letras maiúsculas, minúsculas, números e símbolos. A validação deve ser explícita e observável para o usuário.
+</Callout>
+
+<Playground title="Estrutura inicial" code={`senha = input("Digite a senha: ")
+
+# defina uma regra para cada critério
+# tem_tamanho = ...
+# tem_minuscula = ...
+# tem_maiuscula = ...
+# tem_numero = ...
+# tem_simbolo = ...
+
+# conte quantos critérios foram atendidos
+# liste os critérios faltantes
+# mostre a força da senha
+`} />
+
+## Desafio extra
+Crie uma regra extra para detectar senhas comuns como `123456`, `password`, `admin` e `qwerty`, mostrando uma mensagem de alerta.
+
+## Visão de mercado
+Validação de senha é uma rotina de sistemas de cadastro, autenticação, plataformas de educação, fintechs e administração. O trabalho real não é apenas bloquear fraudes; é dar ao usuário feedback útil para corrigir a senha sem frustrar a experiência.
+
+## Autoavaliação
+- [ ] Separei cada regra em uma validação individual.
+- [ ] Usei `len()`, `isalpha()` e verificações por caractere corretamente.
+- [ ] Listei os critérios faltantes em vez de responder apenas sim/não.
+- [ ] Testei pelo menos uma senha fraca, uma média e uma forte.
+- [ ] A classificação da força da senha faz sentido.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+senha = input("Digite a senha: ")
+
+criterios = {
+    "tamanho": len(senha) >= 8,
+    "minúscula": any(car.islower() for car in senha),
+    "maiúscula": any(car.isupper() for car in senha),
+    "número": any(car.isdigit() for car in senha),
+    "símbolo": any(not car.isalnum() for car in senha),
+}
+
+atendidos = [nome for nome, ok in criterios.items() if ok]
+faltaram = [nome for nome, ok in criterios.items() if not ok]
+
+pontuacao = sum(1 for ok in criterios.values() if ok)
+
+if pontuacao <= 2:
+    classificacao = "fraca"
+elif pontuacao <= 4:
+    classificacao = "média"
+else:
+    classificacao = "forte"
+
+print(f"Senha atende: {pontuacao}/5 critérios")
+print(f"Força: {classificacao}")
+print(f"Critérios atendidos: {', '.join(atendidos) if atendidos else 'nenhum'}")
+print(f"Faltaram: {', '.join(faltaram) if faltaram else 'nenhum'}")
+```
+
+Saída real com entrada:
+
+```text
+Digite a senha: Senha#123
+Senha atende: 5/5 critérios
+Força: forte
+Critérios atendidos: tamanho, minúscula, maiúscula, número, símbolo
+Faltaram: nenhum
+```
+</details>
