@@ -1,0 +1,147 @@
+---
+titulo: "Boletim escolar"
+descricao: "Calcule a média, aplique regras e mostre a situação final do aluno com condicionais."
+topico: "condicionais"
+topicoNome: "Condicionais"
+variacao: "V1"
+tempo: 25
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "condicionais", "boletim", "média", "aprovação"]
+---
+
+# Boletim escolar
+
+## Contexto
+Você trabalha em uma escola e precisa revisar rapidamente o desempenho dos alunos. O boletim precisa mostrar a média e a situação final de forma clara, porque a decisão impacta aprovação, recuperação e atenção pedagógica.
+
+## O que você vai construir
+Um programa que recebe o nome e as 4 notas de um aluno, calcula a média e informa se ele foi aprovado, ficou de recuperação ou reprovado. O resultado deve ser simples de ler e útil para um professor ou gestor.
+
+Exemplo de execução real:
+
+```text
+Nome do aluno: Ana
+Nota 1: 8.5
+Nota 2: 7.0
+Nota 3: 9.0
+Nota 4: 8.0
+Média: 8.12
+Situação: aprovado
+```
+
+## Requisitos
+1. Ler o nome do aluno.
+2. Ler 4 notas.
+3. Calcular a média aritmética.
+4. Definir a situação com base em faixas claras.
+5. Mostrar a média e a situação final em texto legível.
+
+## Critérios de aceite
+- [ ] O programa lê todas as 4 notas do aluno.
+- [ ] A média é calculada corretamente e exibida com duas casas decimais.
+- [ ] A situação final entra em uma das faixas: aprovado, recuperação ou reprovado.
+- [ ] A lógica usa `if` e `elif` para evitar decisões ambíguas.
+- [ ] A saída mostra o nome do aluno e a média em vez de apenas um código interno.
+
+## Guia
+### Etapa 1: receber as notas
+- Use `input()` para ler o nome e cada nota.
+- Armazene todas as notas em uma lista para facilitar o cálculo.
+- Converta cada valor para `float()`, porque notas podem ter casas decimais.
+
+### Etapa 2: calcular a média
+- Some todas as notas com `sum()`.
+- Divida a soma pela quantidade de notas.
+- Formate a média com `:.2f` para deixar a leitura mais profissional.
+
+### Etapa 3: definir as regras da situação
+- Aprovado: média maior ou igual a 7.
+- Recuperação: média maior ou igual a 5.
+- Reprovado: média menor que 5.
+- Aqui a ordem importa: teste primeiro a faixa mais alta e depois as mais baixas.
+
+### Etapa 4: mostrar a resposta final
+- Exiba o nome, a média e a situação em linhas diferentes.
+- Isso deixa o boletim mais fácil de interpretar.
+- A mensagem final pode ser simples: `Situação: aprovado`.
+
+### Etapa 5: usar `match/case`
+- Depois de decidir a situação, você pode usar `match` para exibir uma mensagem específica.
+- Isso deixa o código mais legível quando existem várias saídas possíveis.
+- Exemplo: `match status: ...` com casos para `aprovado`, `recuperacao` e `reprovado`.
+
+<Callout type="importante" title="Dica de lógica">
+A ordem dos testes é tão importante quanto a condição. Se você testar primeiro a média menor que 5, o programa pode classificar tudo como reprovado e perder a faixa de recuperação.
+</Callout>
+
+<Playground title="Estrutura inicial" code={`nome = input("Nome do aluno: ")
+notas = []
+
+for i in range(1, 5):
+    notas.append(float(input(f"Nota {i}: ")))
+
+# calcule a média
+# use if/elif para decidir a situação
+# use match/case para mostrar a mensagem final
+# imprima o nome, a média e o resultado
+`} />
+
+## Desafio extra
+Adicione a frequência e reprove o aluno por falta mesmo que a média esteja boa. Exemplo: se a frequência for menor que 75%, a situação vira `reprovado por falta`.
+
+## Visão de mercado
+Boletins, avaliações e relatórios escolares são ferramentas comuns em sistemas de educação, escolas, universidades e plataformas de aprendizagem. O padrão usado aqui aparece também em processos internos de RH, análise de desempenho e relatórios de operação.
+
+## Autoavaliação
+- [ ] Entendi como usar `if`, `elif` e `else` para regras em ordem.
+- [ ] Calculei a média com 4 notas e a exibi corretamente.
+- [ ] Considerei todas as faixas de aprovação e recuperação.
+- [ ] Testei uma entrada de aprovado e outra de reprovado.
+- [ ] Usei `match/case` para tornar a mensagem final mais clara.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+nome = input("Nome do aluno: ")
+notas = [float(input(f"Nota {i}: ")) for i in range(1, 5)]
+
+media = sum(notas) / len(notas)
+
+if media >= 7:
+    status = "aprovado"
+elif media >= 5:
+    status = "recuperacao"
+else:
+    status = "reprovado"
+
+match status:
+    case "aprovado":
+        mensagem = "Parabéns! Você foi aprovado."
+    case "recuperacao":
+        mensagem = "Você ficou de recuperação."
+    case "reprovado":
+        mensagem = "Você foi reprovado."
+    case _:
+        mensagem = "Situação desconhecida."
+
+print(f"Nome do aluno: {nome}")
+print(f"Média: {media:.2f}")
+print(f"Situação: {status}")
+print(mensagem)
+```
+
+Saída real com entrada:
+
+```text
+Nome do aluno: Ana
+Nota 1: 8.5
+Nota 2: 7.0
+Nota 3: 9.0
+Nota 4: 8.0
+Média: 8.12
+Situação: aprovado
+Parabéns! Você foi aprovado.
+```
+</details>

@@ -1,0 +1,132 @@
+---
+titulo: "Pedra, papel e tesoura"
+descricao: "Crie uma rodada de pedra, papel e tesoura com validação de entrada, escolha aleatória e regras de desempate."
+topico: "condicionais"
+topicoNome: "Condicionais"
+variacao: "V2"
+tempo: 20
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "condicionais", "jogo", "random", "match-case"]
+---
+
+# Pedra, papel e tesoura
+
+## Contexto
+Uma sala de aula está organizando uma mini competição de jogos digitais. O professor quer um programa simples, mas com regras bem definidas, para decidir o vencedor de uma rodada sem dúvidas sobre empate, validação e resultado final.
+
+## O que você vai construir
+Um programa em que o jogador escolhe entre pedra, papel e tesoura, o computador escolhe aleatoriamente e o programa decide quem venceu a rodada. O programa deve validar entradas inválidas e mostrar o resultado final com clareza.
+
+Exemplo de execução real:
+
+```text
+Escolha sua jogada: tesoura
+Escolha do computador: papel
+Resultado: você venceu!
+```
+
+## Requisitos
+1. Ler a escolha do usuário.
+2. Validar se a entrada é uma opção válida.
+3. Gerar a escolha do computador com `random`.
+4. Comparar as escolhas usando as regras do jogo.
+5. Mostrar se houve empate, vitória ou derrota.
+
+## Critérios de aceite
+- [ ] O programa aceita apenas `pedra`, `papel` ou `tesoura`.
+- [ ] A escolha do computador é gerada aleatoriamente com `random`.
+- [ ] O empate é tratado como caso especial e informado ao usuário.
+- [ ] A lógica de vitória/derrota cobre todas as combinações possíveis.
+- [ ] A saída final deixa claro se o jogador venceu, perdeu ou empatou.
+
+## Guia
+### Marco 1: definir as opções
+- Crie uma lista com as três opções válidas: `pedra`, `papel` e `tesoura`.
+- Isso ajuda a validar a entrada e a manter a lógica organizada.
+
+### Marco 2: validar a entrada do usuário
+- Converta a entrada para minúsculas com `.lower()`.
+- Use `if` para verificar se a opção está na lista admitida.
+- Se não estiver, mostre uma mensagem de escolha inválida.
+
+### Marco 3: escolher o computador
+- Use `random.choice(opcoes)` para gerar a jogada da máquina.
+- Repita o teste em vários cenários para garantir que o resultado varia corretamente.
+
+### Marco 4: decidir o vencedor
+- Pedra vence tesoura.
+- Papel vence pedra.
+- Tesoura vence papel.
+- Se as escolhas forem iguais, houve empate.
+- Para manter a lógica clara, você pode usar `if/elif` ou `match/case`.
+
+### Marco 5: revisar casos especiais
+- Teste empate: `pedra` x `pedra`.
+- Teste escolha inválida: `banana`.
+- Teste vitória e derrota em todas as combinações possíveis.
+
+<Callout type="importante" title="Regra central">
+O empate é o caso de decisão mais simples, mas é fácil esquecer de validar a entrada antes de comparar. Faça a validação primeiro e a comparação depois.
+</Callout>
+
+<Playground title="Estrutura inicial" code={`import random
+
+opcoes = ["pedra", "papel", "tesoura"]
+usuario = input("Escolha sua jogada: ").strip().lower()
+
+# valide a entrada do usuário
+# escolha aleatória do computador com random.choice(opcoes)
+# compare as duas jogadas
+# mostre o resultado final
+`} />
+
+## Desafio extra
+Crie uma versão melhor de 3 rodadas, mantendo a pontuação e mostrando quem ganhou o melhor de 3.
+
+## Visão de mercado
+Esse tipo de regra simples aparece em jogos, protótipos, ferramentas de decisão e testes de lógica. No trabalho real, a mesma ideia aparece em motores de regras, validadores de fluxos e sistemas de recomendação que dependem de comparações claras.
+
+## Autoavaliação
+- [ ] Validei a entrada do usuário antes de comparar jogadas.
+- [ ] Usei `random` para a escolha do computador.
+- [ ] Tratei empate e escolha inválida como casos distintos.
+- [ ] Comparei corretamente todas as combinações de vitória.
+- [ ] A mensagem final ficou clara para o jogador.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+import random
+
+opcoes = ["pedra", "papel", "tesoura"]
+usuario = input("Escolha sua jogada: ").strip().lower()
+
+if usuario not in opcoes:
+    print("Escolha inválida. Use pedra, papel ou tesoura.")
+else:
+    random.seed(7)
+    computador = random.choice(opcoes)
+
+    if usuario == computador:
+        resultado = "empate"
+    else:
+        match (usuario, computador):
+            case ("pedra", "tesoura") | ("papel", "pedra") | ("tesoura", "papel"):
+                resultado = "você venceu!"
+            case _:
+                resultado = "você perdeu!"
+
+    print(f"Escolha do computador: {computador}")
+    print(f"Resultado: {resultado}")
+```
+
+Saída real com entrada:
+
+```text
+Escolha sua jogada: tesoura
+Escolha do computador: papel
+Resultado: você venceu!
+```
+</details>

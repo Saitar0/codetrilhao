@@ -1,0 +1,177 @@
+---
+titulo: "Análise de crédito"
+descricao: "Avalie um pedido de crédito com regras claras, motivo da decisão e limite sugerido usando condicionais."
+topico: "condicionais"
+topicoNome: "Condicionais"
+variacao: "V3"
+tempo: 30
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "condicionais", "crédito", "regras", "financeiro"]
+---
+
+# Análise de crédito
+
+## Contexto
+Uma fintech recebe pedidos de crédito de clientes com perfis diferentes. O time de risco não quer apenas aprovar ou negar; ele precisa justificar a decisão, mostrar as regras aplicadas e sugerir um limite que faça sentido com a renda e o histórico do cliente.
+
+## O que você vai construir
+Um programa que recebe renda mensal, idade, dívidas mensais, tempo de emprego e score de crédito, e então decide se o cliente está aprovado, negado ou em análise manual. O programa também deve mostrar o motivo da decisão e um limite sugerido.
+
+Exemplo de execução real:
+
+```text
+Renda mensal: 5500
+Idade: 31
+Dívidas mensais: 900
+Tempo de emprego: 18
+Score de crédito: 720
+Resultado: aprovado
+Motivo: renda estável, dívidas controladas e score acima do mínimo.
+Limite sugerido: R$ 11.000,00
+```
+
+## Requisitos
+1. Ler renda mensal, idade, dívidas mensais, tempo de emprego e score de crédito.
+2. Verificar regras de renda, idade e dívidas.
+3. Classificar a análise como aprovado, negado ou análise manual.
+4. Explicar o motivo da decisão em texto legível.
+5. Sugerir um limite de crédito com base nas regras.
+
+## Critérios de aceite
+- [ ] Cada regra de decisão está isolada e fácil de entender.
+- [ ] A decisão não é genérica; o programa explica por que foi aprovada, negada ou encaminhada para análise.
+- [ ] O limite sugerido é calculado a partir de critérios explícitos.
+- [ ] A lógica considera mais de uma variável ao mesmo tempo.
+- [ ] O programa trata casos de risco e casos bons de forma distinta.
+
+## Histórias de usuário
+- Como analista, quero saber por que um cliente foi aprovado ou negado.
+- Como gerente, quero um limite sugerido para cada caso.
+- Como cliente, quero entender se o pedido precisa de revisão manual.
+
+## Arquitetura sugerida
+- `calcular_limite(renda, score, dividas)` para definir um valor de crédito.
+- `decidir_credito(renda, idade, dividas, tempo_emprego, score)` para aplicar as regras principais.
+- `montar_motivo(resultado, renda, dividas, score)` para explicar a decisão em linguagem clara.
+- `main()` para ler os dados e imprimir o resumo final.
+
+## Casos de teste de aceitação
+- Cliente com renda alta, idade maior de 18, dívidas baixas e score bom: aprovado.
+- Cliente com renda baixa ou dívidas muito altas: negado.
+- Cliente com renda estável, mas score médio: análise manual.
+- Cliente menor de idade: negado sem exceção.
+- Cliente com renda aceitável, mas muito pouco tempo de emprego: análise manual.
+
+## Riscos
+- Decidir com poucas regras pode aprovar clientes com alto risco.
+- Não explicar o motivo da decisão gera frustração e retrabalho.
+- Limites inadequados podem gerar inadimplência ou perder clientes bons.
+- Regras mal organizadas tornam o sistema difícil de auditar e ajustar.
+
+## Guia
+### História do cliente
+A empresa quer um protótipo interno simples para avaliar pedidos de crédito. O objetivo é separar as decisões em regras bem definidas para facilitar revisão e reduzir erros manuais.
+
+### Marcos do projeto
+1. Leia os dados do cliente e transforme cada informação em variável clara.
+2. Defina as regras básicas: idade mínima, renda mínima, dívidas e tempo de emprego.
+3. Use outras variáveis para separar aprovação direta, negação e análise manual.
+4. Calcule um limite sugerido com base na renda e no score.
+5. Revise as justificativas e os casos extremos antes de entregar.
+
+### Dicas
+- Separe a decisão do texto de motivo para deixar o código mais legível.
+- Use condições em ordem lógica: primeiro rejeições claras, depois análise manual, depois aprovação.
+- O motivo deve ser descriptivo e indicar o que precisa melhorar.
+
+<Callout type="importante" title="Regra de negócio">
+Em crédito, a decisão não pode ser apenas "sim" ou "não". O sistema precisa explicar a regra aplicada e o risco percebido para o cliente e para a equipe de análise.
+</Callout>
+
+<Playground title="Ponto de partida" code={`renda = float(input("Renda mensal: "))
+idade = int(input("Idade: "))
+dividas = float(input("Dívidas mensais: "))
+tempo_emprego = int(input("Tempo de emprego (meses): "))
+score = int(input("Score de crédito: "))
+
+# regras: idade mínima, renda mínima, dívidas máximas, tempo de emprego, score
+# classifique como aprovado, negado ou analise manual
+# construa uma mensagem motivada para a decisão
+# calcule o limite sugerido
+`} />
+
+## Desafio extra
+Adicione um campo de `valor_solicitado` e mostre se o pedido está dentro do limite sugerido ou se deve ser reduzido.
+
+## Visão de mercado
+Motores de regras de crédito, seguro e antifraude usam a mesma lógica: cada regra é testada separadamente, e a decisão final explica o risco. Essa abordagem é comum em fintechs, bancos, seguradoras e plataformas de analise de risco.
+
+## Autoavaliação
+- [ ] Separei as regras em partes pequenas e verificáveis.
+- [ ] Tratei idade, renda e dívidas como entradas independentes.
+- [ ] Expliquei a decisão com motivo e não apenas com um status.
+- [ ] Calculei um limite sugerido com base em critérios claros.
+- [ ] Revisei pelo menos um caso de aprovação e um de negação.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+renda = float(input("Renda mensal: "))
+idade = int(input("Idade: "))
+dividas = float(input("Dívidas mensais: "))
+tempo_emprego = int(input("Tempo de emprego (meses): "))
+score = int(input("Score de crédito: "))
+
+if idade < 18:
+    resultado = "negado"
+    motivo = "Cliente menor de idade." 
+    limite = 0
+elif renda < 2000:
+    resultado = "negado"
+    motivo = "Renda insuficiente para o pedido." 
+    limite = 0
+elif dividas > renda * 0.35:
+    resultado = "negado"
+    motivo = "Dívidas mensais estão acima do limite aceitável." 
+    limite = 0
+elif score >= 700 and renda >= 3000 and tempo_emprego >= 12:
+    resultado = "aprovado"
+    motivo = "Renda estável, dívidas controladas e score acima do mínimo."
+    limite = renda * 2
+elif score >= 600 and renda >= 2500 and tempo_emprego >= 6:
+    resultado = "analise manual"
+    motivo = "Perfil aceitável, mas exige revisão por risco moderado."
+    limite = renda * 1.5
+else:
+    resultado = "negado"
+    motivo = "Perfil não atende às condições mínimas de risco."
+    limite = 0
+
+match resultado:
+    case "aprovado":
+        mensagem = "Resultado: aprovado"
+    case "analise manual":
+        mensagem = "Resultado: analise manual"
+    case _:
+        mensagem = "Resultado: negado"
+
+print(f"{mensagem}")
+print(f"Motivo: {motivo}")
+print(f"Limite sugerido: R$ {limite:,.2f}")
+```
+
+Saída real com entrada:
+
+```text
+Renda mensal: 5500
+Idade: 31
+Dívidas mensais: 900
+Tempo de emprego: 18
+Score de crédito: 720
+Resultado: aprovado
+Motivo: Renda estável, dívidas controladas e score acima do mínimo.
+Limite sugerido: R$ 11,000.00
+```
+</details>
