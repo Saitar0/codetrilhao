@@ -1,0 +1,113 @@
+---
+titulo: "Cartão de apresentação"
+descricao: "Crie um cartão simples com nome, profissão e cidade usando input, print e alinhamento."
+topico: "sintaxe-e-primeiros-passos"
+topicoNome: "Sintaxe e primeiros passos"
+variacao: "V1"
+tempo: 20
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "print", "input", "formatacao", "terminal"]
+---
+
+# Cartão de apresentação
+
+## Contexto
+Você está montando o seu primeiro cartão profissional para apresentar para uma equipe nova. O objetivo é que ele fique bonito, legível e fácil de ler no terminal.
+
+## O que você vai construir
+Um programa que lê seu nome, sua profissão e sua cidade e imprime um cartão com moldura.
+
+Exemplo de execução:
+
+```text
+Digite seu nome: Ana
+Digite sua profissão: Desenvolvedora
+Digite sua cidade: São Paulo
+
++--------------------------------------+
+| Ana                                  |
+| Desenvolvedora                       |
+| São Paulo                           |
++--------------------------------------+
+```
+
+## Requisitos
+1. Ler 3 entradas do usuário: nome, profissão e cidade.
+2. Mostrar uma moldura visual com `+`, `-` e `|`.
+3. Manter o texto alinhado e fácil de ler.
+4. Usar `print()` para construir a saída final.
+
+## Critérios de aceite
+- [ ] O programa pede as 3 informações do usuário.
+- [ ] A saída usa uma moldura com borda clara.
+- [ ] O texto fica alinhado dentro da caixa.
+- [ ] O programa roda sem travar com entradas comuns.
+
+## Guia
+1. Leia cada dado com `input()` e guarde em variáveis.
+2. Defina uma linha de borda com `+` e `-` para deixar o cartão bonito.
+3. Use `print()` para desenhar cada linha do cartão.
+4. Ajuste o espaçamento para cada texto ficar alinhado.
+5. Teste com nomes longos e cidades com acentos.
+
+<Callout type="importante" title="Dica da etapa 2">
+A borda não precisa ser complicada. Ela já basta para deixar a apresentação mais clara e profissional.
+</Callout>
+
+<Callout type="importante" title="Dica da etapa 3">
+O alinhamento melhora muito quando você usa uma largura fixa e preenche a linha com espaços.
+</Callout>
+
+<Playground title="Estrutura inicial" code={`nome = input("Digite seu nome: ")
+profissao = input("Digite sua profissão: ")
+cidade = input("Digite sua cidade: ")
+
+linha = "+" + "-" * 38 + "+"
+print(linha)
+print(f"| {nome:<34} |")
+# Continue a parte do cartão com profissão e cidade
+print(linha)`} />
+
+## Desafio extra
+Adicione uma frase curta de apresentação, como uma citação favorita, na última linha do cartão.
+
+## Visão de mercado
+Cartões de apresentação em terminal aparecem em ferramentas internas, painéis de apoio e scripts de onboarding. Mesmo simples, eles ajudam a apresentar dados do usuário de forma clara e profissional.
+
+## Autoavaliação
+- [ ] Usei `input()` para ler os dados do usuário.
+- [ ] Variei `print()` para montar a moldura.
+- [ ] Ajustei o alinhamento visual do texto.
+- [ ] Testei com algum nome e profissão reais.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+nome = input("Digite seu nome: ")
+profissao = input("Digite sua profissão: ")
+cidade = input("Digite sua cidade: ")
+
+linha = "+" + "-" * 38 + "+"
+print(linha)
+print(f"| {nome:<34} |")
+print(f"| {profissao:<34} |")
+print(f"| {cidade:<34} |")
+print(linha)
+```
+
+Saída real com entrada:
+
+```text
+Digite seu nome: Ana
+Digite sua profissão: Desenvolvedora
+Digite sua cidade: São Paulo
+
++--------------------------------------+
+| Ana                                  |
+| Desenvolvedora                       |
+| São Paulo                           |
++--------------------------------------+
+```
+</details>

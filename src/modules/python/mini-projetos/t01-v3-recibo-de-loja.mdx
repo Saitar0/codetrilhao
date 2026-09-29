@@ -1,0 +1,169 @@
+---
+titulo: "Recibo de loja"
+descricao: "Crie um recibo simples com produtos, quantidade, preço e total final."
+topico: "sintaxe-e-primeiros-passos"
+topicoNome: "Sintaxe e primeiros passos"
+variacao: "V3"
+tempo: 30
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "recibo", "loja", "formatacao", "vendas"]
+---
+
+# Recibo de loja
+
+## Contexto
+Uma loja pequena pediu um programa simples para gerar o recibo da compra em poucos segundos. A ideia é entregar uma saída legível, com subtotal e total em formato de nota.
+
+## O que você vai construir
+Um programa que coleta 3 produtos, com quantidade e preço unitário, e imprime um recibo organizado com cabeçalho, itens e total final.
+
+Exemplo de execução:
+
+```text
+Produto 1: Caneta
+Quantidade: 2
+Preço unitário: 3.50
+Produto 2: Caderno
+Quantidade: 1
+Preço unitário: 12.00
+Produto 3: Borracha
+Quantidade: 3
+Preço unitário: 1.50
+
+========================================
+             RECIBO DE COMPRA
+========================================
+Produto          Quant.   Preço unit.   Total
+Caneta               2        R$ 3.50   R$ 7.00
+Caderno              1       R$ 12.00  R$ 12.00
+Borracha             3        R$ 1.50   R$ 4.50
+----------------------------------------
+Subtotal:                            R$ 23.50
+Total:                               R$ 23.50
+========================================
+```
+
+## Requisitos
+1. Ler 3 produtos com nome, quantidade e preço unitário.
+2. Mostrar cabeçalho do recibo e os itens em colunas.
+3. Calcular subtotal e total final.
+4. Formatar valores com duas casas decimais.
+
+## Critérios de aceite
+- [ ] O programa coleta os três produtos do cliente.
+- [ ] O recibo tem cabeçalho, itens e total.
+- [ ] Os preços ficam em duas casas decimais.
+- [ ] A saída é legível e alinhada.
+- [ ] O cálculo do total está correto.
+
+## Guia
+### Histórias de usuário
+- Como vendedor, quero preencher 3 itens de compra para emitir um recibo rápido.
+- Como cliente, quero ver os produtos e o valor total sem confusão.
+- Como gestor, quero que o recibo pareça profissional e seja fácil de ler.
+
+### Arquitetura sugerida
+- Uma função para ler cada produto.
+- Uma função para calcular o total do item.
+- Uma função para imprimir o cabeçalho e os itens.
+- Uma estrutura simples com dicionários ou listas para guardar os produtos.
+
+### Casos de teste de aceitação
+- Produto com quantidade 1 e preço de 10,00 deve gerar total 10,00.
+- Produto com preço decimal deve aparecer com duas casas.
+- 3 itens diferentes devem resultar em subtotal igual à soma dos totais.
+- Entrada vazia ou número inválido deve ser tratada com mensagem clara.
+
+### Riscos
+- Alinhamento quebrado em nomes longos.
+- Cálculo do subtotal errado por falta de conversão.
+- Preço formatado sem duas casas decimais.
+
+<Callout type="importante" title="Estrutura recomendada">
+Comece com um produto por vez e mantenha as operações separadas. Isso reduz erros e deixa a lógica mais fácil de revisar.
+</Callout>
+
+<Playground title="Estrutura inicial" code={`produtos = []
+for indice in range(3):
+    nome = input(f"Produto {indice + 1}: ")
+    quantidade = int(input("Quantidade: "))
+    preco = float(input("Preço unitário: "))
+    produtos.append({"nome": nome, "quantidade": quantidade, "preco": preco})
+
+print("========================================")
+print("             RECIBO DE COMPRA")
+print("========================================")
+# Continue a parte de impressão dos itens e do total`}/>
+
+## Desafio extra
+Adicione descontos ou imposto por item e mostre um subtotal líquido e o valor final a pagar.
+
+## Visão de mercado
+Qualquer sistema de vendas, loja física, e-commerce ou PDV começa por dar ao cliente um recibo legível. A clareza na apresentação impacta diretamente a confiança e a qualidade percebida da operação.
+
+## Autoavaliação
+- [ ] Separei a leitura dos produtos da impressão do recibo.
+- [ ] Converto valores monetários com atenção às casas decimais.
+- [ ] Testei o cálculo do total com três itens diferentes.
+- [ ] A saída ficou alinhada e legível.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+produtos = []
+
+for indice in range(3):
+    nome = input(f"Produto {indice + 1}: ")
+    quantidade = int(input("Quantidade: "))
+    preco = float(input("Preço unitário: "))
+    produtos.append({
+        "nome": nome,
+        "quantidade": quantidade,
+        "preco": preco,
+    })
+
+print("========================================")
+print("             RECIBO DE COMPRA")
+print("========================================")
+print(f"{'Produto':<15}{'Quant.':>8}{'Preço unit.':>14}{'Total':>12}")
+
+subtotal = 0.0
+for produto in produtos:
+    total_item = produto["quantidade"] * produto["preco"]
+    subtotal += total_item
+    print(f"{produto['nome']:<15}{produto['quantidade']:>8}{produto['preco']:>13.2f}{total_item:>12.2f}")
+
+print("----------------------------------------")
+print(f"{'Subtotal:':<27}{subtotal:>12.2f}")
+print(f"{'Total:':<27}{subtotal:>12.2f}")
+print("========================================")
+```
+
+Saída real com entrada:
+
+```text
+Produto 1: Caneta
+Quantidade: 2
+Preço unitário: 3.50
+Produto 2: Caderno
+Quantidade: 1
+Preço unitário: 12.00
+Produto 3: Borracha
+Quantidade: 3
+Preço unitário: 1.50
+
+========================================
+             RECIBO DE COMPRA
+========================================
+Produto          Quant.   Preço unit.   Total
+Caneta               2        R$ 3.50   R$ 7.00
+Caderno              1       R$ 12.00  R$ 12.00
+Borracha             3        R$ 1.50   R$ 4.50
+----------------------------------------
+Subtotal:                            R$ 23.50
+Total:                               R$ 23.50
+========================================
+```
+</details>

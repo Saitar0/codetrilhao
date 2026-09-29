@@ -1,66 +1,129 @@
 ---
-titulo: "Conversor de moedas"
-descricao: "Crie conversões entre moedas com tratamento de erro."
-topico: "entrada-e-saida"
-topicoNome: "Entrada e saída"
+titulo: "Conversor de moedas fixo"
+descricao: "Crie um conversor em reais para dólar, euro e libra com taxas fixas e saída formatada."
+topico: "sintaxe-e-primeiros-passos"
+topicoNome: "Sintaxe e primeiros passos"
 variacao: "V2"
-tempo: 20
+tempo: 25
 nivel: "iniciante"
 execucao: "navegador"
-palavrasChave: ["python", "entrada", "conversao", "validacao"]
+palavrasChave: ["python", "conversao", "input", "float", "moedas"]
 ---
 
-# Conversor de moedas
+# Conversor de moedas fixo
 
 ## Contexto
-Você precisa converter um valor informado pelo usuário para outra moeda, sem quebrar o programa quando a entrada for inválida.
+Você foi pedido para preparar uma ferramenta simples de conversão para um cliente que quer saber quanto um valor em reais vale em outras moedas. A regra é usar cotações fixas definidas no topo do programa.
 
 ## O que você vai construir
-Um conversor simples com validação de entrada, cálculo com taxa fixa e mensagem final clara para o usuário.
+Um conversor de reais para dólar, euro e libra. O programa lê um valor, converte com taxas fixas e mostra o resultado em cada moeda com duas casas decimais.
+
+Exemplo de execução:
+
+```text
+Digite o valor em reais: 250
+Você digitou: R$ 250.00
+
+Dólar: US$ 48.08
+Euro: € 40.98
+Libra: £ 34.72
+```
 
 ## Requisitos
-- Ler o valor e a moeda origem/destino.
-- Validar entradas numéricas.
-- Calcular o valor convertido com uma taxa fixa.
-- Tratar erros com mensagens amigáveis.
+1. Definir as cotações em variáveis no topo do programa.
+2. Ler o valor em reais com `input()`.
+3. Converter para dólar, euro e libra.
+4. Mostrar cada valor com duas casas decimais.
+5. Tratar entrada inválida ou valor negativo.
 
 ## Critérios de aceite
-- O programa aceita valores válidos e rejeita valores inválidos.
-- A saída mostra o resultado final em um formato legível.
-- A lógica está dividida em funções pequenas e claras.
+- [ ] As cotações ficam fora da lógica principal.
+- [ ] O programa converte corretamente para as 3 moedas.
+- [ ] A saída usa 2 casas decimais.
+- [ ] Entrada vazia ou texto inválido gera mensagem clara.
+- [ ] Valores negativos ou zero são tratados com regra definida.
 
 ## Guia
-1. Crie uma função para validar o valor digitado.
-2. Defina uma taxa de conversão fixa.
-3. Faça a operação e mostre o resultado com texto amigável.
-4. Teste entradas válidas e inválidas.
+### Marco 1: definir a regra de negócio
+- Decida as cotações fixas no início do programa.
+- Mantenha-as em variáveis separadas para facilitar a leitura.
+- Registre a regra que o programa vai seguir: um valor em reais dividido pela cotação.
 
-<Playground title="Primeiro protótipo" code={`valor = float(input("Digite um valor em reais: "))
-print(f"Valor digitado: {valor}")`} />
+### Marco 2: receber e validar o valor
+- Use `float(input(...))` para converter a entrada.
+- Se o valor for negativo, mostre uma mensagem de aviso.
+- Se a entrada for vazia ou não numérica, avise o usuário.
+
+### Marco 3: calcular as conversões
+- Calcule cada moeda com operação simples.
+- Arredonde para duas casas decimais no momento da impressão.
+- Use `print()` para separar os resultados.
+
+### Marco 4: testar casos especiais
+- Valor zero deve mostrar 0,00 nas 3 moedas.
+- Valor negativo deve ser rejeitado.
+- Entrada com texto deve gerar uma mensagem amigável.
+
+### Marco 5: revisar a saída
+- A frase inicial deve explicar o valor que foi lido.
+- A resposta final precisa ficar clara e legível no terminal.
+
+<Callout type="importante" title="Regra importante">
+`input()` sempre devolve texto. Se você quiser calcular com números, precisa converter antes da operação.
+</Callout>
+
+<Playground title="Estrutura inicial" code={`valor_reais = float(input("Digite o valor em reais: "))
+
+cotacao_dolar = 5.20
+cotacao_euro = 6.10
+cotacao_libra = 7.20
+
+print(f"Você digitou: R$ {valor_reais:.2f}")
+# Agora converta para as outras moedas e mostre os resultados`} />
 
 ## Desafio extra
-Adicione uma segunda moeda e permita que o usuário escolha entre diferentes pares de conversão.
+Permita que o usuário digite a cotação do dia em vez de usar a taxa fixa do programa.
 
 ## Visão de mercado
-Pequenos utilitários de conversão são muito úteis em ferramentas pessoais e aplicativos de educação financeira.
+Conversores de moeda aparecem em ferramentas financeiras, dashboards pessoais, aplicativos de viagem e sistemas de controle de orçamento. Mesmo em versões simples, eles precisam deixar claro a regra da cotação e o arredondamento.
 
 ## Autoavaliação
-- [ ] Validei entradas inválidas.
-- [ ] Separei a lógica em funções.
-- [ ] Testei o comportamento com exemplos reais.
+- [ ] Converto a entrada de texto para número antes de calcular.
+- [ ] Mantive as cotações em variáveis separadas.
+- [ ] Usei duas casas decimais na saída.
+- [ ] Testei entrada válida, zero e número inválido.
 
 <details>
   <summary>Solução de referência</summary>
 
 ```python
-def converter(valor, taxa):
-    return valor * taxa
+valor_reais = float(input("Digite o valor em reais: "))
 
-try:
-    valor = float(input("Valor em reais: "))
-    taxa = 4.8
-    print(f"Resultado: R${converter(valor, taxa):.2f}")
-except ValueError:
-    print("Digite um valor numérico válido.")
+cotacao_dolar = 5.20
+cotacao_euro = 6.10
+cotacao_libra = 7.20
+
+if valor_reais < 0:
+    print("Digite um valor maior ou igual a zero.")
+else:
+    dolar = valor_reais / cotacao_dolar
+    euro = valor_reais / cotacao_euro
+    libra = valor_reais / cotacao_libra
+
+    print(f"Você digitou: R$ {valor_reais:.2f}")
+    print(f"Dólar: US$ {dolar:.2f}")
+    print(f"Euro: € {euro:.2f}")
+    print(f"Libra: £ {libra:.2f}")
+```
+
+Saída real com entrada:
+
+```text
+Digite o valor em reais: 250
+Você digitou: R$ 250.00
+Dólar: US$ 48.08
+Euro: € 40.98
+Libra: £ 34.72
 ```
 </details>
+
