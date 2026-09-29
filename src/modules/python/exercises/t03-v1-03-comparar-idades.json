@@ -1,0 +1,27 @@
+{
+  "id": "t03-v1-03-comparar-idades",
+  "tipo": "codigo",
+  "titulo": "Comparações entre idades",
+  "topico": "Operadores e expressões",
+  "topicoNumero": 3,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Leia cada comparação e avalie se é verdadeira ou falsa.",
+    "Lembre que `==`, `!=`, `<`, `>`, `<=`, `>=` retornam booleanos.",
+    "Retorne uma lista de 6 valores booleanos na ordem pedida." 
+  ],
+  "solucao": "def comparar_idades(a, b):\n    # Retorna lista com resultados das comparações pedidas\n    return [a == b, a != b, a < b, a > b, a <= b, a >= b]\n",
+  "tags": ["python", "comparacao"],
+  "aulaRelacionada": "operadores",
+  "enunciado": "Implemente `comparar_idades(a, b)` que retorna uma lista com os resultados booleanos das comparações: `a == b`, `a != b`, `a < b`, `a > b`, `a <= b`, `a >= b` (nessa ordem).",
+  "starterCode": "def comparar_idades(a, b):\n    pass\n",
+  "testes": [
+    { "chamada": "comparar_idades(20,20)", "esperado": "[True, False, False, False, True, True]", "oculto": false },
+    { "chamada": "comparar_idades(18,21)[2]", "esperado": "True", "oculto": false },
+    { "chamada": "comparar_idades(30,25)[3]", "esperado": "True", "oculto": false },
+    { "chamada": "len(comparar_idades(1,2))", "esperado": "6", "oculto": true },
+    { "chamada": "comparar_idades(5,5)[5]", "esperado": "True", "oculto": true }
+  ]
+}

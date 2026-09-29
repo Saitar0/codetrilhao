@@ -1,0 +1,27 @@
+{
+  "id": "t03-v3-04-juros-compostos",
+  "tipo": "codigo",
+  "titulo": "Juros compostos por N meses",
+  "topico": "Operadores e expressões",
+  "topicoNumero": 3,
+  "variacao": "V3",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Use a fórmula: montante = principal * (1 + taxa) ** meses.",
+    "Retorne uma tupla `(montante, juros_total)` arredondados em 2 casas.",
+    "Teste com taxa 0, meses 0 e casos maiores para validar exponenciação." 
+  ],
+  "solucao": "def juros_compostos(principal, taxa_mensal, meses):\n    montante = principal * (1 + taxa_mensal) ** meses\n    juros = montante - principal\n    # garantir floats com casas decimais mesmo quando inteiro\n    return [float(round(montante, 2)), float(round(juros, 2))]\n",
+  "tags": ["python", "juros", "expoente"],
+  "aulaRelacionada": "operadores",
+  "enunciado": "Implemente `juros_compostos(principal, taxa_mensal, meses)` que calcula o montante e o total pago de juros usando juros compostos. `taxa_mensal` é em decimal (ex.: 0.01 = 1%).",
+  "starterCode": "def juros_compostos(principal, taxa_mensal, meses):\n    pass\n",
+  "testes": [
+    { "chamada": "juros_compostos(1000, 0.01, 12)", "esperado": "[1126.83, 126.83]", "oculto": false },
+    { "chamada": "juros_compostos(500, 0, 6)", "esperado": "[500.0, 0.0]", "oculto": false },
+    { "chamada": "juros_compostos(100, 0.05, 1)", "esperado": "[105.0, 5.0]", "oculto": false },
+    { "chamada": "juros_compostos(1000, 0.02, 24)[0]", "esperado": "1608.44", "oculto": true },
+    { "chamada": "juros_compostos(100, 0.1, 3)[1]", "esperado": "33.1", "oculto": true }
+  ]
+}

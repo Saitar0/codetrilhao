@@ -1,0 +1,27 @@
+{
+  "id": "t03-v3-01-parcelas-sem-juros",
+  "tipo": "codigo",
+  "titulo": "Valor da parcela sem juros",
+  "topico": "Operadores e expressões",
+  "topicoNumero": 3,
+  "variacao": "V3",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Divida o valor total pelo número de parcelas usando `/` para ter float ou `//` para inteiros se pedido.",
+    "Retorne uma tupla `(valor_parcela, total_pago)` garantindo duas casas quando fizer sentido.",
+    "Teste com 1 parcela (deve ser igual ao valor) e com várias parcelas." 
+  ],
+  "solucao": "def parcela_sem_juros(valor, n_parcelas):\n    valor_parcela = valor / n_parcelas\n    total = valor_parcela * n_parcelas\n    return [round(valor_parcela, 2), round(total, 2)]\n",
+  "tags": ["python", "financeiro", "aritmetica"],
+  "aulaRelacionada": "operadores",
+  "enunciado": "Implemente `parcela_sem_juros(valor, n_parcelas)` que retorna `(valor_parcela, total_pago)` para parcelamento sem juros. Exemplo: `(100, 4)` -> `(25.0, 100.0)`.",
+  "starterCode": "def parcela_sem_juros(valor, n_parcelas):\n    pass\n",
+  "testes": [
+    { "chamada": "parcela_sem_juros(100, 4)", "esperado": "[25.0, 100.0]", "oculto": false },
+    { "chamada": "parcela_sem_juros(99, 2)", "esperado": "[49.5, 99.0]", "oculto": false },
+    { "chamada": "parcela_sem_juros(50, 1)", "esperado": "[50.0, 50.0]", "oculto": false },
+    { "chamada": "parcela_sem_juros(123.45, 3)[0]", "esperado": "41.15", "oculto": true },
+    { "chamada": "parcela_sem_juros(1000, 10)[1]", "esperado": "1000.0", "oculto": true }
+  ]
+}

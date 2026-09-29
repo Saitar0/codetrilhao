@@ -1,0 +1,27 @@
+{
+  "id": "t03-v1-02-eh-par",
+  "tipo": "codigo",
+  "titulo": "Verificar paridade",
+  "topico": "Operadores e expressões",
+  "topicoNumero": 3,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Use o operador `%` para encontrar o resto da divisão por 2.",
+    "Retorne `True` para números pares e `False` caso contrário.",
+    "Considere números negativos e zero como casos válidos de teste." 
+  ],
+  "solucao": "def eh_par(n):\n    # Um número é par quando o resto da divisão por 2 é zero\n    return n % 2 == 0\n",
+  "tags": ["python", "modulo", "%"],
+  "aulaRelacionada": "operadores",
+  "enunciado": "Implemente `eh_par(n)` que retorna `True` se `n` for par, e `False` caso contrário. Exemplo: `eh_par(4)` -> True.",
+  "starterCode": "def eh_par(n):\n    pass\n",
+  "testes": [
+    { "chamada": "eh_par(4)", "esperado": "True", "oculto": false },
+    { "chamada": "eh_par(0)", "esperado": "True", "oculto": false },
+    { "chamada": "eh_par(7)", "esperado": "False", "oculto": false },
+    { "chamada": "eh_par(-2)", "esperado": "True", "oculto": true },
+    { "chamada": "eh_par(99999)", "esperado": "False", "oculto": true }
+  ]
+}

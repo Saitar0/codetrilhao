@@ -1,0 +1,27 @@
+{
+  "id": "t03-v2-04-dia-da-semana",
+  "tipo": "codigo",
+  "titulo": "Dia da semana daqui a N dias",
+  "topico": "Operadores e expressões",
+  "topicoNumero": 3,
+  "variacao": "V2",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Use `% 7` para circular os dias da semana.",
+    "Suponha dias numerados de 0 (domingo) a 6 (sábado).",
+    "Teste com N maior que 7 e com N=0 para cobertura de borda." 
+  ],
+  "solucao": "def dia_da_semana(atual, n):\n    # resultado é (atual + n) mod 7\n    return (atual + n) % 7\n",
+  "tags": ["python", "modulo", "logica"],
+  "aulaRelacionada": "operadores",
+  "enunciado": "Implemente `dia_da_semana(atual, n)` que recebe o dia atual (0-6) e retorna o dia da semana que será daqui a `n` dias, usando apenas operações aritméticas.",
+  "starterCode": "def dia_da_semana(atual, n):\n    pass\n",
+  "testes": [
+    { "chamada": "dia_da_semana(2, 5)", "esperado": "0", "oculto": false },
+    { "chamada": "dia_da_semana(6, 1)", "esperado": "0", "oculto": false },
+    { "chamada": "dia_da_semana(0, 7)", "esperado": "0", "oculto": false },
+    { "chamada": "dia_da_semana(3, 15)", "esperado": "4", "oculto": true },
+    { "chamada": "dia_da_semana(5, 365)", "esperado": "6", "oculto": true }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "t03-v1-01-area-retangulo",
+  "tipo": "codigo",
+  "titulo": "Área e perímetro de retângulo",
+  "topico": "Operadores e expressões",
+  "topicoNumero": 3,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Pense nas fórmulas: área = largura * altura; perímetro = 2*(largura + altura).",
+    "Use operações aritméticas simples e devolva os dois resultados em uma lista [area, perimetro].",
+    "Teste com valores pequenos e com altura=0 ou largura=0 para validar bordas." 
+  ],
+  "solucao": "def area_perimetro(largura, altura):\n    # área é largura * altura\n    area = largura * altura\n    # perímetro é soma dos lados vezes 2\n    perimetro = 2 * (largura + altura)\n    return [area, perimetro]\n",
+  "tags": ["python", "aritmetica", "%", "//"],
+  "aulaRelacionada": "operadores",
+  "enunciado": "Implemente a função `area_perimetro(largura, altura)` que retorna uma lista com a área e o perímetro do retângulo nessa ordem. Exemplo: `area_perimetro(2,3)` -> `[6,10]`. Restrições: largura e altura são inteiros não negativos.",
+  "starterCode": "def area_perimetro(largura, altura):\n    pass\n",
+  "testes": [
+    { "chamada": "area_perimetro(2, 3)", "esperado": "[6, 10]", "oculto": false },
+    { "chamada": "area_perimetro(0, 5)", "esperado": "[0, 10]", "oculto": false },
+    { "chamada": "area_perimetro(7, 1)", "esperado": "[7, 16]", "oculto": false },
+    { "chamada": "area_perimetro(10, 10)[0]", "esperado": "100", "oculto": true },
+    { "chamada": "area_perimetro(4, 6)[1]", "esperado": "20", "oculto": true }
+  ]
+}

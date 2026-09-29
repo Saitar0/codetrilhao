@@ -1,0 +1,27 @@
+{
+  "id": "t03-v2-01-divisivel-por-3e5",
+  "tipo": "codigo",
+  "titulo": "Divisível por 3 e por 5",
+  "topico": "Operadores e expressões",
+  "topicoNumero": 3,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Use `%` e combine condições com `and`/`or` conforme necessário.",
+    "Retorne uma tupla `(por_3, por_5, por_3e5)` indicando se é divisível por 3, por 5 e por ambos.",
+    "Teste com números como 15 (sim), 9 (só por 3), 10 (só por 5) e 7 (nenhum)." 
+  ],
+  "solucao": "def divisivel_por_3_e_5(n):\n    por_3 = (n % 3) == 0\n    por_5 = (n % 5) == 0\n    por_3e5 = por_3 and por_5\n    return [por_3, por_5, por_3e5]\n",
+  "tags": ["python", "modulo", "logica"],
+  "aulaRelacionada": "operadores",
+  "enunciado": "Implemente `divisivel_por_3_e_5(n)` que retorna `(por_3, por_5, por_3e5)` com booleans indicando divisibilidade por 3, por 5 e por ambos simultaneamente.",
+  "starterCode": "def divisivel_por_3_e_5(n):\n    pass\n",
+  "testes": [
+    { "chamada": "divisivel_por_3_e_5(15)", "esperado": "[True, True, True]", "oculto": false },
+    { "chamada": "divisivel_por_3_e_5(9)", "esperado": "[True, False, False]", "oculto": false },
+    { "chamada": "divisivel_por_3_e_5(10)[1]", "esperado": "True", "oculto": false },
+    { "chamada": "divisivel_por_3_e_5(7)[2]", "esperado": "False", "oculto": true },
+    { "chamada": "divisivel_por_3_e_5(0)", "esperado": "[True, True, True]", "oculto": true }
+  ]
+}

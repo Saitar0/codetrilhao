@@ -1,0 +1,27 @@
+{
+  "id": "t03-v1-04-minutos-para-horas",
+  "tipo": "codigo",
+  "titulo": "Converter minutos em horas e minutos",
+  "topico": "Operadores e expressões",
+  "topicoNumero": 3,
+  "variacao": "V1",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Use `//` para obter horas e `%` para o restante em minutos.",
+    "Retorne uma tupla `(horas, minutos)` com inteiros.",
+    "Teste com valores menores que 60 e múltiplos de 60 para garantir bordas." 
+  ],
+  "solucao": "def minutos_para_horas(total_minutos):\n    horas = total_minutos // 60\n    minutos = total_minutos % 60\n    return [horas, minutos]\n",
+  "tags": ["python", "divisao_inteira", "modulo"],
+  "aulaRelacionada": "operadores",
+  "enunciado": "Implemente `minutos_para_horas(total_minutos)` que recebe um número inteiro de minutos e retorna uma tupla `(horas, minutos)` representando o tempo equivalente. Exemplo: 125 -> (2, 5).",
+  "starterCode": "def minutos_para_horas(total_minutos):\n    pass\n",
+  "testes": [
+    { "chamada": "minutos_para_horas(125)", "esperado": "[2, 5]", "oculto": false },
+    { "chamada": "minutos_para_horas(60)", "esperado": "[1, 0]", "oculto": false },
+    { "chamada": "minutos_para_horas(59)", "esperado": "[0, 59]", "oculto": false },
+    { "chamada": "minutos_para_horas(0)", "esperado": "[0, 0]", "oculto": true },
+    { "chamada": "minutos_para_horas(3601)[0]", "esperado": "60", "oculto": true }
+  ]
+}

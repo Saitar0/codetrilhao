@@ -1,0 +1,27 @@
+{
+  "id": "t03-v2-02-separar-digitos",
+  "tipo": "codigo",
+  "titulo": "Separar centenas, dezenas e unidades",
+  "topico": "Operadores e expressões",
+  "topicoNumero": 3,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Use `//` e `%` para extrair cada casa decimal sem converter para string.",
+    "Centena = n // 100, dezena = (n % 100) // 10, unidade = n % 10.",
+    "Teste com 123, 405 e 7 (tratar como 007 se necessário)." 
+  ],
+  "solucao": "def separar_digitos(n):\n    centena = (n // 100) % 10\n    dezena = (n // 10) % 10\n    unidade = n % 10\n    return [centena, dezena, unidade]\n",
+  "tags": ["python", "//", "%"],
+  "aulaRelacionada": "operadores",
+  "enunciado": "Implemente `separar_digitos(n)` que recebe um número inteiro positivo (0-999) e retorna uma tupla `(centena, dezena, unidade)` extraídas com operações aritméticas apenas.",
+  "starterCode": "def separar_digitos(n):\n    pass\n",
+  "testes": [
+    { "chamada": "separar_digitos(123)", "esperado": "[1, 2, 3]", "oculto": false },
+    { "chamada": "separar_digitos(405)", "esperado": "[4, 0, 5]", "oculto": false },
+    { "chamada": "separar_digitos(7)", "esperado": "[0, 0, 7]", "oculto": false },
+    { "chamada": "separar_digitos(999)[0]", "esperado": "9", "oculto": true },
+    { "chamada": "separar_digitos(100)[1]", "esperado": "0", "oculto": true }
+  ]
+}
