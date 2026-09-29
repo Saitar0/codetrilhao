@@ -3,6 +3,8 @@ export type LessonFrontmatter = {
   descricao: string
   secao: string
   ordem: number
+  topico?: number
+  fase?: string
   tempo: number
   nivel: string
   palavrasChave: string[]

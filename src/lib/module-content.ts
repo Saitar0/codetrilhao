@@ -23,6 +23,8 @@ export function getAllModuleLessons(): Record<string, ModuleRouteLesson[]> {
   const result: Record<string, ModuleRouteLesson[]> = {}
 
   for (const [filepath, moduleFile] of Object.entries(lessonFiles)) {
+    if (filepath.includes('/mini-projetos/')) continue
+
     const frontmatter = moduleFile.frontmatter
     const moduleId = filepath.split('/modules/')[1]?.split('/')[0] ?? 'unknown'
 
