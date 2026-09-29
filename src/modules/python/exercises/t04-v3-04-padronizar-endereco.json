@@ -1,0 +1,27 @@
+{
+  "id": "t04-v3-04-padronizar-endereco",
+  "tipo": "codigo",
+  "titulo": "Padronizar prefixos de endereço",
+  "topico": "Strings",
+  "topicoNumero": 4,
+  "variacao": "V3",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Use `lower()` e `strip()` para normalizar a string antes de substituir.",
+    "Substitua variações comuns: 'rua', 'r.', 'R.' para 'Rua' e cuide de espaços extras.",
+    "Considere usar `split()` para separar o prefixo do restante do endereço e reconstruir." 
+  ],
+  "solucao": "def padronizar_endereco(end):\n    # Normaliza espaços e caixa, detecta prefixos comuns (r., rua, av., avenida)\n    if not end or end.strip() == '':\n        return ''\n    s = ' '.join(end.strip().split())\n    s_low = s.lower()\n    prefixes = [('r.', 'rua'), ('rua', 'rua'), ('av.', 'avenida'), ('avenida', 'avenida')]\n    small = {'da','de','do','das','dos','e','a','o','as','os'}\n    for k, v in prefixes:\n        if s_low.startswith(k):\n            resto = s[len(k):].strip()\n            words = resto.split()\n            result_resto = ' '.join([ (w.lower() if w.lower().strip('.,') in small else w.title()) for w in words ])\n            return v.title() + ' ' + result_resto\n    # Nenhum prefixo conhecido: usar title() simples para manter maiúsculas em preposições como 'Da'\n    return s.title()\n",
+  "tags": ["strings", "enderecos", "normalizacao"],
+  "aulaRelacionada": "strings",
+  "enunciado": "Implemente `padronizar_endereco(end)` que normaliza o prefixo do endereço para 'Rua' ou 'Avenida' quando aplicável e padroniza espaços e caixa. Exemplos: 'R. das Flores, 10' -> 'Rua das Flores, 10'; 'av. paulista' -> 'Avenida Paulista'.",
+  "starterCode": "def padronizar_endereco(end):\n    pass\n",
+  "testes": [
+    { "chamada": "padronizar_endereco('R. das Flores, 10')", "esperado": "Rua das Flores, 10", "oculto": false },
+    { "chamada": "padronizar_endereco('av. paulista')", "esperado": "Avenida Paulista", "oculto": false },
+    { "chamada": "padronizar_endereco('   ')", "esperado": "", "oculto": false },
+    { "chamada": "padronizar_endereco('Rua ABC')", "esperado": "Rua Abc", "oculto": true },
+    { "chamada": "padronizar_endereco('Praça da Sé')", "esperado": "Praça Da Sé", "oculto": true }
+  ]
+}

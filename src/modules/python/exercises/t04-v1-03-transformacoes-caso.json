@@ -1,0 +1,27 @@
+{
+  "id": "t04-v1-03-transformacoes-caso",
+  "tipo": "codigo",
+  "titulo": "Transformações de caso: upper/lower/title",
+  "topico": "Strings",
+  "topicoNumero": 4,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Use `upper()`, `lower()` e `title()` para as transformações.",
+    "Teste com nomes mistos como 'jOão da SILVA' para ver o efeito do `title()`.",
+    "Trate espaços iniciais/finais com `strip()` se necessário antes de aplicar `title()`." 
+  ],
+  "solucao": "def transformar_casos(texto):\n    texto_limpo = texto.strip()\n    return [texto_limpo.upper(), texto_limpo.lower(), texto_limpo.title()]\n",
+  "tags": ["strings", "metodos", "case"],
+  "aulaRelacionada": "strings",
+  "enunciado": "Dado um texto, retorne uma lista com três versões: maiúsculas, minúsculas e em formato título. Exemplo: 'joão' -> ['JOÃO','joão','João'].",
+  "starterCode": "def transformar_casos(texto):\n    pass\n",
+  "testes": [
+    { "chamada": "transformar_casos('joão')", "esperado": "['JOÃO', 'joão', 'João']", "oculto": false },
+    { "chamada": "transformar_casos('  MARIA silva  ')", "esperado": "['MARIA SILVA', 'maria silva', 'Maria Silva']", "oculto": false },
+    { "chamada": "transformar_casos('a')", "esperado": "['A', 'a', 'A']", "oculto": false },
+    { "chamada": "transformar_casos('São Paulo')", "esperado": "['SÃO PAULO', 'são paulo', 'São Paulo']", "oculto": true },
+    { "chamada": "transformar_casos('')", "esperado": "['', '', '']", "oculto": true }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "t04-v2-03-anagramas",
+  "tipo": "codigo",
+  "titulo": "Verificar anagramas",
+  "topico": "Strings",
+  "topicoNumero": 4,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Normalize caixa e remova espaços e sinais de pontuação antes de comparar.",
+    "Uma forma simples é ordenar os caracteres de cada palavra limpa e comparar as strings resultantes.",
+    "Considere usar `split()` para separar palavras compostas ou `replace()` para remover símbolos." 
+  ],
+  "solucao": "import unicodedata\n\ndef eh_anagrama(a, b):\n    def clean(s):\n        s = ''.join(ch for ch in unicodedata.normalize('NFD', s) if unicodedata.category(ch) != 'Mn')\n        s = ''.join(ch for ch in s.lower() if ch.isalnum())\n        return ''.join(sorted(s))\n    return clean(a) == clean(b)\n",
+  "tags": ["strings", "anagramas", "sorting"],
+  "aulaRelacionada": "strings",
+  "enunciado": "Implemente `eh_anagrama(a, b)` que retorna True se as duas palavras/frases forem anagramas, ignorando espaços, acentos, pontuação e caixa. Exemplo: 'amor' e 'roma' -> True.",
+  "starterCode": "def eh_anagrama(a, b):\n    pass\n",
+  "testes": [
+    { "chamada": "eh_anagrama('amor', 'roma')", "esperado": "True", "oculto": false },
+    { "chamada": "eh_anagrama('Dormitório', 'Dormi torio')", "esperado": "True", "oculto": false },
+    { "chamada": "eh_anagrama('teste', 'estet')", "esperado": "True", "oculto": false },
+    { "chamada": "eh_anagrama('Listen', 'Silent')", "esperado": "True", "oculto": true },
+    { "chamada": "eh_anagrama('', '')", "esperado": "True", "oculto": true }
+  ]
+}

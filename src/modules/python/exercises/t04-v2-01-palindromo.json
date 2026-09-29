@@ -1,0 +1,27 @@
+{
+  "id": "t04-v2-01-palindromo",
+  "tipo": "codigo",
+  "titulo": "Verificar palíndromo (ignorando espaços e caixa)",
+  "topico": "Strings",
+  "topicoNumero": 4,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Remova espaços e use `lower()` ou `casefold()` antes de comparar.",
+    "Uma técnica é limpar o texto e comparar com sua versão invertida.",
+    "Considere entradas com pontuação (opcionalmente remova símbolos antes de checar)." 
+  ],
+  "solucao": "import unicodedata\n\ndef eh_palindromo(frase):\n    # limpa acentos, espaços e normaliza caixa\n    def remover_acentos(s):\n        return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')\n    limpo = remover_acentos(frase).lower()\n    limpo = ''.join(ch for ch in limpo if ch.isalnum())\n    return limpo == limpo[::-1]\n",
+  "tags": ["strings", "palindromo", "unicode"],
+  "aulaRelacionada": "strings",
+  "enunciado": "Implemente `eh_palindromo(frase)` que retorna True se a frase for palíndromo, ignorando espaços, pontuação, acentos e diferenças de caixa. Exemplo: 'A man, a plan, a canal' -> True.",
+  "starterCode": "def eh_palindromo(frase):\n    pass\n",
+  "testes": [
+    { "chamada": "eh_palindromo('arara')", "esperado": "True", "oculto": false },
+    { "chamada": "eh_palindromo('A man, a plan, a canal, Panama')", "esperado": "True", "oculto": false },
+    { "chamada": "eh_palindromo('Ovo')", "esperado": "True", "oculto": false },
+    { "chamada": "eh_palindromo('Olá mundo')", "esperado": "False", "oculto": true },
+    { "chamada": "eh_palindromo('')", "esperado": "True", "oculto": true }
+  ]
+}

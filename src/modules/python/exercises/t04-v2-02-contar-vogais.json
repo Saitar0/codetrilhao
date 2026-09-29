@@ -1,0 +1,27 @@
+{
+  "id": "t04-v2-02-contar-vogais",
+  "tipo": "codigo",
+  "titulo": "Contar vogais e consoantes",
+  "topico": "Strings",
+  "topicoNumero": 4,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Normalize caixa com `lower()` e remova acentos se desejar usar apenas ascii.",
+    "Considere apenas caracteres alfabéticos para contar; ignore espaços e pontuação.",
+    "Itere sobre os caracteres e incremente contadores separados para vogais e consoantes." 
+  ],
+  "solucao": "import unicodedata\n\ndef contar_vogais_consoantes(texto):\n    def remover_acentos(s):\n        return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')\n    s = remover_acentos(texto).lower()\n    vogais = set('aeiou')\n    v = c = 0\n    for ch in s:\n        if not ch.isalpha():\n            continue\n        if ch in vogais:\n            v += 1\n        else:\n            c += 1\n    return [v, c]\n",
+  "tags": ["strings", "contagem", "vogais"],
+  "aulaRelacionada": "strings",
+  "enunciado": "Dada uma frase, retorne uma lista com duas contagens: [numero_vogais, numero_consoantes]. Ignore caracteres que não sejam letras.",
+  "starterCode": "def contar_vogais_consoantes(texto):\n    pass\n",
+  "testes": [
+    { "chamada": "contar_vogais_consoantes('aeiou')", "esperado": "[5, 0]", "oculto": false },
+    { "chamada": "contar_vogais_consoantes('bcd f')", "esperado": "[0, 4]", "oculto": false },
+    { "chamada": "contar_vogais_consoantes('Olá, Mundo!')", "esperado": "[4, 4]", "oculto": false },
+    { "chamada": "contar_vogais_consoantes('')", "esperado": "[0, 0]", "oculto": true },
+    { "chamada": "contar_vogais_consoantes('Python3.8')", "esperado": "[1, 5]", "oculto": true }
+  ]
+}

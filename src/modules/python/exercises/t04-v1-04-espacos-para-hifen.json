@@ -1,0 +1,27 @@
+{
+  "id": "t04-v1-04-espacos-para-hifen",
+  "tipo": "codigo",
+  "titulo": "Substituir espaços por hífens",
+  "topico": "Strings",
+  "topicoNumero": 4,
+  "variacao": "V1",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Use `replace(' ', '-')` para trocar espaços por hífens.",
+    "Considere múltiplos espaços consecutivos: `split()` e `join()` podem ajudar a normalizar.",
+    "Remova espaços no início e no fim com `strip()` antes de substituir." 
+  ],
+  "solucao": "def espacos_para_hifen(frase):\n    # normaliza espaços múltiplos em um só, depois troca por hífen\n    partes = frase.strip().split()\n    return '-'.join(partes)\n",
+  "tags": ["strings", "replace", "join"],
+  "aulaRelacionada": "strings",
+  "enunciado": "Receba uma frase e retorne a mesma frase com espaços normalizados (um espaço entre palavras) e substituídos por hífens. Exemplo: '  olá   mundo ' -> 'olá-mundo'.",
+  "starterCode": "def espacos_para_hifen(frase):\n    pass\n",
+  "testes": [
+    { "chamada": "espacos_para_hifen('olá mundo')", "esperado": "olá-mundo", "oculto": false },
+    { "chamada": "espacos_para_hifen('  a  b c ')", "esperado": "a-b-c", "oculto": false },
+    { "chamada": "espacos_para_hifen('')", "esperado": "", "oculto": false },
+    { "chamada": "espacos_para_hifen('São  Paulo')", "esperado": "São-Paulo", "oculto": true },
+    { "chamada": "espacos_para_hifen('   ')", "esperado": "", "oculto": true }
+  ]
+}

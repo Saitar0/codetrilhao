@@ -1,0 +1,27 @@
+{
+  "id": "t04-v1-01-contar-letras",
+  "tipo": "codigo",
+  "titulo": "Contar letras e mostrar primeira/última",
+  "topico": "Strings",
+  "topicoNumero": 4,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Use `len()` para obter o número de caracteres.",
+    "A primeira letra é `texto[0]` e a última é `texto[-1]` (verifique string vazia).",
+    "Trate o caso de string vazia explicitamente retornando 0 e duas strings vazias." 
+  ],
+  "solucao": "def contar_letras(texto):\n    # se a string for vazia, devolvemos 0 e strings vazias\n    if texto == '':\n        return [0, '', '']\n    return [len(texto), texto[0], texto[-1]]\n",
+  "tags": ["strings", "fatiamento", "len"],
+  "aulaRelacionada": "strings",
+  "enunciado": "Dado um texto, retorne uma lista com: número de caracteres, primeiro caractere e último caractere. Exemplo: 'python' -> [6, 'p', 'n']. Se a string for vazia, retorne [0, '', ''].",
+  "starterCode": "def contar_letras(texto):\n    pass\n",
+  "testes": [
+    { "chamada": "contar_letras('python')", "esperado": "[6, 'p', 'n']", "oculto": false },
+    { "chamada": "contar_letras('a')", "esperado": "[1, 'a', 'a']", "oculto": false },
+    { "chamada": "contar_letras(' Olá ')", "esperado": "[5, ' ', ' ']", "oculto": false },
+    { "chamada": "contar_letras('')", "esperado": "[0, '', '']", "oculto": true },
+    { "chamada": "contar_letras('São')", "esperado": "[3, 'S', 'o']", "oculto": true }
+  ]
+}

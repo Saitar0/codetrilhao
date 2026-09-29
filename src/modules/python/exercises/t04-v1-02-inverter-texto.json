@@ -1,0 +1,27 @@
+{
+  "id": "t04-v1-02-inverter-texto",
+  "tipo": "codigo",
+  "titulo": "Inverter texto com fatiamento",
+  "topico": "Strings",
+  "topicoNumero": 4,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Use slicing com passo negativo: texto[::-1].",
+    "Teste com uma string de um caractere e com uma string vazia.",
+    "Lembre-se que strings são imutáveis; retorne uma nova string invertida." 
+  ],
+  "solucao": "def inverter_texto(texto):\n    return texto[::-1]\n",
+  "tags": ["strings", "fatiamento", "slicing"],
+  "aulaRelacionada": "strings",
+  "enunciado": "Implemente `inverter_texto(texto)` que retorna o texto invertido. Exemplo: 'abc' -> 'cba'.",
+  "starterCode": "def inverter_texto(texto):\n    pass\n",
+  "testes": [
+    { "chamada": "inverter_texto('abc')", "esperado": "cba", "oculto": false },
+    { "chamada": "inverter_texto('a')", "esperado": "a", "oculto": false },
+    { "chamada": "inverter_texto('')", "esperado": "", "oculto": false },
+    { "chamada": "inverter_texto('Olá')", "esperado": "álO", "oculto": true },
+    { "chamada": "inverter_texto('Python')", "esperado": "nohtyP", "oculto": true }
+  ]
+}

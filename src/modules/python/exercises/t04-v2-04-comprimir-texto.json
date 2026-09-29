@@ -1,0 +1,27 @@
+{
+  "id": "t04-v2-04-comprimir-texto",
+  "tipo": "codigo",
+  "titulo": "Comprimir texto simples (run-length)",
+  "topico": "Strings",
+  "topicoNumero": 4,
+  "variacao": "V2",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "É um algoritmo de run-length: percorra a string contando repetições consecutivas.",
+    "Trate corretamente quando o caractere muda ou no final da string para anexar o par char+count.",
+    "Considere caracteres únicos e strings vazias como casos de borda." 
+  ],
+  "solucao": "def comprimir(texto):\n    if texto == '':\n        return ''\n    resultado = []\n    atual = texto[0]\n    cont = 1\n    for ch in texto[1:]:\n        if ch == atual:\n            cont += 1\n        else:\n            resultado.append(f'{atual}{cont}')\n            atual = ch\n            cont = 1\n    resultado.append(f'{atual}{cont}')\n    return ''.join(resultado)\n",
+  "tags": ["strings", "algoritmos", "rle"],
+  "aulaRelacionada": "strings",
+  "enunciado": "Implemente `comprimir(texto)` que transforma repetições consecutivas em caractere+contagem. Ex: 'aaabbc' -> 'a3b2c1'.",
+  "starterCode": "def comprimir(texto):\n    pass\n",
+  "testes": [
+    { "chamada": "comprimir('aaabbc')", "esperado": "a3b2c1", "oculto": false },
+    { "chamada": "comprimir('abcd')", "esperado": "a1b1c1d1", "oculto": false },
+    { "chamada": "comprimir('')", "esperado": "", "oculto": false },
+    { "chamada": "comprimir('aaaa')", "esperado": "a4", "oculto": true },
+    { "chamada": "comprimir('aabbaa')", "esperado": "a2b2a2", "oculto": true }
+  ]
+}
