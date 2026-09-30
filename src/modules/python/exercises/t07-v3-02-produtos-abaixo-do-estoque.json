@@ -1,0 +1,51 @@
+{
+  "id": "t07-v3-02-produtos-abaixo-do-estoque",
+  "tipo": "codigo",
+  "titulo": "Encontrar produtos abaixo do estoque mínimo",
+  "topico": "Listas",
+  "topicoNumero": 7,
+  "variacao": "V3",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Cada item pode ser uma tupla `(nome, quantidade)`.",
+    "Filtre apenas os produtos cuja quantidade for menor que o mínimo.",
+    "Mantenha a ordem da lista original na resposta."
+  ],
+  "solucao": "def produtos_abaixo_do_estoque(produtos, minimo):\n    resultado = []\n    for nome, quantidade in produtos:\n        if quantidade < minimo:\n            resultado.append(nome)\n    return resultado\n",
+  "tags": [
+    "python",
+    "listas",
+    "estoque"
+  ],
+  "aulaRelacionada": "listas",
+  "enunciado": "Implemente `produtos_abaixo_do_estoque(produtos, minimo)` para receber uma lista de tuplas `(nome, quantidade)` e devolver os nomes dos produtos com quantidade menor que o mínimo.",
+  "starterCode": "def produtos_abaixo_do_estoque(produtos, minimo):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "produtos_abaixo_do_estoque([(\"arroz\", 12), (\"feijao\", 5), (\"leite\", 9)], 10)",
+      "esperado": "['feijao', 'leite']",
+      "oculto": false
+    },
+    {
+      "chamada": "produtos_abaixo_do_estoque([('café', 20), ('açúcar', 15)], 20)",
+      "esperado": "['açúcar']",
+      "oculto": false
+    },
+    {
+      "chamada": "produtos_abaixo_do_estoque([], 5)",
+      "esperado": "[]",
+      "oculto": false
+    },
+    {
+      "chamada": "produtos_abaixo_do_estoque([('batata', 0)], 0)",
+      "esperado": "[]",
+      "oculto": true
+    },
+    {
+      "chamada": "produtos_abaixo_do_estoque([('pão', 3), ('ovo', 3), ('óleo', 6)], 5)",
+      "esperado": "['pão', 'ovo']",
+      "oculto": true
+    }
+  ]
+}

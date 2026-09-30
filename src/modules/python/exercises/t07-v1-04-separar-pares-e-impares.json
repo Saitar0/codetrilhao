@@ -1,0 +1,51 @@
+{
+  "id": "t07-v1-04-separar-pares-e-impares",
+  "tipo": "codigo",
+  "titulo": "Separar uma lista em pares e ímpares",
+  "topico": "Listas",
+  "topicoNumero": 7,
+  "variacao": "V1",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Crie duas listas vazias: uma para pares e outra para ímpares.",
+    "Use o operador `% 2` para identificar o resto da divisão por 2.",
+    "Retorne as duas listas em ordem de coleta."
+  ],
+  "solucao": "def separar_pares_e_impares(numeros):\n    pares = []\n    impares = []\n    for numero in numeros:\n        if numero % 2 == 0:\n            pares.append(numero)\n        else:\n            impares.append(numero)\n    return (pares, impares)\n",
+  "tags": [
+    "python",
+    "listas",
+    "condicionais"
+  ],
+  "aulaRelacionada": "listas",
+  "enunciado": "Implemente `separar_pares_e_impares(numeros)` para devolver uma tupla `(pares, impares)`, preservando a ordem original dentro de cada grupo.",
+  "starterCode": "def separar_pares_e_impares(numeros):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "separar_pares_e_impares([1, 2, 3, 4, 5])",
+      "esperado": "([2, 4], [1, 3, 5])",
+      "oculto": false
+    },
+    {
+      "chamada": "separar_pares_e_impares([8, 9, 10])",
+      "esperado": "([8, 10], [9])",
+      "oculto": false
+    },
+    {
+      "chamada": "separar_pares_e_impares([])",
+      "esperado": "([], [])",
+      "oculto": false
+    },
+    {
+      "chamada": "separar_pares_e_impares([0])",
+      "esperado": "([0], [])",
+      "oculto": true
+    },
+    {
+      "chamada": "separar_pares_e_impares([-2, -1, 0, 1])",
+      "esperado": "([-2, 0], [-1, 1])",
+      "oculto": true
+    }
+  ]
+}

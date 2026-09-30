@@ -1,0 +1,25 @@
+{
+  "id": "t07-v1-03-inverter-lista",
+  "tipo": "prever-saida",
+  "titulo": "Prever a saída de três formas de inversão",
+  "topico": "Listas",
+  "topicoNumero": 7,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Observe que `b = a` aponta para a mesma lista; a cópia precisa ser feita separadamente.",
+    "A fatia `a[:]` cria uma nova lista com todos os elementos.",
+    "A lista original muda apenas quando você altera a referência compartilhada."
+  ],
+  "solucao": "a = [1, 2, 3]\nb = a\nb.append(4)\nc = a[:]\nc.append(5)\nprint(a)\nprint(b)\nprint(c)\n",
+  "tags": [
+    "python",
+    "listas",
+    "referencia"
+  ],
+  "aulaRelacionada": "listas",
+  "enunciado": "Considere o código abaixo. Qual será a saída exata? A ideia é reconhecer o efeito de `b = a` e da cópia com `a[:]` quando a lista é modificada.",
+  "codigo": "a = [1, 2, 3]\nb = a\nb.append(4)\nc = a[:]\nc.append(5)\nprint(a)\nprint(b)\nprint(c)\n",
+  "respostaEsperada": "[1, 2, 3, 4]\n[1, 2, 3, 4]\n[1, 2, 3, 4, 5]"
+}

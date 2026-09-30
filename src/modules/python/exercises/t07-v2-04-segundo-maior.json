@@ -1,0 +1,51 @@
+{
+  "id": "t07-v2-04-segundo-maior",
+  "tipo": "codigo",
+  "titulo": "Achar o segundo maior valor em uma passada",
+  "topico": "Listas",
+  "topicoNumero": 7,
+  "variacao": "V2",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Mantenha o maior e o segundo maior em variáveis separadas.",
+    "A cada número, atualize o maior ou o segundo maior sem ordenar a lista.",
+    "Considere casos com valores repetidos e listas de tamanho pequeno."
+  ],
+  "solucao": "def segundo_maior(numeros):\n    if len(numeros) < 2:\n        return None\n    maior = None\n    segundo = None\n    for valor in numeros:\n        if maior is None or valor > maior:\n            segundo = maior\n            maior = valor\n        elif segundo is None or valor > segundo:\n            segundo = valor\n    return segundo\n",
+  "tags": [
+    "python",
+    "listas",
+    "algoritmo"
+  ],
+  "aulaRelacionada": "listas",
+  "enunciado": "Implemente `segundo_maior(numeros)` para devolver o segundo maior valor da lista sem ordenar a coleção. Se houver valores repetidos, o segundo maior pode ser igual ao maior.",
+  "starterCode": "def segundo_maior(numeros):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "segundo_maior([12, 8, 9, 15])",
+      "esperado": "12",
+      "oculto": false
+    },
+    {
+      "chamada": "segundo_maior([5, 5, 5, 3])",
+      "esperado": "5",
+      "oculto": false
+    },
+    {
+      "chamada": "segundo_maior([4, 2])",
+      "esperado": "2",
+      "oculto": false
+    },
+    {
+      "chamada": "segundo_maior([1])",
+      "esperado": "None",
+      "oculto": true
+    },
+    {
+      "chamada": "segundo_maior([-5, -2, -8, -1])",
+      "esperado": "-2",
+      "oculto": true
+    }
+  ]
+}

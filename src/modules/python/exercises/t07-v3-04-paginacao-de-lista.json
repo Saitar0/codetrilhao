@@ -1,0 +1,51 @@
+{
+  "id": "t07-v3-04-paginacao-de-lista",
+  "tipo": "codigo",
+  "titulo": "Paginar uma lista longa em blocos de 10",
+  "topico": "Listas",
+  "topicoNumero": 7,
+  "variacao": "V3",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Use `range(0, len(itens), 10)` para percorrer blocos de 10 em 10.",
+    "Cada página é uma fatia da lista: `itens[i:i + 10]`.",
+    "Se a lista for vazia, a resposta deve ser uma lista vazia."
+  ],
+  "solucao": "def paginar_lista(itens, tamanho_pagina=10):\n    paginas = []\n    for indice in range(0, len(itens), tamanho_pagina):\n        paginas.append(itens[indice:indice + tamanho_pagina])\n    return paginas\n",
+  "tags": [
+    "python",
+    "listas",
+    "paginacao"
+  ],
+  "aulaRelacionada": "listas",
+  "enunciado": "Implemente `paginar_lista(itens, tamanho_pagina=10)` para devolver uma lista de páginas, onde cada página contém no máximo `tamanho_pagina` elementos, em ordem original.",
+  "starterCode": "def paginar_lista(itens, tamanho_pagina=10):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "paginar_lista([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])",
+      "esperado": "[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [11]]",
+      "oculto": false
+    },
+    {
+      "chamada": "paginar_lista([\"a\", \"b\", \"c\"], 2)",
+      "esperado": "[['a', 'b'], ['c']]",
+      "oculto": false
+    },
+    {
+      "chamada": "paginar_lista([], 10)",
+      "esperado": "[]",
+      "oculto": false
+    },
+    {
+      "chamada": "paginar_lista([1, 2, 3, 4, 5], 5)",
+      "esperado": "[[1, 2, 3, 4, 5]]",
+      "oculto": true
+    },
+    {
+      "chamada": "paginar_lista([1, 2, 3, 4, 5, 6], 3)",
+      "esperado": "[[1, 2, 3], [4, 5, 6]]",
+      "oculto": true
+    }
+  ]
+}

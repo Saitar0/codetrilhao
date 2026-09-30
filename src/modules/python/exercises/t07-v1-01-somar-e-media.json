@@ -1,0 +1,51 @@
+{
+  "id": "t07-v1-01-somar-e-media",
+  "tipo": "codigo",
+  "titulo": "Somar todos os elementos e calcular a média",
+  "topico": "Listas",
+  "topicoNumero": 7,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Acumule a soma em uma variável e percorra cada número da lista.",
+    "A média é a soma dividida pela quantidade de elementos.",
+    "Considere a lista vazia para evitar erro de divisão."
+  ],
+  "solucao": "def somar_e_media(numeros):\n    if not numeros:\n        return (0, 0.0)\n    total = 0\n    for numero in numeros:\n        total += numero\n    return (total, total / len(numeros))\n",
+  "tags": [
+    "python",
+    "listas",
+    "media"
+  ],
+  "aulaRelacionada": "listas",
+  "enunciado": "Implemente `somar_e_media(numeros)` para devolver uma tupla com a soma total e a média aritmética da lista. Se a lista estiver vazia, deve retornar `(0, 0.0)`.",
+  "starterCode": "def somar_e_media(numeros):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "somar_e_media([4, 6, 8])",
+      "esperado": "(18, 6.0)",
+      "oculto": false
+    },
+    {
+      "chamada": "somar_e_media([10, 20])",
+      "esperado": "(30, 15.0)",
+      "oculto": false
+    },
+    {
+      "chamada": "somar_e_media([])",
+      "esperado": "(0, 0.0)",
+      "oculto": false
+    },
+    {
+      "chamada": "somar_e_media([7])",
+      "esperado": "(7, 7.0)",
+      "oculto": true
+    },
+    {
+      "chamada": "somar_e_media([-3, 3, 0])",
+      "esperado": "(0, 0.0)",
+      "oculto": true
+    }
+  ]
+}

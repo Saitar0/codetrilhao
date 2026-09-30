@@ -1,0 +1,51 @@
+{
+  "id": "t07-v2-03-mesclar-listas-ordenadas",
+  "tipo": "codigo",
+  "titulo": "Mesclar duas listas ordenadas em uma ordenada",
+  "topico": "Listas",
+  "topicoNumero": 7,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Compare os elementos das duas listas com dois índices diferentes.",
+    "Pegue o menor elemento atual e avance no índice correspondente.",
+    "No fim, adicione o que sobrou de cada lista."
+  ],
+  "solucao": "def mesclar_listas_ordenadas(a, b):\n    i = 0\n    j = 0\n    resultado = []\n    while i < len(a) and j < len(b):\n        if a[i] <= b[j]:\n            resultado.append(a[i])\n            i += 1\n        else:\n            resultado.append(b[j])\n            j += 1\n    resultado.extend(a[i:])\n    resultado.extend(b[j:])\n    return resultado\n",
+  "tags": [
+    "python",
+    "listas",
+    "ordenacao"
+  ],
+  "aulaRelacionada": "listas",
+  "enunciado": "Implemente `mesclar_listas_ordenadas(a, b)` para combinar duas listas já ordenadas em uma terceira lista também ordenada, sem usar `sort()`.",
+  "starterCode": "def mesclar_listas_ordenadas(a, b):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "mesclar_listas_ordenadas([1, 3, 5], [2, 4, 6])",
+      "esperado": "[1, 2, 3, 4, 5, 6]",
+      "oculto": false
+    },
+    {
+      "chamada": "mesclar_listas_ordenadas([2, 4], [1, 3, 5])",
+      "esperado": "[1, 2, 3, 4, 5]",
+      "oculto": false
+    },
+    {
+      "chamada": "mesclar_listas_ordenadas([], [7, 8, 9])",
+      "esperado": "[7, 8, 9]",
+      "oculto": false
+    },
+    {
+      "chamada": "mesclar_listas_ordenadas([1, 1, 2], [1, 2, 2])",
+      "esperado": "[1, 1, 1, 2, 2, 2]",
+      "oculto": true
+    },
+    {
+      "chamada": "mesclar_listas_ordenadas([-5, -1], [-3, 0])",
+      "esperado": "[-5, -3, -1, 0]",
+      "oculto": true
+    }
+  ]
+}

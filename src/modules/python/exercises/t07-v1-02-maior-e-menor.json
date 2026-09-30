@@ -1,0 +1,51 @@
+{
+  "id": "t07-v1-02-maior-e-menor",
+  "tipo": "codigo",
+  "titulo": "Achar maior e menor sem usar max e min",
+  "topico": "Listas",
+  "topicoNumero": 7,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Escolha o primeiro elemento como referência para maior e menor.",
+    "Compare cada valor com esses dois números enquanto percorre a lista.",
+    "Para lista vazia, devolva `(None, None)` para evitar erro."
+  ],
+  "solucao": "def maior_e_menor(numeros):\n    if not numeros:\n        return (None, None)\n    maior = numeros[0]\n    menor = numeros[0]\n    for numero in numeros[1:]:\n        if numero > maior:\n            maior = numero\n        if numero < menor:\n            menor = numero\n    return (maior, menor)\n",
+  "tags": [
+    "python",
+    "listas",
+    "comparacao"
+  ],
+  "aulaRelacionada": "listas",
+  "enunciado": "Implemente `maior_e_menor(numeros)` para devolver uma tupla `(maior, menor)` sem usar `max()` nem `min()`. Se a lista estiver vazia, devolva `(None, None)`.",
+  "starterCode": "def maior_e_menor(numeros):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "maior_e_menor([3, 7, 1, 9])",
+      "esperado": "(9, 1)",
+      "oculto": false
+    },
+    {
+      "chamada": "maior_e_menor([5, 5, 5])",
+      "esperado": "(5, 5)",
+      "oculto": false
+    },
+    {
+      "chamada": "maior_e_menor([])",
+      "esperado": "(None, None)",
+      "oculto": false
+    },
+    {
+      "chamada": "maior_e_menor([0, -3, 4])",
+      "esperado": "(4, -3)",
+      "oculto": true
+    },
+    {
+      "chamada": "maior_e_menor([-2, -8, -5])",
+      "esperado": "(-2, -8)",
+      "oculto": true
+    }
+  ]
+}

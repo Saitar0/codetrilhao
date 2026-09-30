@@ -1,0 +1,51 @@
+{
+  "id": "t07-v2-01-remover-duplicatas",
+  "tipo": "codigo",
+  "titulo": "Remover duplicatas preservando a ordem",
+  "topico": "Listas",
+  "topicoNumero": 7,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Crie uma nova lista para guardar os valores já vistos.",
+    "Verifique se cada item já está na lista de resultado antes de adicioná-lo.",
+    "Isso mantém a ordem original e evita elementos repetidos."
+  ],
+  "solucao": "def remover_duplicatas(lista):\n    resultado = []\n    for item in lista:\n        if item not in resultado:\n            resultado.append(item)\n    return resultado\n",
+  "tags": [
+    "python",
+    "listas",
+    "ordenacao"
+  ],
+  "aulaRelacionada": "listas",
+  "enunciado": "Implemente `remover_duplicatas(lista)` para devolver uma nova lista sem repetir elementos, preservando a ordem em que aparecem pela primeira vez.",
+  "starterCode": "def remover_duplicatas(lista):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "remover_duplicatas([3, 1, 3, 2, 1])",
+      "esperado": "[3, 1, 2]",
+      "oculto": false
+    },
+    {
+      "chamada": "remover_duplicatas([\"a\", \"b\", \"a\", \"c\"])",
+      "esperado": "['a', 'b', 'c']",
+      "oculto": false
+    },
+    {
+      "chamada": "remover_duplicatas([])",
+      "esperado": "[]",
+      "oculto": false
+    },
+    {
+      "chamada": "remover_duplicatas([5, 5, 5])",
+      "esperado": "[5]",
+      "oculto": true
+    },
+    {
+      "chamada": "remover_duplicatas([10, 20, 10, 30, 20, 40])",
+      "esperado": "[10, 20, 30, 40]",
+      "oculto": true
+    }
+  ]
+}

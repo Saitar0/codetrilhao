@@ -1,0 +1,51 @@
+{
+  "id": "t07-v2-02-rotacionar-lista",
+  "tipo": "codigo",
+  "titulo": "Rotacionar uma lista N posições para a direita",
+  "topico": "Listas",
+  "topicoNumero": 7,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "A rotação é feita em blocos: parte final vai para o início.",
+    "Use o módulo `%` para reduzir valores grandes de N ao tamanho da lista.",
+    "Se a lista for vazia ou `n` for zero, devolva a própria lista."
+  ],
+  "solucao": "def rotacionar(lista, n):\n    if not lista or n == 0:\n        return lista[:]\n    tamanho = len(lista)\n    deslocamento = n % tamanho\n    return lista[-deslocamento:] + lista[:-deslocamento]\n",
+  "tags": [
+    "python",
+    "listas",
+    "rotacao"
+  ],
+  "aulaRelacionada": "listas",
+  "enunciado": "Implemente `rotacionar(lista, n)` para mover os últimos `n` elementos para a frente da lista, preservando a ordem relativa. O deslocamento deve funcionar mesmo quando `n` for maior que o tamanho da lista.",
+  "starterCode": "def rotacionar(lista, n):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "rotacionar([1, 2, 3, 4, 5], 2)",
+      "esperado": "[4, 5, 1, 2, 3]",
+      "oculto": false
+    },
+    {
+      "chamada": "rotacionar([10, 20, 30], 1)",
+      "esperado": "[30, 10, 20]",
+      "oculto": false
+    },
+    {
+      "chamada": "rotacionar([], 5)",
+      "esperado": "[]",
+      "oculto": false
+    },
+    {
+      "chamada": "rotacionar([1, 2, 3, 4], 10)",
+      "esperado": "[3, 4, 1, 2]",
+      "oculto": true
+    },
+    {
+      "chamada": "rotacionar([\"a\", \"b\", \"c\", \"d\"], 0)",
+      "esperado": "['a', 'b', 'c', 'd']",
+      "oculto": true
+    }
+  ]
+}

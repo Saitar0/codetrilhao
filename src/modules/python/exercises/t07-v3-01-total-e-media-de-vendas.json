@@ -1,0 +1,51 @@
+{
+  "id": "t07-v3-01-total-e-media-de-vendas",
+  "tipo": "codigo",
+  "titulo": "Calcular total e média de vendas por mês",
+  "topico": "Listas",
+  "topicoNumero": 7,
+  "variacao": "V3",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Some todos os valores da lista para obter o total.",
+    "A média é o total dividido pela quantidade de meses.",
+    "Liste de 0 a 1000 para testar casos simples e bordas."
+  ],
+  "solucao": "def total_e_media_vendas(vendas):\n    if not vendas:\n        return (0, 0.0)\n    total = 0\n    for valor in vendas:\n        total += valor\n    return (total, total / len(vendas))\n",
+  "tags": [
+    "python",
+    "listas",
+    "vendas"
+  ],
+  "aulaRelacionada": "listas",
+  "enunciado": "Implemente `total_e_media_vendas(vendas)` para receber uma lista com os valores mensais de vendas e devolver uma tupla `(total, media)`. Se não houver vendas, retorne `(0, 0.0)`.",
+  "starterCode": "def total_e_media_vendas(vendas):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "total_e_media_vendas([1500, 2000, 1800])",
+      "esperado": "(5300, 1766.6666666666667)",
+      "oculto": false
+    },
+    {
+      "chamada": "total_e_media_vendas([100, 100])",
+      "esperado": "(200, 100.0)",
+      "oculto": false
+    },
+    {
+      "chamada": "total_e_media_vendas([])",
+      "esperado": "(0, 0.0)",
+      "oculto": false
+    },
+    {
+      "chamada": "total_e_media_vendas([0, 0, 0])",
+      "esperado": "(0, 0.0)",
+      "oculto": true
+    },
+    {
+      "chamada": "total_e_media_vendas([250, 350])",
+      "esperado": "(600, 300.0)",
+      "oculto": true
+    }
+  ]
+}

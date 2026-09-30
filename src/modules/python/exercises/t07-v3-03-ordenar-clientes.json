@@ -1,0 +1,51 @@
+{
+  "id": "t07-v3-03-ordenar-clientes",
+  "tipo": "codigo",
+  "titulo": "Ordenar clientes por nome e depois por valor gasto",
+  "topico": "Listas",
+  "topicoNumero": 7,
+  "variacao": "V3",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Use `sorted()` com `key` para ordenar por nome e, em seguida, por gasto.",
+    "Converta o nome para minúsculas para ignorar diferenças de caixa.",
+    "A chave composta pode ser `lambda cliente: (cliente[0].lower(), cliente[1])`."
+  ],
+  "solucao": "def ordenar_clientes(clientes):\n    return sorted(clientes, key=lambda cliente: (cliente[0].lower(), cliente[1]))\n",
+  "tags": [
+    "python",
+    "listas",
+    "sort"
+  ],
+  "aulaRelacionada": "listas",
+  "enunciado": "Implemente `ordenar_clientes(clientes)` para receber uma lista de tuplas `(nome, gasto)` e devolver a lista ordenada primeiro por nome e depois por valor gasto. Use o critério de ordenação em `key`.",
+  "starterCode": "def ordenar_clientes(clientes):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "ordenar_clientes([(\"Bia\", 120), (\"ana\", 80), (\"Carlos\", 150)])",
+      "esperado": "[('ana', 80), ('Bia', 120), ('Carlos', 150)]",
+      "oculto": false
+    },
+    {
+      "chamada": "ordenar_clientes([(\"Zoe\", 50), (\"Ana\", 40)])",
+      "esperado": "[('Ana', 40), ('Zoe', 50)]",
+      "oculto": false
+    },
+    {
+      "chamada": "ordenar_clientes([])",
+      "esperado": "[]",
+      "oculto": false
+    },
+    {
+      "chamada": "ordenar_clientes([(\"Maria\", 200), (\"maria\", 150)])",
+      "esperado": "[('maria', 150), ('Maria', 200)]",
+      "oculto": true
+    },
+    {
+      "chamada": "ordenar_clientes([(\"Luis\", 70), (\"Ana\", 70)])",
+      "esperado": "[('Ana', 70), ('Luis', 70)]",
+      "oculto": true
+    }
+  ]
+}
