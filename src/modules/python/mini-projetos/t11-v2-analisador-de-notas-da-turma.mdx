@@ -1,66 +1,164 @@
 ---
 titulo: "Analisador de notas da turma"
-descricao: "Calcule média, mediana, maior e menor nota da turma."
+descricao: "Calcule media, mediana, aprovados, maior nota e ranking da turma com comprensoes e funcoes embutidas."
 topico: "comprehensions"
-topicoNome: "Comprehensions"
+topicoNome: "Compreensões e funções embutidas"
 variacao: "V2"
 tempo: 30
 nivel: "intermediario"
 execucao: "navegador"
-palavrasChave: ["python", "estatistica", "listas", "media"]
+palavrasChave: ["python", "estatistica", "notas", "sorted", "comprehensions", "ranking"]
 ---
 
 # Analisador de notas da turma
 
 ## Contexto
-Você precisa interpretar um conjunto de notas e resumir o desempenho da turma em apenas alguns cálculos úteis.
+Você precisa interpretar um conjunto de notas e tecer um resumo útil para a turma. Em vez de contar tudo manualmente, você quer usar estruturas prontas e operações que deixam a análise mais curta, mais legível e mais confiavel. Isso também ajuda a preparar o aluno para relatórios reais em educação, RH e operações.
 
 ## O que você vai construir
-Um pequeno analisador estatístico que calcula média, mediana, menor e maior nota.
+Um pequeno analisador que recebe alunos e notas, calcula a media da turma, mostra os aprovados, identifica a maior e menor nota, calcula a mediana e ordena o ranking final. A lógica deve usar comprehensions e `sorted(key=...)` sempre que a regra for simples.
+
+Exemplo de execução real:
+
+```text
+=== Analisador de notas da turma ===
+Media da turma: 7.93
+Aprovados: Ana, Caio, Dani, Ema, Gabi
+Maior nota: 9.8
+Menor nota: 5.7
+Mediana: 8.50
+Ranking:
+1. Gabi - 9.8
+2. Caio - 9.2
+3. Ema - 8.9
+4. Ana - 8.5
+5. Dani - 7.4
+6. Beto - 6.0
+7. Leo - 5.7
+Acima da media: Ana, Caio, Ema, Gabi
+```
 
 ## Requisitos
-- Receber uma lista de notas.
-- Calcular a média.
-- Encontrar a maior e menor nota.
-- Exibir a mediana final.
+1. Receber uma lista de alunos com nome e nota.
+2. Extrair todas as notas em uma estrutura simples usando comprehension.
+3. Calcular a media da turma com `sum` e `len`.
+4. Ordenar os alunos com `sorted` e `key=lambda ...` para montar o ranking.
+5. Mostrar aprovados, maior nota, menor nota e alunos acima da media.
+6. Tratar casos especiais como turma vazia, notas iguais e lista com quantidade par de elementos.
 
 ## Critérios de aceite
-- Os cálculos estão corretos para números positivos.
-- A lógica é clara e reutilizável.
-- A saída final ajuda a interpretar o desempenho.
+- [ ] A lista de alunos é tratada como estrutura de dados organizada.
+- [ ] A media da turma é calculada corretamente para qualquer lista de notas.
+- [ ] A mediana considera o caso de quantidade par e ímpar de elementos.
+- [ ] O ranking está ordenado pela nota em ordem decrescente.
+- [ ] A saída mostra aprovados e alunos acima da media com nomes claros.
+- [ ] O aluno consegue apontar partes do código que usam comprehensions e `sorted` com `key` de forma natural.
 
 ## Guia
-1. Armazene as notas em uma lista.
-2. Faça operações sobre a lista com funções auxiliares.
-3. Ordene a lista para calcular a mediana.
-4. Exiba todos os resultados em uma mensagem final.
+### Marcos do projeto
+1. Estruture a lista de alunos em dicionarios com `nome` e `nota`.
+2. Extraia as notas em outra lista para calcular media, maior nota e menor nota.
+3. Ordene a lista de alunos por nota usando `sorted(alunos, key=lambda aluno: aluno["nota"], reverse=True)`.
+4. Use comprehensions para criar listas de aprovados e alunos acima da media.
+5. Revise o caso de turma vazia e o cálculo da mediana antes de fechar o programa.
 
-<Playground title="Lista inicial" code={`notas = [8, 7, 9, 10, 6]
-print(notas)`} />
+### Regras e casos especiais
+- Se a turma estiver vazia, a media deve ser `0.0` ou uma mensagem clara de ausência de dados.
+- Se a lista de notas tiver quantidade par, a mediana é a media das duas notas centrais.
+- Se a lista tiver quantidade ímpar, a mediana é o valor central exato.
+- Caso haja empate em nota, a ordem final pode manter a entrada original ou usar ordenação secundaria por nome.
+- O aluno pode usar `any` ou `all` para ajustar a lógica de aprovação, mas não é requisito obrigatório.
+
+### Dicas
+- Para media, pense em `sum(notas) / len(notas)` e tenha uma regra de proteção para lista vazia.
+- `sorted` com `key` funciona bem quando você quer ordenar objetos por um campo interno, como `nota`.
+- Comprehensions tornam a criação de listas de aprovados e acima da media mais simples e menos repetitiva.
+- A saída do ranking fica mais clara se você usar `enumerate` para numerar as posições.
+
+<Callout type="importante" title="Regra de negócio">
+Aqui o objetivo não é contar cada item à mão. O ponto é usar ferramentas prontas para transformar lotes de dados em indicadores úteis, que é o padrão quase universal em analise de desempenho e relatórios de gestão.
+</Callout>
+
+<Playground title="Ponto de partida" code={`alunos = [
+    {"nome": "Ana", "nota": 8.5},
+    {"nome": "Beto", "nota": 6.0},
+    {"nome": "Caio", "nota": 9.2},
+]
+
+notas = [aluno["nota"] for aluno in alunos]
+# media = sum(notas) / len(notas)
+# ranking = sorted(alunos, key=lambda aluno: aluno["nota"], reverse=True)
+# aprovados = [aluno["nome"] for aluno in alunos if aluno["nota"] >= 7]
+print(notas)
+`} />
 
 ## Desafio extra
-Adicione uma opção para mostrar a quantidade de alunos acima da média e a distribuição por faixa de notas.
+Mostre a quantidade de alunos acima da media e a distribuição por faixa de notas, como `baixo`, `medio` e `alto`. Essa extensão transforma o relatório em algo ainda mais útil para professores e gestores.
 
 ## Visão de mercado
-Ferramentas simples de análise de desempenho ajudam professores e gestores a entender padrões rapidamente.
+Esse cenário aparece em escolas, áreas de RH, empresas de treinamento e analytics operacionais. O mesmo padrão de agrupar dados, ordenar e resumir é usado em ferramentas de acompanhamento de performance, gestão de equipe e dashboards executivos.
 
 ## Autoavaliação
-- [ ] Calculei a média corretamente.
-- [ ] Ordenei os dados para mediana.
-- [ ] Apresentei uma saída clara da turma.
+- [ ] Criei a lista de alunos com nome e nota.
+- [ ] Calculei a media corretamente com dados reais.
+- [ ] Ordenei o ranking com `sorted` e `key`.
+- [ ] Separei aprovados e alunos acima da media com comprehensions.
+- [ ] Consigo explicar o que muda quando a turma tem quantidade par ou ímpar de notas.
 
 <details>
   <summary>Solução de referência</summary>
 
 ```python
-notas = [7, 8, 9, 10, 6, 5]
-notas_ordenadas = sorted(notas)
-media = sum(notas) / len(notas)
-mediana = notas_ordenadas[len(notas_ordenadas) // 2]
+# -*- coding: utf-8 -*-
 
-print(f"Média: {media:.2f}")
-print(f"Maior: {max(notas)}")
-print(f"Menor: {min(notas)}")
-print(f"Mediana: {mediana}")
+alunos = [
+    {"nome": "Ana", "nota": 8.5},
+    {"nome": "Beto", "nota": 6.0},
+    {"nome": "Caio", "nota": 9.2},
+    {"nome": "Dani", "nota": 7.4},
+    {"nome": "Ema", "nota": 8.9},
+    {"nome": "Gabi", "nota": 9.8},
+    {"nome": "Leo", "nota": 5.7},
+]
+
+notas = [aluno["nota"] for aluno in alunos]
+notas_ordenadas = sorted(notas)
+media = sum(notas) / len(notas) if notas else 0.0
+mediana = (notas_ordenadas[len(notas_ordenadas) // 2 - 1] + notas_ordenadas[len(notas_ordenadas) // 2]) / 2 if len(notas_ordenadas) % 2 == 0 else notas_ordenadas[len(notas_ordenadas) // 2]
+aprovados = [aluno["nome"] for aluno in alunos if aluno["nota"] >= 7]
+acima_media = [aluno["nome"] for aluno in alunos if aluno["nota"] > media]
+classificacao = sorted(alunos, key=lambda aluno: aluno["nota"], reverse=True)
+
+print("=== Analisador de notas da turma ===")
+print(f"Media da turma: {media:.2f}")
+print(f"Aprovados: {', '.join(aprovados)}")
+print(f"Maior nota: {max(notas)}")
+print(f"Menor nota: {min(notas)}")
+print(f"Mediana: {mediana:.2f}")
+print("Ranking:")
+for pos, aluno in enumerate(classificacao, start=1):
+    print(f"{pos}. {aluno['nome']} - {aluno['nota']}")
+print(f"Acima da media: {', '.join(acima_media)}")
+```
+
+Saída real com execução:
+
+```text
+=== Analisador de notas da turma ===
+Media da turma: 7.93
+Aprovados: Ana, Caio, Dani, Ema, Gabi
+Maior nota: 9.8
+Menor nota: 5.7
+Mediana: 8.50
+Ranking:
+1. Gabi - 9.8
+2. Caio - 9.2
+3. Ema - 8.9
+4. Ana - 8.5
+5. Dani - 7.4
+6. Beto - 6.0
+7. Leo - 5.7
+Acima da media: Ana, Caio, Ema, Gabi
 ```
 </details>
+

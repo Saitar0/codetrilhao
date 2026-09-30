@@ -1,0 +1,208 @@
+---
+titulo: "Relatorio de vendas por vendedor"
+descricao: "Crie um relatório de vendas por vendedor com total, ticket medio, melhor vendedor e dias de pico."
+topico: "comprehensions"
+topicoNome: "Compreensões e funções embutidas"
+variacao: "V3"
+tempo: 35
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "vendas", "analise", "vendedor", "sum", "sorted", "etl"]
+---
+
+# Relatorio de vendas por vendedor
+
+## Contexto
+Você foi contratado por uma loja de produtos digitais para produzir um relatório rápido do desempenho de cada vendedor. O gerente quer entender quem vende mais, qual é o ticket medio, quais produtos aparecem mais e quando o volume de vendas cresce. A solução precisa ser fácil de manter e útil para decisões diarias.
+
+## O que você vai construir
+Um relatório de vendas agrupado por vendedor. O programa deve resumir o total vendido, a quantidade de vendas, o ticket medio, o melhor vendedor e os produtos mais vendidos. O objetivo é aplicar transformações em lote com `sum`, `sorted`, `list comprehension` e agrupamento por chave.
+
+Exemplo de execução real:
+
+```text
+=== Relatorio de vendas por vendedor ===
+Ana: total=R$ 1,020.00 | ticket medio=R$ 340.00 | vendas=3
+Bruno: total=R$ 660.00 | ticket medio=R$ 220.00 | vendas=3
+Cleo: total=R$ 1,020.00 | ticket medio=R$ 340.00 | vendas=3
+Dani: total=R$ 410.00 | ticket medio=R$ 410.00 | vendas=1
+Melhor vendedor: Ana
+Produtos mais vendidos:
+- Teclado: 3
+- Monitor: 2
+- Mouse: 2
+- Webcam: 2
+- Cabo USB: 1
+Dias de pico:
+- 2026-09-01: 2 vendas
+- 2026-09-02: 2 vendas
+- 2026-09-03: 2 vendas
+- 2026-09-04: 2 vendas
+- 2026-09-05: 2 vendas
+```
+
+## Requisitos
+1. Receber uma lista de vendas com vendedor, produto, valor e data.
+2. Agregar o total por vendedor.
+3. Calcular o ticket medio de cada vendedor.
+4. Identificar o melhor vendedor.
+5. Contar os produtos mais vendidos.
+6. Mostrar os dias com maior volume de vendas.
+7. Usar funções prontos da linguagem para simplificar a lógica.
+
+## Critérios de aceite
+- [ ] O relatório agrupa vendas por vendedor de forma clara.
+- [ ] O ticket medio usa o total dividido pelo número de vendas.
+- [ ] O melhor vendedor aparece mesmo quando há empate.
+- [ ] Os produtos são contados corretamente e ordenados por quantidade.
+- [ ] O aluno consegue apontar onde `sum`, `sorted` e `key` melhoram a legibilidade.
+- [ ] O programa funciona com mais de 30 vendas sem perder a organização.
+
+## Histórias de usuário
+- Como gerente, quero ver o desempenho de cada vendedor em um único relatório.
+- Como comercial, quero identificar quais produtos surtiram mais vendas no período.
+- Como diretoria, quero ver quais dias foram de pico para planejar reforço de equipe.
+- Como analista, quero converter uma lista de vendas em indicadores reais sem reescrever a lógica manualmente.
+
+## Arquitetura sugerida
+- `agrupar_vendas(vendas)` para montar o resumo por vendedor.
+- `calcular_ticket_medio(vendas_por_vendedor)` para obter a media por vendedor.
+- `contar_produtos(vendas)` para descobrir o ranking de itens mais vendidos.
+- `contar_dias(vendas)` para ver os dias com maior volume.
+- `main()` para organizar a rotina de leitura e impressão do relatório.
+
+## Casos de teste de aceitação
+- Lista vazia: o programa deve sair com uma mensagem clara e sem quebrar.
+- Vendedor sem vendas: o relatório não deve aparecer como uma venda inexistente.
+- Empate para melhor vendedor: o critério deve usá-lo do maior total e, em caso de empate, manter a ordem alfabetica ou a primeira ocorrência.
+- Produtos repetidos: devem ser somados pela quantidade total e ordenados por volume.
+- Dias com mesmo volume: a ordem deve ser deterministica e previsivel.
+
+## Riscos
+- Misturar regras de apresentação e cálculo deixa o código mais frágil.
+- Dados sem padronização de datas ou valores podem distorcer o relatório.
+- Ordenar a lista sem `key` pode criar resultados inesperados.
+- Ignorar casos de empate torna a análise menos confiavel para o cliente.
+
+## Guia
+### Historia do cliente
+O cliente quer um protótipo funcional que mostre como transformar uma base de vendas em indicadores úteis. Ele não precisa de um sistema completo, mas quer algo que inspire confiança e sirva de base para dashboards mais avançados.
+
+### Marcos do projeto
+1. Estruture a lista de vendas em dicionarios com vendedor, produto, valor e data.
+2. Agrupe as vendas por vendedor para calcular o total e a quantidade de vendas.
+3. Use `sorted` com `key` para ordenar o ranking e identificar o melhor vendedor.
+4. Conte os produtos e os dias com maior volume usando dicionarios ou comprehensions.
+5. Revise a saída final para garantir que o relatório seja legivel para o cliente.
+
+### Dicas
+- Quando você precisa resumir dados em lote, um dicionario de agregados costuma ser mais limpo do que várias listas paralelas.
+- `sorted(..., key=lambda item: item[1])` ajuda a ordenar a equipe por total ou por quantidade sem complicar a lógica.
+- Se sua contagem estiver repetitiva, pense em uma estrutura de chave e valor; isso reduz os erros.
+- O relatório não precisa mostrar tudo em uma linha só. Quebrar a saída em blocos deixa a leitura mais amigavel.
+
+<Callout type="importante" title="Regra de negócio">
+Transformações em lote são a base de qualquer rotina de ETL e análise de dados. Quando a regra de negócio é bem organizada, o mesmo padrão serve para relatórios de vendas, marketing e operações.
+</Callout>
+
+<Playground title="Ponto de partida" code={`vendas = [
+    {"vendedor": "Ana", "produto": "Teclado", "valor": 220.0, "data": "2026-09-01"},
+    {"vendedor": "Bruno", "produto": "Mouse", "valor": 120.0, "data": "2026-09-01"},
+    {"vendedor": "Cleo", "produto": "Monitor", "valor": 680.0, "data": "2026-09-02"},
+]
+
+# 1. agrupe as vendas por vendedor
+# 2. calcule o ticket medio
+# 3. conte produtos e dias de pico
+# 4. ordene o ranking com sorted(..., key=...)
+`} />
+
+## Desafio extra
+Adicione um resumo por produto, mostrando o total faturado por item e a quantidade vendida. Isso muda o relatório de uma visão de vendedor para uma visão de mix de vendas, que é muito útil em lojas, marketplaces e áreas comerciais.
+
+## Visão de mercado
+Esse tipo de relatório aparece em lojas, e-commerce, CRM e ferramentas de analytics. Transformações em lote com agrupamento e ordenação são a base de qualquer análise de dados e de dashboards executivos.
+
+## Autoavaliação
+- [ ] Consegui agrupar todas as vendas por vendedor.
+- [ ] Calculei o ticket medio corretamente.
+- [ ] Identifiquei o melhor vendedor com uma regra consistente.
+- [ ] Ordenei o ranking com `sorted` e `key`.
+- [ ] Entendi por que dicionarios e agregacoes ajudam em relatórios reais.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+# -*- coding: utf-8 -*-
+
+vendas = [
+    {"vendedor": "Ana", "produto": "Teclado", "valor": 220.0, "data": "2026-09-01"},
+    {"vendedor": "Ana", "produto": "Mouse", "valor": 120.0, "data": "2026-09-01"},
+    {"vendedor": "Ana", "produto": "Monitor", "valor": 680.0, "data": "2026-09-02"},
+    {"vendedor": "Bruno", "produto": "Teclado", "valor": 220.0, "data": "2026-09-02"},
+    {"vendedor": "Bruno", "produto": "Cabo USB", "valor": 30.0, "data": "2026-09-03"},
+    {"vendedor": "Bruno", "produto": "Webcam", "valor": 410.0, "data": "2026-09-03"},
+    {"vendedor": "Cleo", "produto": "Mouse", "valor": 120.0, "data": "2026-09-04"},
+    {"vendedor": "Cleo", "produto": "Monitor", "valor": 680.0, "data": "2026-09-04"},
+    {"vendedor": "Cleo", "produto": "Teclado", "valor": 220.0, "data": "2026-09-05"},
+    {"vendedor": "Dani", "produto": "Webcam", "valor": 410.0, "data": "2026-09-05"},
+]
+
+por_vendedor = {}
+for venda in vendas:
+    vendedor = venda["vendedor"]
+    if vendedor not in por_vendedor:
+        por_vendedor[vendedor] = {"total": 0.0, "quantidade": 0}
+    por_vendedor[vendedor]["total"] += venda["valor"]
+    por_vendedor[vendedor]["quantidade"] += 1
+
+produtos = {}
+for venda in vendas:
+    produtos[venda["produto"]] = produtos.get(venda["produto"], 0) + 1
+
+dias = {}
+for venda in vendas:
+    dias[venda["data"]] = dias.get(venda["data"], 0) + 1
+
+ranking_vendedores = sorted(por_vendedor.items(), key=lambda item: item[1]["total"], reverse=True)
+melhor_vendedor = ranking_vendedores[0][0]
+
+print("=== Relatorio de vendas por vendedor ===")
+for vendedor, dados in sorted(por_vendedor.items()):
+    ticket_medio = dados["total"] / dados["quantidade"]
+    print(f"{vendedor}: total=R$ {dados['total']:,.2f} | ticket medio=R$ {ticket_medio:,.2f} | vendas={dados['quantidade']}")
+
+print(f"Melhor vendedor: {melhor_vendedor}")
+print("Produtos mais vendidos:")
+for produto, quantidade in sorted(produtos.items(), key=lambda item: (-item[1], item[0])):
+    print(f"- {produto}: {quantidade}")
+
+print("Dias de pico:")
+for dia, quantidade in sorted(dias.items(), key=lambda item: (-item[1], item[0])):
+    print(f"- {dia}: {quantidade} vendas")
+```
+
+Saída real com execução:
+
+```text
+=== Relatorio de vendas por vendedor ===
+Ana: total=R$ 1,020.00 | ticket medio=R$ 340.00 | vendas=3
+Bruno: total=R$ 660.00 | ticket medio=R$ 220.00 | vendas=3
+Cleo: total=R$ 1,020.00 | ticket medio=R$ 340.00 | vendas=3
+Dani: total=R$ 410.00 | ticket medio=R$ 410.00 | vendas=1
+Melhor vendedor: Ana
+Produtos mais vendidos:
+- Teclado: 3
+- Monitor: 2
+- Mouse: 2
+- Webcam: 2
+- Cabo USB: 1
+Dias de pico:
+- 2026-09-01: 2 vendas
+- 2026-09-02: 2 vendas
+- 2026-09-03: 2 vendas
+- 2026-09-04: 2 vendas
+- 2026-09-05: 2 vendas
+```
+</details>

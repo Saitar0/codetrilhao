@@ -1,0 +1,133 @@
+---
+titulo: "Tabela de quadrados e cubos"
+descricao: "Gere uma tabela útil com quadrados, cubos e paridade usando compreensões e funções embutidas."
+topico: "comprehensions"
+topicoNome: "Compreensões e funções embutidas"
+variacao: "V1"
+tempo: 25
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "comprehensions", "quadrado", "cubo", "paridade"]
+---
+
+# Tabela de quadrados e cubos
+
+## Contexto
+Você está montando uma tabela de referência rápida para uma aula de matemática e precisa mostrar, em poucos segundos, o número, o quadrado, o cubo e se o valor é par ou ímpar. Em vez de escrever um trecho longo em vários loops, você quer uma solução curta, clara e fácil de ler.
+
+## O que você vai construir
+Uma função que gera uma tabela de 1 até N e organiza cada linha com o número, o quadrado e o cubo. O foco é praticar listas por compreensão, filtros e legibilidade sem perder a clareza do resultado.
+
+Exemplo de execução real:
+
+```text
+=== Tabela de quadrados e cubos ===
+ 1 |  1 |   1 | impar
+ 2 |  4 |   8 | par
+ 3 |  9 |  27 | impar
+ 4 | 16 |  64 | par
+ 5 | 25 | 125 | impar
+```
+
+## Requisitos
+1. Crie uma função que recebe um valor final `n`.
+2. Gere uma lista com os números de 1 até `n`.
+3. Calcule o quadrado e o cubo de cada número.
+4. Marque se cada valor é par ou ímpar.
+5. Imprima a tabela em formato legível.
+
+## Critérios de aceite
+- [ ] A tabela começa no número 1 e vai até `n`.
+- [ ] O quadrado e o cubo são calculados corretamente.
+- [ ] A lógica usa compreensão e deixa o código mais curto do que um loop manual.
+- [ ] A saída mostra claramente se cada número é par ou ímpar.
+- [ ] O aluno consegue explicar por que uma comprehension é útil quando a regra é simples.
+- [ ] A função pode ser reutilizada para qualquer valor de `n`.
+
+## Guia
+### Passo a passo
+1. Comece com uma função `gerar_tabela(n)` e pense em quais dados cada item vai guardar.
+2. Use `range(1, n + 1)` para gerar os valores de entrada.
+3. Crie um dicionário para cada item com `numero`, `quadrado`, `cubo` e `par`.
+4. Faça a saída em colunas com `print` e alinhamento simples.
+5. Teste com `n = 5` e veja se a tabela da saída bate com os cálculos.
+
+### Dicas por etapa
+- A compreensão pode criar uma lista inteira em uma linha, mas cada item ainda precisa ter a estrutura correta.
+- Se o código ficar longo, volte para o bloco simples e pense em uma regra por item.
+- Para verificar paridade, use o operador `%`. Se o resto for zero, o número é par.
+- Alinhar textos com `f"{valor:>2}"` deixa a tabela muito mais legível.
+- Quando o padrão de cada item é igual, uma comprehension funciona melhor do que um `for` com vários `append`.
+
+<Callout type="importante" title="Regra de negócio">
+Em tarefas de análise simples, a melhor ferramenta nem sempre é a mais complexa. Quando a regra do item é direta, uma comprehension deixa o programa mais enxuto, mais legível e mais fácil de revisar.
+</Callout>
+
+<Playground title="Ponto de partida" code={`def gerar_tabela(n):
+    return [
+        {
+            "numero": numero,
+            "quadrado": numero ** 2,
+            "cubo": numero ** 3,
+            "par": numero % 2 == 0,
+        }
+        for numero in range(1, n + 1)
+    ]
+
+for item in gerar_tabela(5):
+    print(item)
+`} />
+
+## Desafio extra
+Crie uma segunda versão que exporte a tabela como lista de dicionários e, depois, transforme essa lista em uma string em formato CSV. Isso ajuda a perceber que a mesma estrutura pode servir tanto para tela quanto para arquivo ou para outra etapa do pipeline.
+
+## Visão de mercado
+Esse padrão aparece em dashboards, relatórios de monitoramento e ETL simples. Em ferramentas de análise, gerar uma tabela resumida em lote é muito mais comum do que escrever blocos enormes de lógica manual para cada cálculo.
+
+## Autoavaliação
+- [ ] Consegui gerar a tabela de 1 até `n` corretamente.
+- [ ] Usei uma comprehension para criar os itens da tabela.
+- [ ] Entendi como calcular quadrado e cubo com operadores simples.
+- [ ] Tratando paridade com `%`, a saída ficou clara.
+- [ ] Posso explicar quando uma comprehension é mais legível do que um loop manual.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+# -*- coding: utf-8 -*-
+
+def gerar_tabela(n):
+    return [
+        {
+            "numero": numero,
+            "quadrado": numero ** 2,
+            "cubo": numero ** 3,
+            "par": numero % 2 == 0,
+        }
+        for numero in range(1, n + 1)
+    ]
+
+
+def imprimir_tabela(tabela):
+    print("=== Tabela de quadrados e cubos ===")
+    for item in tabela:
+        status = "par" if item["par"] else "impar"
+        print(f"{item['numero']:>2} | {item['quadrado']:>2} | {item['cubo']:>3} | {status}")
+
+
+tabela = gerar_tabela(5)
+imprimir_tabela(tabela)
+```
+
+Saída real com execução:
+
+```text
+=== Tabela de quadrados e cubos ===
+ 1 |  1 |   1 | impar
+ 2 |  4 |   8 | par
+ 3 |  9 |  27 | impar
+ 4 | 16 |  64 | par
+ 5 | 25 | 125 | impar
+```
+</details>
