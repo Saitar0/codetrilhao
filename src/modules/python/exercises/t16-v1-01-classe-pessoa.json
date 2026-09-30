@@ -1,0 +1,52 @@
+{
+  "id": "t16-v1-01-classe-pessoa",
+  "tipo": "codigo",
+  "titulo": "Classe Pessoa",
+  "topico": "Orientação a Objetos",
+  "topicoNumero": 16,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Defina nome e idade no __init__ usando self.",
+    "O método apresentar deve montar uma frase com os dois atributos.",
+    "Teste com pessoas diferentes para verificar que cada objeto guarda seu próprio estado."
+  ],
+  "solucao": "class Pessoa:\n    def __init__(self, nome, idade):\n        self.nome = nome\n        self.idade = idade\n\n    def apresentar(self):\n        return f\"{self.nome} tem {self.idade} anos\"\n",
+  "tags": [
+    "python",
+    "classes",
+    "objetos",
+    "self"
+  ],
+  "aulaRelacionada": "classes-e-objetos",
+  "enunciado": "Crie a classe `Pessoa` com os atributos `nome` e `idade` e um método `apresentar()` que devolve uma frase no formato `Ana tem 22 anos`.",
+  "starterCode": "class Pessoa:\n    def __init__(self, nome, idade):\n        self.nome = nome\n        self.idade = idade\n\n    def apresentar(self):\n        pass\n",
+  "testes": [
+    {
+      "chamada": "Pessoa('Ana', 22).apresentar()",
+      "esperado": "Ana tem 22 anos",
+      "oculto": false
+    },
+    {
+      "chamada": "Pessoa('Beto', 15).apresentar()",
+      "esperado": "Beto tem 15 anos",
+      "oculto": false
+    },
+    {
+      "chamada": "(Pessoa('Lia', 30).nome, Pessoa('Lia', 30).idade)",
+      "esperado": "('Lia', 30)",
+      "oculto": false
+    },
+    {
+      "chamada": "Pessoa('Marta', 0).apresentar()",
+      "esperado": "Marta tem 0 anos",
+      "oculto": true
+    },
+    {
+      "chamada": "Pessoa('João', 18).apresentar()",
+      "esperado": "João tem 18 anos",
+      "oculto": true
+    }
+  ]
+}

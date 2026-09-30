@@ -1,0 +1,32 @@
+{
+  "id": "t16-v2-03-gerente-com-super",
+  "tipo": "codigo",
+  "titulo": "Gerente com super",
+  "topico": "Orientação a Objetos",
+  "topicoNumero": 16,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "A classe `Gerente` herda de `Funcionario`.",
+    "Use `super().__init__` para reaproveitar dados da classe base.",
+    "No resumo, combine o texto do pai com o departamento do filho."
+  ],
+  "solucao": "class Funcionario:\n    def __init__(self, nome, salario):\n        self.nome = nome\n        self.salario = salario\n\n    def resumo(self):\n        return f\"{self.nome}: R$ {self.salario:.2f}\"\n\nclass Gerente(Funcionario):\n    def __init__(self, nome, salario, departamento):\n        super().__init__(nome, salario)\n        self.departamento = departamento\n\n    def resumo(self):\n        return f\"{super().resumo()} | Departamento: {self.departamento}\"\n",
+  "tags": [
+    "python",
+    "heranca",
+    "super",
+    "funcionario"
+  ],
+  "aulaRelacionada": "heranca-e-polimorfismo",
+  "enunciado": "Crie `Funcionario` e `Gerente`, usando herança e `super()` para reaproveitar o resumo do pai e acrescentar o departamento.",
+  "starterCode": "class Funcionario:\n    def __init__(self, nome, salario):\n        self.nome = nome\n        self.salario = salario\n\n    def resumo(self):\n        return f\"{self.nome}: R$ {self.salario:.2f}\"\n\nclass Gerente(Funcionario):\n    def __init__(self, nome, salario, departamento):\n        pass\n\n    def resumo(self):\n        pass\n",
+  "testes": [
+    { "chamada": "Gerente('Ana', 5000, 'TI').resumo()", "esperado": "Ana: R$ 5000.00 | Departamento: TI", "oculto": false },
+    { "chamada": "Funcionario('Bia', 2000).resumo()", "esperado": "Bia: R$ 2000.00", "oculto": false },
+    { "chamada": "Gerente('Caio', 3500, 'Vendas').departamento", "esperado": "Vendas", "oculto": false },
+    { "chamada": "Gerente('Dora', 1000, 'Financeiro').resumo()", "esperado": "Dora: R$ 1000.00 | Departamento: Financeiro", "oculto": true },
+    { "chamada": "Gerente('Elo', 4200, 'RH').salario", "esperado": "4200", "oculto": true }
+  ]
+}

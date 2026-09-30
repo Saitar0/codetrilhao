@@ -1,0 +1,52 @@
+{
+  "id": "t16-v2-01-animais-polimorficos",
+  "tipo": "codigo",
+  "titulo": "Animais polimórficos",
+  "topico": "Orientação a Objetos",
+  "topicoNumero": 16,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Defina uma classe base com o método emitir_som.",
+    "Cada subclasse sobrescreve o comportamento.",
+    "A função recebe uma lista e aplica o mesmo método em cada animal."
+  ],
+  "solucao": "class Animal:\n    def emitir_som(self):\n        return 'som'\n\nclass Cachorro(Animal):\n    def emitir_som(self):\n        return 'au au'\n\nclass Gato(Animal):\n    def emitir_som(self):\n        return 'miau'\n\ndef sons_dos_animais(animais):\n    return [animal.emitir_som() for animal in animais]\n",
+  "tags": [
+    "python",
+    "heranca",
+    "polimorfismo",
+    "animais"
+  ],
+  "aulaRelacionada": "heranca-e-polimorfismo",
+  "enunciado": "Crie a hierarquia `Animal → Cachorro` e `Animal → Gato`, e implemente `sons_dos_animais(animais)` para devolver a lista de sons emitidos.",
+  "starterCode": "class Animal:\n    def emitir_som(self):\n        return 'som'\n\nclass Cachorro(Animal):\n    def emitir_som(self):\n        pass\n\nclass Gato(Animal):\n    def emitir_som(self):\n        pass\n\ndef sons_dos_animais(animais):\n    return [animal.emitir_som() for animal in animais]\n",
+  "testes": [
+    {
+      "chamada": "sons_dos_animais([Cachorro(), Gato(), Cachorro()])",
+      "esperado": "['au au', 'miau', 'au au']",
+      "oculto": false
+    },
+    {
+      "chamada": "sons_dos_animais([Gato()])",
+      "esperado": "['miau']",
+      "oculto": false
+    },
+    {
+      "chamada": "sons_dos_animais([])",
+      "esperado": "[]",
+      "oculto": false
+    },
+    {
+      "chamada": "sons_dos_animais([Cachorro(), Cachorro()])",
+      "esperado": "['au au', 'au au']",
+      "oculto": true
+    },
+    {
+      "chamada": "sons_dos_animais([Gato(), Cachorro(), Gato()])",
+      "esperado": "['miau', 'au au', 'miau']",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "t16-v2-04-produto-por-valor",
+  "tipo": "codigo",
+  "titulo": "Produto comparado por valor",
+  "topico": "Orientação a Objetos",
+  "topicoNumero": 16,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Use `__eq__` para comparar os atributos relevantes do objeto.",
+    "Verifique o tipo com `isinstance` antes de comparar.",
+    "Se os campos forem iguais, os produtos são iguais por valor."
+  ],
+  "solucao": "class Produto:\n    def __init__(self, nome, preco):\n        self.nome = nome\n        self.preco = preco\n\n    def __eq__(self, other):\n        return isinstance(other, Produto) and self.nome == other.nome and self.preco == other.preco\n",
+  "tags": [
+    "python",
+    "dunder",
+    "comparacao",
+    "valor"
+  ],
+  "aulaRelacionada": "metodos-especiais",
+  "enunciado": "Crie a classe `Produto` com `__eq__` para que dois produtos sejam considerados iguais quando nome e preço forem iguais.",
+  "starterCode": "class Produto:\n    def __init__(self, nome, preco):\n        self.nome = nome\n        self.preco = preco\n\n    def __eq__(self, other):\n        pass\n",
+  "testes": [
+    { "chamada": "Produto('Caneta', 5) == Produto('Caneta', 5)", "esperado": "True", "oculto": false },
+    { "chamada": "Produto('Caneta', 5) == Produto('Caneta', 6)", "esperado": "False", "oculto": false },
+    { "chamada": "Produto('Borracha', 3) == Produto('Apontador', 3)", "esperado": "False", "oculto": false },
+    { "chamada": "Produto('Livro', 20) == Produto('Livro', 20)", "esperado": "True", "oculto": true },
+    { "chamada": "Produto('Livro', 20) == 'Livro'", "esperado": "False", "oculto": true }
+  ]
+}

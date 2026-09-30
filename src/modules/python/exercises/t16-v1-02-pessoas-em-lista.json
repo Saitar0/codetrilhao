@@ -1,0 +1,46 @@
+{
+  "id": "t16-v1-02-pessoas-em-lista",
+  "tipo": "multipla-escolha",
+  "titulo": "Objetos em lista",
+  "topico": "Orientação a Objetos",
+  "topicoNumero": 16,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Cada pessoa é uma instância da mesma classe.",
+    "A lista guarda os objetos, não apenas strings.",
+    "A iteração percorre cada objeto e usa o método de apresentação do item atual."
+  ],
+  "pergunta": "Qual alternativa cria três objetos da classe `Pessoa`, guarda-os em uma lista e imprime as apresentações?",
+  "alternativas": [
+    {
+      "texto": "class Pessoa:\n    def __init__(self, nome, idade):\n        self.nome = nome\n        self.idade = idade\n\n    def apresentar(self):\n        return f'{self.nome} tem {self.idade} anos'\n\npessoas = [Pessoa('Ana', 20), Pessoa('Bia', 22), Pessoa('Caio', 18)]\nfor pessoa in pessoas:\n    print(pessoa.apresentar())",
+      "correta": true,
+      "explicacao": "Essa opção cria três instâncias de Pessoa e itera sobre elas, exibindo a apresentação de cada objeto."
+    },
+    {
+      "texto": "class Pessoa:\n    def __init__(self, nome, idade):\n        self.nome = nome\n        self.idade = idade\n\n    def apresentar(self):\n        return f'{self.nome} tem {self.idade} anos'\n\npessoas = ['Ana', 'Bia', 'Caio']\nfor nome in pessoas:\n    print(Pessoa(nome, 20).apresentar())",
+      "correta": false,
+      "explicacao": "Aqui a lista guarda strings e não objetos Pessoa, então você perde as idades e a identidade de cada instância."
+    },
+    {
+      "texto": "class Pessoa:\n    def __init__(self, nome, idade):\n        self.nome = nome\n        self.idade = idade\n\n    def apresentar(self):\n        return f'{self.nome} tem {self.idade} anos'\n\npessoas = []\nfor nome in ['Ana', 'Bia', 'Caio']:\n    pessoas.append(nome)\nprint(pessoas)",
+      "correta": false,
+      "explicacao": "Esse trecho adiciona só nomes em uma lista; ele não cria objetos nem usa a classe Pessoa."
+    },
+    {
+      "texto": "class Pessoa:\n    def __init__(self, nome, idade):\n        self.nome = nome\n        self.idade = idade\n\n    def apresentar(self):\n        return f'{self.nome} tem {self.idade} anos'\n\npessoas = [Pessoa('Ana', 20), Pessoa('Bia', 22), Pessoa('Caio', 18)]\nprint(pessoas)",
+      "correta": false,
+      "explicacao": "Isso mostra a lista de objetos, mas não percorre cada pessoa para imprimir a apresentação individual."
+    }
+  ],
+  "tags": [
+    "python",
+    "classes",
+    "objetos",
+    "lista"
+  ],
+  "aulaRelacionada": "classes-e-objetos",
+  "enunciado": "Leia o trecho e escolha a opção que cria três objetos `Pessoa`, guarda todos em uma lista e imprime a apresentação de cada um."
+}

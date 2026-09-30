@@ -1,0 +1,32 @@
+{
+  "id": "t16-v2-02-conta-bancaria-com-propriedade",
+  "tipo": "codigo",
+  "titulo": "Conta bancária com propriedade",
+  "topico": "Orientação a Objetos",
+  "topicoNumero": 16,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Use um atributo privado para guardar o saldo real.",
+    "O getter deve apenas devolver o valor interno.",
+    "No setter, rejeite valores negativos com ValueError."
+  ],
+  "solucao": "class Conta:\n    def __init__(self, titular, saldo_inicial=0):\n        self.titular = titular\n        self._saldo = saldo_inicial\n\n    @property\n    def saldo(self):\n        return self._saldo\n\n    @saldo.setter\n    def saldo(self, valor):\n        if valor < 0:\n            raise ValueError('Saldo não pode ser negativo')\n        self._saldo = valor\n",
+  "tags": [
+    "python",
+    "encapsulamento",
+    "property",
+    "conta"
+  ],
+  "aulaRelacionada": "encapsulamento-e-propriedades",
+  "enunciado": "Crie a classe `Conta` com atributo privado `_saldo`, propriedade `saldo` e validação que impede saldo negativo.",
+  "starterCode": "class Conta:\n    def __init__(self, titular, saldo_inicial=0):\n        self.titular = titular\n        self._saldo = saldo_inicial\n\n    @property\n    def saldo(self):\n        return 0\n\n    @saldo.setter\n    def saldo(self, valor):\n        self._saldo = valor\n",
+  "testes": [
+    { "chamada": "Conta('Ana', 50).saldo", "esperado": "50", "oculto": false },
+    { "chamada": "Conta('Bia', 10).saldo", "esperado": "10", "oculto": false },
+    { "chamada": "Conta('Caio', 0).saldo", "esperado": "0", "oculto": false },
+    { "chamada": "Conta('Dora', 5).saldo", "esperado": "5", "oculto": true },
+    { "chamada": "Conta('Elo', 12).saldo", "esperado": "12", "oculto": true }
+  ]
+}

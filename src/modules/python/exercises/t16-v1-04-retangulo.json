@@ -1,0 +1,52 @@
+{
+  "id": "t16-v1-04-retangulo",
+  "tipo": "codigo",
+  "titulo": "Retângulo com classe",
+  "topico": "Orientação a Objetos",
+  "topicoNumero": 16,
+  "variacao": "V1",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Guarde largura e altura no __init__.",
+    "A área é largura * altura.",
+    "O perímetro usa 2 * (largura + altura)."
+  ],
+  "solucao": "class Retangulo:\n    def __init__(self, largura, altura):\n        self.largura = largura\n        self.altura = altura\n\n    def area(self):\n        return self.largura * self.altura\n\n    def perimetro(self):\n        return 2 * (self.largura + self.altura)\n",
+  "tags": [
+    "python",
+    "classe",
+    "area",
+    "perimetro"
+  ],
+  "aulaRelacionada": "classes-e-objetos",
+  "enunciado": "Crie a classe `Retangulo` com os atributos `largura` e `altura` e os métodos `area()` e `perimetro()`. Use medidas em unidades inteiras.",
+  "starterCode": "class Retangulo:\n    def __init__(self, largura, altura):\n        self.largura = largura\n        self.altura = altura\n\n    def area(self):\n        pass\n\n    def perimetro(self):\n        pass\n",
+  "testes": [
+    {
+      "chamada": "Retangulo(3, 4).area()",
+      "esperado": "12",
+      "oculto": false
+    },
+    {
+      "chamada": "Retangulo(3, 4).perimetro()",
+      "esperado": "14",
+      "oculto": false
+    },
+    {
+      "chamada": "Retangulo(7, 2).area()",
+      "esperado": "14",
+      "oculto": false
+    },
+    {
+      "chamada": "Retangulo(5, 5).perimetro()",
+      "esperado": "20",
+      "oculto": true
+    },
+    {
+      "chamada": "Retangulo(1, 9).area()",
+      "esperado": "9",
+      "oculto": true
+    }
+  ]
+}

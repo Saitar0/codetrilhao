@@ -1,0 +1,52 @@
+{
+  "id": "t16-v1-03-objeto-com-str",
+  "tipo": "codigo",
+  "titulo": "Objeto com __str__",
+  "topico": "Orientação a Objetos",
+  "topicoNumero": 16,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Use __str__ para devolver uma mensagem legível.",
+    "A string pode usar o nome e a idade do objeto.",
+    "Teste com um valor simples e outro com idade diferente."
+  ],
+  "solucao": "class Pessoa:\n    def __init__(self, nome, idade):\n        self.nome = nome\n        self.idade = idade\n\n    def __str__(self):\n        return f\"{self.nome} ({self.idade} anos)\"\n",
+  "tags": [
+    "python",
+    "dunder",
+    "str",
+    "objetos"
+  ],
+  "aulaRelacionada": "metodos-especiais",
+  "enunciado": "Crie a classe `Pessoa` com `__str__` para devolver uma representação amigável, como `Ana (22 anos)`.",
+  "starterCode": "class Pessoa:\n    def __init__(self, nome, idade):\n        self.nome = nome\n        self.idade = idade\n\n    def __str__(self):\n        pass\n",
+  "testes": [
+    {
+      "chamada": "str(Pessoa('Ana', 22))",
+      "esperado": "Ana (22 anos)",
+      "oculto": false
+    },
+    {
+      "chamada": "str(Pessoa('Bia', 18))",
+      "esperado": "Bia (18 anos)",
+      "oculto": false
+    },
+    {
+      "chamada": "str(Pessoa('Caio', 0))",
+      "esperado": "Caio (0 anos)",
+      "oculto": false
+    },
+    {
+      "chamada": "str(Pessoa('Dora', 40))",
+      "esperado": "Dora (40 anos)",
+      "oculto": true
+    },
+    {
+      "chamada": "str(Pessoa('Elo', 12))",
+      "esperado": "Elo (12 anos)",
+      "oculto": true
+    }
+  ]
+}
