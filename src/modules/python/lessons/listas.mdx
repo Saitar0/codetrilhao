@@ -1,39 +1,370 @@
 ﻿---
 titulo: "Listas"
-descricao: "Organize coleÃ§Ãµes ordenadas com listas e mÃ©todos essenciais."
+descricao: "Crie, percorra e modifique coleções mutáveis com listas em Python."
 secao: "B. Estruturas de dados"
 ordem: 10
-tempo: 12
+topico: 7
+fase: "B"
+tempo: 30
 nivel: "iniciante"
-palavrasChave: ['lista', 'append', 'indexaÃ§Ã£o', 'coleÃ§Ã£o']
+palavrasChave: ['listas', 'append', 'indexacao', 'fatiamento', 'referencia']
 exercicios: []
 ---
 
 # Listas
 
-Organize coleÃ§Ãµes ordenadas com listas e mÃ©todos essenciais.
+Você já sabe repetir ações e tomar decisões em código. Agora, para trabalhar com coleções de dados, Python oferece as listas: estruturas ordenadas, mutáveis e muito úteis para guardar itens que mudam ao longo do tempo. Em vez de criar um monte de variáveis separadas, você guarda tudo em uma só estrutura e aplica operações sobre ela.
 
-<Callout type="importante" title="Objetivo da aula">
-  Neste bloco, vocÃª vai entender o conceito principal, ver exemplos prÃ¡ticos e testar a lÃ³gica em pequenos passos.
+Imagine um carrinho de compras, uma fila de tarefas ou uma lista de clientes. Em todos esses casos, você precisa adicionar, remover, consultar, classificar e limitar dados. As listas são a base para resolver quase todos esses problemas de forma direta e legível.
+
+<Callout type="importante" title="O que você vai aprender">
+  - Como criar uma lista e acessar elementos por índice.
+  - Como usar fatiamento para recuperar partes da lista.
+  - Quando usar `append`, `extend`, `insert`, `remove`, `pop`, `index`, `count`, `sort`, `reverse` e `clear`.
+  - Como percorrer listas com `for`, `enumerate` e `zip`.
+  - Como distinguir cópia da lista e referência para a mesma lista em memória.
+  - Como usar `len`, `sum`, `min`, `max` e `in` em operações reais.
 </Callout>
 
-<CodeBlock title="exemplo_1.py" code={`frutas = ["maÃ§Ã£", "banana"]
-print(frutas[0])`} />
-<CodeBlock title="exemplo_2.py" code={`numeros = [1, 2, 3]
-numeros.append(4)
-print(numeros)`} />
-<CodeBlock title="exemplo_3.py" code={`itens = ["pÃ£o", "leite"]
-print(len(itens))`} />
+## 1. Criação, indexação e fatiamento
 
-<Quiz questions={[{ question: "Qual Ã© a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prÃ¡tica", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensÃ£o e aplicaÃ§Ã£o prÃ¡tica." }, { question: "Qual hÃ¡bito Ã© mais Ãºtil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o cÃ³digo"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prÃ¡tica em Python?", options: ["clareza e execuÃ§Ã£o", "complexidade por padrÃ£o", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execuÃ§Ã£o objetiva." }]} />
+Uma <Glossario termo="lista" definition="Coleção ordenada e mutável de elementos em Python." /> é um conjunto de valores guardados em sequência. Diferente de uma string, a lista pode mudar depois de criada: você pode adicionar itens, remover itens, trocar valores e ordenar tudo sem recriar a estrutura do zero.
+
+O acesso aos itens acontece por <Glossario termo="índice" definition="Posição de um elemento dentro da lista, começando em zero." />. Em Python, o primeiro elemento está em `0`, o segundo em `1` e assim por diante.
+
+<CodeBlock title="lista_basica.py" code={`frutas = ["maçã", "banana", "uva"]
+print(frutas)
+print(frutas[0])
+print(frutas[-1])`} />
+
+```text
+['maçã', 'banana', 'uva']
+maçã
+uva
+```
+
+Você também pode usar <Glossario termo="fatia" definition="Parte da lista selecionada por intervalo de índices." /> para pegar uma sequência de elementos.
+
+<CodeBlock title="lista_fatiamento.py" code={`frutas = ["maçã", "banana", "uva", "morango", "coco"]
+print(frutas[:3])
+print(frutas[1:4])
+print(frutas[::2])`} />
+
+```text
+['maçã', 'banana', 'uva']
+['banana', 'uva', 'morango']
+['maçã', 'uva', 'morango']
+```
+
+A primeira fatia, `[:3]`, pega do começo até o índice 2. A segunda, `[1:4]`, começa no índice 1 e vai até 3. Já o `[::2]` pega um item pulando de dois em dois. Esse padrão é muito usado em filtros, relatórios e manipulação de dados.
+
+## 2. Métodos de listas: acrescentar, remover e buscar
+
+As listas vêm com vários métodos prontos. Em vez de reinventar a lógica, você usa funções específicas para cada operação. Isso deixa o programa mais legível e reduz erros de implementação.
+
+<CodeBlock title="lista_metodos.py" code={`carrinho = ["arroz", "feijão"]
+carrinho.append("leite")
+carrinho.extend(["ovos", "café"])
+carrinho.insert(1, "pão")
+print(carrinho)
+print(carrinho.index("leite"))
+print(carrinho.count("leite"))
+print(carrinho.pop())
+print(carrinho)
+print(carrinho.remove("feijão"))`} />
+
+```text
+['arroz', 'pão', 'feijão', 'leite', 'ovos', 'café']
+3
+1
+café
+['arroz', 'pão', 'feijão', 'leite', 'ovos']
+None
+```
+
+Este exemplo mostra a sintaxe básica dos métodos mais importantes:
+
+- `append()` adiciona um item no fim.
+- `extend()` junta outra lista ao final.
+- `insert(posição, valor)` coloca um item em uma posição específica.
+- `remove(valor)` remove a primeira ocorrência encontrada.
+- `pop()` remove e retorna o último elemento.
+- `index(valor)` devolve a posição do valor.
+- `count(valor)` conta quantas vezes ele aparece.
+- `sort()` ordena a lista no lugar.
+- `reverse()` inverte a ordem.
+- `clear()` esvazia a lista.
+
+Uma tabela ajuda a memorizar os métodos mais úteis:
+
+<Tabela data={[
+  ['Método', 'Ação', 'Exemplo de uso'],
+  ['append()', 'adiciona um item no fim', 'lista.append(10)'],
+  ['extend()', 'adiciona vários itens', 'lista.extend([20, 30])'],
+  ['insert()', 'insere em posição específica', 'lista.insert(0, "x")'],
+  ['remove()', 'remove o primeiro valor', 'lista.remove("x")'],
+  ['pop()', 'remove e devolve o último item', 'ultimo = lista.pop()'],
+  ['sort()', 'ordena a lista no lugar', 'lista.sort()'],
+  ['clear()', 'esvazia a lista', 'lista.clear()'],
+]} />
+
+## 3. Ordenando com `sorted()` e `.sort()`
+
+Você vai encontrar dois caminhos para ordenar listas: `sorted()` e `.sort()`. A diferença é importante e aparece muito em código real.
+
+<CodeTabs>
+  <div label="sorted()">
+    <CodeBlock title="sorted_exemplo.py" code={`notas = [7, 2, 9, 1]
+ordenadas = sorted(notas)
+print(ordenadas)
+print(notas)`} />
+  </div>
+  <div label=".sort()">
+    <CodeBlock title="sort_exemplo.py" code={`notas = [7, 2, 9, 1]
+notas.sort()
+print(notas)`} />
+  </div>
+</CodeTabs>
+
+```text
+[1, 2, 7, 9]
+[7, 2, 9, 1]
+[1, 2, 7, 9]
+```
+
+Com `sorted(notas)`, a lista original continua intacta e uma nova lista ordenada é criada. Já com `notas.sort()`, a própria lista original é alterada. Isso é um detalhe de comportamento muito importante: a mutabilidade da lista faz a diferença entre “criar uma versão ordenada” e “mudar a lista em si”.
+
+Você também pode ordenar com `reverse=True` e `key=` para personalizar a regra:
+
+<CodeBlock title="lista_ordenacao_customizada.py" code={`produtos = [
+    ("café", 12),
+    ("arroz", 8),
+    ("feijão", 10),
+]
+print(sorted(produtos, key=lambda item: item[1]))
+print(sorted(produtos, key=lambda item: item[0], reverse=True))`} />
+
+```text
+[('arroz', 8), ('feijão', 10), ('café', 12)]
+[('feijão', 10), ('café', 12), ('arroz', 8)]
+```
+
+O `key` diz ao Python “ordene usando esse critério”, e `reverse=True` inverte a ordem. Essa técnica é essencial em dashboards, rankings e relatórios empresariais.
+
+## 4. Percorrendo listas com `for`, `enumerate` e `zip`
+
+Para processar cada item da lista, você usa normalmente `for`. Isso deixa o código mais curto e mais fácil de entender.
+
+<CodeBlock title="for_lista.py" code={`produtos = ["pão", "leite", "café"]
+for produto in produtos:
+    print(produto)`} />
+
+```text
+pão
+leite
+café
+```
+
+Quando você quer o índice junto com o valor, usa `enumerate`:
+
+<CodeBlock title="enumerate_lista.py" code={`produtos = ["pão", "leite", "café"]
+for indice, produto in enumerate(produtos, start=1):
+    print(f"{indice}. {produto}")`} />
+
+```text
+1. pão
+2. leite
+3. café
+```
+
+Se você precisa combinar duas listas, use `zip`:
+
+<CodeBlock title="zip_lista.py" code={`nomes = ["Ana", "Bruno", "Carla"]
+idades = [20, 25, 30]
+for nome, idade in zip(nomes, idades):
+    print(f"{nome} tem {idade} anos")`} />
+
+```text
+Ana tem 20 anos
+Bruno tem 25 anos
+Carla tem 30 anos
+```
+
+Essas ferramentas deixam o código muito mais claro do que manipular índices manualmente. Em listas de dados, isso é totalmente normal e comum.
+
+## 5. Listas de listas: matrizes e dados tabulares
+
+Uma lista pode conter outras listas. Isso cria uma estrutura em formato de matriz, muito útil para representar tabelas, grade de horários, planilhas e dados em duas dimensões.
+
+<CodeBlock title="lista_de_listas.py" code={`matriz = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+print(matriz[1][2])
+print(matriz[0])`} />
+
+```text
+6
+[1, 2, 3]
+```
+
+A consulta `matriz[1][2]` significa: “vá para a linha 1 e pegue a coluna 2”. Esse tipo de organização é usado em jogos, planilhas e sistemas de gerenciamento. Com uma estrutura pequena, você consegue representar relações mais complexas sem acrescentar muita dificuldade.
+
+## 6. Cópia vs referência: a parte mais importante da lista
+
+Essa parte é crucial: em Python, `b = a` não cria cópia da lista. Ele faz ambas apontarem para o mesmo objeto na memória. Isso significa que, se você alterar `b`, também altera `a`.
+
+<StepThrough>
+  <div>
+    <p>Primeiro, <strong>a</strong> e <strong>b</strong> apontam para a mesma lista em memória.</p>
+    <CodeBlock title="referencia_mesma_lista.py" code={`a = [1, 2, 3]
+b = a
+print(a)
+print(b)
+print(a is b)`} />
+  </div>
+  <div>
+    <p>Depois, quando você modifica <strong>b</strong>, a alteração aparece em <strong>a</strong> porque ambos apontam para o mesmo objeto.</p>
+    <CodeBlock title="referencia_modifica_ambas.py" code={`a = [1, 2, 3]
+b = a
+b.append(4)
+print(a)
+print(b)`} />
+  </div>
+  <div>
+    <p>Para criar uma lista separada, use <strong>copy()</strong> ou <strong>a[:]</strong>.</p>
+    <CodeBlock title="copia_separada.py" code={`a = [1, 2, 3]
+c = a.copy()
+c.append(4)
+print(a)
+print(c)`} />
+  </div>
+</StepThrough>
+
+```text
+[1, 2, 3]
+[1, 2, 3]
+True
+[1, 2, 3, 4]
+[1, 2, 3, 4]
+[1, 2, 3]
+[1, 2, 3, 4]
+```
+
+Esse comportamento aparece em sistemas reais quando você passa listas para funções ou tarefas paralelas. Se você não quer que uma alteração afete outras partes do programa, crie uma cópia antes de mexer. Isso também é bastante visível em rotinas de processamento de dados, filtros e relatórios.
+
+<Playground title="Experimento: fatia de lista" code={`estoque = [10, 20, 30, 40, 50]
+print(estoque[:3])
+print(estoque[2:])
+print(estoque[::2])`} />
+
+<Playground title="Experimento: cópia e referência" code={`a = ["maçã", "banana"]
+b = a
+c = a.copy()
+
+b.append("uva")
+c.append("morango")
+
+print("a:", a)
+print("b:", b)
+print("c:", c)`} />
+
+## 7. Busca e análise com `len`, `sum`, `min`, `max` e `in`
+
+Além dos métodos, Python oferece funções úteis para analisar listas sem precisar montá-las manualmente. Elas ajudam em relatórios, estatísticas e tomadas de decisão.
+
+<CodeBlock title="lista_analise.py" code={`notas = [7, 8, 6, 10, 9]
+print(len(notas))
+print(sum(notas))
+print(min(notas))
+print(max(notas))
+print(8 in notas)`} />
+
+```text
+5
+40
+6
+10
+True
+```
+
+O `len` entrega a quantidade de itens. O `sum` soma tudo. O `min` e o `max` trazem os menores e maiores valores. Já o `in` responde se um elemento está presente. Isso é muito usado em verificações, filtros e validações de negócios.
+
+## 8. Erros comuns com listas
+
+<Callout type="erro-comum" title="IndexError: list index out of range">
+  <CodeBlock title="lista_indice_inexistente.py" code={`numeros = [10, 20, 30]
+print(numeros[3])`} />
+  <p>Esse código gera a mensagem real:</p>
+  <pre>Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 2, in &lt;module&gt;
+    print(numeros[3])
+IndexError: list index out of range</pre>
+  <p>Quando o índice pedido não existe, o programa quebra. Antes de acessar um item por posição, verifique se a lista tem o tamanho esperado com `len()`.</p>
+  <CodeBlock title="lista_indice_seguro.py" code={`numeros = [10, 20, 30]
+indice = 3
+if indice < len(numeros):
+    print(numeros[indice])
+else:
+    print("Índice fora do intervalo")`} />
+</Callout>
+
+<Callout type="erro-comum" title="Alterar lista enquanto percorre">
+  <CodeBlock title="lista_remocao_durante_loop.py" code={`frutas = ["maçã", "banana", "uva", "morango"]
+for fruta in frutas:
+    if fruta.startswith("b"):
+        frutas.remove(fruta)
+print(frutas)`} />
+  <p>Esse código pode produzir uma saída real como:</p>
+  <pre>['maçã', 'uva', 'morango']</pre>
+  <p>Você remove itens da lista enquanto itera sobre a mesma lista e isso pode pular elementos. Se a lógica exigir isso, percorra uma cópia: `for fruta in frutas.copy():`.</p>
+  <CodeBlock title="lista_remocao_segura.py" code={`frutas = ["maçã", "banana", "uva", "morango"]
+for fruta in frutas.copy():
+    if fruta.startswith("b"):
+        frutas.remove(fruta)
+print(frutas)`} />
+</Callout>
+
+<Callout type="erro-comum" title="`lista = lista.sort()` vira `None`">
+  <CodeBlock title="sort_atribuicao_errada.py" code={`numeros = [5, 2, 9]
+resultado = numeros.sort()
+print(resultado)
+print(numeros)`} />
+  <p>Esse código imprime a saída real:</p>
+  <pre>None
+[2, 5, 9]</pre>
+  <p>O método `.sort()` ordena a lista no lugar e retorna `None`. Se você quer guardar a lista ordenada em outra variável, use `sorted(numeros)` ou apenas `numeros.sort()` sem atribuição.</p>
+  <CodeBlock title="sort_correto.py" code={`numeros = [5, 2, 9]
+resultado = sorted(numeros)
+print(resultado)
+print(numeros)`} />
+</Callout>
+
+A regra prática é simples: listas são mutáveis, muito úteis e fáceis de adaptar, mas precisam de atenção quando você altera a estrutura enquanto itera ou quando mistura ordenação com atribuição.
+
+## No mercado de trabalho
+
+Listas aparecem em praticamente qualquer sistema que precisa lidar com quantidade de dados: estoque, cadastro de clientes, itens de pedido, fila de atendimento, dados de sensores, processamento de transações e relatórios de vendas. Quando uma empresa precisa guardar dezenas ou centenas de valores, a lista oferece um formato direto, legível e flexível.
+
+Em contextos reais, você vai encontrar listas em filtros de seleção, cálculo de médias, validação de dados, ranking de usuários, páginas de resultados e controle de estoque. Em Python, é muito comum que listas sirvam como base para dados temporários e para estruturas mais complexas, como dicionários e matrizes.
+
+A boa notícia é que você não precisa memorizar centenas de regras para usar listas bem. O que realmente importa é dominar o comportamento de mutação, ordenação e referência. Isso faz a diferença entre um código que “funciona” e um código que continua funcionando quando a base de dados cresce ou quando novas regras são adicionadas.
+
+<Quiz questions={[
+  { question: "O que este código imprime?\n\n```python\nfrutas = ['maçã', 'banana', 'uva']\nprint(frutas[1])\n```", options: ['maçã', 'banana', 'uva', 'Erro'], correctIndex: 1, explanation: "Em Python, o índice 0 representa o primeiro item; então `frutas[1]` é `banana`." },
+  { question: "Qual é a diferença entre `sorted(lista)` e `lista.sort()`?", options: ['Nenhuma; os dois mudam a lista original', 'O primeiro cria uma nova lista ordenada e o segundo altera a original', 'O primeiro remove itens e o segundo adiciona', 'O primeiro só funciona com strings'], correctIndex: 1, explanation: "`sorted()` retorna uma nova lista ordenada, enquanto `.sort()` ordena a lista original no lugar." },
+  { question: "Qual dos trechos abaixo cria uma cópia segura da lista?", options: ['`b = a`', '`b = a.copy()`', '`b = len(a)`', '`b = a.sort()`'], correctIndex: 1, explanation: "`copy()` cria uma nova lista separada, evitando que alterações em `b` afetem `a`." },
+  { question: "O que o `in` faz em uma lista?", options: ['Soma todos os valores', 'Verifica se um item existe na lista', 'Remove um item', 'Cria uma cópia da lista'], correctIndex: 1, explanation: "O operador `in` verifica presença: `valor in lista` retorna `True` ou `False`." },
+  { question: "Qual linha de código produz a saída `['maçã', 'uva']` a partir de `['maçã', 'banana', 'uva']`?", options: ['`lista[::2]`', '`lista[1:]`', '`lista[:1] + lista[2:]`', '`lista[:2]`'], correctIndex: 2, explanation: "A expressão `lista[:1] + lista[2:]` junta o primeiro e o restante a partir do índice 2, produzindo `['maçã', 'uva']`." }
+]} />
 
 <Resumo>
-  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
-  <li>Teste pequenos exemplos e avalie o resultado.</li>
-  <li>Aplica a ideia em cenÃ¡rios reais para fixar o conhecimento.</li>
+  <li>Você aprendeu a criar listas e acessar elementos por índice.</li>
+  <li>Entendeu como fatiar e analisar listas com `len`, `sum`, `min`, `max` e `in`.</li>
+  <li>Usou métodos como `append`, `extend`, `insert`, `remove`, `pop` e `clear`.</li>
+  <li>Reconheceu a diferença entre `sorted()` e `.sort()` para ordenação segura.</li>
+  <li>Viu como percorrer listas com `for`, `enumerate` e `zip`.</li>
+  <li>Entendeu que `b = a` é referência, e não cópia, e quando usar `copy()` ou `[:]`.</li>
 </Resumo>
 
-<Desafio>
-  Aplique esse tema em um mini cenÃ¡rio do dia a dia e confirme o resultado com um cÃ³digo simples e legÃ­vel.
+<Desafio title="Desafio do tópico">
+  Crie um programa que guarda uma lista de compras com 5 itens, remove um item solicitado pelo usuário, ordena a lista alfabeticamente e mostra o total de itens restantes. Depois, teste a mesma rotina em duas situações: uma com uma lista normal e outra com uma lista que precisa ser copiada antes de alterar o conteúdo.
 </Desafio>
 
