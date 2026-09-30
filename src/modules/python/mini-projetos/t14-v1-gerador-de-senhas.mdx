@@ -1,0 +1,157 @@
+---
+titulo: "Gerador de senhas aleatórias"
+descricao: "Crie um gerador de senhas seguras com regras de complexidade e seleção aleatória."
+topico: "modulos"
+topicoNome: "Módulos, bibliotecas e ambiente"
+variacao: "V1"
+tempo: 30
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "senhas", "secrets", "seguranca", "modulos", "bibliotecas"]
+---
+
+# Gerador de senhas aleatórias
+
+## Contexto
+Você foi contratado para montar um utilitário pequeno, mas importante: um gerador de senhas para uma plataforma interna. O problema não é só gerar texto aleatório, e sim criar uma senha com quantidade suficiente de variedade para ser útil em um sistema real. A tarefa pede segurança, clareza e uma escolha inteligente de caracteres.
+
+## O que você vai construir
+Um gerador que pergunta o tamanho da senha e quais tipos de caractere devem entrar na combinação. O programa mostra uma senha pronta para uso e informa o tamanho final, além de verificar se ela atende ao mínimo de complexidade esperado.
+
+Exemplo de execução real:
+
+```text
+Digite o tamanho da senha: 12
+Usar letras maiúsculas? (s/n): s
+Usar letras minúsculas? (s/n): s
+Usar números? (s/n): s
+Usar símbolos? (s/n): s
+Senha gerada: &kP4@tQ9!mLz
+Tamanho: 12
+Tem número: True
+```
+
+## Requisitos
+1. Perguntar ao usuário o tamanho desejado da senha.
+2. Permitir escolher letras maiúsculas, minúsculas, números e símbolos.
+3. Construir a senha usando caracteres válidos e sem repetir regras vazias.
+4. Validar entradas antes de gerar a senha.
+5. Mostrar o resultado final de forma legível para o usuário.
+
+## Critérios de aceite
+- [ ] O programa pede o tamanho da senha antes de gerar o resultado.
+- [ ] A senha respeita pelo menos um tipo de caractere selecionado.
+- [ ] O programa rejeita tamanho menor ou igual a zero com mensagem clara.
+- [ ] O tamanho da senha gerada bate com o número escolhido.
+- [ ] O aluno consegue explicar por que `secrets` é melhor que `random` para senhas reais.
+- [ ] O código separa a criação dos caracteres da lógica de impressão da senha.
+
+## Guia
+### Passo a passo
+1. Crie uma função que monte a lista de caracteres permitidos conforme as opções escolhidas.
+2. Valide o tamanho da senha e evite valores vazios ou negativos.
+3. Use `secrets.choice()` para gerar cada caractere da senha com aleatoriedade segura.
+4. Concatene os caracteres em uma string e mostre o resultado final.
+5. Finalize com uma verificação simples para confirmar que a senha contém pelo menos um número ou símbolo quando necessário.
+
+### Dicas por etapa
+- `string.ascii_uppercase`, `string.ascii_lowercase`, `string.digits` e `string.punctuation` são seus blocos básicos de construção.
+- Se o usuário escolher “nenhuma categoria”, a geração deve falhar de forma elegante com uma mensagem clara.
+- `secrets` foi pensado para senhas e tokens; ele é mais seguro do que `random` para esse caso.
+- A lista de caracteres pode ser montada em uma variável, e depois cada posição da senha é preenchida com `secrets.choice()`.
+- Para a resposta final, o programa pode mostrar tanto a senha quanto o tamanho dela para facilitar a conferência.
+
+<Callout type="importante" title="Sem pip no navegador">
+Este mini projeto roda no navegador em memória, sem `pip`, sem rede e sem arquivos do sistema operacional. A ideia é praticar a lógica de geração e segurança sem depender do ambiente do computador.
+</Callout>
+
+<Playground title="Ponto de partida" code={`import secrets
+import string
+
+# 1. monte a lista de caracteres permitidos
+# 2. leia o tamanho da senha
+# 3. valide as opções escolhidas pelo usuário
+# 4. use secrets.choice() para construir a senha
+# 5. imprima a senha final e o tamanho
+
+print("Gerador de senhas")`} />
+
+## Desafio extra
+Adicione um modo que gere 5 senhas diferentes de uma vez, mantendo as mesmas regras de complexidade. Isso ajuda a comparar qualidade e variedade sem repetir a mesma senha em várias tentativas.
+
+## Visão de mercado
+Geradores de senha e políticas de segurança aparecem em sistemas internos, plataformas de autenticação, ferramentas de administração e apps financeiros. Em projetos reais, a regra não é só “gerar um texto”, e sim criar algo que respeite a política de segurança da empresa.
+
+## Autoavaliação
+- [ ] Consegui montar uma lista de caracteres por categoria.
+- [ ] Entendi por que `secrets` é mais adequado do que `random` para senha.
+- [ ] Validei tamanho e categorias antes de gerar a senha.
+- [ ] Mostrei o resultado final de forma legível.
+- [ ] Consigo explicar como essa lógica se conecta com segurança de software.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+import secrets
+import string
+
+
+def gerar_senha(tamanho, usar_maiusculas=True, usar_minusculas=True,
+                usar_numeros=True, usar_simbolos=True):
+    categorias = []
+
+    if usar_maiusculas:
+        categorias.append(string.ascii_uppercase)
+    if usar_minusculas:
+        categorias.append(string.ascii_lowercase)
+    if usar_numeros:
+        categorias.append(string.digits)
+    if usar_simbolos:
+        categorias.append(string.punctuation)
+
+    if not categorias or tamanho <= 0:
+        raise ValueError("Escolha pelo menos um tipo de caractere e um tamanho maior que zero.")
+
+    senha = [secrets.choice(grupo) for grupo in categorias]
+    while len(senha) < tamanho:
+        grupo = secrets.choice(categorias)
+        senha.append(secrets.choice(grupo))
+
+    secrets.SystemRandom().shuffle(senha)
+    return "".join(senha)
+
+
+while True:
+    try:
+        tamanho = int(input("Digite o tamanho da senha: ").strip())
+        if tamanho <= 0:
+            raise ValueError
+        break
+    except ValueError:
+        print("Digite um número inteiro maior que zero.")
+
+mai = input("Usar letras maiúsculas? (s/n): ").strip().lower() != "n"
+min_ = input("Usar letras minúsculas? (s/n): ").strip().lower() != "n"
+num = input("Usar números? (s/n): ").strip().lower() != "n"
+simb = input("Usar símbolos? (s/n): ").strip().lower() != "n"
+
+senha = gerar_senha(tamanho, mai, min_, num, simb)
+print(f"Senha gerada: {senha}")
+print(f"Tamanho: {len(senha)}")
+print(f"Tem número: {any(ch.isdigit() for ch in senha)}")
+```
+
+Saída real com execução:
+
+```text
+Digite o tamanho da senha: 12
+Usar letras maiúsculas? (s/n): s
+Usar letras minúsculas? (s/n): s
+Usar números? (s/n): s
+Usar símbolos? (s/n): s
+Senha gerada: E4!dR5t@KpQm
+Tamanho: 12
+Tem número: True
+```
+</details>

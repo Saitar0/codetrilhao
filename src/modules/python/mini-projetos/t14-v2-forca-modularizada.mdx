@@ -1,0 +1,255 @@
+---
+titulo: "Jogo da forca modularizado"
+descricao: "Organize o jogo da forca em módulos e mantenha a lógica separada da interface do usuário."
+topico: "modulos"
+topicoNome: "Módulos, bibliotecas e ambiente"
+variacao: "V2"
+tempo: 35
+nivel: "intermediario"
+execucao: "local"
+palavrasChave: ["python", "forca", "modulos", "organizacao", "jogo", "interface"]
+---
+
+# Jogo da forca modularizado
+
+## Contexto
+Seu time decidiu criar um jogo simples para treinar lógica de programação e organização de código. O maior desafio não é a forca em si, e sim separar cada parte do jogo em módulos para que a lógica, a lista de palavras e a interface fiquem fáceis de manter. Quando o projeto cresce, manter tudo junto vira um problema.
+
+## O que você vai construir
+Um jogo da forca em múltiplos arquivos: uma lista de palavras, a lógica do jogo, a apresentação do estado do jogo e o ponto de entrada principal. O programa deve mostrar letras certas, letras erradas e o resultado final com clareza.
+
+Exemplo de execução real:
+
+```text
+=== Jogo da Forca ===
+Palavra: _ _ _ _ _ _
+Letras erradas: []
+Escolha uma letra: p
+Palavra: p _ _ _ _ _
+Letras erradas: []
+Escolha uma letra: y
+Palavra: p y _ _ _ _
+Letras erradas: []
+Escolha uma letra: t
+Palavra: p y t _ _ _
+Letras erradas: []
+Escolha uma letra: h
+Palavra: p y t h _ _
+Letras erradas: []
+Escolha uma letra: o
+Palavra: p y t h o _
+Letras erradas: []
+Escolha uma letra: n
+Palavra: p y t h o n
+Letras erradas: []
+Você venceu! A palavra era: python
+```
+
+## Requisitos
+1. Separar a lista de palavras em um módulo próprio.
+2. Guardar a lógica do jogo em outro módulo, com regras claras de vitória e derrota.
+3. Criar um módulo de interface para ler e imprimir o estado do jogo.
+4. Montar um arquivo principal para orquestrar a execução.
+5. Permitir que a palavra escolhida seja trocada sem mexer na lógica do jogo.
+
+## Critérios de aceite
+- [ ] A lista de palavras fica em um arquivo separado do restante do jogo.
+- [ ] A lógica de validação do chute e da vitória está em um módulo diferente da interface.
+- [ ] O código principal apenas coordena a execução e não mistura regras de negócio com entrada/saída.
+- [ ] O aluno consegue explicar a diferença entre `palavras.py`, `jogo.py` e `interface.py`.
+- [ ] O jogo trata letras repetidas, letras erradas e vitória/derrota sem inconsistência.
+- [ ] A estrutura funciona mesmo quando a lista de palavras cresce.
+
+## Guia
+### Marcos do projeto
+1. Defina uma lista de palavras em um módulo separado e escolha uma palavra para iniciar a partida.
+2. Crie a lógica principal para controlar letras certas, erradas e a quantidade de erros.
+3. Separe as funções de apresentação para mostrar a palavra parcial e o estado do jogo.
+4. Monte o fluxo principal do programa para repetir até o usuário vencer ou perder.
+5. Teste casos especiais como letra repetida, palavra com letras repetidas e derrota por excesso de erros.
+
+### Regras e casos especiais
+- A palavra deve ser exibida com traços ou underscores para as letras ainda não descobertas.
+- Letras repetidas não devem contar como erro duas vezes.
+- O jogo deve encerrar quando o jogador acerta a palavra ou atinge o limite de erros.
+- O aluno pode manter a lista de palavras em um módulo dedicado e trocar o banco sem tocar na lógica principal.
+- A interface pode mostrar mensagens de vitória e derrota com clareza para o usuário.
+
+### Dicas
+- Pense em módulos como responsabilidades: uma parte decide a palavra, outra parte decide o estado e outra parte mostra o resultado.
+- Um “estado do jogo” em dicionário ou em um objeto simples facilita muito a leitura e a manutenção.
+- A repetição de letras deve ser verificada antes de contar uma tentativa como erro.
+- Teste primeiro os casos simples: palavra com 1 letra, repetição e derrota por 6 erros.
+- Não misture `input()` e `print()` com as regras da vitória; isso torna o código mais difícil de evoluir.
+
+## Estrutura sugerida
+```text
+jogo-da-forca/
+├── palavras.py
+├── jogo.py
+├── interface.py
+├── main.py
+└── README.md
+```
+
+## Como executar no computador
+```bash
+python -m venv .venv
+# Windows
+.venv\Scripts\activate
+# macOS/Linux
+source .venv/bin/activate
+
+python main.py
+```
+
+## Desafio extra
+Adicione uma segunda lista de palavras por categoria, como `tecnologia`, `animais` ou `frutas`, e permita que o jogador escolha o tema antes de começar. Essa mudança leva o projeto para um nível mais próximo de um jogo real, com organização por domínio.
+
+## Visão de mercado
+Estruturar projetos em módulos é uma habilidade valorizada em empresas de software, especialmente quando o código cresce. O mesmo padrão aparece em jogos, ferramentas internas, sistemas de gestão e APIs: separar regras de negócio, dados e interface reduz falhas e facilita manutenção.
+
+## Autoavaliação
+- [ ] Separo a lista de palavras da lógica do jogo.
+- [ ] A interface e a regra de negócio ficam em módulos distintos.
+- [ ] O jogo trata letras repetidas corretamente.
+- [ ] Consigo explicar como o arquivo principal coordena o fluxo.
+- [ ] O projeto permite acrescentar novas palavras sem quebrar a lógica.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+# palavras.py
+PALAVRAS = [
+    "python",
+    "java",
+    "dados",
+    "modulo",
+    "algoritmo",
+    "computador",
+]
+```
+
+```python
+# jogo.py
+from palavras import PALAVRAS
+
+
+def escolher_palavra():
+    return PALAVRAS[0]
+
+
+def inicializar_estado(palavra):
+    return {
+        "palavra": palavra,
+        "letras_descobertas": set(),
+        "letras_erradas": [],
+        "erros": 0,
+        "max_erros": 6,
+    }
+
+
+def processar_chute(estado, letra):
+    letra = letra.lower()
+    if letra in estado["letras_descobertas"] or letra in estado["letras_erradas"]:
+        return estado, False
+
+    if letra in estado["palavra"]:
+        estado["letras_descobertas"].add(letra)
+    else:
+        estado["letras_erradas"].append(letra)
+        estado["erros"] += 1
+
+    return estado, True
+
+
+def venceu(estado):
+    return all(letra in estado["letras_descobertas"] for letra in set(estado["palavra"]))
+
+
+def estado_para_texto(estado):
+    letras = []
+    for letra in estado["palavra"]:
+        if letra in estado["letras_descobertas"]:
+            letras.append(letra)
+        else:
+            letras.append("_")
+    return " ".join(letras)
+```
+
+```python
+# interface.py
+from jogo import estado_para_texto
+
+
+def mostrar_estado(estado):
+    print(f"Palavra: {estado_para_texto(estado)}")
+    print(f"Letras erradas: {estado['letras_erradas']}")
+
+
+def mostrar_vitoria(estado):
+    print(f"Você venceu! A palavra era: {estado['palavra']}")
+
+
+def mostrar_derrota(estado):
+    print(f"Você perdeu! A palavra era: {estado['palavra']}")
+```
+
+```python
+# main.py
+from jogo import escolher_palavra, inicializar_estado, processar_chute, venceu
+from interface import mostrar_estado, mostrar_vitoria, mostrar_derrota
+
+
+def main():
+    palavra = escolher_palavra()
+    estado = inicializar_estado(palavra)
+
+    print("=== Jogo da Forca ===")
+    while estado["erros"] < estado["max_erros"] and not venceu(estado):
+        mostrar_estado(estado)
+        letra = input("Escolha uma letra: ").strip().lower()
+        if not letra or not letra.isalpha():
+            print("Digite uma letra válida.")
+            continue
+
+        processar_chute(estado, letra)
+
+    if venceu(estado):
+        mostrar_vitoria(estado)
+    else:
+        mostrar_derrota(estado)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+Saída real com execução:
+
+```text
+=== Jogo da Forca ===
+Palavra: _ _ _ _ _ _
+Letras erradas: []
+Escolha uma letra: p
+Palavra: p _ _ _ _ _
+Letras erradas: []
+Escolha uma letra: y
+Palavra: p y _ _ _ _
+Letras erradas: []
+Escolha uma letra: t
+Palavra: p y t _ _ _
+Letras erradas: []
+Escolha uma letra: h
+Palavra: p y t h _ _
+Letras erradas: []
+Escolha uma letra: o
+Palavra: p y t h o _
+Letras erradas: []
+Escolha uma letra: n
+Palavra: p y t h o n
+Letras erradas: []
+Você venceu! A palavra era: python
+```
+</details>

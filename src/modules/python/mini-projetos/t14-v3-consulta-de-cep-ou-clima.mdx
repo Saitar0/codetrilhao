@@ -1,0 +1,210 @@
+---
+titulo: "Consulta de CEP ou clima"
+descricao: "Crie um cliente de consulta em APIs públicas para pesquisar CEP ou clima com tratamento de erros e organização em módulos."
+topico: "modulos"
+topicoNome: "Módulos, bibliotecas e ambiente"
+variacao: "V3"
+tempo: 40
+nivel: "intermediario"
+execucao: "local"
+palavrasChave: ["python", "requests", "api", "cep", "clima", "venv", "requirements"]
+---
+
+# Consulta de CEP ou clima
+
+## Contexto
+Um cliente de pequeno porte quer uma ferramenta simples para consultar rapidamente um endereço por CEP ou verificar o clima de uma cidade. A necessidade não é montar uma aplicação enorme; é ter um utilitário útil, organizado e fácil de manter, usando uma biblioteca externa e um ambiente virtual isolado. O projeto precisa suportar falhas de rede e respostas inválidas sem quebrar a experiência.
+
+## O que você vai construir
+Um programa em Python que consulta uma API pública para buscar dados de CEP ou clima e imprime o resultado em texto legível. O cliente quer uma estrutura simples, com módulos para interpretar a resposta, tratar erros e montar a mensagem final.
+
+Exemplo de execução real:
+
+```text
+=== Consulta de CEP ou clima ===
+1) Consultar CEP
+2) Consultar clima
+Escolha uma opção: 1
+Digite o CEP: 01001000
+Resultado da consulta:
+CEP: 01001-000
+Logradouro: Praça da Sé
+Bairro: Sé
+Cidade: São Paulo
+Estado: SP
+```
+
+## Requisitos
+1. Criar um ambiente virtual com `venv`.
+2. Instalar a biblioteca `requests` com `pip` e salvar as dependências em `requirements.txt`.
+3. Consultar API pública de CEP ou clima sem expor chave secreta no código.
+4. Tratar falha de rede, resposta vazia e JSON inválido.
+5. Exibir a resposta final de forma amigável para o usuário.
+
+## Critérios de aceite
+- [ ] O programa roda em um ambiente virtual isolado.
+- [ ] O arquivo `requirements.txt` contém a dependência necessária.
+- [ ] O aluno consegue explicar a diferença entre `requests` e a API que ele está acessando.
+- [ ] O código trata falha de rede sem encerrar abruptamente.
+- [ ] A resposta final apresenta dados em formato legível para humanos.
+- [ ] O código separa consulta, parsing e apresentação em funções ou módulos claros.
+- [ ] O aluno consegue dizer o que acontece quando a API responde com erro ou HTML em vez de JSON.
+
+## Histórias de usuário
+- Como usuário comum, quero consultar um CEP rápido para confirmar o endereço de entrega.
+- Como cliente, quero saber o clima atual de uma cidade antes de planejar atendimento ou logística.
+- Como suporte, quero ver uma mensagem clara quando a API falha em vez de um traceback.
+- Como dev, quero manter a consulta em módulos separados para testar cada parte com mais facilidade.
+
+## Arquitetura sugerida
+- `api_client.py`: funções para consultar CEP ou clima via `requests`.
+- `parser.py`: funções para extrair os campos importantes da resposta em JSON.
+- `ui.py`: funções para mostrar mensagens e pedir entrada ao usuário.
+- `main.py`: orquestra o fluxo e chama as outras partes.
+- `requirements.txt`: lista as dependências do projeto.
+
+## Casos de teste de aceitação
+- CEP válido: o sistema retorna rua, bairro, cidade e estado.
+- CEP inválido: o programa mostra uma mensagem clara e não quebra.
+- Falha de rede: o programa informa que não foi possível consultar a API.
+- Cidade sem dados: o retorno deve indicar que a cidade não foi encontrada.
+- Resposta de API em formato inesperado: o código deve tratar JSON incompleto sem travar.
+
+## Riscos
+- Dar `requests.get()` sem `timeout` pode travar o programa por muito tempo.
+- Acessar uma API sem tratar erro deixa o cliente vendo respostas confusas.
+- Misturar URL, parsing e print em uma mesma função aumenta a chance de bugs.
+- Ignorar `status_code` pode fazer o programa interpretar erro como dado válido.
+- Não isolar a biblioteca externa em um ambiente virtual deixa o computador mais sujeito a conflitos de pacote.
+
+## Guia
+### História do cliente
+A empresa precisa de uma ferramenta simples para consulta pontual de dados externos, sem cadastro nem chave de API. O objetivo é ter um código organizado e seguro, capaz de consultar CEP e clima em uma rotina pequena, mas útil para uso diário.
+
+### Marcos do projeto
+1. Crie um ambiente virtual e instale `requests` no projeto.
+2. Defina a estrutura de pastas com módulos e o arquivo principal.
+3. Faça uma função para consultar CEP e outra para consultar clima.
+4. Trate falhas de rede e resposta vazia ou inválida.
+5. Exiba um resumo final em texto legível para o cliente.
+
+### Regras e casos especiais
+- O cliente pode escolher entre CEP ou cidade.
+- Para CEP, use uma API pública sem chave, como ViaCEP.
+- Para clima, use uma API pública sem autenticação, como Open-Meteo.
+- Respostas com status de erro devem ser tratadas como falha de operação.
+- O código deve funcionar mesmo quando o usuário digita um valor incompleto.
+- Use `requirements.txt` para registrar a dependência da biblioteca externa.
+
+### Dicas
+- A consulta deve ser feita em uma função separada; a mensagem final é outra responsabilidade.
+- Sempre confira o `status_code` antes de ler o JSON.
+- Uma `timeout` pequena ajuda a impedir que o programa espere indefinidamente.
+- Se a resposta vier como JSON inválido, transforme a falha em uma mensagem útil para o usuário.
+- Para a cidade, a API pode exigir um nome exato e sua forma correta em português ou inglês.
+
+## Estrutura sugerida
+```text
+consulta-cep-ou-clima/
+├── api_client.py
+├── parser.py
+├── ui.py
+├── main.py
+├── requirements.txt
+└── .venv/
+```
+
+## Como executar no computador
+```bash
+python -m venv .venv
+# Windows
+.venv\Scripts\activate
+# macOS/Linux
+source .venv/bin/activate
+
+pip install -r requirements.txt
+python main.py
+```
+
+## Desafio extra
+Adicione um histórico de consultas recentes em arquivo `.txt` para que o usuário veja as últimas pesquisas e reutilize dados sem consultar a API de novo. Esse passo aproxima o projeto de uma ferramenta real de produtividade.
+
+## Visão de mercado
+Consultas de endereço e clima aparecem em lojas online, sistemas de logística, ferramentas de atendimento e apps de produtividade. O padrão é o mesmo em praticamente todos os sistemas: consumir um serviço externo, validar a resposta e transformar os dados em uma experiência útil para o usuário.
+
+## Autoavaliação
+- [ ] Criei o ambiente virtual e instalei a dependência com `pip`.
+- [ ] Sei como usar `requests` para consultar uma API pública.
+- [ ] Tratei falha de rede e resposta inválida.
+- [ ] O código separa consulta, parsing e apresentação.
+- [ ] Entendo por que `requirements.txt` é importante em projetos reais.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+import requests
+
+
+def consultar_cep(cep):
+    url = f"https://viacep.com.br/ws/{cep}/json/"
+    resposta = requests.get(url, timeout=10)
+
+    if resposta.status_code != 200:
+        raise RuntimeError("Não foi possível consultar o CEP.")
+
+    dados = resposta.json()
+    if "erro" in dados:
+        raise ValueError("CEP não encontrado.")
+
+    return dados
+
+
+def main():
+    print("=== Consulta de CEP ou clima ===")
+    print("1) Consultar CEP")
+    print("2) Consultar clima")
+    opcao = input("Escolha uma opção: ").strip()
+
+    if opcao == "1":
+        cep = input("Digite o CEP: ").strip()
+        try:
+            dados = consultar_cep(cep)
+            print("Resultado da consulta:")
+            print(f"CEP: {dados.get('cep')}")
+            print(f"Logradouro: {dados.get('logradouro')}")
+            print(f"Bairro: {dados.get('bairro')}")
+            print(f"Cidade: {dados.get('localidade')}")
+            print(f"Estado: {dados.get('uf')}")
+        except Exception as erro:
+            print(f"Erro: {erro}")
+    else:
+        print("Opção ainda não implementada para clima neste exemplo.")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+Arquivo `requirements.txt`:
+
+```text
+requests==2.32.3
+```
+
+Saída real com execução:
+
+```text
+=== Consulta de CEP ou clima ===
+1) Consultar CEP
+2) Consultar clima
+Escolha uma opção: 1
+Digite o CEP: 01001000
+Resultado da consulta:
+CEP: 01001-000
+Logradouro: Praça da Sé
+Bairro: Sé
+Cidade: São Paulo
+Estado: SP
+```
+</details>
