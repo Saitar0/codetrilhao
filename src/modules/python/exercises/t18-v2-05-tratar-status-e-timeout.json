@@ -1,0 +1,52 @@
+{
+  "id": "t18-v2-05-tratar-status-e-timeout",
+  "tipo": "bug",
+  "titulo": "Corrigir tratamento de status 404 e timeout em uma API",
+  "topico": "Consumindo APIs e persistência com SQLite",
+  "topicoNumero": 18,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "O código deve distinguir `404` de exceções de timeout e devolver mensagens diferentes.",
+    "Verifique se o erro veio do status HTTP ou da própria tentativa de conexão com `timeout`.",
+    "Use `str(erro).lower()` para analisar a mensagem do erro sem depender de exatamente um texto."
+  ],
+  "solucao": "def mensagem_erro(status_code, erro=None):\n    if status_code == 404:\n        return 'Recurso não encontrado'\n    if erro is not None and 'timed out' in str(erro).lower():\n        return 'Timeout ao consultar a API'\n    if status_code >= 500:\n        return 'Erro interno do servidor'\n    return 'Erro inesperado na API'\n",
+  "tags": [
+    "api",
+    "status",
+    "timeout",
+    "bug"
+  ],
+  "aulaRelacionada": "apis-e-requests",
+  "enunciado": "A função abaixo está errada porque trata todas as falhas como o mesmo problema. Corrija `mensagem_erro(status_code, erro=None)` para responder de forma distinta para status 404, timeout e outros erros genéricos.",
+  "starterCode": "def mensagem_erro(status_code, erro=None):\n    return 'Erro na API'\n",
+  "testes": [
+    {
+      "chamada": "mensagem_erro(404)",
+      "esperado": "Recurso não encontrado",
+      "oculto": false
+    },
+    {
+      "chamada": "mensagem_erro(200, TimeoutError('timed out'))",
+      "esperado": "Timeout ao consultar a API",
+      "oculto": false
+    },
+    {
+      "chamada": "mensagem_erro(500)",
+      "esperado": "Erro interno do servidor",
+      "oculto": false
+    },
+    {
+      "chamada": "mensagem_erro(403)",
+      "esperado": "Erro inesperado na API",
+      "oculto": true
+    },
+    {
+      "chamada": "mensagem_erro(404, RuntimeError('timeout'))",
+      "esperado": "Recurso não encontrado",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "t18-v2-06-update-e-delete-com-where-seguro",
+  "tipo": "codigo",
+  "titulo": "Atualizar e excluir registros com filtro seguro",
+  "topico": "Consumindo APIs e persistência com SQLite",
+  "topicoNumero": 18,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Crie a tabela e insira os registros antes de tentar alterar os valores.",
+    "Para atualizar ou apagar, use `WHERE id = ?` com parâmetro em vez de concatenar a string da condição.",
+    "Depois da operação, faça um `SELECT` para confirmar o estado final."
+  ],
+  "solucao": "import sqlite3\n\ndef atualizar_e_excluir():\n    conexao = sqlite3.connect(':memory:')\n    cursor = conexao.cursor()\n    cursor.execute('CREATE TABLE produtos (id INTEGER PRIMARY KEY, nome TEXT, preco REAL)')\n    cursor.executemany(\n        'INSERT INTO produtos (nome, preco) VALUES (?, ?)',\n        [('Caneta', 4.5), ('Caderno', 9.0), ('Borracha', 2.0)]\n    )\n    conexao.commit()\n\n    cursor.execute('UPDATE produtos SET preco = ? WHERE nome = ?', (5.5, 'Caneta'))\n    cursor.execute('DELETE FROM produtos WHERE nome = ?', ('Borracha',))\n    conexao.commit()\n\n    return cursor.execute('SELECT nome, preco FROM produtos ORDER BY id').fetchall()\n",
+  "tags": [
+    "sqlite",
+    "update",
+    "delete",
+    "where"
+  ],
+  "aulaRelacionada": "sqlite-basico",
+  "enunciado": "Implemente `atualizar_e_excluir()` para criar uma tabela `produtos` com `id`, `nome` e `preco`, inserir 3 itens, atualizar o preço da `Caneta` para `5.5`, remover a `Borracha` e devolver a tabela restante em ordem de id.",
+  "starterCode": "import sqlite3\ndef atualizar_e_excluir():\n    return []\n",
+  "testes": [
+    {
+      "chamada": "atualizar_e_excluir()",
+      "esperado": "[('Caneta', 5.5), ('Caderno', 9.0)]",
+      "oculto": false
+    },
+    {
+      "chamada": "len(atualizar_e_excluir())",
+      "esperado": "2",
+      "oculto": false
+    },
+    {
+      "chamada": "atualizar_e_excluir()[0][1]",
+      "esperado": "5.5",
+      "oculto": false
+    },
+    {
+      "chamada": "all(item[0] != 'Borracha' for item in atualizar_e_excluir())",
+      "esperado": "True",
+      "oculto": true
+    },
+    {
+      "chamada": "sorted([item[0] for item in atualizar_e_excluir()])",
+      "esperado": "['Caderno', 'Caneta']",
+      "oculto": true
+    }
+  ]
+}

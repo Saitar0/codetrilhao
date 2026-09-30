@@ -1,0 +1,52 @@
+{
+  "id": "t18-v2-07-consulta-order-by-limit-e-filtro",
+  "tipo": "codigo",
+  "titulo": "Consultar pedidos com filtro, ordenação e limite",
+  "topico": "Consumindo APIs e persistência com SQLite",
+  "topicoNumero": 18,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Insira alguns registros para ter dados reais e depois filtre por valor mínimo.",
+    "Use `ORDER BY valor DESC` para mostrar os maiores primeiro e `LIMIT 2` para pegar só os mais relevantes.",
+    "A função retorna uma lista de tuplas, então o teste pode comparar diretamente o resultado."
+  ],
+  "solucao": "import sqlite3\n\ndef pedidos_relevantes():\n    conexao = sqlite3.connect(':memory:')\n    cursor = conexao.cursor()\n    cursor.execute('CREATE TABLE pedidos (id INTEGER PRIMARY KEY, cliente TEXT, valor REAL)')\n    cursor.executemany(\n        'INSERT INTO pedidos (cliente, valor) VALUES (?, ?)',\n        [('Ana', 40), ('Bia', 120), ('Carlos', 90), ('Duda', 160), ('Elo', 80)]\n    )\n    conexao.commit()\n    return cursor.execute(\n        'SELECT cliente, valor FROM pedidos WHERE valor >= 90 ORDER BY valor DESC LIMIT 2'\n    ).fetchall()\n",
+  "tags": [
+    "sqlite",
+    "select",
+    "order by",
+    "limit"
+  ],
+  "aulaRelacionada": "sqlite-basico",
+  "enunciado": "Implemente `pedidos_relevantes()` para criar a tabela `pedidos`, inserir 5 registros, filtrar apenas valores `>= 90`, ordenar por `valor` em ordem decrescente e devolver apenas os 2 primeiros resultados.",
+  "starterCode": "import sqlite3\ndef pedidos_relevantes():\n    return []\n",
+  "testes": [
+    {
+      "chamada": "pedidos_relevantes()",
+      "esperado": "[('Duda', 160.0), ('Bia', 120.0)]",
+      "oculto": false
+    },
+    {
+      "chamada": "len(pedidos_relevantes())",
+      "esperado": "2",
+      "oculto": false
+    },
+    {
+      "chamada": "pedidos_relevantes()[0][0]",
+      "esperado": "Duda",
+      "oculto": false
+    },
+    {
+      "chamada": "all(item[1] >= 90 for item in pedidos_relevantes())",
+      "esperado": "True",
+      "oculto": true
+    },
+    {
+      "chamada": "pedidos_relevantes()[0][1] >= pedidos_relevantes()[1][1]",
+      "esperado": "True",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "t18-v1-02-campos-importantes-do-json",
+  "tipo": "codigo",
+  "titulo": "Extrair campos específicos de uma resposta JSON",
+  "topico": "Consumindo APIs e persistência com SQLite",
+  "topicoNumero": 18,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "O campo principal está em `dados`; dentro dele, as chaves `nome`, `cidade` e `status` aparecem com nomes específicos.",
+    "Use `get()` para evitar `KeyError` quando uma chave pode faltar em alguma resposta.",
+    "Retorne o valor direto do dicionário em vez de tentar imprimir tudo de uma vez."
+  ],
+  "solucao": "def extrair_campos(resposta):\n    dados = resposta.get('dados', {})\n    nome = dados.get('nome', 'desconhecido')\n    cidade = dados.get('cidade', 'desconhecida')\n    status = dados.get('status', 'indefinido')\n    return {\n        'nome': nome,\n        'cidade': cidade,\n        'status': status,\n    }\n",
+  "tags": [
+    "json",
+    "dicionario",
+    "api",
+    "get"
+  ],
+  "aulaRelacionada": "apis-e-requests",
+  "enunciado": "Implemente `extrair_campos(resposta)` para ler uma resposta de API que vem em formato de dicionário e devolver um novo dicionário com apenas `nome`, `cidade` e `status`.",
+  "starterCode": "def extrair_campos(resposta):\n    return {}\n",
+  "testes": [
+    {
+      "chamada": "extrair_campos({'dados': {'nome': 'Ana', 'cidade': 'Recife', 'status': 'ativo'}})['nome']",
+      "esperado": "Ana",
+      "oculto": false
+    },
+    {
+      "chamada": "extrair_campos({'dados': {'nome': 'Bia', 'cidade': 'São Paulo', 'status': 'inativo'}})['cidade']",
+      "esperado": "São Paulo",
+      "oculto": false
+    },
+    {
+      "chamada": "extrair_campos({'dados': {'nome': 'Caio', 'cidade': 'Brasília', 'status': 'ativo'}})['status']",
+      "esperado": "ativo",
+      "oculto": false
+    },
+    {
+      "chamada": "extrair_campos({'dados': {'nome': 'Duda', 'cidade': 'Fortaleza'}}).get('status', 'indefinido')",
+      "esperado": "indefinido",
+      "oculto": true
+    },
+    {
+      "chamada": "extrair_campos({'dados': {'nome': 'Elo', 'cidade': 'João Pessoa', 'status': 'bloqueado'}})['cidade']",
+      "esperado": "João Pessoa",
+      "oculto": true
+    }
+  ]
+}

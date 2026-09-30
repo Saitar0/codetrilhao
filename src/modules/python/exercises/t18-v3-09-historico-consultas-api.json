@@ -1,0 +1,52 @@
+{
+  "id": "t18-v3-09-historico-consultas-api",
+  "tipo": "codigo",
+  "titulo": "Salvar histórico de consultas de API com data e hora",
+  "topico": "Consumindo APIs e persistência com SQLite",
+  "topicoNumero": 18,
+  "variacao": "V3",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Crie a tabela com o nome do endpoint, a data e a resposta raw em texto.",
+    "Use `INSERT INTO ... VALUES (?, ?, ?)` para salvar cada consulta como um registro de histórico.",
+    "Ao devolver os dados, faça um `SELECT` completo e transforme a resposta em uma lista de tuplas."
+  ],
+  "solucao": "import sqlite3\n\ndef registrar_consulta(endpoint, resposta):\n    conexao = sqlite3.connect(':memory:')\n    cursor = conexao.cursor()\n    cursor.execute(\n        'CREATE TABLE historico (id INTEGER PRIMARY KEY, endpoint TEXT, data_hora TEXT, resposta TEXT)'\n    )\n    cursor.execute(\n        'INSERT INTO historico (endpoint, data_hora, resposta) VALUES (?, ?, ?)',\n        (endpoint, '2024-09-30 12:00:00', resposta),\n    )\n    conexao.commit()\n    return cursor.execute('SELECT endpoint, resposta FROM historico').fetchall()\n",
+  "tags": [
+    "api",
+    "sqlite",
+    "historico",
+    "datetime"
+  ],
+  "aulaRelacionada": "apis-e-requests",
+  "enunciado": "Implemente `registrar_consulta(endpoint, resposta)` para criar uma tabela `historico` em um banco SQLite em memória, salvar uma consulta com `endpoint`, `data_hora` e `resposta`, e devolver os registros armazenados.",
+  "starterCode": "import sqlite3\ndef registrar_consulta(endpoint, resposta):\n    return []\n",
+  "testes": [
+    {
+      "chamada": "registrar_consulta('cep', '{\"cidade\": \"SP\"}')",
+      "esperado": "[('cep', '{\"cidade\": \"SP\"}')]",
+      "oculto": false
+    },
+    {
+      "chamada": "len(registrar_consulta('cotacao', '{\"valor\": 5.2}'))",
+      "esperado": "1",
+      "oculto": false
+    },
+    {
+      "chamada": "registrar_consulta('tempo', '{\"temperatura\": 28}') [0][0]",
+      "esperado": "tempo",
+      "oculto": false
+    },
+    {
+      "chamada": "registrar_consulta('clima', '{\"cidade\": \"Recife\"}')[0][1]",
+      "esperado": "{\"cidade\": \"Recife\"}",
+      "oculto": true
+    },
+    {
+      "chamada": "registrar_consulta('cep', '{\"cidade\": \"Rio\"}')[-1][0]",
+      "esperado": "cep",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "t18-v1-03-criar-banco-sqlite",
+  "tipo": "codigo",
+  "titulo": "Criar um banco SQLite e uma tabela de usuários",
+  "topico": "Consumindo APIs e persistência com SQLite",
+  "topicoNumero": 18,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Use `sqlite3.connect(\":memory:\")` para criar o banco em memória na execução do teste.",
+    "O comando `CREATE TABLE` deve definir o nome da tabela e as colunas com seus tipos.",
+    "Depois da criação, consulte `sqlite_master` para confirmar que a tabela existe."
+  ],
+  "solucao": "import sqlite3\n\ndef criar_tabela_usuarios():\n    conexao = sqlite3.connect(':memory:')\n    cursor = conexao.cursor()\n    cursor.execute(\n        'CREATE TABLE usuarios (id INTEGER PRIMARY KEY, nome TEXT, ativo INTEGER)'\n    )\n    conexao.commit()\n    return cursor.execute(\n        \"SELECT name FROM sqlite_master WHERE type='table' AND name='usuarios'\"\n    ).fetchone()[0]\n",
+  "tags": [
+    "sqlite",
+    "tabela",
+    "database",
+    "memory"
+  ],
+  "aulaRelacionada": "sqlite-basico",
+  "enunciado": "Implemente `criar_tabela_usuarios()` para abrir uma conexão SQLite em memória, criar a tabela `usuarios` com `id`, `nome` e `ativo`, e devolver o nome da tabela criada.",
+  "starterCode": "import sqlite3\ndef criar_tabela_usuarios():\n    return 'tabela faltando'\n",
+  "testes": [
+    {
+      "chamada": "criar_tabela_usuarios()",
+      "esperado": "usuarios",
+      "oculto": false
+    },
+    {
+      "chamada": "criar_tabela_usuarios() == 'usuarios'",
+      "esperado": "True",
+      "oculto": false
+    },
+    {
+      "chamada": "len(criar_tabela_usuarios())",
+      "esperado": "8",
+      "oculto": false
+    },
+    {
+      "chamada": "criar_tabela_usuarios().upper()",
+      "esperado": "USUARIOS",
+      "oculto": true
+    },
+    {
+      "chamada": "criar_tabela_usuarios().startswith('usu')",
+      "esperado": "True",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "t18-v1-04-inserir-e-listar-registros",
+  "tipo": "codigo",
+  "titulo": "Inserir 5 linhas e listar os nomes em ordem",
+  "topico": "Consumindo APIs e persistência com SQLite",
+  "topicoNumero": 18,
+  "variacao": "V1",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Use `executemany` para inserir várias linhas em uma única operação e manter o código enxuto.",
+    "Defina a tabela com `id INTEGER PRIMARY KEY` para que a ordem de inserção seja preservada.",
+    "Ao listar, ordene pela coluna `id` e recupere apenas os nomes."
+  ],
+  "solucao": "import sqlite3\n\ndef inserir_e_listar_registros():\n    conexao = sqlite3.connect(':memory:')\n    cursor = conexao.cursor()\n    cursor.execute('CREATE TABLE clientes (id INTEGER PRIMARY KEY, nome TEXT)')\n    registros = [('Ana',), ('Bia',), ('Caio',), ('Duda',), ('Elo',)]\n    cursor.executemany('INSERT INTO clientes (nome) VALUES (?)', registros)\n    conexao.commit()\n    return [nome for (nome,) in cursor.execute('SELECT nome FROM clientes ORDER BY id')]\n",
+  "tags": [
+    "sqlite",
+    "insert",
+    "select",
+    "dado"
+  ],
+  "aulaRelacionada": "sqlite-basico",
+  "enunciado": "Implemente `inserir_e_listar_registros()` para criar uma tabela `clientes` com `id` e `nome`, inserir 5 clientes e devolver a lista dos nomes em ordem de cadastro.",
+  "starterCode": "import sqlite3\ndef inserir_e_listar_registros():\n    return []\n",
+  "testes": [
+    {
+      "chamada": "inserir_e_listar_registros()",
+      "esperado": "['Ana', 'Bia', 'Caio', 'Duda', 'Elo']",
+      "oculto": false
+    },
+    {
+      "chamada": "len(inserir_e_listar_registros())",
+      "esperado": "5",
+      "oculto": false
+    },
+    {
+      "chamada": "inserir_e_listar_registros()[0]",
+      "esperado": "Ana",
+      "oculto": false
+    },
+    {
+      "chamada": "inserir_e_listar_registros()[-1]",
+      "esperado": "Elo",
+      "oculto": true
+    },
+    {
+      "chamada": "all(nome in inserir_e_listar_registros() for nome in ['Ana', 'Duda'])",
+      "esperado": "True",
+      "oculto": true
+    }
+  ]
+}

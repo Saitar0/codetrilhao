@@ -1,0 +1,52 @@
+{
+  "id": "t18-v1-01-consulta-json-de-api",
+  "tipo": "codigo",
+  "titulo": "Processar um JSON de API e resumir o endereço",
+  "topico": "Consumindo APIs e persistência com SQLite",
+  "topicoNumero": 18,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Comece olhando os campos que a resposta tem: `cep`, `localidade` e `uf`.",
+    "Use a chave correta do dicionário e montando a string com `f` para evitar concatenação manual.",
+    "Teste com um dado realista e depois com outro estado para garantir que a regra é genérica."
+  ],
+  "solucao": "def resumo_api(resposta):\n    cep = resposta.get('cep', 'desconhecido')\n    cidade = resposta.get('localidade', 'desconhecida')\n    uf = resposta.get('uf', 'XX')\n    return f\"{cidade}/{uf} - {cep}\"\n",
+  "tags": [
+    "api",
+    "json",
+    "dicionario",
+    "requests"
+  ],
+  "aulaRelacionada": "apis-e-requests",
+  "enunciado": "Você recebeu uma resposta em formato JSON fictício de uma API de CEP. Implemente `resumo_api(resposta)` para extrair `cep`, `localidade` e `uf` e devolver uma string no formato `cidade/UF - CEP`.",
+  "starterCode": "def resumo_api(resposta):\n    return ''\n",
+  "testes": [
+    {
+      "chamada": "resumo_api({'cep': '01001000', 'localidade': 'São Paulo', 'uf': 'SP'})",
+      "esperado": "São Paulo/SP - 01001000",
+      "oculto": false
+    },
+    {
+      "chamada": "resumo_api({'cep': '20040020', 'localidade': 'Rio de Janeiro', 'uf': 'RJ'})",
+      "esperado": "Rio de Janeiro/RJ - 20040020",
+      "oculto": false
+    },
+    {
+      "chamada": "resumo_api({'cep': '80000000', 'localidade': 'Curitiba', 'uf': 'PR'})",
+      "esperado": "Curitiba/PR - 80000000",
+      "oculto": false
+    },
+    {
+      "chamada": "resumo_api({'cep': '00000000', 'localidade': 'Porto Alegre', 'uf': 'RS'})[-4:]",
+      "esperado": "0000",
+      "oculto": true
+    },
+    {
+      "chamada": "resumo_api({'cep': '40200000', 'localidade': 'Salvador', 'uf': 'BA'})",
+      "esperado": "Salvador/BA - 40200000",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "t18-v2-08-injecao-sql-vulneravel-e-correcao",
+  "tipo": "codigo",
+  "titulo": "Demonstrar SQL injection e corrigir a consulta",
+  "topico": "Consumindo APIs e persistência com SQLite",
+  "topicoNumero": 18,
+  "variacao": "V2",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Você precisa mostrar que a versão insegura aceita entrada maliciosa e a versão segura não.",
+    "Use `OR 1=1` como exemplo clássico de injeção para perceber o problema da concatenação.",
+    "O valor seguro deve ser passado como parâmetro com `?`, não montado em uma f-string."
+  ],
+  "solucao": "import sqlite3\n\ndef consulta_insegura_e_segura(entrada):\n    conexao = sqlite3.connect(':memory:')\n    cursor = conexao.cursor()\n    cursor.execute('CREATE TABLE usuarios (login TEXT)')\n    cursor.executemany('INSERT INTO usuarios (login) VALUES (?)', [('joao',), ('maria',), ('admin',)])\n    conexao.commit()\n\n    sql_inseguro = f\"SELECT login FROM usuarios WHERE login = '{entrada}'\"\n    consulta = cursor.execute(sql_inseguro).fetchall()\n    segura = cursor.execute('SELECT login FROM usuarios WHERE login = ?', (entrada,)).fetchall()\n    return {\n        'insegura': consulta,\n        'segura': segura,\n    }\n",
+  "tags": [
+    "sqlite",
+    "sql",
+    "seguranca",
+    "inyeccao"
+  ],
+  "aulaRelacionada": "sqlite-basico",
+  "enunciado": "Implemente `consulta_insegura_e_segura(entrada)` para criar uma tabela `usuarios` com três logins, demonstrar uma consulta vulnerável construída com f-string e uma correção com parâmetro seguro. O retorno deve ser um dicionário com as chaves `insegura` e `segura`.",
+  "starterCode": "import sqlite3\ndef consulta_insegura_e_segura(entrada):\n    return {'insegura': [], 'segura': []}\n",
+  "testes": [
+    {
+      "chamada": "consulta_insegura_e_segura('joao')['insegura']",
+      "esperado": "[('joao',)]",
+      "oculto": false
+    },
+    {
+      "chamada": "consulta_insegura_e_segura(\"joao' OR 1=1 --\")['insegura']",
+      "esperado": "[('joao',), ('maria',), ('admin',)]",
+      "oculto": false
+    },
+    {
+      "chamada": "consulta_insegura_e_segura(\"joao' OR 1=1 --\")['segura']",
+      "esperado": "[]",
+      "oculto": false
+    },
+    {
+      "chamada": "consulta_insegura_e_segura('admin')['segura']",
+      "esperado": "[('admin',)]",
+      "oculto": true
+    },
+    {
+      "chamada": "len(consulta_insegura_e_segura('joao')['insegura'])",
+      "esperado": "1",
+      "oculto": true
+    }
+  ]
+}

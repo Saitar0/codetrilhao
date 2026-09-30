@@ -1,0 +1,52 @@
+{
+  "id": "t18-v3-12-sincronizar-api-com-banco",
+  "tipo": "codigo",
+  "titulo": "Sincronizar dados da API com o banco local",
+  "topico": "Consumindo APIs e persistência com SQLite",
+  "topicoNumero": 18,
+  "variacao": "V3",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Faça uma varredura em cada item da API e compare com o banco usando o `id` do registro.",
+    "Se o registro existe, faça `UPDATE`; se não existe, faça `INSERT`.",
+    "Ao final, ordene por `id` e devolva a tabela completa para validar as alterações."
+  ],
+  "solucao": "import sqlite3\n\ndef sincronizar_dados(api_itens, banco_itens):\n    conexao = sqlite3.connect(':memory:')\n    cursor = conexao.cursor()\n    cursor.execute('CREATE TABLE clientes (id INTEGER PRIMARY KEY, nome TEXT, pontos INTEGER)')\n    cursor.executemany(\n        'INSERT INTO clientes (id, nome, pontos) VALUES (?, ?, ?)',\n        banco_itens,\n    )\n    conexao.commit()\n\n    for item in api_itens:\n        existe = cursor.execute(\n            'SELECT 1 FROM clientes WHERE id = ?',\n            (item['id'],),\n        ).fetchone()\n        if existe:\n            cursor.execute(\n                'UPDATE clientes SET nome = ?, pontos = ? WHERE id = ?',\n                (item['nome'], item['pontos'], item['id']),\n            )\n        else:\n            cursor.execute(\n                'INSERT INTO clientes (id, nome, pontos) VALUES (?, ?, ?)',\n                (item['id'], item['nome'], item['pontos']),\n            )\n    conexao.commit()\n    return cursor.execute('SELECT id, nome, pontos FROM clientes ORDER BY id').fetchall()\n",
+  "tags": [
+    "api",
+    "sqlite",
+    "sincronizacao",
+    "update"
+  ],
+  "aulaRelacionada": "apis-e-requests",
+  "enunciado": "Implemente `sincronizar_dados(api_itens, banco_itens)` para comparar a lista de itens da API com a tabela local e atualizar registros existentes ou inserir novos, mantendo a tabela em ordem por `id`.",
+  "starterCode": "import sqlite3\ndef sincronizar_dados(api_itens, banco_itens):\n    return []\n",
+  "testes": [
+    {
+      "chamada": "sincronizar_dados([{'id': 1, 'nome': 'Ana', 'pontos': 150}, {'id': 3, 'nome': 'Duda', 'pontos': 90}], [(1, 'Ana', 100), (2, 'Bia', 80)])",
+      "esperado": "[(1, 'Ana', 150), (2, 'Bia', 80), (3, 'Duda', 90)]",
+      "oculto": false
+    },
+    {
+      "chamada": "len(sincronizar_dados([{'id': 1, 'nome': 'Ana', 'pontos': 100}], [(1, 'Ana', 90), (2, 'Bia', 70)]))",
+      "esperado": "2",
+      "oculto": false
+    },
+    {
+      "chamada": "sincronizar_dados([{'id': 2, 'nome': 'Bia', 'pontos': 120}], [(1, 'Ana', 90), (2, 'Bia', 70)])[-1][2]",
+      "esperado": "120",
+      "oculto": false
+    },
+    {
+      "chamada": "sincronizar_dados([{'id': 4, 'nome': 'Elo', 'pontos': 50}], [(1, 'Ana', 30)])[-1][0]",
+      "esperado": "4",
+      "oculto": true
+    },
+    {
+      "chamada": "sincronizar_dados([{'id': 1, 'nome': 'Ana', 'pontos': 200}], [(1, 'Ana', 50), (2, 'Bia', 20)])[0][2]",
+      "esperado": "200",
+      "oculto": true
+    }
+  ]
+}
