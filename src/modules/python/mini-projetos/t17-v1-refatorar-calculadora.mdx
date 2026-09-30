@@ -1,0 +1,135 @@
+---
+titulo: "Refatorar uma calculadora simples"
+descricao: "Transforme um script monolítico em funções testáveis e legíveis."
+topico: 17
+topicoNome: "Testes, depuração, boas práticas e Git"
+variacao: "V1"
+tempo: 45
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ['calculadora','funções','refatoração','testes']
+---
+
+# Refatorar uma calculadora simples
+
+Contexto: você tem um script que faz operações aritméticas a partir de `input()` e quer transformá-lo em pequenas funções reutilizáveis para testar e manter com facilidade.
+
+O que você vai construir
+- Exemplo de execução real (saída do `python3` usada aqui):
+
+```bash
+10 + 5 = 15
+10 - 5 = 5
+3 * 7 = 21
+22 / 7 = 3.142857142857143
+```
+
+Requisitos
+1. Separe cada operação aritmética em uma função (`soma`, `subtrai`, `multiplica`, `divide`).
+2. Crie uma função `calcular(op, a, b)` que delega para a operação correta.
+3. Trate divisão por zero com exceção clara.
+4. Escreva exemplos executáveis que mostram o resultado (não é obrigatório ler `input()` no Playground).
+
+Critérios de aceite
+- [ ] Cada operação é uma função independente.
+- [ ] `calcular` escolhe a operação por um mapa (`dict`).
+- [ ] Divisão por zero lança `ValueError` com mensagem.
+- [ ] Código no `<Playground>` roda sem usar pip ou rede.
+
+Guia (passo a passo com dicas)
+
+1. Identifique os trechos do script que realizam cada operação e extraia-os em funções curtas.
+   - Dica: cada função deve receber os operandos e retornar o resultado (sem `print`).
+2. Crie o `calcular(op, a, b)` que contém um `dict` com operadores como chaves.
+   - Dica: isso facilita testar e adicionar novas operações.
+3. Trate erros previsíveis (ex.: divisão por zero) lançando exceções com mensagens legíveis.
+   - Dica: prefira `ValueError("Divisão por zero")`.
+4. No final, escreva um pequeno bloco que itere casos de exemplo e `print` os resultados (este bloco pode ficar só no `if __name__ == '__main__'`).
+
+Código inicial (Playground)
+
+<Playground>
+# Código inicial para abrir no Playground (execução em memória)
+def soma(a, b):
+    # implemente
+    pass
+
+def subtrai(a, b):
+    pass
+
+def multiplica(a, b):
+    pass
+
+def divide(a, b):
+    pass
+
+def calcular(op, a, b):
+    # use um dict para mapear operadores
+    pass
+
+if __name__ == '__main__':
+    # exemplos embutidos (nada de input quando rodar no Playground)
+    casos = [('+', 10, 5), ('-', 10, 5), ('*', 3, 7), ('/', 22, 7)]
+    for op, a, b in casos:
+        try:
+            print(a, op, b, '=', calcular(op, a, b))
+        except Exception as e:
+            print('Erro:', e)
+</Playground>
+
+Desafio extra
+- Adicione as operações `**` (potência) e `%` (módulo) com documentação curta em docstring.
+
+Visão de mercado
+- Refatoração e decomposição em funções são habilidades essenciais para entregar código testável em times.
+
+Autoavaliação
+- [ ] Consegui extrair funções sem duplicação.
+- [ ] Escrevi tratamento de erro significativo.
+- [ ] Sei explicar onde colocar testes unitários.
+
+Solução de referência
+<details>
+<summary>Mostrar solução executada (saída real incluída)</summary>
+
+```python
+# scripts/tmp-mini-projects/t17_v1_solution.py
+def soma(a: float, b: float) -> float:
+    return a + b
+
+def subtrai(a: float, b: float) -> float:
+    return a - b
+
+def multiplica(a: float, b: float) -> float:
+    return a * b
+
+def divide(a: float, b: float) -> float:
+    if b == 0:
+        raise ValueError("Divisão por zero")
+    return a / b
+
+def calcular(op: str, a: float, b: float) -> float:
+    ops = {"+": soma, "-": subtrai, "*": multiplica, "/": divide}
+    if op not in ops:
+        raise ValueError(f"Operador desconhecido: {op}")
+    return ops[op](a, b)
+
+if __name__ == '__main__':
+    casos = [('+', 10, 5), ('-', 10, 5), ('*', 3, 7), ('/', 22, 7)]
+    for op, a, b in casos:
+        try:
+            print(f"{a} {op} {b} = {calcular(op, a, b)}")
+        except Exception as e:
+            print(f"Erro ao calcular {a} {op} {b}: {e}")
+```
+
+Saída real do `python3`:
+
+```
+10 + 5 = 15
+10 - 5 = 5
+3 * 7 = 21
+22 / 7 = 3.142857142857143
+```
+
+</details>

@@ -1,0 +1,157 @@
+---
+titulo: "Testes do validador de CPF"
+descricao: "Defina regras e casos de teste para um validador de CPF robusto."
+topico: 17
+topicoNome: "Testes, depuração, boas práticas e Git"
+variacao: "V2"
+tempo: 90
+nivel: "intermediario"
+execucao: "local"
+palavrasChave: ['cpf','validação','testes','pytest']
+---
+
+# Testes do validador de CPF
+
+Contexto: validar CPF é tarefa comum em sistemas brasileiros. O foco aqui é projetar conjuntos de testes (unitários e de aceitação) que cubram regras e casos especiais.
+
+## O que você vai construir
+
+Um conjunto de marcos de implementação e uma suíte de testes que cobre limpeza, regras e dígitos verificadores do CPF. A saída real abaixo demonstra o comportamento da solução de referência.
+
+Exemplo de execução real (saída do `python3` usada aqui):
+
+```bash
+529.982.247-25 -> True
+111.111.111-11 -> False
+123.456.789-09 -> True
+935.411.347-80 -> True
+```
+
+## Requisitos
+
+1. Liste 3–5 marcos de implementação (por exemplo: limpeza, cálculo de dígitos, rejeição de sequências repetidas).
+2. Para cada marco, escreva pelo menos 5 casos de teste: normal, borda, inválido formatado, inválido por conteúdo, entrada com caracteres extras.
+3. Descreva como executar `pytest` localmente (ilustrativo) e mostre exemplos de asserts simples que o aluno pode rodar no REPL.
+
+## Critérios de aceite
+
+- [ ] Há de 3 a 5 marcos claros.
+- [ ] Cada marco tem testes cobrindo casos normais e de borda.
+- [ ] Há instruções claras para executar `pytest` localmente.
+
+## Guia (marcos — sem código pronto)
+
+1. Limpeza e normalização
+   - Separar dígitos, remover máscara e espaços.
+   - Casos de teste: CPF com pontos/traços, CPF com espaços, string vazia, `None` (se for caso de entrada), CPF com letras.
+
+2. Rejeição de sequências repetidas
+   - Sequências como `111.111.111-11` são inválidas.
+   - Casos: todas as mesmas casas, variações com máscara, comprimento errado.
+
+3. Cálculo dos dígitos verificadores
+   - Implementar multiplicadores decrescentes e regras `r < 2 -> 0` else `11 - r`.
+   - Casos: CPF válido conhecido, CPF com dígito errado, base correta mas último dígito trocado.
+
+4. Integração e comportamento em massa
+   - Testar uma lista de CPFs, medir taxa de rejeição.
+   - Casos: lista com 1000 CPFs (simulados), lista vazia.
+
+## Execução local (ilustrativa)
+
+```bash
+# Instale virtualenv e ative um ambiente.
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install pytest
+pytest tests/test_validador_cpf.py -q
+```
+
+## Exemplos de `assert` executáveis (o aluno pode colar no REPL)
+
+```python
+from scripts.tmp_mini_projects.t17_v2_solution import valida_cpf
+assert valida_cpf('529.982.247-25') is True
+assert valida_cpf('111.111.111-11') is False
+```
+
+## Visão de mercado
+
+Validação de dados e suites de testes são habilidades centrais em engenharia de software; saber projetar testes previne regressões.
+
+## Autoavaliação
+
+- [ ] Documentei os casos de teste.
+- [ ] Expliquei como rodar `pytest` localmente.
+
+## Solução de referência (detalhes e código executado)
+<details>
+<summary>Mostrar solução e saída</summary>
+
+```python
+# scripts/tmp-mini-projects/t17_v2_solution.py
+import re
+
+def limpa_cpf(cpf: str) -> str:
+	return re.sub(r"\D", "", cpf)
+
+def sequencia_repetida(cpf: str) -> bool:
+	return cpf == cpf[0] * len(cpf)
+
+def calcular_digito(cpf: str, multiplicadores) -> int:
+	s = sum(int(d) * m for d, m in zip(cpf, multiplicadores))
+	r = s % 11
+	return 0 if r < 2 else 11 - r
+
+def valida_cpf(cpf: str) -> bool:
+	c = limpa_cpf(cpf)
+	if len(c) != 11 or not c.isdigit():
+		return False
+	if sequencia_repetida(c):
+		return False
+	base = c[:9]
+	d1 = calcular_digito(base, range(10, 1, -1))
+	d2 = calcular_digito(base + str(d1), range(11, 1, -1))
+	return c == base + str(d1) + str(d2)
+
+if __name__ == '__main__':
+	exemplos = [
+		'529.982.247-25',
+		'111.111.111-11',
+		'123.456.789-09',
+		'935.411.347-80',
+	]
+	for e in exemplos:
+		print(e, '->', valida_cpf(e))
+```
+
+Saída real:
+
+```
+529.982.247-25 -> True
+111.111.111-11 -> False
+123.456.789-09 -> True
+935.411.347-80 -> True
+```
+
+</details>
+
+## Código inicial
+
+Para ajudar a começar, crie o arquivo de testes `tests/test_validador_cpf.py` com esqueleto:
+
+```python
+from validator import valida_cpf
+
+def test_cpf_valido():
+	assert valida_cpf('529.982.247-25') is True
+
+def test_cpf_sequencia():
+	assert valida_cpf('111.111.111-11') is False
+
+# adicione outros testes cobrindo bordas
+```
+
+## Desafio extra
+
+- Escreva um gerador de CPFs válidos para usar em testes de carga (por exemplo, 1000 CPFs), e meça a porcentagem válida/invalidade.

@@ -1,0 +1,136 @@
+---
+titulo: "Repositório profissional: entrega com testes e histórico"
+descricao: "Organize um repositório como se fosse para um cliente: commits claros, changelog e instruções de uso."
+topico: 17
+topicoNome: "Testes, depuração, boas práticas e Git"
+variacao: "V3"
+tempo: 120
+nivel: "intermediario"
+execucao: "local"
+palavrasChave: ['git','repositório','commit','CI']
+---
+
+## Repositório profissional
+
+## Contexto
+
+Um cliente pediu um microserviço que valida CPFs e gera relatórios simples. Você entregará um repositório com código, testes e instruções de uso.
+
+## O que você vai construir
+
+Um repositório organizado com código de validação, testes e scripts de manutenção. Abaixo há um exemplo ilustrativo da saída de um commit (simulada).
+
+## Requisitos
+
+1. Implementar `validator/cpf.py` exportando `valida_cpf(cpf: str) -> bool`.
+2. Fornecer uma suíte de testes em `tests/` que cubra casos normais e borda.
+3. Incluir `README.md` com instruções de setup e execução de testes.
+
+## Critérios de aceite
+
+- [ ] `validator/cpf.py` existe e expõe `valida_cpf`.
+- [ ] Há pelo menos 8 testes cobrindo regras principais e bordas.
+- [ ] O README descreve como criar venv e rodar `pytest`.
+
+### Exemplo de execução ilustrativo (saída simulada)
+
+```bash
+[master] conteudo(python): t17 mini projetos de testes e git
+ 3 files changed, 123 insertions(+), 10 deletions(-)
+```
+
+### Histórias de usuário
+1. Como usuário, quero validar um CPF e receber True/False.
+2. Como integrador, quero executar a suíte de testes localmente com `pytest`.
+3. Como revisor, quero commits pequenos e mensagens que expliquem o porquê das mudanças.
+
+### Arquitetura sugerida
+- `validator/` - funções de validação (limpeza, dígitos, regras)
+- `tests/` - testes unitários e de integração (pytest)
+- `scripts/` - scripts de manutenção (ex.: gerar relatório)
+- `README.md` com instruções de setup e comandos
+
+### Casos de teste de aceitação
+- Validar CPFs válidos conhecidos → True
+- CPFs com máscara e espaços → True/False conforme conteúdo
+- Sequências repetidas → False
+- Arquivo CSV com 100 CPFs → produzir relatório com contagem válidos/invalidos
+
+### Riscos
+- Regras de validação mudam entre países/locais; documentar suposições.
+- Dependência de bibliotecas externas pode quebrar o ambiente; prefira stdlib.
+
+## Guia de entrega ao cliente (checklist)
+
+- [ ] README com setup e `pytest`
+- [ ] Commits pequenos e atômicos
+- [ ] Tests cobrem regras principais
+
+## Execução local (ilustrativa)
+
+```bash
+# criar venv
+python -m venv .venv
+.venv\Scripts\activate   # Windows
+pip install -r requirements.txt
+pytest -q
+```
+
+## Solução de referência (simulada)
+<details>
+<summary>Mostrar script de commit simulado</summary>
+
+```python
+# scripts/tmp-mini-projects/t17_v3_solution.py
+def simula_commit(mensagem: str) -> None:
+	print(f"[master] {mensagem}")
+	print(" 3 files changed, 123 insertions(+), 10 deletions(-)")
+
+if __name__ == '__main__':
+	simula_commit('conteudo(python): t17 mini projetos de testes e git')
+```
+
+Saída simulada:
+
+```
+[master] conteudo(python): t17 mini projetos de testes e git
+ 3 files changed, 123 insertions(+), 10 deletions(-)
+```
+
+</details>
+
+## Desafio extra
+
+- Configure um `pre-commit` que rode `pytest` e `flake8` (descrição de passos, sem código).
+
+## Visão de mercado
+
+- Entregar um repositório com histórico claro e testes facilita revisão por pares e contratação.
+
+## Autoavaliação
+
+- [ ] README explicativo
+- [ ] Testes fáceis de rodar
+- [ ] Mensagens de commit descritivas
+
+## Código inicial
+
+Inclua no repositório um esqueleto mínimo:
+
+```
+validator/
+	__init__.py
+	cpf.py         # funções de validação
+tests/
+	test_cpf.py
+README.md
+```
+
+`validator/cpf.py` deve expor `valida_cpf(cpf: str) -> bool`.
+
+## Desafio extra (com passos)
+
+- Adicione um `CONTRIBUTING.md` com convenções de commit e como rodar testes.
+- Escreva um `scripts/relatorio.py` que lê um CSV com CPFs e grava um sumário (válidos x inválidos).
++
+*** End Patch
