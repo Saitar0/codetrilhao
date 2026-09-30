@@ -51,7 +51,8 @@ function parseFrontmatterValue(value) {
 }
 
 function parseFrontmatter(text) {
-  const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/)
+  const normalizedText = String(text ?? '').replace(/^\uFEFF/, '')
+  const match = normalizedText.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/)
   if (!match) return { raw: '', data: {} }
   const data = {}
   for (const line of match[1].split(/\r?\n/)) {
@@ -112,7 +113,8 @@ function validateProject(filePath) {
     errors.push(`${fileName}: execucao deve ser 'navegador' ou 'local'.`)
   }
 
-  const body = text.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '')
+  const normalizedText = String(text ?? '').replace(/^\uFEFF/, '')
+  const body = normalizedText.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '')
   const requiredPatterns = [
     /#\s+/,
     /Contexto/i,

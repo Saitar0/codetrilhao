@@ -1,0 +1,27 @@
+{
+  "id": "t12-v2-06-excecao-personalizada",
+  "tipo": "completar",
+  "titulo": "Criar e usar exceção personalizada",
+  "topico": "Tratamento de erros",
+  "topicoNumero": 12,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Defina uma classe que herda de `Exception` com o nome pedido.",
+    "Use `raise MinhaExcecao('mensagem')` quando a condição de erro ocorrer.",
+    "No `except`, capture a exceção específica e imprima a mensagem passada."
+  ],
+  "solucao": "class ErroNegocio(Exception):\n    pass\n\ndef validar_saque(saldo, valor):\n    if valor > saldo:\n        raise ErroNegocio(\"Saldo insuficiente\")\n    return saldo - valor\n",
+  "tags": ["raise", "excecao", "classe"],
+  "aulaRelacionada": "excecoes",
+  "enunciado": "Crie a exceção `SaldoInsuficienteError` herdando de `Exception`. Implemente a função `sacar(saldo, valor)` que lança `SaldoInsuficienteError('Saldo insuficiente')` se `valor > saldo`, caso contrário retorna o novo saldo.",
+  "starterCode": "class SaldoInsuficienteError(Exception):\n    pass\n\ndef sacar(saldo, valor):\n    pass\n",
+  "testes": [
+    { "chamada": "sacar(100, 20)", "esperado": "80", "oculto": false },
+    { "chamada": "sacar(50, 50)", "esperado": "0", "oculto": false },
+    { "chamada": "sacar(10, 20)", "esperado": "Saldo insuficiente", "oculto": false },
+    { "chamada": "sacar(0, 0)", "esperado": "0", "oculto": true },
+    { "chamada": "sacar(200, 199.99)", "esperado": "0.01", "oculto": true }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "t12-v1-04-keyerror",
+  "tipo": "codigo",
+  "titulo": "Acesso seguro a dicionário (KeyError)",
+  "topico": "Tratamento de erros",
+  "topicoNumero": 12,
+  "variacao": "V1",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Use `try/except KeyError` ao acessar chaves de um dicionário.",
+    "Você pode também usar `dict.get` como alternativa (LBYL).",
+    "Ao capturar `KeyError`, imprima 'Chave ausente.' e termine o programa."
+  ],
+  "solucao": "def acessar_chave():\n    import sys\n    try:\n        chave = input().strip()\n        import json\n        d = json.loads(input())\n        print(d[chave])\n    except KeyError:\n        print(\"Chave ausente.\")\n",
+  "tags": ["KeyError", "dicionario", "entrada"],
+  "aulaRelacionada": "excecoes",
+  "enunciado": "Primeira linha: chave a consultar. Segunda linha: JSON que representa um dicionário. Imprima o valor da chave. Se a chave não existir, capture `KeyError` e imprima 'Chave ausente.'",
+  "starterCode": "def acessar_chave():\n    pass\n",
+  "testes": [
+    { "entrada": "nome\n{\"nome\": \"Ana\", \"idade\": 30}\n", "esperado": "Ana\n", "oculto": false },
+    { "entrada": "idade\n{\"nome\": \"Ana\", \"idade\": 30}\n", "esperado": "30\n", "oculto": false },
+    { "entrada": "cpf\n{\"nome\": \"Ana\", \"idade\": 30}\n", "esperado": "Chave ausente.\n", "oculto": false },
+    { "entrada": "endereco\n{\"endereco\": \"Rua A\"}\n", "esperado": "Rua A\n", "oculto": true },
+    { "entrada": "saldo\n{\"saldo\": 0}\n", "esperado": "0\n", "oculto": true }
+  ]
+}

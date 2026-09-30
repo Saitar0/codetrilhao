@@ -1,0 +1,27 @@
+{
+  "id": "t12-v2-05-ler-float-entre",
+  "tipo": "codigo",
+  "titulo": "Ler float dentro de intervalo (repetir até válido)",
+  "topico": "Tratamento de erros",
+  "topicoNumero": 12,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Use `try/except ValueError` ao converter para float.",
+    "Depois de converter, verifique se está no intervalo; se não, levante `ValueError` ou informe e repita.",
+    "Registre falhas com `logging.warning` antes de pedir nova entrada (o runner mostra logs no stdout)."
+  ],
+  "solucao": "import logging\nimport sys\nlogging.basicConfig(level=logging.INFO, format='%(levelname)s:%(message)s', stream=sys.stdout)\n\ndef ler_float(msg, minimo, maximo):\n    while True:\n        try:\n            s = input(msg)\n            val = float(s)\n            if val < minimo or val > maximo:\n                raise ValueError(f\"Valor fora do intervalo [{minimo}, {maximo}].\")\n            return val\n        except ValueError as e:\n            logging.warning(str(e))\n            print(e)\n",
+  "tags": ["float", "intervalo", "logging"],
+  "aulaRelacionada": "excecoes",
+  "enunciado": "Implemente a função `ler_float(msg, minimo, maximo)` que pede uma entrada com `input(msg)` e repete até receber um `float` dentro do intervalo `[minimo, maximo]`. Ao erro, faça `logging.warning` com a mensagem e mostre-a ao usuário antes de repetir.",
+  "starterCode": "import logging\nimport sys\n\nlogging.basicConfig(level=logging.INFO, format='%(levelname)s:%(message)s', stream=sys.stdout)\n\ndef ler_float(msg, minimo, maximo):\n    pass\n",
+  "testes": [
+    { "entrada": "10\n", "chamada": null, "esperado": "10.0", "oculto": false },
+    { "entrada": "abc\n5\n", "esperado": "5.0", "oculto": false },
+    { "entrada": "3\n8\n", "esperado": "8.0", "oculto": false },
+    { "entrada": "100\n50\n", "esperado": "50.0", "oculto": true },
+    { "entrada": "-1\n0.5\n", "esperado": "0.5", "oculto": true }
+  ]
+}

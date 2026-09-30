@@ -1,0 +1,27 @@
+{
+  "id": "t12-v1-03-finalmente",
+  "tipo": "codigo",
+  "titulo": "Uso de finally sempre executado",
+  "topico": "Tratamento de erros",
+  "topicoNumero": 12,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Coloque um `print('fim')` dentro do bloco `finally` para garantir execução.",
+    "Teste com entradas que causam exceção e com entradas válidas para ver a ordem.",
+    "Mantenha o `try` pequeno para que o `finally` seja claramente relacionado ao bloco perigoso."
+  ],
+  "solucao": "def executar_e_print_final():\n    try:\n        x = int(input())\n        print(x)\n    except ValueError:\n        print(\"Valor inválido.\")\n    finally:\n        print(\"fim\")\n",
+  "tags": ["finally", "excecoes"],
+  "aulaRelacionada": "excecoes",
+  "enunciado": "Leia uma linha, tente convertê-la para inteiro e imprima o número. Use um bloco `finally` para sempre imprimir 'fim' no final, mesmo que haja erro na conversão.",
+  "starterCode": "def executar_e_print_final():\n    pass\n",
+  "testes": [
+    { "entrada": "7\n", "esperado": "7\nfim\n", "oculto": false },
+    { "entrada": "abc\n", "esperado": "Valor inválido.\nfim\n", "oculto": false },
+    { "entrada": "0\n", "esperado": "0\nfim\n", "oculto": false },
+    { "entrada": "\n5\n", "esperado": "5\nfim\n", "oculto": true },
+    { "entrada": "3.2\n2\n", "esperado": "2\nfim\n", "oculto": true }
+  ]
+}

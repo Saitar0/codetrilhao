@@ -1,0 +1,27 @@
+{
+  "id": "t12-v1-01-valor-inteiro",
+  "tipo": "codigo",
+  "titulo": "Converter para inteiro com tratamento",
+  "topico": "Tratamento de erros",
+  "topicoNumero": 12,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Tente converter com `int()` dentro de um `try/except`.",
+    "No `except` capture `ValueError` e peça nova entrada ou retorne uma mensagem clara.",
+    "Garanta que o `starterCode` não resolva todos os testes por si só; repita a leitura quando usar `input()`."
+  ],
+  "solucao": "def ler_inteiro(msg: str) -> int:\n    while True:\n        try:\n            return int(input(msg))\n        except ValueError:\n            print(\"Digite um número inteiro válido.\")\n",
+  "tags": ["erros", "int", "entrada", "ValueError"],
+  "aulaRelacionada": "excecoes",
+  "enunciado": "Escreva um programa que leia uma linha com `input()` e tente convertê-la para inteiro. Se a conversão falhar, mostre 'Entrada inválida. Digite um número inteiro.' e continue pedindo até receber um inteiro válido. Ao final, imprima o inteiro." ,
+  "starterCode": "def ler_inteiro(msg: str) -> int:\n    pass\n\n# Exemplo de execução (não coloque no código de produção):\n# Entrada: 'vinte'  '30' -> Saída: 30\n",
+  "testes": [
+    { "entrada": "10\n", "esperado": "10\n", "oculto": false },
+    { "entrada": "abc\n10\n", "esperado": "10\n", "oculto": false },
+    { "entrada": "-5\n", "esperado": "-5\n", "oculto": false },
+    { "entrada": "\n5\n", "esperado": "5\n", "oculto": true },
+    { "entrada": "3.5\n2\n", "esperado": "2\n", "oculto": true }
+  ]
+}
