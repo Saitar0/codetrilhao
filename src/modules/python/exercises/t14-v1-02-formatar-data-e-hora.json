@@ -1,0 +1,52 @@
+{
+  "id": "t14-v1-02-formatar-data-e-hora",
+  "tipo": "codigo",
+  "titulo": "Formatar uma data e hora em texto",
+  "topico": "Módulos, bibliotecas e ambiente",
+  "topicoNumero": 14,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Use o módulo `datetime` e crie um objeto fixo, sem depender do horário do sistema.",
+    "O formato desejado é `dd/mm/AAAA HH:MM`.",
+    "O método `strftime` recebe a máscara de formatação e devolve a string final."
+  ],
+  "solucao": "from datetime import datetime\n\ndef formatar_data_hora(valor):\n    return valor.strftime('%d/%m/%Y %H:%M')\n",
+  "tags": [
+    "datetime",
+    "strftime",
+    "formato",
+    "data"
+  ],
+  "aulaRelacionada": "datas-e-tempo",
+  "enunciado": "Crie uma função que recebe um objeto `datetime` e devolve a data e a hora em formato brasileiro, como `dd/mm/AAAA HH:MM`. Use uma data fixa no teste para que o resultado seja previsível.",
+  "starterCode": "from datetime import datetime\n\ndef formatar_data_hora(valor):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "formatar_data_hora(datetime(2025, 3, 8, 9, 15))",
+      "esperado": "08/03/2025 09:15",
+      "oculto": false
+    },
+    {
+      "chamada": "formatar_data_hora(datetime(2024, 12, 31, 23, 59))",
+      "esperado": "31/12/2024 23:59",
+      "oculto": false
+    },
+    {
+      "chamada": "formatar_data_hora(datetime(2023, 1, 2, 0, 5))",
+      "esperado": "02/01/2023 00:05",
+      "oculto": false
+    },
+    {
+      "chamada": "formatar_data_hora(datetime(2026, 11, 20, 18, 0))",
+      "esperado": "20/11/2026 18:00",
+      "oculto": true
+    },
+    {
+      "chamada": "formatar_data_hora(datetime(2027, 6, 7, 12, 30))",
+      "esperado": "07/06/2027 12:30",
+      "oculto": true
+    }
+  ]
+}

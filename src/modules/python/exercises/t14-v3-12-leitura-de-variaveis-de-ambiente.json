@@ -1,0 +1,26 @@
+{
+  "id": "t14-v3-12-leitura-de-variaveis-de-ambiente",
+  "tipo": "prever-saida",
+  "titulo": "Ler variáveis de ambiente para configurar o programa",
+  "topico": "Módulos, bibliotecas e ambiente",
+  "topicoNumero": 14,
+  "variacao": "V3",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Use `os.environ` para acessar as variáveis do ambiente.",
+    "`get()` recupera o valor com padrão caso a chave não exista.",
+    "A saída final depende do valor setado antes da execução do programa."
+  ],
+  "solucao": "import os\n\nos.environ['APP_MODE'] = 'producao'\nprint(os.environ.get('APP_MODE', 'teste'))\n# Saída: producao\n",
+  "tags": [
+    "os",
+    "ambiente",
+    "variavel",
+    "configuracao"
+  ],
+  "aulaRelacionada": "ambientes-e-projetos",
+  "enunciado": "Preveja a saída do programa abaixo. Ele configura a variável de ambiente `APP_MODE` e depois lê o valor com `get()`.",
+  "codigo": "import os\n\nos.environ['APP_MODE'] = 'producao'\nprint(os.environ.get('APP_MODE', 'teste'))\n",
+  "respostaEsperada": "producao"
+}

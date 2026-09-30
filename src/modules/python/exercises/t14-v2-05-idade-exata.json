@@ -1,0 +1,52 @@
+{
+  "id": "t14-v2-05-idade-exata",
+  "tipo": "codigo",
+  "titulo": "Calcular a idade exata em anos, meses e dias",
+  "topico": "Módulos, bibliotecas e ambiente",
+  "topicoNumero": 14,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "A lógica precisa comparar o aniversário com a data de referência.",
+    "Quando o dia do aniversário ainda não chegou no mês atual, você diminui 1 ano.",
+    "Ao calcular dias, trate o caso em que o dia do nascimento é maior do que o dia atual."
+  ],
+  "solucao": "from datetime import date, timedelta\n\ndef idade_exata(data_nascimento, data_referencia):\n    anos = data_referencia.year - data_nascimento.year\n    if (data_referencia.month, data_referencia.day) < (data_nascimento.month, data_nascimento.day):\n        anos -= 1\n\n    meses = data_referencia.month - data_nascimento.month\n    dias = data_referencia.day - data_nascimento.day\n\n    if dias < 0:\n        ultimo_dia_mes_anterior = (data_referencia.replace(day=1) - timedelta(days=1)).day\n        dias = ultimo_dia_mes_anterior + dias\n        meses -= 1\n\n    if meses < 0:\n        meses += 12\n        anos -= 1\n\n    if meses == 12:\n        meses = 0\n        anos += 1\n\n    return anos, meses, dias\n",
+  "tags": [
+    "datetime",
+    "idade",
+    "anos",
+    "meses"
+  ],
+  "aulaRelacionada": "datas-e-tempo",
+  "enunciado": "Implemente `idade_exata(data_nascimento, data_referencia)` para devolver a idade em formato `(anos, meses, dias)`, calculando com precisão a diferença entre duas datas fixas.",
+  "starterCode": "from datetime import date, timedelta\n\ndef idade_exata(data_nascimento, data_referencia):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "idade_exata(date(2000, 1, 15), date(2025, 3, 20))",
+      "esperado": "(25, 2, 5)",
+      "oculto": false
+    },
+    {
+      "chamada": "idade_exata(date(2001, 5, 12), date(2025, 6, 10))",
+      "esperado": "(24, 0, 29)",
+      "oculto": false
+    },
+    {
+      "chamada": "idade_exata(date(1988, 8, 3), date(2025, 9, 2))",
+      "esperado": "(37, 0, 30)",
+      "oculto": false
+    },
+    {
+      "chamada": "idade_exata(date(1999, 12, 31), date(2025, 12, 30))",
+      "esperado": "(24, 11, 29)",
+      "oculto": true
+    },
+    {
+      "chamada": "idade_exata(date(2010, 3, 10), date(2025, 6, 9))",
+      "esperado": "(15, 2, 30)",
+      "oculto": true
+    }
+  ]
+}

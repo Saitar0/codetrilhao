@@ -1,0 +1,52 @@
+{
+  "id": "t14-v1-03-raiz-potencia-e-arredondamento",
+  "tipo": "codigo",
+  "titulo": "Usar `math` para raiz, potência e arredondamento",
+  "topico": "Módulos, bibliotecas e ambiente",
+  "topicoNumero": 14,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Importe `math` e use `sqrt()` para raiz quadrada.",
+    "Para potência, escolha `math.pow()` ou `**` de forma consistente.",
+    "Use `round(valor, 2)` para controlar a casa decimal no arredondamento."
+  ],
+  "solucao": "import math\n\ndef calcular_raiz_e_potencia(numero):\n    raiz = math.sqrt(numero)\n    potencia = math.pow(numero, 2)\n    arredondado = round(raiz, 2)\n    return raiz, potencia, arredondado\n",
+  "tags": [
+    "math",
+    "raiz",
+    "potencia",
+    "arredondamento"
+  ],
+  "aulaRelacionada": "modulos-e-pacotes",
+  "enunciado": "Implemente `calcular_raiz_e_potencia(numero)` para devolver a raiz quadrada do número, o quadrado do número e a raiz arredondada em 2 casas decimais. O resultado deve seguir a ordem: raiz, potência e arredondamento.",
+  "starterCode": "import math\n\ndef calcular_raiz_e_potencia(numero):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "calcular_raiz_e_potencia(9)",
+      "esperado": "(3.0, 81.0, 3.0)",
+      "oculto": false
+    },
+    {
+      "chamada": "calcular_raiz_e_potencia(16)",
+      "esperado": "(4.0, 256.0, 4.0)",
+      "oculto": false
+    },
+    {
+      "chamada": "calcular_raiz_e_potencia(2)",
+      "esperado": "(1.4142135623730951, 4.0, 1.41)",
+      "oculto": false
+    },
+    {
+      "chamada": "calcular_raiz_e_potencia(0)",
+      "esperado": "(0.0, 0.0, 0.0)",
+      "oculto": true
+    },
+    {
+      "chamada": "calcular_raiz_e_potencia(25)",
+      "esperado": "(5.0, 625.0, 5.0)",
+      "oculto": true
+    }
+  ]
+}

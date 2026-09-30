@@ -1,0 +1,48 @@
+{
+  "id": "t14-v2-07-programa-em-tres-modulos",
+  "tipo": "multipla-escolha",
+  "titulo": "Dividir um programa grande em 3 módulos",
+  "topico": "Módulos, bibliotecas e ambiente",
+  "topicoNumero": 14,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Pense em responsabilidades: alguns arquivos cuidam da lógica, outros da entrada e saída.",
+    "Um bom módulo geralmente concentra uma parte do sistema e não todas as regras ao mesmo tempo.",
+    "A vantagem principal é a reutilização e a manutenção sem mexer em tudo ao mesmo tempo."
+  ],
+  "solucao": "Resposta correta: separar lógica, interface e configuração de execução deixa o projeto mais legível, reutilizável e fácil de manter. Isso reduz acoplamento e facilita testes e expansão.",
+  "tags": [
+    "modulos",
+    "organizacao",
+    "pacotes",
+    "manutencao"
+  ],
+  "aulaRelacionada": "modulos-e-pacotes",
+  "enunciado": "Escolha a melhor explicação para a prática de dividir um programa em três módulos distintos.",
+  "pergunta": "Qual é a principal vantagem de separar um programa em módulos, como `calculos.py`, `interface.py` e `main.py`?",
+  "alternativas": [
+    {
+      "texto": "É só uma regra estética para aumentar o número de arquivos.",
+      "explicacao": "Incorreta: a divisão em módulos não é só estética; ela ajuda a organizar responsabilidades e facilitar manutenção.",
+      "correta": false
+    },
+    {
+      "texto": "Aumenta a velocidade do programa, porque cada módulo roda em paralelo.",
+      "explicacao": "Incorreta: módulos não garantem paralelismo; a vantagem principal é organização e reutilização.",
+      "correta": false
+    },
+    {
+      "texto": "Permite separar responsabilidades, reutilizar código e manter a lógica mais clara.",
+      "explicacao": "Correta: a divisão em módulos reduz acoplamento e melhora manutenção e expansão do projeto.",
+      "correta": true
+    },
+    {
+      "texto": "Elimina a necessidade de funções e condicionais no projeto.",
+      "explicacao": "Incorreta: módulos não eliminam estruturas básicas do Python; eles organizam a solução.",
+      "correta": false
+    }
+  ],
+  "respostaEsperada": "Permite separar responsabilidades, reutilizar código e manter a lógica mais clara."
+}

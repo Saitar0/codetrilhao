@@ -1,0 +1,52 @@
+{
+  "id": "t14-v2-08-dias-uteis-entre-datas",
+  "tipo": "codigo",
+  "titulo": "Calcular dias úteis entre duas datas",
+  "topico": "Módulos, bibliotecas e ambiente",
+  "topicoNumero": 14,
+  "variacao": "V2",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Percorra cada dia entre a data inicial e a final, inclusive ou exclusivo conforme a convenção da sua função.",
+    "Use `weekday()` para saber se o dia cai em sábado ou domingo.",
+    "A regra de negócio é simples: alguns dias contam, outros não; você soma apenas os úteis."
+  ],
+  "solucao": "from datetime import date, timedelta\n\ndef dias_uteis_entre(data_inicial, data_final):\n    if data_final < data_inicial:\n        data_inicial, data_final = data_final, data_inicial\n\n    contador = 0\n    dia = data_inicial\n    while dia <= data_final:\n        if dia.weekday() < 5:\n            contador += 1\n        dia += timedelta(days=1)\n    return contador\n",
+  "tags": [
+    "datetime",
+    "dias-uteis",
+    "semana",
+    "loop"
+  ],
+  "aulaRelacionada": "datas-e-tempo",
+  "enunciado": "Implemente `dias_uteis_entre(data_inicial, data_final)` para contar quantos dias úteis existem no intervalo, ignorando sábado e domingo.",
+  "starterCode": "from datetime import date, timedelta\n\ndef dias_uteis_entre(data_inicial, data_final):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "dias_uteis_entre(date(2025, 3, 1), date(2025, 3, 7))",
+      "esperado": "5",
+      "oculto": false
+    },
+    {
+      "chamada": "dias_uteis_entre(date(2025, 3, 8), date(2025, 3, 10))",
+      "esperado": "1",
+      "oculto": false
+    },
+    {
+      "chamada": "dias_uteis_entre(date(2025, 12, 20), date(2025, 12, 31))",
+      "esperado": "8",
+      "oculto": false
+    },
+    {
+      "chamada": "dias_uteis_entre(date(2025, 3, 10), date(2025, 3, 8))",
+      "esperado": "1",
+      "oculto": true
+    },
+    {
+      "chamada": "dias_uteis_entre(date(2025, 1, 1), date(2025, 1, 1))",
+      "esperado": "1",
+      "oculto": true
+    }
+  ]
+}

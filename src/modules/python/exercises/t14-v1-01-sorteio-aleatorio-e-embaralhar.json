@@ -1,0 +1,52 @@
+{
+  "id": "t14-v1-01-sorteio-aleatorio-e-embaralhar",
+  "tipo": "codigo",
+  "titulo": "Sortear um número, escolher um item e embaralhar a lista",
+  "topico": "Módulos, bibliotecas e ambiente",
+  "topicoNumero": 14,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Use `random.randint()` para o número e `random.choice()` para a escolha da lista.",
+    "Faça uma cópia da lista antes de embaralhar para não alterar a lista original.",
+    "A função deve devolver os 3 valores juntos em uma tupla: número, item escolhido e lista embaralhada."
+  ],
+  "solucao": "import random\n\ndef sortear_item(lista, minimo, maximo):\n    numero = random.randint(minimo, maximo)\n    escolha = random.choice(lista)\n    embaralhada = lista.copy()\n    random.shuffle(embaralhada)\n    return numero, escolha, embaralhada\n",
+  "tags": [
+    "random",
+    "modulo",
+    "lista",
+    "embaralhar"
+  ],
+  "aulaRelacionada": "modulos-e-pacotes",
+  "enunciado": "Escreva uma função chamada `sortear_item(lista, minimo, maximo)` que sorteia um número inteiro no intervalo informado, escolhe um item aleatório da lista e devolve também a mesma lista embaralhada. A função deve manter a lista original intacta.",
+  "starterCode": "import random\n\ndef sortear_item(lista, minimo, maximo):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "(lambda: (random.seed(1), sortear_item(['A', 'B', 'C', 'D'], 1, 3))[1])()",
+      "esperado": "(1, 'A', ['D', 'B', 'A', 'C'])",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (random.seed(7), sortear_item(['A', 'B', 'C', 'D'], 1, 3))[1])()",
+      "esperado": "(2, 'B', ['B', 'A', 'C', 'D'])",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (random.seed(13), sortear_item(['A', 'B', 'C', 'D'], 1, 3))[1])()",
+      "esperado": "(2, 'C', ['D', 'A', 'C', 'B'])",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (random.seed(21), sortear_item(['A', 'B', 'C', 'D'], 1, 3))[1])()",
+      "esperado": "(1, 'D', ['A', 'B', 'C', 'D'])",
+      "oculto": true
+    },
+    {
+      "chamada": "(lambda: (random.seed(42), sortear_item(['A', 'B', 'C', 'D'], 1, 3))[1])()",
+      "esperado": "(3, 'A', ['D', 'B', 'C', 'A'])",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "t14-v2-06-dias-ate-proximo-aniversario",
+  "tipo": "codigo",
+  "titulo": "Contar os dias até o próximo aniversário",
+  "topico": "Módulos, bibliotecas e ambiente",
+  "topicoNumero": 14,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Crie a data do aniversário no ano atual e veja se ela já passou.",
+    "Se a data atual for depois do aniversário, avance para o próximo ano.",
+    "A diferença entre duas datas em Python dá um `timedelta`, e `.days` entrega os dias exatos."
+  ],
+  "solucao": "from datetime import date\n\ndef dias_ate_proximo_aniversario(data_nascimento, hoje):\n    aniversario_este_ano = date(hoje.year, data_nascimento.month, data_nascimento.day)\n\n    if aniversario_este_ano < hoje:\n        aniversario_este_ano = date(hoje.year + 1, data_nascimento.month, data_nascimento.day)\n\n    return (aniversario_este_ano - hoje).days\n",
+  "tags": [
+    "datetime",
+    "aniversario",
+    "timedelta",
+    "prazo"
+  ],
+  "aulaRelacionada": "datas-e-tempo",
+  "enunciado": "Implemente `dias_ate_proximo_aniversario(data_nascimento, hoje)` para devolver quantos dias faltam para o próximo aniversário, considerando que a data do aniversário pode já ter passado neste ano.",
+  "starterCode": "from datetime import date\n\ndef dias_ate_proximo_aniversario(data_nascimento, hoje):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "dias_ate_proximo_aniversario(date(1998, 5, 22), date(2025, 1, 3))",
+      "esperado": "139",
+      "oculto": false
+    },
+    {
+      "chamada": "dias_ate_proximo_aniversario(date(2000, 12, 5), date(2025, 4, 1))",
+      "esperado": "248",
+      "oculto": false
+    },
+    {
+      "chamada": "dias_ate_proximo_aniversario(date(1995, 7, 9), date(2025, 7, 1))",
+      "esperado": "8",
+      "oculto": false
+    },
+    {
+      "chamada": "dias_ate_proximo_aniversario(date(2002, 2, 28), date(2025, 2, 1))",
+      "esperado": "27",
+      "oculto": true
+    },
+    {
+      "chamada": "dias_ate_proximo_aniversario(date(2005, 11, 30), date(2025, 11, 1))",
+      "esperado": "29",
+      "oculto": true
+    }
+  ]
+}

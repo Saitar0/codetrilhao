@@ -1,0 +1,52 @@
+{
+  "id": "t14-v1-04-modulo-com-duas-funcoes",
+  "tipo": "codigo",
+  "titulo": "Criar um módulo com duas funções reutilizáveis",
+  "topico": "Módulos, bibliotecas e ambiente",
+  "topicoNumero": 14,
+  "variacao": "V1",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Defina uma função para formatar valores monetários e outra para aplicar desconto.",
+    "Mantenha a lógica separada da execução principal e pense em nomes claros.",
+    "O módulo deve ser útil em vários pontos do programa sem repetir código."
+  ],
+  "solucao": "def formatar_real(valor):\n    return f'R$ {valor:,.2f}'.replace(',', 'X').replace('.', ',').replace('X', '.')\n\n\ndef aplicar_desconto(preco, percentual):\n    desconto = preco * percentual / 100\n    return round(preco - desconto, 2)\n",
+  "tags": [
+    "modulo",
+    "funcao",
+    "desconto",
+    "dinheiro"
+  ],
+  "aulaRelacionada": "modulos-e-pacotes",
+  "enunciado": "Crie um módulo de finanças com duas funções: `formatar_real(valor)` e `aplicar_desconto(preco, percentual)`. A primeira deve devolver o valor em moeda brasileira com duas casas decimais e a segunda deve aplicar um percentual de desconto sobre o preço base.",
+  "starterCode": "def formatar_real(valor):\n    pass\n\ndef aplicar_desconto(preco, percentual):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "formatar_real(1234.5)",
+      "esperado": "R$ 1.234,50",
+      "oculto": false
+    },
+    {
+      "chamada": "aplicar_desconto(200, 10)",
+      "esperado": "180.0",
+      "oculto": false
+    },
+    {
+      "chamada": "aplicar_desconto(80, 25)",
+      "esperado": "60.0",
+      "oculto": false
+    },
+    {
+      "chamada": "formatar_real(42)",
+      "esperado": "R$ 42,00",
+      "oculto": true
+    },
+    {
+      "chamada": "aplicar_desconto(150, 15)",
+      "esperado": "127.5",
+      "oculto": true
+    }
+  ]
+}
