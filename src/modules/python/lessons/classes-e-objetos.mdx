@@ -1,47 +1,254 @@
 ﻿---
 titulo: "Classes e objetos"
-descricao: "Modela entidades e comportamentos com classes e objetos."
+descricao: "Modela entidades do mundo real com estado e comportamento em objetos reutilizáveis."
 secao: "E. Pensamento de engenharia"
-ordem: 23
-tempo: 11
+ordem: 3
+topico: 16
+fase: "E"
+tempo: 22
 nivel: "intermediario"
-palavrasChave: ['class', 'objeto', 'atributo', 'mÃ©todo']
+palavrasChave: ['classes', 'objetos', 'atributos', 'métodos']
 exercicios: []
 ---
 
 # Classes e objetos
 
-Modela entidades e comportamentos com classes e objetos.
+Você já viu que Python lida muito bem com dados simples, listas e dicionários. Mas quando a lógica cresce, uma estrutura mais rica aparece: a classe. Ela reúne dados e comportamentos em uma única ideia. Em vez de pensar em “uma pessoa como nome e idade” em variáveis separadas, você passa a criar uma entidade chamada `Pessoa`, com os atributos dela e os métodos que descrevem o que ela pode fazer.
 
-<Callout type="importante" title="Objetivo da aula">
-  Neste bloco, vocÃª vai entender o conceito principal, ver exemplos prÃ¡ticos e testar a lÃ³gica em pequenos passos.
+Esse movimento é o coração da orientação a objetos: modelar entidades do mundo real como objetos com identidade, estado e comportamento. Quando você cria uma classe, está definindo um molde; quando instancia, está criando um objeto concreto a partir desse molde.
+
+<Callout type="importante" title="O que você vai aprender">
+  - Como uma classe serve como molde para objetos.
+  - Como `__init__` define o estado inicial de cada objeto.
+  - Como usar `self` para acessar atributos e métodos do objeto atual.
+  - Como separar responsabilidade em métodos claros e reutilizáveis.
 </Callout>
 
-<CodeBlock title="exemplo_1.py" code={`class Pessoa:
-    def __init__(self, nome):
-        self.nome = nome
+## Classe, objeto e instância
 
-pessoa = Pessoa("Ana")
-print(pessoa.nome)`} />
-<CodeBlock title="exemplo_2.py" code={`class Carrinho:
+Uma classe é uma descrição de um tipo de coisa. Um objeto é uma ocorrência real dessa classe. Em Python, você define uma classe com a palavra-chave `class` e cria uma instância chamando a classe como se fosse uma função.
+
+A ideia central é simples: a classe explica o que a entidade “é”, enquanto o objeto guarda os dados concretos daquele caso.
+
+<CodeBlock title="pessoa.py" code={`class Pessoa:
+    def __init__(self, nome, idade):
+        self.nome = nome
+        self.idade = idade
+
+    def apresentar(self):
+        return f"{self.nome} tem {self.idade} anos"
+
+ana = Pessoa("Ana", 22)
+print(ana.nome)
+print(ana.apresentar())
+`} />
+
+Saída:
+
+```text
+Ana
+Ana tem 22 anos
+```
+
+A primeira linha cria a classe `Pessoa`. O `__init__` é chamado automaticamente quando você instancia a classe: `ana = Pessoa("Ana", 22)`. Dentro dele, `self` representa exatamente esse objeto recém-criado. O `self.nome` e `self.idade` são atributos de instância, ou seja, pertencem a cada objeto individual.
+
+## Atributos de instância e de classe
+
+Nem todo dado pertence a um objeto específico. Alguns valores são compartilhados por todas as instâncias. Por isso, Python diferencia entre atributos de instância e atributos de classe.
+
+Um atributo de instância depende do objeto. Já um atributo de classe é compartilhado por todos os objetos dessa classe.
+
+<CodeBlock title="produto.py" code={`class Produto:
+    categoria = "eletrônicos"
+
+    def __init__(self, nome, preco):
+        self.nome = nome
+        self.preco = preco
+
+p1 = Produto("Teclado", 180)
+p2 = Produto("Mouse", 80)
+
+print(Produto.categoria)
+print(p1.categoria)
+print(p2.preco)
+`} />
+
+Saída:
+
+```text
+eletrônicos
+Eletrônicos
+80
+```
+
+Esse exemplo mostra que `categoria` é parte da classe em si, e não de um objeto específico. Você pode acessar por `Produto.categoria` ou por `p1.categoria`. Já `preco` é um atributo de instância, porque cada produto pode ter um preço diferente.
+
+<CodeBlock title="estado_por_objeto.py" code={`class Carrinho:
     def __init__(self):
         self.itens = []
 
-car = Carrinho()
-print(car.itens)`} />
-<CodeBlock title="exemplo_3.py" code={`class Produto:
-    pass
-print(Produto())`} />
+    def adicionar(self, item):
+        self.itens.append(item)
 
-<Quiz questions={[{ question: "Qual Ã© a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prÃ¡tica", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensÃ£o e aplicaÃ§Ã£o prÃ¡tica." }, { question: "Qual hÃ¡bito Ã© mais Ãºtil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o cÃ³digo"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prÃ¡tica em Python?", options: ["clareza e execuÃ§Ã£o", "complexidade por padrÃ£o", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execuÃ§Ã£o objetiva." }]} />
+    def total(self):
+        return len(self.itens)
+
+c1 = Carrinho()
+c2 = Carrinho()
+c1.adicionar("banana")
+c1.adicionar("maçã")
+print(c1.total())
+print(c2.total())
+`} />
+
+<Playground title="Experimente: mudar estados sem perder o contexto" code={`class Carrinho:
+    def __init__(self):
+        self.itens = []
+
+    def adicionar(self, item):
+        self.itens.append(item)
+
+    def total(self):
+        return len(self.itens)
+
+c1 = Carrinho()
+c2 = Carrinho()
+c1.adicionar("banana")
+c1.adicionar("maçã")
+print(c1.total())
+print(c2.total())
+`} />
+
+Atenção: cada instância recebe sua própria lista `self.itens`. Se você criar um atributo de classe em vez de um atributo de instância, o valor pode ser compartilhado entre todos os objetos e gerar bugs difíceis de rastrear.
+
+## Métodos e responsabilidade única
+
+Muitos programas começam com funções simples, mas com o tempo surge a necessidade de agrupar regras relacionadas ao mesmo conceito. Em vez de espalhar a lógica em diversas funções, você coloca métodos dentro da classe.
+
+Uma regra útil é pensar “cada classe deve ter uma responsabilidade clara”. Por exemplo, a classe `Pessoa` pode identificar a pessoa e apresentar a si mesma; a classe `Banco` pode cuidar de operações de conta; a classe `Pedido` pode calcular total e itens.
+
+<CodeBlock title="conta_bancaria.py" code={`class ContaBancaria:
+    def __init__(self, titular, saldo=0):
+        self.titular = titular
+        self._saldo = saldo
+
+    def depositar(self, valor):
+        if valor <= 0:
+            raise ValueError("Valor deve ser positivo")
+        self._saldo += valor
+
+    def saldo(self):
+        return self._saldo
+
+    def __str__(self):
+        return f"{self.titular}: R$ {self._saldo:.2f}"
+
+conta = ContaBancaria("Ana", 150)
+conta.depositar(50)
+print(conta.saldo())
+print(conta)
+`} />
+
+Saída:
+
+```text
+200
+Ana: R$ 200.00
+```
+
+Esse exemplo é importante porque ele já mostra a base da ideia de orientação a objetos: dados e operações em um mesmo bloco. Em seguida, a aula vai aprofundar como proteger esse estado e como dar representação mais clara ao objeto.
+
+<Glossario termo="Classe" definition="Molde que define atributos e métodos de um tipo de objeto." />
+<Glossario termo="Instância" definition="Objeto concreto criado a partir de uma classe." />
+<Glossario termo="Atributo" definition="Dado armazenado dentro de um objeto, como nome, idade ou saldo." />
+
+<StepThrough>
+  <div>
+    <p><strong>Etapa 1:</strong> a classe <code>Pessoa</code> define o comportamento esperado.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 2:</strong> `ana = Pessoa("Ana", 22)` cria um objeto real com dados específicos.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 3:</strong> `ana.apresentar()` usa o estado desse objeto para produzir uma resposta.</p>
+  </div>
+</StepThrough>
+
+## Quando uma classe faz sentido?
+
+Você não precisa transformar tudo em classe. A regra é: use classes quando o problema tem entidades com identidade e regras próprias. Se você só quer armazenar dados temporários em um dicionário, talvez uma função resolva melhor. Se você quer representar uma conta bancária, um pedido, uma pessoa, um produto ou um funcionário, classes são muito úteis.
+
+Uma classe melhora a clareza porque ela deixa explícito o que o objeto sabe e o que ele consegue fazer.
+
+<Tabela data={[
+  ['Situação', 'Estrutura simples', 'Estrutura orientada a objetos'],
+  ['Dados de uma pessoa', 'dicionário', 'classe Pessoa'],
+  ['Conta bancária', 'variáveis soltas', 'classe ContaBancaria'],
+  ['Carrinho de compras', 'listas separadas', 'classe Carrinho'],
+  ['Pedido com itens e total', 'muitos dicionários', 'classe Pedido'],
+]} />
+
+<Callout type="erro-comum" title="Método chamado na classe em vez do objeto">
+  ```python
+  class Pessoa:
+      def apresentar(self):
+          return "Olá!"
+
+  print(Pessoa.apresentar())
+  ```
+
+  Saída real:
+
+  ```text
+  TypeError: Pessoa.apresentar() missing 1 required positional argument: 'self'
+  ```
+
+  O erro acontece porque `apresentar` precisa do objeto para receber `self`. A correção é criar uma instância: `p = Pessoa(); print(p.apresentar())`.
+</Callout>
+
+<Callout type="erro-comum" title="Atributo compartilhado entre objetos">
+  ```python
+  class Carrinho:
+      itens = []
+
+      def adicionar(self, item):
+          self.itens.append(item)
+
+  c1 = Carrinho()
+  c2 = Carrinho()
+  c1.adicionar("maçã")
+  print(c2.itens)
+  ```
+
+  Saída real:
+
+  ```text
+  ['maçã']
+  ```
+
+  O problema é que `itens` foi criado como atributo da classe e não de cada objeto. A correção é criar a lista em `__init__` com `self.itens = []`.
+</Callout>
+
+No mercado de trabalho
+
+Em backend, em sistemas financeiros, em APIs e em automações, a modelagem de domínio é muito valorizada. Quando você cria classes com nomes claros e responsabilidades bem definidas, o código fica mais fácil de evoluir, testar e manter. Isso é essencial em projetos reais, especialmente quando o sistema cresce e várias pessoas passam a trabalhar no mesmo código.
+
+<Quiz questions={[
+  { question: "Qual é a principal diferença entre uma classe e um objeto?", options: ["Classe é a instância e objeto é o molde.", "Classe é o molde e objeto é uma ocorrência concreta.", "Objeto sempre guarda métodos de classe.", "Não há diferença entre os dois."], correctIndex: 1, explanation: "A classe define a estrutura e o objeto guarda os dados específicos daquele caso." },
+  { question: "O que o parâmetro self representa em um método de instância?", options: ["O nome da classe.", "O objeto atual em execução.", "Uma variável global.", "A função construída pela linguagem."], correctIndex: 1, explanation: "self é a referência ao objeto que está usando o método." },
+  { question: "Qual código cria corretamente uma instância de Pessoa?", options: ["Pessoa.apresentar()", "Pessoa('Ana', 22)", "pessoa = Pessoa()", "Pessoa = instância()"], correctIndex: 1, explanation: "Você chama a classe como uma função para criar um objeto concreto." },
+  { question: "Para que serve o método __init__?", options: ["Para definir a classe.", "Para inicializar os atributos do objeto.", "Para criar variáveis globais.", "Para importar módulos."], correctIndex: 1, explanation: "__init__ é chamado no momento da instanciação para preparar o estado inicial do objeto." }
+]} />
 
 <Resumo>
-  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
-  <li>Teste pequenos exemplos e avalie o resultado.</li>
-  <li>Aplica a ideia em cenÃ¡rios reais para fixar o conhecimento.</li>
+  <li>Uma classe funciona como um molde para objetos.</li>
+  <li>`__init__` prepara o estado inicial de cada instância.</li>
+  <li>`self` acessa o objeto atual dentro dos métodos.</li>
+  <li>Atributos de instância são próprios do objeto; de classe são compartilhados.</li>
+  <li>Classes ajudam a organizar regras e dados em um mesmo conceito.</li>
 </Resumo>
 
 <Desafio>
-  Aplique esse tema em um mini cenÃ¡rio do dia a dia e confirme o resultado com um cÃ³digo simples e legÃ­vel.
+  Crie uma classe `Livro` com `titulo`, `autor` e um método `resumo()`. Depois instancie dois livros e imprima o resumo de cada um. Essa pequena modelagem já mostra como orientação a objetos deixa o código mais expressivo.
 </Desafio>
 

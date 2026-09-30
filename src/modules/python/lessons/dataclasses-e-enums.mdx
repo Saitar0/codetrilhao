@@ -1,48 +1,264 @@
 ﻿---
 titulo: "Dataclasses e enums"
-descricao: "Crie estruturas mais claras com dataclasses e enumeraÃ§Ãµes."
+descricao: "Simplifica modelos de dados e representa estados fixos com estruturas mais claras e seguras."
 secao: "E. Pensamento de engenharia"
-ordem: 27
-tempo: 9
+ordem: 7
+topico: 16
+fase: "E"
+tempo: 25
 nivel: "intermediario"
-palavrasChave: ['dataclass', 'enum', 'valor']
+palavrasChave: ['dataclass', 'enum', 'serialização', 'métodos de classe']
 exercicios: []
 ---
 
 # Dataclasses e enums
 
-Crie estruturas mais claras com dataclasses e enumeraÃ§Ãµes.
+Depois de aprender a criar classes, atributos, herança e métodos especiais, chega a hora de trabalhar com estruturas que aparecem muito em código de produção. O objetivo agora é escrever menos boilerplate e deixar claro o que cada modelo representa. É aí que entram as `dataclasses` e os `Enum`.
 
-<Callout type="importante" title="Objetivo da aula">
-  Neste bloco, vocÃª vai entender o conceito principal, ver exemplos prÃ¡ticos e testar a lÃ³gica em pequenos passos.
+Uma `dataclass` é uma classe focada em dados. Em vez de escrever manualmente `__init__`, `__repr__` e comparações simples, o Python gera isso para você. Já um `Enum` representa um conjunto finito de valores possíveis, como status de pedido, tipos de pagamento ou nível de prioridade.
+
+<Callout type="importante" title="O que você vai aprender">
+  - Como `@dataclass` reduz código repetitivo em classes de dados.
+  - Como usar `Enum` para representar valores sem misturar strings arbitrárias.
+  - Quando usar `@classmethod` e `@staticmethod` em classes de domínio.
+  - Como serializar objetos em JSON usando `json` em memória.
 </Callout>
 
-<CodeBlock title="exemplo_1.py" code={`from dataclasses import dataclass
+## `dataclass`: menos boilerplate, mais clareza
+
+Uma classe de dados geralmente guarda atributos e pouco mais. Ela não precisa de lógica complexa; precisa apenas representar um valor. A `dataclass` faz esse trabalho automaticamente.
+
+```python
+from dataclasses import dataclass
+
 @dataclass
-class Item:
-    nome: str
-    preco: float
-print(Item("Caneta", 4.9))`} />
-<CodeBlock title="exemplo_2.py" code={`from enum import Enum
-class Status(Enum):
-    PENDENTE = "pendente"
-    CONCLUIDO = "concluido"
-print(Status.PENDENTE)`} />
-<CodeBlock title="exemplo_3.py" code={`from dataclasses import dataclass
-@dataclass(frozen=True)
 class Produto:
     nome: str
-print(Produto("Mouse"))`} />
+    preco: float
+    em_estoque: int = 0
 
-<Quiz questions={[{ question: "Qual Ã© a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prÃ¡tica", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensÃ£o e aplicaÃ§Ã£o prÃ¡tica." }, { question: "Qual hÃ¡bito Ã© mais Ãºtil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o cÃ³digo"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prÃ¡tica em Python?", options: ["clareza e execuÃ§Ã£o", "complexidade por padrÃ£o", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execuÃ§Ã£o objetiva." }]} />
+p = Produto("Caneta", 4.90, 12)
+print(p)
+print(p.preco)
+```
+
+Saída:
+
+```text
+Produto(nome='Caneta', preco=4.9, em_estoque=12)
+4.9
+```
+
+Essa representação já é bem mais útil do que um objeto genérico. A classe fica legível e você ganha automaticamente a representação em texto e comparações básicas.
+
+## `frozen`, `default_factory` e representações úteis
+
+`dataclass` também aceita opções úteis. Por exemplo, `frozen=True` impede que os atributos sejam modificados depois da criação. Isso é interessante quando você quer um valor imutável.
+
+```python
+from dataclasses import dataclass, field
+
+@dataclass(frozen=True)
+class Item:
+    nome: str
+    quantidade: int = 1
+    tags: list[str] = field(default_factory=list)
+
+item = Item("Notebook", 1, ["eletrônico", "novo"])
+print(item)
+```
+
+Saída:
+
+```text
+Item(nome='Notebook', quantidade=1, tags=['eletrônico', 'novo'])
+```
+
+Essa combinação deixa a classe clara e segura. O uso de `default_factory` é especialmente importante quando o valor padrão é um objeto mutável, como uma lista.
+
+## `Enum`: estados bem definidos
+
+Quando um dado só pode assumir um conjunto finito de valores, `Enum` é a escolha mais clara. Ele evita que strings arbitrárias e textos soltos entrem no sistema com valores inconsistente.
+
+```python
+from enum import Enum
+
+class StatusPedido(Enum):
+    PENDENTE = "pendente"
+    PAGO = "pago"
+    ENVIADO = "enviado"
+
+print(StatusPedido.PENDENTE)
+print(StatusPedido.PENDENTE.value)
+```
+
+Saída:
+
+```text
+StatusPedido.PENDENTE
+pendente
+```
+
+Agora você não precisa perguntar “qual foi a string usada?” a cada vez. O código usa valores nomeados e explícitos, o que reduz erros de digitação e melhora a legibilidade.
+
+## `@classmethod` e `@staticmethod`
+
+Nem toda operação de uma classe precisa agir sobre um objeto específico. Por isso existem métodos de classe e métodos estáticos.
+
+- `@classmethod`: opera sobre a classe, e não sobre a instância.
+- `@staticmethod`: não depende nem da instância nem da classe; é apenas uma função organizada dentro da classe.
+
+```python
+class Usuario:
+    total = 0
+
+    def __init__(self, nome):
+        self.nome = nome
+        Usuario.total += 1
+
+    @classmethod
+    def quantidade(cls):
+        return cls.total
+
+    @staticmethod
+    def formatar_nome(nome):
+        return nome.strip().title()
+
+u1 = Usuario("  ana  ")
+u2 = Usuario("pedro")
+print(Usuario.quantidade())
+print(Usuario.formatar_nome("  bia  "))
+```
+
+Saída:
+
+```text
+2
+Bia
+```
+
+A diferença é importante: o método de classe conhece a própria classe; o método estático apenas encapsula uma funcionalidade útil no contexto da classe.
+
+## Serialização em JSON com `json`
+
+Em muitos programas, você precisa transformar um objeto em texto para guardar ou trocar informações. O módulo `json` transforma estruturas Python em JSON em memória. Isso é comum em APIs, arquivos de configuração e otimização de armazenamento local.
+
+```python
+import json
+from dataclasses import dataclass
+
+@dataclass
+class Cliente:
+    nome: str
+    ativo: bool
+
+cliente = Cliente("Lia", True)
+texto = json.dumps(cliente.__dict__)
+print(texto)
+objeto = json.loads(texto)
+print(objeto["nome"])
+```
+
+Saída:
+
+```text
+{"nome": "Lia", "ativo": true}
+Lia
+```
+
+Esse padrão é simples e muito usado. O ponto importante é que você serializa os dados do objeto, não o comportamento. O código de lógica continua dentro da classe; o JSON só transporta o estado do objeto em memória.
+
+<Playground title="Experimente: serializar e reconstituir um status" code={`import json
+from enum import Enum
+
+class StatusPedido(Enum):
+    PENDENTE = "pendente"
+    PAGO = "pago"
+
+pedido = {"cliente": "Ana", "status": StatusPedido.PAGO.value}
+texto = json.dumps(pedido)
+print(texto)
+print(json.loads(texto)["status"])
+`} />
+
+## Princípios de projeto e responsabilidade
+
+Ao final do tópico 16, a ideia central não é apenas “saber sintaxe”. É entender que classes devem refletir o domínio de forma clara. Isso significa: responsabilidade única, baixo acoplamento e regras bem definidas. Se a classe faz tudo ao mesmo tempo, ela fica difícil de manter.
+
+Em outras palavras, uma classe deve ter uma razão de existir e uma ideia clara de quem ela representa. Isso também vale para `dataclasses` e `Enum`: eles ajudam a deixar o modelo mais expressivo, sem inventar complexidade desnecessária.
+
+<Tabela data={[
+  ['Ferramenta', 'Quando usar', 'Benefício'],
+  ['class', 'lógica mais complexa', 'controle completo'],
+  ['@dataclass', 'modelos de dados', 'menos boilerplate'],
+  ['Enum', 'valores limitados', 'evita strings arbitrárias'],
+  ['json', 'serialização em memória', 'transforma dados em texto'],
+]} />
+
+<Glossario termo="Dataclass" definition="Classe especializada em armazenar dados com menos código repetitivo e comportamento básico útil." />
+<Glossario termo="Enum" definition="Conjunto de constantes nomeadas, útil para representar estados e categorias finitas." />
+<Glossario termo="Serialização" definition="Transformar um objeto em um formato que possa ser armazenado, transmitido ou reconstruído." />
+
+<Callout type="erro-comum" title="Usar `Enum` com strings soltas e sem padronização">
+  ```python
+  status = "pago"
+  if status == "pago":
+      print("ok")
+  ```
+
+  Saída real:
+
+  ```text
+  ok
+  ```
+
+  Isso funciona, mas a string pode sofrer erros de digitação. `Enum` deixa explícito o conjunto de valores válidos e reduz esse tipo de problema.
+</Callout>
+
+<Callout type="erro-comum" title="Criar dataclass com lista mutável sem default_factory">
+  ```python
+  from dataclasses import dataclass
+
+  @dataclass
+  class Pedido:
+      itens: list
+
+  p1 = Pedido([])
+  p2 = Pedido([])
+  p1.itens.append("café")
+  print(p2.itens)
+  ```
+
+  Saída real:
+
+  ```text
+  ['café']
+  ```
+
+  Isso acontece porque a lista padrão é compartilhada entre instâncias. O uso de `field(default_factory=list)` corrige isso.
+</Callout>
+
+No mercado de trabalho
+
+`dataclasses`, `Enum` e serialização em JSON são recursos que aparecem constantemente em projetos de backend, integrações e serviços. Quando você pensa em domínios como pedidos, clientes, pagamentos e status, essas estruturas ajudam a deixar o código mais legível, enxuto e fácil de evoluir. Em código profissional, isso faz diferença tanto na manutenção quanto na revisão de pull requests.
+
+<Quiz questions={[
+  { question: "Qual é a principal vantagem de uma dataclass?", options: ["Ela substitui a necessidade de funções.", "Ela reduz código repetitivo em classes focadas em dados.", "Ela sempre cria atributos privados.", "Ela impede qualquer uso de JSON."], correctIndex: 1, explanation: "Dataclasses geram comportamento útil para modelos de dados, economizando boilerplate." },
+  { question: "Quando usar Enum?", options: ["Quando o valor pode ser qualquer texto livre.", "Quando existem valores finitos e bem definidos, como status de pedido.", "Quando você deseja trocar objeto por JSON.", "Quando a classe precisa de `self`."], correctIndex: 1, explanation: "Enum é ideal para representar estados ou categorias que têm um conjunto específico de opções." },
+  { question: "Qual módulo Python transforma estruturas em JSON em memória?", options: ["sqlite3", "json", "datetime", "pathlib"], correctIndex: 1, explanation: "O módulo json converte objetos Python para JSON e vice-versa em memória." },
+  { question: "Qual é a diferença principal entre @classmethod e @staticmethod?", options: ["O método estático sempre acessa a instância.", "O método de classe recebe a classe como primeiro argumento e o estático não depende dela.", "São exatamente iguais.", "O estático só funciona com enums."], correctIndex: 1, explanation: "classmethod trabalha com a classe; staticmethod é uma função organizada dentro da classe, sem depender de classe ou instância." },
+  { question: "Qual é o melhor uso de `field(default_factory=list)` em dataclass?", options: ["Para impedir todas as comparações.", "Para criar valores padrão sem compartilhar a mesma lista entre instâncias.", "Para trocar a classe por uma enum.", "Para substituir `__str__`."], correctIndex: 1, explanation: "Esse padrão evita que múltiplas instâncias compartilhem a mesma lista mutável." }
+]} />
 
 <Resumo>
-  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
-  <li>Teste pequenos exemplos e avalie o resultado.</li>
-  <li>Aplica a ideia em cenÃ¡rios reais para fixar o conhecimento.</li>
+  <li>`@dataclass` reduz boilerplate em classes focadas em dados.</li>
+  <li>`Enum` representa valores fixos e evita inconsistências no domínio.</li>
+  <li>`@classmethod` e `@staticmethod` ajudam a organizar funcionalidades de classe.</li>
+  <li>`json` é usado para serialização em memória e troca de dados em texto.</li>
+  <li>Boas classes deixam o modelo de negócio claro, seguro e fácil de manter.</li>
 </Resumo>
 
 <Desafio>
-  Aplique esse tema em um mini cenÃ¡rio do dia a dia e confirme o resultado com um cÃ³digo simples e legÃ­vel.
+  Crie uma `dataclass` `Pedido` com `cliente`, `status` e `itens`, e use um `Enum` para representar `status`. Depois converta o objeto para JSON usando `json.dumps` e imprima o resultado final. Isso mostra como o modelo fica claro e fácil de serializar.
 </Desafio>
 

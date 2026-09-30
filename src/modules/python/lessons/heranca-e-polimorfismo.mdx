@@ -1,60 +1,266 @@
 ﻿---
-titulo: "HeranÃ§a e polimorfismo"
-descricao: "Reaproveite lÃ³gica e adapte comportamento por heranÃ§a."
+titulo: "Herança e polimorfismo"
+descricao: "Reaproveita lógica comum e adapta comportamentos específicos sem duplicar código."
 secao: "E. Pensamento de engenharia"
-ordem: 25
-tempo: 11
+ordem: 5
+topico: 16
+fase: "E"
+tempo: 26
 nivel: "intermediario"
-palavrasChave: ['heranÃ§a', 'super', 'polimorfismo']
+palavrasChave: ['herança', 'super', 'sobrescrita', 'polimorfismo']
 exercicios: []
 ---
 
-# HeranÃ§a e polimorfismo
+# Herança e polimorfismo
 
-Reaproveite lÃ³gica e adapte comportamento por heranÃ§a.
+Você já aprendeu que classes representam entidades e que cada objeto pode ter estado próprio. Agora vem um passo importante: como evitar duplicação de código quando várias classes compartilham a mesma ideia. A resposta é a herança.
 
-<Callout type="importante" title="Objetivo da aula">
-  Neste bloco, vocÃª vai entender o conceito principal, ver exemplos prÃ¡ticos e testar a lÃ³gica em pequenos passos.
+A herança permite que uma classe filha reutilize atributos e métodos de uma classe pai. Isso reduz repetição e deixa o modelo mais organizado. Mas existe um cuidado: herança não é para tudo. Nem toda relação entre classes é “é um”. Às vezes, a melhor solução é composição.
+
+<Callout type="importante" title="O que você vai aprender">
+  - Como criar uma classe pai e classes filhas.
+  - Como usar `super()` para reaproveitar a lógica da classe base.
+  - Como sobrescrever métodos para adaptar o comportamento.
+  - Como polimorfismo permite tratar objetos de tipos diferentes de forma uniforme.
 </Callout>
 
-<CodeBlock title="exemplo_1.py" code={`class Animal:
-    def falar(self):
-        return "som"
+## Herança: reaproveitar comportamento
 
-class Cachorro(Animal):
-    def falar(self):
-        return "au au"
+Uma classe filha herda da classe pai. Isso significa que ela ganha atributos e métodos já definidos, e pode adicionar ou sobrescrever o que for necessário.
 
-print(Cachorro().falar())`} />
-<CodeBlock title="exemplo_2.py" code={`class Pessoa:
+```python
+class Animal:
     def __init__(self, nome):
         self.nome = nome
 
-class Cliente(Pessoa):
-    pass
+    def emitir_som(self):
+        return "som genérico"
 
-print(Cliente("Ana").nome)`} />
-<CodeBlock title="exemplo_3.py" code={`class Forma:
+class Cachorro(Animal):
+    def emitir_som(self):
+        return "au au"
+
+class Gato(Animal):
+    def emitir_som(self):
+        return "miau"
+
+pets = [Cachorro("Rex"), Gato("Mimi")]
+for pet in pets:
+    print(f"{pet.nome}: {pet.emitir_som()}")
+```
+
+Saída:
+
+```text
+Rex: au au
+Mimi: miau
+```
+
+A classe `Animal` define a base. `Cachorro` e `Gato` reutilizam a estrutura e sobrescrevem o método `emitir_som` para produzir sons diferentes. Isso é o que chamamos de sobrescrita.
+
+## `super()` e a lógica da classe base
+
+Quando uma classe filha precisa complementar o comportamento do pai, o `super()` ajuda a chamar a implementação da classe base sem repetir todo o código.
+
+```python
+class Funcionario:
+    def __init__(self, nome, salario):
+        self.nome = nome
+        self.salario = salario
+
+    def resumo(self):
+        return f"{self.nome}: R$ {self.salario:.2f}"
+
+class Gerente(Funcionario):
+    def __init__(self, nome, salario, departamento):
+        super().__init__(nome, salario)
+        self.departamento = departamento
+
+    def resumo(self):
+        return f"{super().resumo()} | Departamento: {self.departamento}"
+
+manager = Gerente("Lia", 5000, "TI")
+print(manager.resumo())
+```
+
+Saída:
+
+```text
+Lia: R$ 5000.00 | Departamento: TI
+```
+
+A classe `Gerente` reutiliza o que já existe em `Funcionario`, mas adiciona informação específica do departamento. Isso é uma solução muito comum quando o modelo do domínio tem hierarquias claras.
+
+## Polimorfismo: mesma interface, comportamentos diferentes
+
+O polimorfismo aparece quando objetos de diferentes classes respondem ao mesmo método de maneira específica. Em outras palavras, você pode chamar um método comum em vários tipos e cada um executa sua própria lógica.
+
+```python
+class Forma:
     def area(self):
-        return 0
+        raise NotImplementedError("Subclasse deve implementar area()")
 
 class Quadrado(Forma):
     def __init__(self, lado):
         self.lado = lado
+
     def area(self):
-        return self.lado * self.lado
+        return self.lado ** 2
 
-print(Quadrado(4).area())`} />
+class Circulo(Forma):
+    def __init__(self, raio):
+        self.raio = raio
 
-<Quiz questions={[{ question: "Qual Ã© a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prÃ¡tica", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensÃ£o e aplicaÃ§Ã£o prÃ¡tica." }, { question: "Qual hÃ¡bito Ã© mais Ãºtil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o cÃ³digo"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prÃ¡tica em Python?", options: ["clareza e execuÃ§Ã£o", "complexidade por padrÃ£o", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execuÃ§Ã£o objetiva." }]} />
+    def area(self):
+        return 3.14159 * self.raio ** 2
+
+formas = [Quadrado(4), Circulo(3)]
+for forma in formas:
+    print(forma.area())
+```
+
+Saída:
+
+```text
+16
+28.27431
+```
+
+Mesmo sendo tipos diferentes, ambas as classes atendem à mesma interface: o método `area()`. Isso permite que você trate os objetos por um conceito comum sem escrever lógica quebrada para cada caso individual.
+
+<Playground title="Experimente: trate diferentes tipos de forma uniforme" code={`class Animal:
+    def emitir_som(self):
+        return "som"
+
+class Cachorro(Animal):
+    def emitir_som(self):
+        return "au au"
+
+class Gato(Animal):
+    def emitir_som(self):
+        return "miau"
+
+animais = [Cachorro(), Gato()]
+for animal in animais:
+    print(type(animal).__name__, "->", animal.emitir_som())
+`} />
+
+## Herança x composição
+
+Aqui entra uma decisão importante: “é um” ou “tem um”? A herança é adequada quando a relação é clara de subclasse: `Gato` é um `Animal`, `Gerente` é um `Funcionario`. Já a composição é melhor quando a classe usa outra classe como parte de si, sem ser um tipo compatível.
+
+```python
+class Motor:
+    def ligar(self):
+        return "motor ligado"
+
+class Carro:
+    def __init__(self):
+        self.motor = Motor()
+
+    def iniciar(self):
+        return self.motor.ligar()
+
+carro = Carro()
+print(carro.iniciar())
+```
+
+Saída:
+
+```text
+motor ligado
+```
+
+O carro “tem um” motor, mas não é um motor. Essa distinção impede hierarquias artificiais e torna o código mais sustentável.
+
+<StepThrough>
+  <div>
+    <p><strong>Etapa 1:</strong> `Animal` fornece a base comum de comportamento.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 2:</strong> `Cachorro` e `Gato` sobrescrevem `emitir_som`.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 3:</strong> a coleção de animais funciona porque cada objeto responde ao mesmo método.</p>
+  </div>
+</StepThrough>
+
+<Tabela data={[
+  ['Relação', 'Use', 'Motivo'],
+  ['Animal -> Cachorro', 'Herança', 'Cachorro é um tipo de Animal'],
+  ['Carro -> Motor', 'Composição', 'Carro tem um motor'],
+  ['Forma -> Quadrado', 'Herança', 'Quadrado é uma Forma'],
+  ['Pedido -> Itens', 'Composição', 'Pedido contém vários itens'],
+]} />
+
+<Glossario termo="Herança" definition="Mecanismo de reutilizar atributos e métodos de uma classe base em classes filhas." />
+<Glossario termo="Sobrescrita" definition="Substituir a implementação de um método da classe pai em uma classe filha." />
+<Glossario termo="Polimorfismo" definition="Capacidade de objetos diferentes responderem ao mesmo método com comportamentos próprios." />
+
+<Callout type="erro-comum" title="Herança para tudo">
+  ```python
+  class Livro:
+      def __init__(self, titulo):
+          self.titulo = titulo
+
+  class Kindle(Livro):
+      pass
+
+  print(isinstance(Kindle("Python"), Livro))
+  ```
+
+  Saída real:
+
+  ```text
+  True
+  ```
+
+  Isso funciona, mas a relação pode ser artificial. O problema é usar herança para representar “tem um” quando a ideia correta é composição. Nem toda relação de uso deve virar herança.
+</Callout>
+
+<Callout type="erro-comum" title="Super sem chamar a classe base">
+  ```python
+  class Funcionario:
+      def __init__(self, nome):
+          self.nome = nome
+
+  class Gerente(Funcionario):
+      def __init__(self, nome, setor):
+          self.setor = setor
+
+  g = Gerente("Bia", "Vendas")
+  print(g.nome)
+  ```
+
+  Saída real:
+
+  ```text
+  AttributeError: 'Gerente' object has no attribute 'nome'
+  ```
+
+  A classe filha não inicializou a parte herdada. A correção é usar `super().__init__(nome)` antes de acessar atributos do pai.
+</Callout>
+
+No mercado de trabalho
+
+Herança e polimorfismo aparecem muito em sistemas com regras de negócio, cadastros, regras de cálculo e APIs. Em código de backend, por exemplo, você pode ter `Funcionario`, `CLT`, `PJ` e `Estagiario` compartilham a mesma interface para calcular pagamento. Ao usar herança de forma correta, o sistema fica mais fácil de evoluir quando o domínio cresce.
+
+<Quiz questions={[
+  { question: "Quando a herança é mais apropriada?", options: ["Quando uma classe usa outra como parte dela.", "Quando a classe filha é uma especialização da classe pai.", "Quando a classe não tem nenhum comportamento.", "Quando você quer evitar todos os métodos."], correctIndex: 1, explanation: "Herança faz sentido quando a relação é de especialização, como `Cachorro` é um `Animal`." },
+  { question: "Qual é a função do super()?", options: ["Criar uma nova classe.", "Chamar o construtor e métodos da classe base.", "Acessar um atributo privado sem validação.", "Ignorar polimorfismo."], correctIndex: 1, explanation: "super() ajuda a reutilizar a lógica da classe pai sem duplicar código." },
+  { question: "Qual exemplo mostra polimorfismo?", options: ["Duas classes diferentes com o mesmo método `area()` e implementações próprias.", "Uma classe sem nenhum método.", "Dois objetos com o mesmo nome.", "Atribuir o mesmo valor em todas as instâncias."], correctIndex: 0, explanation: "O polimorfismo aparece quando diferentes objetos respondem ao mesmo método de acordo com sua própria lógica." },
+  { question: "Qual relação deve ser modelada com composição?", options: ["Carro é um Motor.", "Gato é um Animal.", "Pedido tem vários itens.", "Pessoa é um Cliente."], correctIndex: 2, explanation: "Pedido contém itens; isso é uma relação de composição e não de herança." }
+]} />
 
 <Resumo>
-  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
-  <li>Teste pequenos exemplos e avalie o resultado.</li>
-  <li>Aplica a ideia em cenÃ¡rios reais para fixar o conhecimento.</li>
+  <li>Herança reutiliza código de classes que compartilham uma ideia comum.</li>
+  <li>`super()` chama a lógica da classe pai sem duplicar implementação.</li>
+  <li>Polimorfismo permite que diferentes objetos respondam ao mesmo método de forma específica.</li>
+  <li>Herança serve para “é um”; composição serve para “tem um”.</li>
+  <li>Modelar a relação correta deixa o sistema mais claro e menos frágil.</li>
 </Resumo>
 
 <Desafio>
-  Aplique esse tema em um mini cenÃ¡rio do dia a dia e confirme o resultado com um cÃ³digo simples e legÃ­vel.
+  Crie uma hierarquia simples com `Animal`, `Cachorro` e `Gato`, e depois use uma lista com os dois objetos para imprimir o som de cada um. Essa prática demonstra muito bem o polimorfismo em ação.
 </Desafio>
 

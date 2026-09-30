@@ -1,50 +1,223 @@
 ﻿---
-titulo: "MÃ©todos especiais"
-descricao: "Ajuste a representaÃ§Ã£o de objetos com mÃ©todos especiais."
+titulo: "Métodos especiais"
+descricao: "Personaliza a representação e a comparação de objetos para deixar o comportamento do código mais natural."
 secao: "E. Pensamento de engenharia"
-ordem: 26
-tempo: 10
+ordem: 6
+topico: 16
+fase: "E"
+tempo: 23
 nivel: "intermediario"
-palavrasChave: ['__str__', '__repr__', 'dunder']
+palavrasChave: ['__str__', '__repr__', '__eq__', '__len__', 'dunder']
 exercicios: []
 ---
 
-# MÃ©todos especiais
+# Métodos especiais
 
-Ajuste a representaÃ§Ã£o de objetos com mÃ©todos especiais.
+Quando você imprime um objeto simples em Python, a saída costuma ser pouco útil: algo como `<__main__.Produto object at 0x...>`. Isso não é uma mensagem amigável para quem está lendo o código ou depurando um problema. Por isso, existem os métodos especiais, também chamados de “dunder methods”, que permitem definir como o objeto se comporta em operações comuns do Python.
 
-<Callout type="importante" title="Objetivo da aula">
-  Neste bloco, vocÃª vai entender o conceito principal, ver exemplos prÃ¡ticos e testar a lÃ³gica em pequenos passos.
+Esses métodos fazem o objeto parecer “nativo” da linguagem. Em vez de ter uma saída genérica, você pode controlar o que acontece ao converter para string, comparar objetos, calcular tamanho ou acessar elementos.
+
+<Callout type="importante" title="O que você vai aprender">
+  - Como `__str__` e `__repr__` controlam a exibição do objeto.
+  - Como `__eq__`, `__lt__` e `__len__` definem comparação e comportamento.
+  - Quando os métodos especiais deixam o código mais claro e expressivo.
+  - Como evitar comparações por identidade quando o contexto pede igualdade por valor.
 </Callout>
 
-<CodeBlock title="exemplo_1.py" code={`class Produto:
-    def __init__(self, nome):
+## `__str__` e `__repr__`
+
+O método `__str__` define a representação legível de um objeto para humanos. Já `__repr__` é a representação principal para desenvolvedores, normalmente mais detalhada.
+
+```python
+class Produto:
+    def __init__(self, nome, preco):
         self.nome = nome
+        self.preco = preco
+
     def __str__(self):
-        return self.nome
-print(str(Produto("Mouse")))`} />
-<CodeBlock title="exemplo_2.py" code={`class Caixa:
-    def __init__(self, valor):
-        self.valor = valor
-    def __len__(self):
-        return self.valor
-print(len(Caixa(3)))`} />
-<CodeBlock title="exemplo_3.py" code={`class Lista:
+        return f"{self.nome} por R$ {self.preco:.2f}"
+
+    def __repr__(self):
+        return f"Produto(nome={self.nome!r}, preco={self.preco!r})"
+
+p = Produto("Mouse", 49.9)
+print(str(p))
+print(repr(p))
+```
+
+Saída:
+
+```text
+Mouse por R$ 49.90
+Produto(nome='Mouse', preco=49.9)
+```
+
+A diferença é de propósito: `str` foca em leitura simples; `repr` ajuda no debug. Em muitos projetos, isso torna o código muito mais fácil de acompanhar.
+
+## `__len__`, `__getitem__` e a integração com o Python
+
+Os métodos especiais também permitem que seus objetos se comportem como estruturas nativas. Assim, um objeto pode ter um tamanho, suportar acesso por índice e até comparações sem precisar de regras externas.
+
+```python
+class Colecao:
     def __init__(self, itens):
         self.itens = itens
+
+    def __len__(self):
+        return len(self.itens)
+
     def __getitem__(self, index):
         return self.itens[index]
-print(Lista([1,2,3])[1])`} />
 
-<Quiz questions={[{ question: "Qual Ã© a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prÃ¡tica", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensÃ£o e aplicaÃ§Ã£o prÃ¡tica." }, { question: "Qual hÃ¡bito Ã© mais Ãºtil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o cÃ³digo"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prÃ¡tica em Python?", options: ["clareza e execuÃ§Ã£o", "complexidade por padrÃ£o", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execuÃ§Ã£o objetiva." }]} />
+c = Colecao([10, 20, 30])
+print(len(c))
+print(c[1])
+```
+
+Saída:
+
+```text
+3
+20
+```
+
+Isso faz parte da “gramática” do Python: o objeto passa a se comportar como uma coleção legítima, o que melhora a ergonomia do código.
+
+## `__eq__` e comparação por valor
+
+Quando você compara dois objetos com `==`, o Python usa a igualdade por identidade, a menos que você defina `__eq__`. Isso significa que, por padrão, objetos diferentes com os mesmos dados ainda são considerados distintos.
+
+```python
+class Item:
+    def __init__(self, nome, quantidade):
+        self.nome = nome
+        self.quantidade = quantidade
+
+    def __eq__(self, other):
+        if not isinstance(other, Item):
+            return NotImplemented
+        return self.nome == other.nome and self.quantidade == other.quantidade
+
+a = Item("Caneta", 3)
+b = Item("Caneta", 3)
+print(a == b)
+```
+
+Saída:
+
+```text
+True
+```
+
+Esse tipo de método é útil em classes que representam valores: se duas instâncias representam a mesma entidade, você pode considerar them iguais, e não apenas “mesma referência de memória”.
+
+<Playground title="Experimente: compare objetos sem depender da identidade" code={`class Pacote:
+    def __init__(self, codigo, peso):
+        self.codigo = codigo
+        self.peso = peso
+
+    def __eq__(self, other):
+        return isinstance(other, Pacote) and self.codigo == other.codigo and self.peso == other.peso
+
+    def __lt__(self, other):
+        return self.peso < other.peso
+
+p1 = Pacote("A1", 2.5)
+p2 = Pacote("A1", 2.5)
+p3 = Pacote("B2", 1.8)
+print(p1 == p2)
+print(p1 < p3)
+print(sorted([p1, p3]))
+`} />
+
+<StepThrough>
+  <div>
+    <p><strong>Etapa 1:</strong> `__eq__` define quando dois objetos são iguais por valor.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 2:</strong> `__lt__` faz o objeto funcionar em comparações de ordem.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 3:</strong> `sorted` usa esse critério para ordenar objetos da lista.</p>
+  </div>
+</StepThrough>
+
+## Métodos especiais em código real
+
+No mundo real, os métodos especiais aparecem em classes que representam valores, estruturas de dados e domínios de negócio. Quando você modela `Pedido`, `Produto`, `Cliente` ou `Pilha`, essas operações ajudam a integrar sua classe ao comportamento natural do Python. Não é luxo: é ergonomia e clareza.
+
+<Tabela data={[
+  ['Método', 'Uso', 'Exemplo'],
+  ['__str__', 'Texto amigável', 'mostrar produto em console'],
+  ['__repr__', 'Representação técnica', 'debug e inspeção'],
+  ['__eq__', 'Igualdade por valor', 'comparar duas contas'],
+  ['__len__', 'Tamanho', 'quantos itens na coleção'],
+  ['__lt__', 'Ordenação', 'sort de objetos'],
+]} />
+
+<Glossario termo="Dunder" definition="Métodos com duplo underscore, usados para integrar a classe com operações internas do Python." />
+<Glossario termo="Representação" definition="Forma como o objeto é exibido ou descrito em texto." />
+<Glossario termo="Comparação por valor" definition="Dizer que objetos diferentes representam o mesmo dado quando seus atributos são equivalentes." />
+
+<Callout type="erro-comum" title="Comparar objetos sem __eq__">
+  ```python
+  class Produto:
+      def __init__(self, nome):
+          self.nome = nome
+
+  p1 = Produto("Teclado")
+  p2 = Produto("Teclado")
+  print(p1 == p2)
+  ```
+
+  Saída real:
+
+  ```text
+  False
+  ```
+
+  Esse comportamento acontece porque Python compara identidade por padrão. A correção é implementar `__eq__` para comparar os atributos relevantes.
+</Callout>
+
+<Callout type="erro-comum" title="Esperar `str(obj)` sem definir `__str__`">
+  ```python
+  class Pedido:
+      def __init__(self, numero):
+          self.numero = numero
+
+  print(Pedido(42))
+  ```
+
+  Saída real:
+
+  ```text
+  <__main__.Pedido object at 0x...>
+  ```
+
+  A saída depende do endereço de memória e não é útil. A solução é implementar `__str__` para uma mensagem clara e amigável.
+</Callout>
+
+No mercado de trabalho
+
+Em projetos reais, a qualidade da modelagem costuma aparecer em pequenos detalhes: uma resposta de API, um log legível, uma lista ordenada por prioridade, ou uma comparação correta entre objetos. Métodos especiais tornam esse tipo de interface mais intuitiva e ajudam outros desenvolvedores a entender rapidamente o comportamento da classe.
+
+<Quiz questions={[
+  { question: "Para que serve __str__?", options: ["Para criar uma variável global.", "Para controlar a string amigável de um objeto.", "Para bloquear acesso ao objeto.", "Para angariar herança automática."], correctIndex: 1, explanation: "__str__ define como o objeto é exibido ao ser convertido para texto para humanos." },
+  { question: "Qual método define igualdade por valor?", options: ["__repr__", "__len__", "__eq__", "__getitem__"], correctIndex: 2, explanation: "__eq__ decide quando dois objetos são considerados iguais." },
+  { question: "O que acontece se você não implementa __len__ em uma classe?", options: ["Python usa a quantidade de atributos automaticamente.", "A classe não pode ser usada em listas.", "`len(obj)` pode falhar ou não estar definido para esse tipo.", "O objeto vira um dicionário."], correctIndex: 2, explanation: "len() depende de __len__ para saber o tamanho da estrutura." },
+  { question: "Como __lt__ ajuda em suas classes?", options: ["Ele escolhe a ordem em que os objetos são comparados.", "Ele cria uma função estática.", "Ele protege dados internos.", "Ele só funciona com strings."], correctIndex: 0, explanation: "__lt__ define a ordem menor-que para objetos de uma classe." },
+  { question: "Qual saída você espera para `print(str(obj))` quando __str__ foi implementado?", options: ["Um endereço de memória arbitrário.", "Uma mensagem personalizada e legível.", "A definição da classe inteira.", "A lista de atributos privados."], correctIndex: 1, explanation: "__str__ deve produzir uma representação amigável para o usuário." }
+]} />
 
 <Resumo>
-  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
-  <li>Teste pequenos exemplos e avalie o resultado.</li>
-  <li>Aplica a ideia em cenÃ¡rios reais para fixar o conhecimento.</li>
+  <li>__str__ e __repr__ controlam como o objeto é exibido em texto.</li>
+  <li>__eq__ permite comparar objetos por valor, não por identidade.</li>
+  <li>__len__ e __getitem__ deixam objetos mais parecidos com listas e coleções.</li>
+  <li>__lt__ e outros métodos ajudam em ordenação e comparação.</li>
+  <li>Esses métodos deixam a API da classe mais natural para o Python.</li>
 </Resumo>
 
 <Desafio>
-  Aplique esse tema em um mini cenÃ¡rio do dia a dia e confirme o resultado com um cÃ³digo simples e legÃ­vel.
+  Crie uma classe `Livro` com `titulo`, `autor` e `paginas`. Implemente `__str__`, `__eq__` e `__lt__` e depois teste com uma lista de livros ordenados por número de páginas. Isso mostra como a classe passa a se integrar ao comportamento do Python.
 </Desafio>
 
