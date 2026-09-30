@@ -1,0 +1,179 @@
+---
+titulo: "Funções embutidas"
+descricao: "Use ferramentas prontas do Python para transformar, filtrar e resumir dados com clareza."
+secao: "C. Organização de código"
+ordem: 5
+topico: 11
+fase: "C"
+tempo: 27
+nivel: "intermediario"
+palavrasChave: ['map', 'filter', 'sorted', 'zip', 'enumerate', 'any', 'all', 'min', 'max', 'sum']
+exercicios: []
+---
+
+# Funções embutidas
+
+Python já vem com várias funções prontas para você lidar com coleções sem escrever loops repetitivos. Quando a operação é simples e clara, essas funções deixam o código mais curto, mais legível e mais idiomático. Em vez de “montar tudo na mão”, você descreve a intenção do programa com uma linha que diz exatamente o que deve acontecer.
+
+<Callout type="importante" title="O que você vai aprender">
+  <ul>
+    <li>Usar <Glossario termo="map" definition="Aplica uma função a cada item de um iterável." /> para transformar dados.</li>
+    <li>Usar <Glossario termo="filter" definition="Mantém somente os elementos que atendem a condição informada." /> para reduzir coleções.</li>
+    <li>Ordenar dados com <Glossario termo="sorted" definition="Cria uma nova lista ordenada usando uma chave opcional." /> e `key=lambda`.</li>
+    <li>Combinar elementos com `zip`, numerar com `enumerate` e resumir com `any`, `all`, `min`, `max` e `sum`.</li>
+  </ul>
+</Callout>
+
+## 1. `map`: transformar todos os elementos
+
+`map` recebe uma função e um iterável. Ele aplica essa função em cada item e devolve um iterador.
+
+<CodeBlock title="map.py" code={`frutas = ['maçã', 'banana', 'uva']
+maiusculas = list(map(str.upper, frutas))
+print(maiusculas)`} />
+
+A saída é `['MAÇÃ', 'BANANA', 'UVA']`. Isso mostra a ideia: cada item foi transformado pela mesma regra.
+
+<CodeBlock title="map_lambda.py" code={`precos = [10, 20, 30]
+precos_mais_um = list(map(lambda valor: valor + 1, precos))
+print(precos_mais_um)`} />
+
+A saída é `[11, 21, 31]`. Quando a transformação é pequena, `lambda` faz sentido e deixa o código enxuto.
+
+## 2. `filter`: manter apenas os que passam no teste
+
+`filter` recebe uma função de teste e um iterável. Ele devolve apenas os elementos cuja condição é verdadeira.
+
+<CodeBlock title="filter.py" code={`idades = [12, 17, 18, 21, 30, 35]
+maiores = list(filter(lambda idade: idade >= 18, idades))
+print(maiores)`} />
+
+A saída é `[18, 21, 30, 35]`. Em vez de percorrer a lista com vários `if`, você diz diretamente: “mantém os que atendem a esta condição”.
+
+## 3. `sorted` com `key` e `reverse`
+
+`sorted` cria uma nova lista ordenada. Quando os itens são dicionários ou objetos mais complexos, o argumento `key=` define exatamente por qual campo a ordenação será feita.
+
+<CodeBlock title="sorted_key.py" code={`alunos = [
+    {'nome': 'Ana', 'nota': 8},
+    {'nome': 'Bia', 'nota': 9},
+    {'nome': 'Caio', 'nota': 7},
+]
+ordem = sorted(alunos, key=lambda aluno: aluno['nota'])
+print([aluno['nome'] for aluno in ordem])`} />
+
+A saída é `['Caio', 'Ana', 'Bia']`, porque a ordenação foi feita pela nota. Se você quiser a ordem reversa, use `reverse=True`.
+
+<CodeBlock title="sorted_reverse.py" code={`alunos = [
+    {'nome': 'Ana', 'nota': 8},
+    {'nome': 'Bia', 'nota': 9},
+    {'nome': 'Caio', 'nota': 7},
+]
+ordem = sorted(alunos, key=lambda aluno: aluno['nota'], reverse=True)
+print([aluno['nome'] for aluno in ordem])`} />
+
+A saída é `['Bia', 'Ana', 'Caio']`. Esse padrão aparece muito em rankings e relatórios.
+
+## 4. `zip` e `enumerate`: combinar e numerar
+
+`zip` emparelha itens de duas sequências pela posição.
+
+<CodeBlock title="zip.py" code={`nomes = ['Ana', 'Bia', 'Caio']
+notas = [9, 8, 7]
+print(list(zip(nomes, notas)))`} />
+
+A saída é `[('Ana', 9), ('Bia', 8), ('Caio', 7)]`.
+
+`enumerate` é útil para obter o índice junto com o valor.
+
+<CodeBlock title="enumerate.py" code={`for indice, nome in enumerate(['Ana', 'Bia', 'Caio'], start=1):
+    print(indice, nome)`} />
+
+A saída será:
+
+```text
+1 Ana
+2 Bia
+3 Caio
+```
+
+## 5. `any`, `all`, `min`, `max` e `sum`
+
+Essas funções resumem uma coleção inteira em uma resposta curta.
+
+<CodeBlock title="any_all.py" code={`notas = [7, 8, 9, 5]
+print(any(nota >= 9 for nota in notas))
+print(all(nota >= 5 for nota in notas))`} />
+
+A saída é `True` e `True`. O primeiro verifica se existe pelo menos uma nota grande; o segundo verifica se todas atendem ao critério.
+
+<CodeBlock title="min_max_sum.py" code={`precos = [25, 18, 40, 10]
+print(min(precos))
+print(max(precos))
+print(sum(precos))`} />
+
+A saída é `10`, `40` e `93`.
+
+## 6. `lambda` e regras rápidas de comparação
+
+Quando a regra de comparação é curta, `lambda` funciona muito bem com `sorted`, `max` e `min`.
+
+<CodeBlock title="lambda_ordenacao.py" code={`vendas = [
+    {'vendedor': 'Ana', 'valor': 300},
+    {'vendedor': 'Rui', 'valor': 500},
+    {'vendedor': 'Lia', 'valor': 220},
+]
+melhor = max(vendas, key=lambda venda: venda['valor'])
+print(melhor['vendedor'])`} />
+
+A saída é `Rui`, porque ele tem o maior valor de venda.
+
+<Callout type="erro-comum" title="Erro: sorted com dicionários sem key">
+  Ordenar listas de dicionários diretamente produz erro, porque Python tenta comparar dicionários entre si.
+  <CodeBlock title="sorted_dicionario_erro.py" code={`pessoas = [
+    {'nome': 'Ana', 'nota': 9},
+    {'nome': 'Bia', 'nota': 5},
+]
+print(sorted(pessoas))`} />
+  O erro real é `TypeError: '<' not supported between instances of 'dict' and 'dict'`.
+  A correção é usar `key=lambda pessoa: pessoa['nota']`.
+</Callout>
+
+<Tabela data={[
+  ['Função', 'Uso principal', 'Exemplo'],
+  ['map()', 'transformar tudo', 'map(str.upper, nomes)'],
+  ['filter()', 'manter elementos por condição', 'filter(lambda n: n > 10, ids)'],
+  ['sorted()', 'ordenar dados', 'sorted(lista, key=lambda x: x["nota"])'],
+  ['zip()', 'combinar elementos por posição', 'zip(nomes, notas)'],
+  ['enumerate()', 'numerar elementos', 'enumerate(itens, start=1)'],
+  ['any()/all()', 'validar condições', 'any(n > 10 for n in lista)']
+]} />
+
+<Glossario termo="Lambda" definition="Função anônima curta usada em situações pontuais como critério de ordenação." />
+<Glossario termo="Critério de ordenação" definition="Valor que será usado para decidir qual item vem antes do outro." />
+
+### No mercado de trabalho
+
+Funções embutidas aparecem em scripts de automação, análise de dados, relatórios e ETL. Em vez de escrever blocos maiores de lógica manual, você usa `sorted`, `sum`, `filter` e `zip` para deixar o código mais direto. Isso é especialmente útil quando a intenção do programa é simples e fácil de entender.
+
+<Quiz questions={[
+  { question: "Qual é a diferença entre map e filter?", options: ["map altera tudo e filter mantém tudo", "map transforma cada item e filter seleciona itens por condição", "são a mesma função", "map só funciona com listas"], correctIndex: 1, explanation: "map aplica uma transformação a cada item; filter seleciona apenas os que atendem ao critério." },
+  { question: "Como você ordena uma lista de dicionários pela chave `nota`?", options: ["sorted(lista)", "sorted(lista, key=lambda item: item['nota'])", "filter(lambda item: item['nota'])", "zip(lista, key='nota')"], correctIndex: 1, explanation: "O `key` informa ao sorted qual campo usar na comparação." },
+  { question: "O que `zip` faz?", options: ["divide uma lista em duas", "combina elementos de duas sequências por posição", "sumariza a lista", "ordena a lista"], correctIndex: 1, explanation: "zip cria pares como (nome, nota) usando a posição dos itens." },
+  { question: "Qual expressão retorna True se houver pelo menos um valor maior ou igual a 10?", options: ["all(n >= 10 for n in lista)", "sum(lista) >= 10", "any(n >= 10 for n in lista)", "max(lista) == 10"], correctIndex: 2, explanation: "any() verifica se pelo menos um elemento satisfaz a condição." },
+  { question: "Qual é o resultado de sum(notas), min(notas) e max(notas) para a lista [5, 8, 9]?", options: ["22 5 9", "5 8 9", "9 5 22", "Erro"], correctIndex: 0, explanation: "A soma é 22, o menor valor é 5 e o maior é 9." }
+]} />
+
+<Resumo>
+  <li>`map` transforma cada item de um iterável.</li>
+  <li>`filter` mantém somente os itens que passam no teste.</li>
+  <li>`sorted` ordena dados e usa `key` para definir a regra de comparação.</li>
+  <li>`zip` combina elementos por posição e `enumerate` adiciona o índice.</li>
+  <li>`any`, `all`, `min`, `max` e `sum` resumem coleções com pouco código.</li>
+</Resumo>
+
+Checklist de domínio: ☐ uso `map` e `filter` quando a operação é clara ☐ ordeno listas com `sorted(..., key=...)` ☐ combino dados com `zip` e `enumerate` ☐ resumo condições com `any`/`all` ☐ uso `min`, `max` e `sum` para análise rápida
+
+<Desafio title="Desafio da aula">
+  Crie uma lista de dicionários com nomes e notas, ordene por nota com `sorted` e `key=lambda`, e use `any` para verificar se existe alguém com nota acima de 9. Em seguida, responda em 2 frases por que esse padrão deixa o código mais claro do que um loop manual.
+</Desafio>

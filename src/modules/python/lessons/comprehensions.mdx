@@ -1,38 +1,161 @@
-﻿---
+---
 titulo: "Comprehensions"
-descricao: "Crie listas e dicionÃ¡rios de maneira concisa e expressiva."
+descricao: "Transforme listas, dicionários e conjuntos com sintaxe concisa e legível."
 secao: "C. Organização de código"
-ordem: 14
-tempo: 10
+ordem: 4
+topico: 11
+fase: "C"
+tempo: 23
 nivel: "intermediario"
-palavrasChave: ['comprehension', 'lista', 'dicionÃ¡rio']
+palavrasChave: ['comprehension', 'lista', 'dicionário', 'set', 'condição']
 exercicios: []
 ---
 
 # Comprehensions
 
-Crie listas e dicionÃ¡rios de maneira concisa e expressiva.
+Você já viu que Python aceita loops explícitos, mas há uma forma mais curta e idiomática de transformar coleções. Quando você precisa criar uma lista, um dicionário ou um conjunto a partir de outra estrutura, a comprehension funciona como um “filtro + transformação” em uma linha só. A ideia não é decorar a sintaxe; é escrever código que comunica a intenção com clareza.
 
-<Callout type="importante" title="Objetivo da aula">
-  Neste bloco, vocÃª vai entender o conceito principal, ver exemplos prÃ¡ticos e testar a lÃ³gica em pequenos passos.
+Imagine que você está montando uma tabela de notas e precisa criar uma lista de quadrados, um dicionário com tamanhos de palavras ou um conjunto com nomes únicos. Em vez de escrever vários passos com `for`, você pode converter esses dados de forma direta e legível. Isso é especialmente útil quando a lógica é simples e bem definida.
+
+<Callout type="importante" title="O que você vai aprender">
+  <ul>
+    <li>Entender a sintaxe de <Glossario termo="list comprehension" definition="Forma curta de criar listas com base em um iterável e uma expressão." />.</li>
+    <li>Aplicar condição com `if` dentro de comprehensions.</li>
+    <li>Criar dicionários e conjuntos com a mesma ideia.</li>
+    <li>Reconhecer quando a sintaxe fica pouco legível e o `for` normal é melhor.</li>
+  </ul>
 </Callout>
 
-<CodeBlock title="exemplo_1.py" code={`quadrados = [n * n for n in range(5)]
-print(quadrados)`} />
-<CodeBlock title="exemplo_2.py" code={`pares = [n for n in range(10) if n % 2 == 0]
-print(pares)`} />
-<CodeBlock title="exemplo_3.py" code={`dobros = {n: n * 2 for n in range(3)}
-print(dobros)`} />
+## 1. List comprehension: transformar em uma linha
 
-<Quiz questions={[{ question: "Qual Ã© a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prÃ¡tica", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensÃ£o e aplicaÃ§Ã£o prÃ¡tica." }, { question: "Qual hÃ¡bito Ã© mais Ãºtil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o cÃ³digo"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prÃ¡tica em Python?", options: ["clareza e execuÃ§Ã£o", "complexidade por padrÃ£o", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execuÃ§Ã£o objetiva." }]} />
+A forma mais comum é esta:
+
+```python
+[expressao for item in iteravel]
+```
+
+Ela percorre cada item da coleção, calcula a expressão e reúne tudo em uma nova lista. Para ficar mais fácil de lembrar, pense em “para cada item, faça algo com ele”.
+
+<CodeBlock title="quadrados.py" code={`quadrados = [n * n for n in range(1, 7)]
+print(quadrados)`} />
+
+A saída é `[1, 4, 9, 16, 25, 36]`. Cada número de `1` a `6` foi elevado ao quadrado e o resultado entrou em uma lista única.
+
+Você também pode usar `if` para filtrar elementos.
+
+<CodeBlock title="pares.py" code={`numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+pares = [n for n in numeros if n % 2 == 0]
+print(pares)`} />
+
+A saída é `[2, 4, 6, 8, 10]`. A condição `if n % 2 == 0` seleciona somente os pares.
+
+<Playground title="Experimente: gerar uma lista de palavras em maiúsculas" code={`nomes = ['ana', 'bia', 'carlos', 'duda']
+maiusculas = [nome.upper() for nome in nomes if len(nome) > 3]
+print(maiusculas)`} />
+
+## 2. Dict comprehension: transformar chaves e valores
+
+Dicionários também têm sua versão mais curta: a dict comprehension. Em vez de montar um dicionário item por item com `for`, você coloca a chave e o valor em uma expressão única.
+
+<CodeBlock title="dicionario_tamanhos.py" code={`palavras = ['python', 'dados', 'lista', 'loop']
+tamanhos = {palavra: len(palavra) for palavra in palavras}
+print(tamanhos)`} />
+
+A saída é `{'python': 6, 'dados': 5, 'lista': 5, 'loop': 4}`. Cada palavra virou uma chave e seu tamanho virou o valor.
+
+Você também pode usar filtros no dicionário:
+
+<CodeBlock title="dicionario_filtrado.py" code={`notas = {'Ana': 9, 'Bia': 6, 'Caio': 8, 'Dora': 5}
+aprovadas = {nome: nota for nome, nota in notas.items() if nota >= 7}
+print(aprovadas)`} />
+
+A saída mostra apenas os aprovados: `{'Ana': 9, 'Caio': 8}`.
+
+## 3. Set comprehension: dados únicos
+
+O conjunto também pode ser gerado com a mesma lógica. Quando a ideia é “quero um grupo de itens sem repetir valores”, um `set` é perfeito.
+
+<CodeBlock title="set_comprehension.py" code={`nomes = ['ana', 'bia', 'ana', 'caio', 'bia', 'dora']
+letras_iniciais = {nome[0].upper() for nome in nomes}
+print(letras_iniciais)`} />
+
+A saída é `{'A', 'B', 'C', 'D'}`. Como conjunto não repete elementos, as iniciales duplicadas são eliminadas automaticamente.
+
+## 4. Quando a compreensão fica difícil de ler
+
+Compreensões são poderosas, mas nem toda lógica deve entrar em uma linha. Quando a expressão fica longa, envolve vários `if` ou vários `for`, a leitura começa a piorar. Nesse momento, a versão com loop normal é mais clara.
+
+<CodeBlock title="comprehension_complexa.py" code={`dados = [[1, 2], [3, 4, 5], [6]]
+resultado = [valor for grupo in dados for valor in grupo if valor % 2 == 0]
+print(resultado)`} />
+
+A saída é `[2, 4, 6]`. Isso funciona, mas com vários `for` e `if`, a leitura exige atenção. A regra prática é simples: use comprehension para lógica curta e direta; use loop normal quando a lógica tem várias etapas ou muita condição.
+
+<StepThrough>
+  <div>
+    <strong>Passo 1:</strong> a expressão <code>[valor for grupo in dados for valor in grupo if valor % 2 == 0]</code> percorre cada sublista em <code>dados</code>.
+  </div>
+  <div>
+    <strong>Passo 2:</strong> dentro de cada grupo, ela visita cada valor e mantém apenas os pares.
+  </div>
+  <div>
+    <strong>Passo 3:</strong> os valores filtrados são reunidos em uma nova lista.
+  </div>
+</StepThrough>
+
+## 5. Compreensões em código real
+
+Na prática, listas e dicionários gerados em comprehension aparecem em filtros, mapas e relatórios. Por exemplo, uma planilha de notas pode converter uma lista de alunos em outra com apenas aprovados, ou gerar um dicionário com a média final de cada pessoa.
+
+<CodeBlock title="notas_da_turma.py" code={`notas = {'Ana': 9.5, 'Bia': 7.0, 'Caio': 6.5, 'Dora': 8.5}
+acima_da_media = {nome: nota for nome, nota in notas.items() if nota >= 8}
+print(acima_da_media)`} />
+
+A saída é `{'Ana': 9.5, 'Dora': 8.5}`. Isso mostra o ponto principal: compreensões são excelentes para organizar dados e eliminar repetições.
+
+<Callout type="erro-comum" title="Erro: comprehension ilegível">
+  Uma linha enorme com vários `for` e `if` pode funcionar, mas vira código difícil de acompanhar.
+  <CodeBlock title="comprehension_ruim.py" code={`clientes = [('Ana', 29), ('Bia', 17), ('Caio', 22)]
+resultado = [nome for nome, idade in clientes if idade >= 18 and idade <= 25 and nome[0].upper() == 'A']
+print(resultado)`} />
+  A saída real é `['Ana']`. O problema não é o resultado em si; é a legibilidade. Quando a expressão exige releitura, o `for` normal costuma ser melhor.
+</Callout>
+
+<Tabela data={[
+  ['Situação', 'Melhor opção', 'Por quê'],
+  ['Transformar cada item', 'List comprehension', 'É direta e curta'],
+  ['Mapear chave e valor', 'Dict comprehension', 'Escreve o dicionário em uma linha'],
+  ['Lógica com várias decisões', 'Loop normal', 'Fica mais legível e fácil de manter'],
+  ['Deduplicação simples', 'Set comprehension', 'Remove duplicados automaticamente']
+]} />
+
+<Glossario termo="Iterável" definition="Qualquer objeto que pode ser percorrido em um loop, como listas, strings e dicionários." />
+<Glossario termo="Filtro" definition="Condição que decide quais elementos entram ou saem da estrutura gerada." />
+<Glossario termo="Expressão" definition="Trecho que produz um valor calculado, como `n * n` ou `nome.upper()`." />
+
+### No mercado de trabalho
+
+Em análise de dados, automações, ETL e scripts de rotina, você encontra muita transformação de listas e dicionários. Compreensões aparecem em pipelines de dados, filtros de relatórios e extração de métricas simples. Elas são ótimas quando a intenção é clara.
+
+O ponto importante é que “curto” não deve virar “obscuro”. Em projetos reais, legibilidade vence micro-otimização.
+
+<Quiz questions={[
+  { question: "Qual é a forma mais direta de criar uma lista de quadrados de 1 a 5?", options: ["[n * n for n in range(1, 6)]", "for n in range(1, 6): print(n * n)", "list(range(1, 6))", "{n: n * n for n in range(1, 6)}"], correctIndex: 0, explanation: "A list comprehension aplica a expressão a cada item da sequência." },
+  { question: "Qual código filtra apenas os valores pares de uma lista?", options: ["[n for n in lista if n % 2 == 0]", "{n for n in lista if n % 2 == 1}", "[n % 2 == 0 for n in lista]", "lista.filter(n % 2 == 0)"], correctIndex: 0, explanation: "A condição if dentro da compreensão decide quais valores entram na nova lista." },
+  { question: "O que a expressão {nome[0].upper() for nome in nomes} gera para a lista ['ana', 'bia', 'bia', 'carlos']?", options: ["{'a', 'b', 'c'}", "['A', 'B', 'C']", "{'ana', 'bia', 'carlos'}", "Erro"], correctIndex: 0, explanation: "A set comprehension remove duplicados e usa a inicial em maiúsculas." },
+  { question: "Quando você deve evitar uma comprehension complexa?", options: ["Quando ela parece simples e direta", "Quando a lógica precisa de várias condições ou múltiplos passos", "Quando usa apenas lista", "Nunca é preciso evitar"], correctIndex: 1, explanation: "Se a lógica exigir muita leitura ou várias decisões, a versão com loop costuma ser mais clara." }
+]} />
 
 <Resumo>
-  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
-  <li>Teste pequenos exemplos e avalie o resultado.</li>
-  <li>Aplica a ideia em cenÃ¡rios reais para fixar o conhecimento.</li>
+  <li>List comprehension transforma itens em uma nova lista de forma concisa.</li>
+  <li>O `if` serve para filtrar elementos que entram na estrutura gerada.</li>
+  <li>Dict comprehension cria mapeamentos de chave e valor em uma linha.</li>
+  <li>Set comprehension é útil para remover duplicatas e gerar conjuntos.</li>
+  <li>Compreensões são ótimas quando a lógica é curta e o código fica mais legível.</li>
 </Resumo>
 
-<Desafio>
-  Aplique esse tema em um mini cenÃ¡rio do dia a dia e confirme o resultado com um cÃ³digo simples e legÃ­vel.
-</Desafio>
+Checklist de domínio: ☐ escrevo comprehensions legíveis ☐ uso `if` para filtrar com clareza ☐ crio dicionários e sets quando faz sentido ☐ sei quando a lógica exige um `for` mais explícito ☐ mantenho código Python idiomático
 
+<Desafio title="Desafio da aula">
+  Crie uma list comprehension que receba uma lista de preços e devolva apenas os valores acima de 50. Depois, transforme os mesmos valores em um dicionário `preço → preço * 2` usando dict comprehension. Explique em 2 frases por que sua solução é clara e legível.
+</Desafio>
