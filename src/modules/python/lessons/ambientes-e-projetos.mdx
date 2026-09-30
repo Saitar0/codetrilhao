@@ -1,37 +1,206 @@
 ﻿---
 titulo: "Ambientes e projetos"
-descricao: "Organize o projeto e isole dependÃªncias com ambientes virtuais."
+descricao: "Organize seu projeto e isole dependências com ambientes virtuais seguros."
 secao: "D. Mundo real"
-ordem: 38
-tempo: 10
+ordem: 23
+topico: 14
+fase: "D"
+tempo: 32
 nivel: "intermediario"
-palavrasChave: ['venv', 'requirements', 'projeto']
+palavrasChave: ['venv', 'pip', 'requirements', 'ambiente virtual', 'projeto', 'dependencias']
 exercicios: []
 ---
 
 # Ambientes e projetos
 
-Organize o projeto e isole dependÃªncias com ambientes virtuais.
+Você já deve ter percebido que, em programação, o ambiente do projeto importa tanto quanto o código. O mesmo programa pode funcionar em um computador e falhar em outro se a versão do Python ou a lista de bibliotecas forem diferentes. Quando você cria um projeto em Python, a prática mais segura é isolar suas dependências em um ambiente virtual: um espaço separado para instalar e usar bibliotecas do projeto sem mexer no sistema global.
 
-<Callout type="importante" title="Objetivo da aula">
-  Neste bloco, vocÃª vai entender o conceito principal, ver exemplos prÃ¡ticos e testar a lÃ³gica em pequenos passos.
+Esse conceito é crucial porque a maioria dos erros reais de “funciona na minha máquina” não nasce do algoritmo em si. Ela nasce do ambiente. Talvez a máquina tenha outra versão do Python, outra biblioteca ou outra combinação de pacotes. Ao isolar o ambiente, você reduz esse tipo de problema e deixa o projeto mais previsível e fácil de reproduzir.
+
+<Callout type="importante" title="O que você vai aprender">
+  <ul>
+    <li>Entender o que é um <Glossario termo="ambiente virtual" definition="Diretório isolado com uma cópia do Python e de suas bibliotecas para um projeto específico." /> e por que ele evita conflitos.</li>
+    <li>Conferir a diferença entre instalar pacotes globalmente e instalar no ambiente do projeto.</li>
+    <li>Usar <Glossario termo="pip" definition="Gerenciador de pacotes da comunidade Python, usado para instalar e atualizar bibliotecas." /> com entendimento do contexto do projeto.</li>
+    <li>Representar dependências com <Glossario termo="requirements.txt" definition="Arquivo que lista as bibliotecas necessárias para o projeto e suas versões." />.</li>
+    <li>Organizar a estrutura do projeto de forma que o ambiente e o código acompanhem a mesma ideia de manutenção.</li>
+  </ul>
 </Callout>
 
-<CodeBlock title="exemplo_1.py" code={`python -m venv .venv`} />
-<CodeBlock title="exemplo_2.py" code={`requirements.txt
-flask==3.0.0`} />
-<CodeBlock title="exemplo_3.py" code={`[project]
-name = "meu-projeto"`} />
+## 1. Por que não instalar tudo no sistema?
 
-<Quiz questions={[{ question: "Qual Ã© a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prÃ¡tica", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensÃ£o e aplicaÃ§Ã£o prÃ¡tica." }, { question: "Qual hÃ¡bito Ã© mais Ãºtil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o cÃ³digo"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prÃ¡tica em Python?", options: ["clareza e execuÃ§Ã£o", "complexidade por padrÃ£o", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execuÃ§Ã£o objetiva." }]} />
+Imagine que você trabalha em dois projetos diferentes. Um usa uma versão antiga de uma biblioteca e o outro precisa da versão nova. Se você instalar tudo globalmente, os dois projetos competem pelo mesmo estado do ambiente. Isso cria um efeito de “trava” em que o sistema inteiro fica mais difícil de controlar.
+
+O ambiente virtual resolve esse problema criando um espaço isolado para cada projeto. Em vez de compartilhar a mesma instalação global, cada projeto tem sua própria cópia do Python e suas dependências. Isso facilita a reprodução em outros ambientes, a execução em máquinas diferentes e a manutenção do código mais tarde.
+
+<CodeBlock title="estrutura_do_projeto.py" code={`from pathlib import Path
+
+raiz = Path("meu_projeto")
+for item in ["app", "src", "tests", ".venv", "requirements.txt"]:
+    caminho = raiz / item
+    print(item, "->", caminho.exists())`} />
+
+Saída esperada:
+
+```text
+app -> False
+src -> False
+tests -> False
+.venv -> False
+requirements.txt -> False
+```
+
+Esse código apenas simula a estrutura de um projeto em Python e mostra como os diretórios e arquivos aparecem na visão do programa. Em um projeto real, você cria essa estrutura antes de começar a chamar `pip` e instalar dependências. A organização deixa claro o que faz parte do código, o que faz parte do ambiente e o que é dependência externa.
+
+## 2. Venv, ativação e isolamento real
+
+O módulo que cria ambientes virtuais em Python é `venv`. A ideia é simples: você cria uma pasta para o ambiente, por exemplo `.venv`, e aí o Python do ambiente passa a ser usado para esse projeto. Em termos práticos, isso evita mistura entre bibliotecas do sistema e bibliotecas do seu código.
+
+Você normalmente cria o ambiente com `python -m venv .venv`. Depois, ativa o ambiente conforme o sistema operacional. Em Linux ou macOS, costuma ser `source .venv/bin/activate`; em Windows, geralmente é `.venv\Scripts\activate` em PowerShell. O detalhe importante é que a ativação muda o `PATH` do terminal para usar o Python local do projeto.
+
+<CodeBlock title="ambiente_python.py" code={`import os
+import sys
+
+print("Python:", sys.executable)
+print("Ambiente virtual:", "VIRTUAL_ENV" in os.environ)
+print("Versão:", sys.version.split()[0])`} />
+
+Saída esperada:
+
+```text
+Python: /usr/local/bin/python
+Ambiente virtual: False
+Versão: 3.11.x
+```
+
+A saída depende do computador em que o código foi executado. O ponto importante é entender que o programa usa o Python do ambiente ativo. Quando `VIRTUAL_ENV` está presente, indica que o interpretador foi trocado para um ambiente virtual. Isso é uma marca de que o projeto está correndo em um contexto isolado e previsível.
+
+<Playground title="Experimente: verificar se o Python pertence ao ambiente" code={`import os
+import sys
+
+print("Diretório do Python:", sys.executable)
+print("Variável VIRTUAL_ENV presente?", "VIRTUAL_ENV" in os.environ)
+if "VIRTUAL_ENV" in os.environ:
+    print("Você está em um ambiente virtual.")
+else:
+    print("Ainda não há ambiente virtual ativo.")`} />
+
+## 3. `pip`, `pip list`, `pip freeze` e `requirements.txt`
+
+Quando você instala uma biblioteca externa, a ferramenta usada normalmente é `pip`. Ela lê o pacote adequado para o ambiente atual e faz a instalação. Em seguida, você frequentemente usa `pip list` para ver tudo que está instalado no ambiente e `pip freeze` para gerar uma lista com versões específicas.
+
+Esse arquivo gerado é o `requirements.txt`. Ele é muito útil porque permite reproduzir o ambiente em outra máquina. Em vez de dizer “instale as bibliotecas X, Y e Z”, você usa um único arquivo com as versões exatas e executa a instalação em outro ambiente com o mesmo comando.
+
+A prática correta é: o ambiente do projeto fica isolado; as dependências ficam explícitas; a instalação usa `pip`; e a reprodução usa `requirements.txt`. Isso cria uma cadeia de confiabilidade para o projeto inteiro.
+
+<StepThrough>
+  <div>
+    <strong>Passo 1:</strong> você cria o ambiente virtual com <code>python -m venv .venv</code> para o projeto.
+  </div>
+  <div>
+    <strong>Passo 2:</strong> você ativa o ambiente e confirma se o Python usado é aquele do diretório do projeto.
+  </div>
+  <div>
+    <strong>Passo 3:</strong> você instala dependências com <code>pip install ...</code> e registra versões no arquivo de requisitos.
+  </div>
+  <div>
+    <strong>Passo 4:</strong> qualquer pessoa nova no projeto pode recriar o ambiente usando esse mesmo arquivo e o mesmo fluxo.
+  </div>
+</StepThrough>
+
+## 4. Estrutura de projeto: o que vai em cada pasta?
+
+Um projeto bem organizado não é só “uma pasta com scripts”. Ele costuma ter divisão clara entre código principal, testes, configurações e dependências. Isso não é frescura; é uma forma de reduzir a confusão. Quando você abre um projeto pela primeira vez e consegue localizar rapidamente a lógica principal, os testes e o ambiente, a produtividade cresce muito.
+
+Uma estrutura típica é:
+
+- `app/` ou `src/`: código da aplicação
+- `tests/`: testes automatizados
+- `requirements.txt`: dependências do projeto
+- `.venv/`: ambiente virtual
+- `README.md`: instruções de uso
+
+<CodeBlock title="listar_pastas.py" code={`from pathlib import Path
+
+for item in ["src", "tests", ".venv", "requirements.txt", "README.md"]:
+    caminho = Path(item)
+    print(f"{item}: {'sim' if caminho.exists() else 'não'}")`} />
+
+Saída esperada:
+
+```text
+src: sim
+tests: sim
+.venv: sim
+requirements.txt: sim
+README.md: sim
+```
+
+O ponto aqui é a clareza da convenção. O ambiente virtual não deve ser tratado como “uma pasta qualquer”. Ele é uma parte da configuração do projeto e precisa ser reconhecido como tal. A mesma ideia vale para requisitos e estrutura de diretórios: você quer que o processo seja repetível e compreensível para outra pessoa ou para você, meses depois.
+
+<Tabela data={[
+  ['Abordagem', 'Resultado', 'Risco principal'],
+  ['Instalar tudo globalmente', 'Economiza passos rápidos', 'Conflito de versões e dependências'],
+  ['Usar ambiente virtual', 'Isolamento e previsibilidade', 'Precisa ativar o ambiente antes de rodar'],
+  ['Gerar requirements.txt', 'Reprodução fácil em outro ambiente', 'Se não for atualizado, pode ficar desatualizado'],
+  ['Organizar pastas e arquivos', 'Código mais legível e fácil de manter', 'Estrutura caótica gera confusão']
+]} />
+
+<Callout type="erro-comum" title="Ambiente errado">
+  <p>Você pode ter instalado a biblioteca em um ambiente virtual diferente do projeto que está executando. O resultado é um erro típico de módulo inexistente ou comportamento inconsistente.</p>
+  <CodeBlock title="ambiente_errado.py" code={`import sys
+print(sys.executable)
+print(sys.version.split()[0])`} />
+  <p>Mensagem real: o programa mostra o executável do Python ativo no momento. Se o ambiente errado estiver selecionado, esse caminho aponta para um interpretador fora do projeto.</p>
+  <p>Correção: ativar o ambiente do projeto com o venv correto e instalar as dependências naquele mesmo ambiente.</p>
+</Callout>
+
+<Callout type="erro-comum" title="Dependência global sem controle">
+  <p>Se você instala pacotes direto no sistema e não no ambiente do projeto, o programa passa a depender do estado do computador inteiro.</p>
+  <CodeBlock title="dependencia_global.py" code={`import sys
+print(sys.executable)`} />
+  <p>Mensagem real: o programa aponta para o Python global, e não para o ambiente localizado do projeto; isso torna a execução frágil e difícil de reproduzir.</p>
+  <p>Correção: manter cada projeto em um ambiente isolado e registrar as dependências em <code>requirements.txt</code>.</p>
+</Callout>
+
+<Callout type="erro-comum" title="Requisitos desatualizados">
+  <p>Quando o arquivo de dependências não é atualizado, você pode reproduzir um ambiente antigo ou configurar o projeto de forma inconsistente.</p>
+  <CodeBlock title="requisitos_check.py" code={`with open("requirements.txt", "w", encoding="utf-8") as arquivo:
+    arquivo.write("requests==2.32.3\n")
+    arquivo.write("pandas==2.2.2\n")
+    arquivo.write("rich==13.7.1\n")
+
+with open("requirements.txt", "r", encoding="utf-8") as arquivo:
+    print(arquivo.read().splitlines()[:3])`} />
+  <p>Mensagem real:</p>
+  <pre>['requests==2.32.3', 'pandas==2.2.2', 'rich==13.7.1']</pre>
+  <p>Correção: sempre atualizar o arquivo após instalar ou remover bibliotecas e versionar o projeto junto com ele.</p>
+</Callout>
+
+## No mercado de trabalho
+
+Em qualquer time de software, o ambiente do projeto não é um detalhe de “configuração”. Ele define se o projeto roda, se ele se comporta como esperado e se alguém consegue reproduzir seu código em uma máquina nova. Desenvolvedores e analistas de dados, automação, backend e dados trabalham com ambientes virtuais como rotina.
+
+Quando você entende isso, passa a confiar mais no fluxo de trabalho profissional: separar ambiente, registrar dependências, manter versões e documentar como reinstalar tudo. Isso reduz retrabalho e melhora a colaboração. Em empresas, a pessoa que consegue “reproduzir o ambiente” costuma ser vista como alguém que resolve a parte mais dolorosa da análise e do desenvolvimento.
+
+<Quiz questions={[
+  { question: "Qual é a vantagem principal de um ambiente virtual?", options: ["Eliminar a necessidade de escrever código", "Isolar dependências do projeto", "Criar uma pasta de backup", "Trocar o Python por uma biblioteca"], correctIndex: 1, explanation: "Ambientes virtuais impedem conflitos entre versões e bibliotecas de projetos diferentes." },
+  { question: "O que o arquivo `requirements.txt` representa?", options: ["A lista de pastas do projeto", "As dependências e versões do ambiente", "Uma lista de funções do código", "O log de erros do programa"], correctIndex: 1, explanation: "O arquivo registra as bibliotecas e versões necessárias para reproduzir o ambiente." },
+  { question: "Por que não se instala tudo no ambiente global?", options: ["Porque Python não permite isso", "Porque isso mistura dependências entre projetos", "Porque o sistema fica mais rápido", "Porque o ambiente virtual não funciona"], correctIndex: 1, explanation: "Instalar globalmente pode causar conflitos de versão e deixar o projeto frágil." },
+  { question: "Qual comportamento mostra que o ambiente virtual está ativo?", options: ["A presença da variável `VIRTUAL_ENV`", "A ausência do arquivo `requirements.txt`", "A criação do diretório `src`", "O uso de funções importadas do módulo math"], correctIndex: 0, explanation: "A variável `VIRTUAL_ENV` é um sinal claro de que o ambiente virtual foi ativado." }
+]} />
 
 <Resumo>
-  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
-  <li>Teste pequenos exemplos e avalie o resultado.</li>
-  <li>Aplica a ideia em cenÃ¡rios reais para fixar o conhecimento.</li>
+  <li>Ambiente virtual separa as dependências do projeto do sistema global.</li>
+  <li>O comando `python -m venv .venv` cria esse ambiente isolado.</li>
+  <li>`pip` instala bibliotecas específicas para o contexto do projeto.</li>
+  <li>`requirements.txt` ajuda a reproduzir o ambiente em outra máquina.</li>
+  <li>A organização das pastas deixa o projeto mais compreensível e testável.</li>
+  <li>Projetos bem documentados e bem isolados são mais fáceis de manter.</li>
 </Resumo>
 
 <Desafio>
-  Aplique esse tema em um mini cenÃ¡rio do dia a dia e confirme o resultado com um cÃ³digo simples e legÃ­vel.
+  <p>Crie uma pequena estrutura de projeto em sua cabeça ou em um diretório local: uma pasta `src`, uma pasta `tests`, uma pasta para o ambiente virtual e um `requirements.txt`. Depois, escreva uma descrição curta do que cada item faz e como você garantiria que o projeto possa ser reproduzido em outra máquina.</p>
+  <p>Se você quiser praticar além disso, pense em um projeto simples com uma biblioteca externa e explique qual seria o ambiente ideal para rodá-lo.</p>
 </Desafio>
 

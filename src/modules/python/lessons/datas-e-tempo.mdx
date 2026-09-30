@@ -1,38 +1,220 @@
 ﻿---
 titulo: "Datas e tempo"
-descricao: "Manipule datas, horÃ¡rios e intervalos de tempo."
+descricao: "Manipule datas, horários e intervalos com precisão e legibilidade."
 secao: "D. Mundo real"
-ordem: 21
-tempo: 9
+ordem: 24
+topico: 14
+fase: "D"
+tempo: 31
 nivel: "intermediario"
-palavrasChave: ['datetime', 'tempo', 'data', 'timedelta']
+palavrasChave: ['datetime', 'timedelta', 'strftime', 'data', 'tempo', 'timezone']
 exercicios: []
 ---
 
 # Datas e tempo
 
-Manipule datas, horÃ¡rios e intervalos de tempo.
+Quando você trabalha com sistemas reais, a data e a hora aparecem em praticamente todas as regras de negócio: vencimentos, prazos, relatórios, agendamento, campanhas e auditoria. Em Python, o módulo `datetime` é a ferramenta principal para lidar com isso, e ele é especialmente útil porque você consegue representar datas, horas, diferenças de tempo e também formatar o resultado para mensagem humana.
 
-<Callout type="importante" title="Objetivo da aula">
-  Neste bloco, vocÃª vai entender o conceito principal, ver exemplos prÃ¡ticos e testar a lÃ³gica em pequenos passos.
+O importante aqui é separar três ideias que costumam misturar na cabeça: data, horário e diferença de tempo. Uma data representa um dia específico; um horário representa um ponto no dia; e um `timedelta` representa uma duração, como “três dias” ou “45 minutos”. Quando você entende isso, os programas ficam muito mais claros e menos propensos a erros de cálculo.
+
+<Callout type="importante" title="O que você vai aprender">
+  <ul>
+    <li>Entender o que são <Glossario termo="date" definition="Tipo que representa uma data sem hora, como 2025-02-01." /> e <Glossario termo="datetime" definition="Tipo que representa data e hora em um único objeto." />.</li>
+    <li>Usar <Glossario termo="timedelta" definition="Classe que armazena diferenças entre datas, como 2 dias ou 3 horas." /> para somar e subtrair tempo.</li>
+    <li>Formatar saídas com <Glossario termo="strftime" definition="Método que transforma uma data em texto no formato desejado." />.</li>
+    <li>Ler datas de texto com <Glossario termo="strptime" definition="Método que transforma texto em objeto de data usando um formato específico." />.</li>
+    <li>Reconhecer erros comuns ao trabalhar com fusos e formatos diferentes.</li>
+  </ul>
 </Callout>
 
-<CodeBlock title="exemplo_1.py" code={`from datetime import datetime
-print(datetime.now())`} />
-<CodeBlock title="exemplo_2.py" code={`from datetime import timedelta
-print(timedelta(days=2))`} />
-<CodeBlock title="exemplo_3.py" code={`from datetime import datetime
-print(datetime.strptime("2025-01-01", "%Y-%m-%d"))`} />
+## 1. `datetime` e `timedelta`: a base do cálculo de tempo
 
-<Quiz questions={[{ question: "Qual Ã© a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prÃ¡tica", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensÃ£o e aplicaÃ§Ã£o prÃ¡tica." }, { question: "Qual hÃ¡bito Ã© mais Ãºtil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o cÃ³digo"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prÃ¡tica em Python?", options: ["clareza e execuÃ§Ã£o", "complexidade por padrÃ£o", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execuÃ§Ã£o objetiva." }]} />
+O ponto de partida é criar objetos de data e hora em Python. Em vez de depender do momento atual do sistema em todos os testes, você usa valores fixos e previsíveis. Isso facilita muito o raciocínio e também evita a armadilha de testar um programa em horário ou data diferentes do que foi previsto.
+
+A operação mais comum é a diferença entre duas datas. Quando você subtrai um `datetime` de outro, o resultado é um `timedelta`. Isso permite calcular “quantos dias faltam” ou “a diferença entre dois horários”.
+
+<CodeBlock title="data_e_diferenca.py" code={`from datetime import datetime, timedelta
+
+inicio = datetime(2025, 3, 1, 9, 30)
+fim = datetime(2025, 3, 5, 18, 15)
+diferenca = fim - inicio
+
+print(diferenca)
+print("Dias:", diferenca.days)
+print("Horas:", diferenca.seconds // 3600)
+print("Soma de 2 dias:", inicio + timedelta(days=2))`} />
+
+Saída esperada:
+
+```text
+4 days, 8:45:00
+Dias: 4
+Horas: 8
+Soma de 2 dias: 2025-03-03 09:30:00
+```
+
+Veja que a diferença entre as datas é uma duração de 4 dias e 8 horas e 45 minutos. Em Python, `timedelta` guarda isso como um intervalo e você pode operar com ele como se fosse uma quantidade de tempo. Isso é muito útil em cálculos de prazo, vencimento, faturamento em datas e qualquer sistema que dependa de tempo real.
+
+## 2. `strftime` e `strptime`: texto e data em formatos diferentes
+
+Uma parte muito importante de trabalhar com datas é a conversão entre texto e objetos. O método `strftime` transforma uma data em uma string com o formato solicitado. Já `strptime` faz o caminho inverso: uma string com data e hora vira objeto `datetime`.
+
+Esse processo aparece em aplicações reais em que a data vem de um banco de dados, de um arquivo CSV, de uma API ou da entrada do usuário. Não é raro receber algo como `"25/08/2025"` ou `"2025-08-25T14:30:00"` e precisar transformar em um objeto que você consegue comparar e calcular.
+
+<CodeBlock title="formatar_e_ler_data.py" code={`from datetime import datetime
+
+vencimento = datetime(2025, 8, 25, 14, 30)
+print(vencimento.strftime("%d/%m/%Y %H:%M"))
+
+texto = "25/08/2025 14:30"
+objeto = datetime.strptime(texto, "%d/%m/%Y %H:%M")
+print(objeto)
+print(objeto.strftime("%Y-%m-%d"))`} />
+
+Saída esperada:
+
+```text
+25/08/2025 14:30
+2025-08-25 14:30:00
+2025-08-25
+```
+
+A diferença entre `strftime` e `strptime` é simples: um transforma objeto em texto e o outro transforma texto em objeto. Isso é o coração da manipulação de data em sistemas reais. Quando o formato é incompatível, a leitura falha, e isso é exatamente quando o erro de parsing aparece.
+
+<Playground title="Experimente: formatar uma data para texto" code={`from datetime import datetime
+
+entrega = datetime(2026, 1, 15, 9, 0)
+print(entrega.strftime("Dia: %d | Mês: %B | Ano: %Y"))
+print(entrega.strftime("%A, %d de %B de %Y"))`} />
+
+## 3. Comparando datas, calculando prazos e isso é o que importa
+
+Depois que você atinge um objeto de data ou hora correto, consegue comparar e calcular prazos. Isso pode ser tão simples quanto descobrir quantos dias faltam para uma entrega ou somar 30 dias para um vencimento. A vantagem é que você deixa a lógica explícita e o programa não depende do “momento em que o computador está funcionando”.
+
+Esse uso é extremamente comum em sistemas de cobrança, calendário, controles de pedidos e relatórios financeiros. Você não precisa que a data seja “agora”; você precisa que ela siga a regra de negócio do problema.
+
+<CodeBlock title="prazo_e_vencimento.py" code={`from datetime import datetime, timedelta
+
+entrega = datetime(2025, 12, 20)
+hoje = datetime(2025, 12, 10)
+
+dias_restantes = (entrega - hoje).days
+print("Dias restantes:", dias_restantes)
+
+vencimento = hoje + timedelta(days=30)
+print("Vencimento:", vencimento.strftime("%d/%m/%Y"))`} />
+
+Saída esperada:
+
+```text
+Dias restantes: 10
+Vencimento: 09/01/2026
+```
+
+Aqui fica visível que a lógica de datas é simples quando você faz a distinção entre “valor concreto” e “intervalo”. Uma data pode ser um ponto fixo, e o `timedelta` representa o deslocamento até esse ponto. Isso é uma forma muito prática de construir regras como “falta 10 dias”, “renova em 30 dias” ou “vencimento do próximo mês”.
+
+## 4. Fuso horário e atenção aos tipos
+
+Um erro muito comum é misturar objetos de data com e sem timezone. Em Python, `datetime` pode ser “sem fuso” ou “com fuso”. A diferença é importante, porque você não pode somar ou subtrair facilmente datas em zonas diferentes sem convertê-las para uma referência comum.
+
+Isso aparece em sistemas internacionais e em aplicações que precisam lidar com UTC, horários locais e conversões para exibição. A ideia principal é: ao trabalhar com fuso, você precisa escolher uma base e manter a conversão clara. Em projetos menores, muitas vezes basta usar datas locais e evitar a complexidade de timezone até o momento em que ela realmente existir.
+
+<CodeBlock title="timezone_basico.py" code={`from datetime import datetime, timezone
+
+utc = datetime(2025, 1, 1, 12, 0, tzinfo=timezone.utc)
+print(utc.isoformat())
+print(utc.astimezone())`} />
+
+Saída esperada:
+
+```text
+2025-01-01T12:00:00+00:00
+2025-01-01T09:00:00-03:00
+```
+
+Esse exemplo mostra que a data mantém o offset do fuso. A informação é clara e pode ser convertida para outro fuso quando necessário. O ponto crítico é não misturar `datetime` sem timezone com `datetime` com timezone em um cálculo sem converter antes.
+
+<StepThrough>
+  <div>
+    <strong>Passo 1:</strong> você cria uma data ou horário específico com um ponto de referência fixo, em vez de depender do momento atual do sistema.
+  </div>
+  <div>
+    <strong>Passo 2:</strong> você transforma esse valor em texto com `strftime` ou em objeto com `strptime` conforme a necessidade do programa.
+  </div>
+  <div>
+    <strong>Passo 3:</strong> você usa `timedelta` para somar ou subtrair intervalos e descobrir diferença entre datas.
+  </div>
+  <div>
+    <strong>Passo 4:</strong> ao final, a lógica fica previsível e você consegue comparar datas com segurança e clareza.
+  </div>
+</StepThrough>
+
+<Tabela data={[
+  ['Tipo', 'Representa', 'Uso típico', 'Exemplo'],
+  ['date', 'uma data', 'aniversário, vencimento', '2025-06-15'],
+  ['datetime', 'data + hora', 'agendamento, logs, relatórios', '2025-06-15 10:00:00'],
+  ['timedelta', 'intervalo de tempo', 'diferença entre datas', '3 dias, 2 horas'],
+  ['timezone', 'fuso horário', 'sistemas internacionais', 'UTC-03:00']
+]} />
+
+<Callout type="erro-comum" title="Formatos divergentes">
+  <p>Quando você recebe texto em um formato diferente do esperado, `strptime` pode falhar e lançar `ValueError`.</p>
+  <CodeBlock title="formato_errado.py" code={`from datetime import datetime
+
+texto = "2025/08/25"
+print(datetime.strptime(texto, "%d/%m/%Y"))`} />
+  <p>Mensagem real:</p>
+  <pre>ValueError: time data '2025/08/25' does not match format '%d/%m/%Y'</pre>
+  <p>Correção: usar o formato do texto recebido e converter de acordo com a mesma estrutura.</p>
+</Callout>
+
+<Callout type="erro-comum" title="Misturar data e string">
+  <p>Você não pode somar ou subtrair uma string de uma data; isso gera erro de tipos e interrompe a execução.</p>
+  <CodeBlock title="operacao_invalida.py" code={`from datetime import datetime, timedelta
+
+vencimento = datetime(2025, 6, 10)
+print(vencimento + "7 dias")`} />
+  <p>Mensagem real:</p>
+  <pre>TypeError: unsupported operand type(s) for +: 'datetime.datetime' and 'str'</pre>
+  <p>Correção: transformar a string em `timedelta` ou em `datetime` usando o formato adequado antes da operação.</p>
+</Callout>
+
+<Callout type="erro-comum" title="Timezone misturado">
+  <p>Se você compara `datetime` com timezone sem padronizar o fuso, o cálculo pode ficar inconsistente.</p>
+  <CodeBlock title="timezone_misturado.py" code={`from datetime import datetime, timezone
+
+local = datetime(2025, 1, 1, 9, 0)
+utc = datetime(2025, 1, 1, 12, 0, tzinfo=timezone.utc)
+print(local - utc)`} />
+  <p>Mensagem real:</p>
+  <pre>TypeError: can't subtract offset-naive and offset-aware datetimes</pre>
+  <p>Correção: padronizar os dois valores para o mesmo tipo de timezone antes de subtrair.</p>
+</Callout>
+
+## No mercado de trabalho
+
+Datas e tempo são essenciais em quase todo produto digital: controle de cadastro, envio de e-mails, cobrança, vendas, agendamento de tarefas, relatórios e integração com sistemas de banco de dados. Em muitos casos, o maior custo de um sistema não está na parte de interface, mas nas regras de tempo: “qual é o prazo?”, “qual foi a data da última atualização?”, “em que faixa esse pedido caiu?”, “qual foi o intervalo entre duas ocorrências?”.
+
+Essa é uma área em que Python é muito forte, porque ele oferece uma API clara e direta para cálculo de datas, comparação e formatação. Em empresas, essa combinação de clareza e precisão é extremamente valorizada. Quem domina datas e tempo consegue reduzir bugs em regras de negócio, melhorar relatórios e criar sistemas muito mais confiáveis.
+
+<Quiz questions={[
+  { question: "Qual é a diferença entre `date` e `datetime`?", options: ["Não há diferença; ambos representam hora", "`date` guarda só a data, `datetime` guarda data e hora", "`datetime` só serve para tempo, `date` serve para texto", "`date` não existe em Python"], correctIndex: 1, explanation: "`date` representa só a parte da data, enquanto `datetime` inclui hora e pode usar timezone." },
+  { question: "O que `timedelta` representa?", options: ["A representação de um mês", "Uma duração de tempo, como 2 dias ou 3 horas", "O formato do texto da data", "A zona do sistema operacional"], correctIndex: 1, explanation: "`timedelta` representa deslocamento de tempo entre dois valores de data e hora." },
+  { question: "Qual método transforma uma data em texto conforme um formato?", options: ["`strptime`", "`strftime`", "`replace`", "`isoformat`"], correctIndex: 1, explanation: "`strftime` é usado para formatar um objeto de data em string com o padrão desejado." },
+  { question: "Qual é o problema do código que mistura `datetime` com e sem timezone?", options: ["Não existe problema", "A operação pode falhar por incompatibilidade de tipos", "Ele sempre converte para string", "O programa ignora o timezone"], correctIndex: 1, explanation: "Objetos com timezone e sem timezone são tipos diferentes e precisam ser padronizados antes de operar." }
+]} />
 
 <Resumo>
-  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
-  <li>Teste pequenos exemplos e avalie o resultado.</li>
-  <li>Aplica a ideia em cenÃ¡rios reais para fixar o conhecimento.</li>
+  <li>Python representa datas e horários com `date` e `datetime`.</li>
+  <li>`timedelta` calcula diferenças e intervalos de tempo de forma simples.</li>
+  <li>`strftime` formata data para texto; `strptime` converte texto em data.</li>
+  <li>Comparar datas e prazos é uma rotina essencial em sistemas reais.</li>
+  <li>Timezone e formatação corretas são fundamentais para evitar bugs silenciosos.</li>
+  <li>Regras de negócio com tempo ficam muito mais confiáveis quando a data é tratada com clareza.</li>
 </Resumo>
 
 <Desafio>
-  Aplique esse tema em um mini cenÃ¡rio do dia a dia e confirme o resultado com um cÃ³digo simples e legÃ­vel.
+  <p>Escolha uma regra de negócio real, como aniversário, prazo de entrega, vencimento de boleto ou prazo de resposta, e escreva um breve algoritmo em Python que calcule o tempo restante. Use datas fixas, formate a saída para texto e explique por que o cálculo depende de `timedelta` e de `strftime`.</p>
+  <p>Se quiser avançar, pense em como essa lógica seria usada em um sistema de cobrança ou em um calendário de tarefas.</p>
 </Desafio>
 
