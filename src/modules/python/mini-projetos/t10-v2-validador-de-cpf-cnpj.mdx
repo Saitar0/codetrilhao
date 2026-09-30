@@ -1,0 +1,174 @@
+---
+titulo: "Validador de CPF e CNPJ"
+descricao: "Crie funções para limpar máscara, calcular dígitos verificadores e validar documentos brasileiros com regras bem separadas."
+topico: "funcoes"
+topicoNome: "Funções"
+variacao: "V2"
+tempo: 35
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "funcoes", "validacao", "cpf", "cnpj", "documentos"]
+---
+
+# Validador de CPF e CNPJ
+
+## Contexto
+Uma equipe de atendimento precisa validar documentos rapidamente antes de liberar cadastros em um sistema interno. O problema não é só aceitar um número: o programa precisa rejeitar sequências repetidas, formatar corretamente e separar cada etapa da validação em funções. Esse é um cenário clássico de regra de negócio em Python.
+
+## O que você vai construir
+Um validador de CPF e CNPJ com funções dedicadas para limpar máscara, validar tamanho, detectar sequências repetidas, calcular dígitos verificadores e formatar a saída. Você vai organizar a lógica em blocos, de modo que cada parte da regra fique fácil de testar.
+
+Exemplo de execução real:
+
+```text
+CPF: 529.982.247-25 => válido
+CPF: 111.111.111-11 => inválido
+CNPJ: 12.345.678/0001-95 => válido
+CNPJ: 11.111.111/1111-11 => inválido
+```
+
+## Requisitos
+1. Crie uma função para remover pontuação e deixar só números.
+2. Rejeite CPFs e CNPJs com comprimento inválido.
+3. Rejeite sequências repetidas como `111.111.111-11` ou `11.111.111/1111-11`.
+4. Calcule os dígitos verificadores em funções separadas.
+5. Crie uma função que formata o valor para mostrar CPF e CNPJ legíveis.
+6. Faça a validação final com retorno booleano (`True` ou `False`).
+
+## Critérios de aceite
+- [ ] A máscara é removida antes da validação.
+- [ ] CPFs e CNPJs com sequência repetida são rejeitados.
+- [ ] Cada etapa da regra está em uma função diferente.
+- [ ] A saída final mostra se o documento é válido ou inválido.
+- [ ] O aluno consegue explicar por que separar cálculo e validação deixa a regra mais confiável.
+- [ ] O código trata corretamente documentos válidos e inválidos em diferentes cenários.
+
+## Guia
+### Marcos do projeto
+1. Crie uma função `limpar_mascara` para transformar qualquer entrada em uma string numericamente limpa.
+2. Implemente a validação de tamanho e rejeição de sequências repetidas antes de calcular dígitos.
+3. Crie a rotina para gerar o primeiro e o segundo dígito verificador do CPF ou do CNPJ.
+4. Monte a função principal `validar_cpf` e `validar_cnpj` com retorno booleano.
+5. Formate a saída final para exibir o documento no padrão brasileiro.
+
+### Dicas
+- O cálculo dos dígitos verificadores é sequencial: primeiro a base, depois o primeiro dígito, depois o segundo dígito.
+- Sequência repetida é um caso clássico de documento inválido e não deve passar pela regra de cálculo.
+- Evite misturar limpeza, validação e formatação em uma única função; isso reduz erros e facilita testes.
+- Teste um caso válido e um inválido antes de generalizar a solução.
+
+<Callout type="importante" title="Regra de negócio">
+Documentos com máscara, pontos e traços ainda são números em essência. A validação precisa limpar a entrada, verificar a estrutura e só então calcular os dígitos verificadores.
+</Callout>
+
+<Playground title="Ponto de partida" code={`def limpar_mascara(valor):
+    # remove pontos, traços e barras
+    pass
+
+
+def eh_sequencia_repetida(numero):
+    # rejeita 111.111.111-11 e 11.111.111/1111-11
+    pass
+
+
+def validar_cpf(valor):
+    # limpar, validar tamanho e calcular dígitos
+    pass
+
+
+def validar_cnpj(valor):
+    # limpar, validar tamanho e calcular dígitos
+    pass
+
+
+def formatar_cpf(valor):
+    # devolve "XXX.XXX.XXX-XX"
+    pass
+
+
+def formatar_cnpj(valor):
+    # devolve "XX.XXX.XXX/XXXX-XX"
+    pass`} />
+
+## Desafio extra
+Crie uma função que gere documentos válidos para testes automatizados. Isso ajuda a praticar cálculos, regras de negócio e a diferença entre um documento real e um número gerado apenas para cenário de teste.
+
+## Visão de mercado
+Sistemas financeiros, RH, e-commerce, revisão de cadastro e processos de compliance usam esse tipo de validação todos os dias. Qualquer cadastro que aceite CPF, CNPJ ou documento internacional normalmente passa por regras como essas antes de liberar um usuário ou enviar uma transação.
+
+## Autoavaliação
+- [ ] Separo limpeza de máscara da validação real do documento.
+- [ ] Rejeitei sequências repetidas corretamente.
+- [ ] Calculei os dígitos verificadores em funções próprias.
+- [ ] Testei ao menos um caso válido e um inválido.
+- [ ] Entendo por que a validação em etapas reduz o risco de erro.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+# -*- coding: utf-8 -*-
+
+def limpar_mascara(valor: str) -> str:
+    return "".join(ch for ch in valor if ch.isdigit())
+
+
+def eh_sequencia_repetida(numero: str) -> bool:
+    return len(set(numero)) == 1
+
+
+def calcular_digito(numero, pesos):
+    total = sum(int(digito) * peso for digito, peso in zip(numero, pesos))
+    resto = total % 11
+    return "0" if resto < 2 else str(11 - resto)
+
+
+def validar_cpf(valor: str) -> bool:
+    cpf = limpar_mascara(valor)
+    if len(cpf) != 11 or not cpf.isdigit() or eh_sequencia_repetida(cpf):
+        return False
+
+    parte_inicial = cpf[:9]
+    d1 = calcular_digito(parte_inicial, list(range(10, 1, -1)))
+    d2 = calcular_digito(parte_inicial + d1, list(range(11, 1, -1)))
+    return cpf == parte_inicial + d1 + d2
+
+
+def validar_cnpj(valor: str) -> bool:
+    cnpj = limpar_mascara(valor)
+    if len(cnpj) != 14 or not cnpj.isdigit() or eh_sequencia_repetida(cnpj):
+        return False
+
+    parte_inicial = cnpj[:12]
+    pesos_1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
+    pesos_2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
+    d1 = calcular_digito(parte_inicial, pesos_1)
+    d2 = calcular_digito(parte_inicial + d1, pesos_2)
+    return cnpj == parte_inicial + d1 + d2
+
+
+def formatar_cpf(valor: str) -> str:
+    cpf = limpar_mascara(valor)
+    return f"{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"
+
+
+def formatar_cnpj(valor: str) -> str:
+    cnpj = limpar_mascara(valor)
+    return f"{cnpj[:2]}.{cnpj[2:5]}.{cnpj[5:8]}/{cnpj[8:12]}-{cnpj[12:]}"
+
+
+for valor in ["529.982.247-25", "111.111.111-11"]:
+    print(f"CPF: {formatar_cpf(valor)} => {'válido' if validar_cpf(valor) else 'inválido'}")
+for valor in ["12.345.678/0001-95", "11.111.111/1111-11"]:
+    print(f"CNPJ: {formatar_cnpj(valor)} => {'válido' if validar_cnpj(valor) else 'inválido'}")
+```
+
+Saída real com execução:
+
+```text
+CPF: 529.982.247-25 => válido
+CPF: 111.111.111-11 => inválido
+CNPJ: 12.345.678/0001-95 => válido
+CNPJ: 11.111.111/1111-11 => inválido
+```
+</details>

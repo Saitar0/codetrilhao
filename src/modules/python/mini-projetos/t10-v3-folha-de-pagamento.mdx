@@ -1,0 +1,212 @@
+---
+titulo: "Folha de pagamento"
+descricao: "Crie um sistema simples de holerite com cálculos de INSS, IRRF e salário líquido para uma equipe de colaboradores."
+topico: "funcoes"
+topicoNome: "Funções"
+variacao: "V3"
+tempo: 40
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "funcoes", "folha", "salario", "inss", "irrf"]
+---
+
+# Folha de pagamento
+
+## Contexto
+Uma pequena empresa de consultoria precisa montar o holerite de seus funcionários para a próxima rodada de pagamentos. O time quer saber qual será o valor líquido, quanto será descontado de INSS e IRRF, e como cada cálculo fica organizado sem misturar regras de negócio com apresentação. O cliente pediu uma solução enxuta, mas pronta para evoluir.
+
+## O que você vai construir
+Um sistema de folha de pagamento simplificado, com funções para calcular INSS, IRRF, salário líquido e apresentar o resultado final em formato legível. A ideia é organizar cada regra em um bloco separado e mostrar o cálculo para cada colaborador sem misturar a lógica de cálculo com a parte visual.
+
+Exemplo de execução real:
+
+```text
+=== Folha de pagamento ===
+Ana: bruto=R$ 5,000.00 | INSS=R$ 464.27 | IRRF=R$ 243.18 | líquido=R$ 4,492.55
+Bruno: bruto=R$ 3,200.00 | INSS=R$ 268.47 | IRRF=R$ 40.53 | líquido=R$ 2,991.00
+```
+
+## Requisitos
+1. Armazene os dados do colaborador em dicionários ou em estruturas simples e organizadas.
+2. Crie uma função para calcular o INSS com base em uma tabela simplificada.
+3. Crie uma função para calcular o IRRF com tabela de alíquotas e deduções.
+4. Crie uma função para calcular o salário líquido final.
+5. Formate valores monetários com padrão brasileiro (`R$ 1.234,56`).
+6. Mantenha todas as regras em constantes ou funções, sem números mágicos soltos no código.
+
+## Critérios de aceite
+- [ ] Cada cálculo principal está em uma função separada.
+- [ ] Os dados do colaborador são tratados de forma organizada.
+- [ ] O código usa constantes ou estruturas de tabela para os percentuais.
+- [ ] A saída mostra bruto, descontos e líquido por pessoa.
+- [ ] O aluno consegue explicar por que separar regra de cálculo e apresentação ajuda na manutenção.
+- [ ] O programa continua legível mesmo quando mais funcionários forem adicionados.
+
+## Histórias de usuário
+- Como gestor, quero ver o salário bruto de cada colaborador e os descontos envolvidos.
+- Como financeiro, quero calcular INSS e IRRF de forma consistente para cada cargo e faixa.
+- Como RH, quero um holerite legível para comunicar o pagamento sem confusão.
+- Como dono da empresa, quero reduzir erros e facilitar o auditoria do cálculo final.
+
+## Arquitetura sugerida
+- `calcular_inss(salario)` para aplicar a tabela simplificada de contribuições.
+- `calcular_irrf(base, dependentes)` para calcular a tributação sobre o salário líquido ajustado.
+- `calcular_liquido(salario, dependentes, beneficios)` para combinar os cálculos e devolver o valor final.
+- `formatar_moeda(valor)` para ler melhor os valores em tela.
+- `funcionarios` como lista de dicionários com dados do time.
+- `main()` para iterar por cada colaborador e mostrar o holerite.
+
+## Casos de teste de aceitação
+- Salário abaixo do teto do INSS: deve mostrar desconto proporcional correto.
+- Dependentes e benefícios: devem alterar a base de cálculo de maneira esperada.
+- Salário zero ou negativo: deve ser rejeitado ou tratado como entrada inválida.
+- A apresentação em reais deve usar o formato brasileiro e manter duas casas decimais.
+- Funcionários com valores diferentes: cada item deve trazer resultado independente.
+
+## Riscos
+- Misturar discount tables e regras de exibição pode gerar resultados inconsistentes.
+- Entradas sem validação podem quebrar o cálculo e a auditoria do holerite.
+- Números mágicos espalhados pelo código deixam o sistema difícil de revisar por terceiros.
+- Sem uma estrutura organizada, qualquer nova regra de benefício ou imposto aumenta muito o custo de manutenção.
+
+## Guia
+### História do cliente
+O cliente quer um protótipo funcional e claro. Ele não precisa de um sistema completo de folha, mas quer algo que mostre como a lógica pode ser separada em funções, documentada e fácil de evoluir para regras reais de caixa, benefícios e imposto.
+
+### Marcos do projeto
+1. Defina as tabelas de INSS e IRRF em constantes ou listas de tuplas.
+2. Organize a lógica em funções pequenas: cálculo do INSS, cálculo do IRRF, cálculo do líquido.
+3. Estruture o conjunto de funcionários em uma lista de dicionários.
+4. Formate o valor monetário com duas casas decimais e o símbolo do real.
+5. Revise um caso com dependentes, outro sem dependentes e um com benefício extra.
+
+### Dicas
+- Tabelas em listas de tuplas funcionam bem para regras discretas de porcentagem e faixas.
+- A base para IRRF normalmente considera salário, INSS e dependentes. Isso deixa a regra mais próxima do que a empresa usa na prática.
+- Quando a lógica começa a crescer, separar a apresentação da regra de cálculo reduz erros e acelera testes.
+- Evite números soltos no código; os valores ficam mais legíveis quando você os guarda em constantes.
+
+<Callout type="importante" title="Regra de negócio">
+Regra de negócio bem isolada em funções é a base de qualquer sistema de folha de pagamento. Isso permite auditar cada cálculo, facilitar ajustes e manter o código legível para o time de finanças.
+</Callout>
+
+<Playground title="Ponto de partida" code={`INSS_TABELA = [
+    (1302.00, 0.075),
+    (2571.29, 0.09),
+]
+
+IRRF_TABELA = [
+    (2112.00, 0.0, 0.0),
+    (2826.65, 0.075, 158.40),
+]
+
+
+def calcular_inss(salario):
+    # aplica a tabela simplificada do INSS
+    pass
+
+
+def calcular_irrf(base, dependentes):
+    # calcula o imposto a pagar com tabela simplificada
+    pass
+
+
+def calcular_liquido(salario, dependentes, beneficios):
+    # combina INSS, IRRF e benefícios
+    pass
+
+
+def formatar_moeda(valor):
+    # devolve "R$ 1.234,56"
+    pass
+
+# monte a lista de funcionarios e imprima o holerite`} />
+
+## Desafio extra
+Adicione uma visão geral por departamento, mostrando soma do salário bruto, total de descontos e total líquido do time. Essa extensão prepara o aluno para pensar em relatórios de gestão, que são muito comuns no mercado financeiro e em RH.
+
+## Visão de mercado
+Folha de pagamento, benefícios, imposto, gerenciamento de pessoal e relatórios de custos são processos muito comuns em pequenas e grandes empresas. Quando a regra de negócio é bem separada em funções, o sistema fica muito mais fácil de auditar, evoluir e manter conforme a empresa cresce.
+
+## Autoavaliação
+- [ ] Separo cada regra de cálculo em funções próprias.
+- [ ] Mantive as tabelas em um lugar organizado.
+- [ ] Calculei INSS e IRRF sem misturar lógica de apresentação.
+- [ ] Formatei os valores em moeda com padrão brasileiro.
+- [ ] Entendo por que regras de negócio isoladas são importantes em sistemas reais.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+# -*- coding: utf-8 -*-
+
+INSS_TABELA = [
+    (1302.00, 0.075),
+    (2571.29, 0.09),
+    (3856.94, 0.12),
+    (7507.49, 0.14),
+]
+
+IRRF_TABELA = [
+    (2112.00, 0.0, 0.0),
+    (2826.65, 0.075, 158.40),
+    (3751.05, 0.15, 370.40),
+    (4664.68, 0.225, 651.73),
+    (float("inf"), 0.275, 884.96),
+]
+
+
+def calcular_inss(salario: float) -> float:
+    valor = 0.0
+    restante = salario
+    for teto, aliquota in INSS_TABELA:
+        if restante <= 0:
+            break
+        faixa = min(restante, teto)
+        valor += faixa * aliquota
+        restante -= faixa
+    return valor
+
+
+def calcular_irrf(base: float, dependentes: int = 0) -> float:
+    base_liquida = base - dependentes * 189.59
+    for teto, aliquota, deducao in IRRF_TABELA:
+        if base_liquida <= teto:
+            return max(0.0, base_liquida * aliquota - deducao)
+    return 0.0
+
+
+def calcular_liquido(salario: float, dependentes: int = 0, beneficios: float = 0.0) -> float:
+    inss = calcular_inss(salario)
+    base = salario - inss - dependentes * 189.59 + beneficios
+    irrf = calcular_irrf(base, dependentes)
+    return salario - inss - irrf + beneficios
+
+
+def formatar_moeda(valor):
+    return f"R$ {valor:,.2f}"
+
+
+funcionarios = [
+    {"nome": "Ana", "salario": 5000.00, "dependentes": 2, "beneficios": 200.00},
+    {"nome": "Bruno", "salario": 3200.00, "dependentes": 1, "beneficios": 100.00},
+]
+
+print("=== Folha de pagamento ===")
+for func in funcionarios:
+    inss = calcular_inss(func["salario"])
+    base = func["salario"] - inss - func["dependentes"] * 189.59 + func["beneficios"]
+    irrf = calcular_irrf(base, func["dependentes"])
+    liquido = func["salario"] - inss - irrf + func["beneficios"]
+    print(f"{func['nome']}: bruto={formatar_moeda(func['salario'])} | INSS={formatar_moeda(inss)} | IRRF={formatar_moeda(irrf)} | líquido={formatar_moeda(liquido)}")
+```
+
+Saída real com execução:
+
+```text
+=== Folha de pagamento ===
+Ana: bruto=R$ 5,000.00 | INSS=R$ 464.27 | IRRF=R$ 243.18 | líquido=R$ 4,492.55
+Bruno: bruto=R$ 3,200.00 | INSS=R$ 268.47 | IRRF=R$ 40.53 | líquido=R$ 2,991.00
+```
+</details>

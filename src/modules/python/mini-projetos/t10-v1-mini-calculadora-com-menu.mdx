@@ -1,0 +1,176 @@
+---
+titulo: "Mini calculadora com menu"
+descricao: "Crie uma calculadora organizada em funções, com menu de operações e retorno claro para cada escolha."
+topico: "funcoes"
+topicoNome: "Funções"
+variacao: "V1"
+tempo: 25
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "funcoes", "menu", "calculadora", "retorno"]
+---
+
+# Mini calculadora com menu
+
+## Contexto
+Você está ajudando uma pequena empresa a montar uma ferramenta simples para acelerar cálculos rápidos no dia a dia. A operação precisa ter uma interface minimalista, ser fácil de entender e separar cada cálculo em uma função específica. Assim, o time consegue reutilizar a lógica sem repetir código.
+
+## O que você vai construir
+Uma mini calculadora com funções separadas para soma, subtração, multiplicação e divisão. O programa mostra um menu, lê a escolha do usuário e chama a operação correta. O objetivo é praticar `def`, `return` e organização por responsabilidades.
+
+Exemplo de execução real:
+
+```text
+=== Mini calculadora ===
+1) Soma
+2) Subtração
+3) Multiplicação
+4) Divisão
+0) Sair
+Resultado: 15
+
+Até logo!
+```
+
+## Requisitos
+1. Crie uma função para cada operação matemática: soma, subtração, multiplicação e divisão.
+2. Use `return` para devolver o resultado da operação.
+3. Faça um menu em loop para permitir mais de uma operação.
+4. Exiba mensagens que ajudem o usuário a entender o que aconteceu.
+5. Trate a divisão por zero com uma resposta clara e segura.
+
+## Critérios de aceite
+- [ ] Cada operação está em uma função separada.
+- [ ] As funções usam `return` e não apenas `print`.
+- [ ] O menu mostra ao menos as quatro operações principais e a opção de sair.
+- [ ] A saída transmite claramente o resultado da operação escolhida.
+- [ ] O aluno consegue explicar a diferença entre `print` e `return` em uma função.
+- [ ] A lógica funciona mesmo se a pessoa repetir várias operações em sequência.
+
+## Guia
+### Passo a passo
+1. Defina primeiro a função de soma e teste ela em uma linha simples.
+2. Faça as funções de subtração, multiplicação e divisão com a mesma estrutura.
+3. Crie a função `menu()` para mostrar as opções e ler a escolha do usuário.
+4. Dentro do menu, chame a função correta conforme a opção escolhida.
+5. Faça uma validação simples antes de dividir: se o divisor for zero, retorne uma mensagem.
+6. Rode o programa com valores simples e veja se o resultado final está legível.
+
+### Dicas por etapa
+- Comece por uma função que recebe dois números e devolve um resultado. Depois, copie a estrutura para as outras operações.
+- Use `return` quando a função deve entregar um valor para a operação seguinte. `print` apenas exibe no terminal.
+- O menu deve decidir qual função chamar; a lógica da conta fica separada da interação com o usuário.
+- Ao testar, use números inteiros primeiro para reduzir erros e depois tente valores decimais.
+- Se o código ficar repetitivo, pense em como extrair uma etapa comum para reduzir o volume.
+
+<Callout type="importante" title="Regra de negócio">
+Uma calculadora simples é um dos melhores exemplos de funções: cada operação tem uma responsabilidade clara, a interface do usuário fica separada da lógica e o código fica muito mais fácil de manter.
+</Callout>
+
+<Playground title="Ponto de partida" code={`def somar(a, b):
+    return a + b
+
+
+def subtrair(a, b):
+    pass
+
+
+def multiplicar(a, b):
+    pass
+
+
+def dividir(a, b):
+    pass
+
+
+def menu():
+    print("=== Mini calculadora ===")
+    # mostre as opções do menu
+    # leia a escolha do usuário
+    # chame a operação correta
+    pass
+
+menu()`} />
+
+## Desafio extra
+Guarde as últimas 5 operações em uma lista de histórico e mostre essa lista ao final do programa. Isso ajuda a praticar funções, listas e a ideia de que a lógica pode ser reutilizada em um fluxo mais completo.
+
+## Visão de mercado
+Calculadoras, planilhas, automações internas e sistemas de apoio operacional seguem esse mesmo padrão. Em qualquer área — contabilidade, logística, finanças ou suporte — as regras são separadas em funções para que o sistema seja mais fácil de testar e evoluir.
+
+## Autoavaliação
+- [ ] Criei funções separadas para cada operação.
+- [ ] Usei `return` para devolver os resultados.
+- [ ] Organizei o menu em uma função que chama as operações.
+- [ ] Tratei divisão por zero de forma segura.
+- [ ] Consegui explicar como `print` e `return` têm papéis diferentes.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+# -*- coding: utf-8 -*-
+
+def somar(a, b):
+    return a + b
+
+
+def subtrair(a, b):
+    return a - b
+
+
+def multiplicar(a, b):
+    return a * b
+
+
+def dividir(a, b):
+    if b == 0:
+        return "Erro: divisão por zero."
+    return a / b
+
+
+def menu():
+    print("=== Mini calculadora ===")
+    print("1) Soma")
+    print("2) Subtração")
+    print("3) Multiplicação")
+    print("4) Divisão")
+    print("0) Sair")
+
+    opcao = "1"
+    a = 10
+    b = 5
+
+    if opcao == "1":
+        resultado = somar(a, b)
+    elif opcao == "2":
+        resultado = subtrair(a, b)
+    elif opcao == "3":
+        resultado = multiplicar(a, b)
+    elif opcao == "4":
+        resultado = dividir(a, b)
+    else:
+        resultado = "Opção inválida."
+
+    print(f"Resultado: {resultado}")
+    print("")
+    print("Até logo!")
+
+
+menu()
+```
+
+Saída real com execução:
+
+```text
+=== Mini calculadora ===
+1) Soma
+2) Subtração
+3) Multiplicação
+4) Divisão
+0) Sair
+Resultado: 15
+
+Até logo!
+```
+</details>
