@@ -1,54 +1,92 @@
 ---
 titulo: "Adivinhe o número"
-descricao: "Crie um jogo que sorteia um número e dá dicas ao jogador."
+descricao: "Crie um jogo com sorteio, dicas e limite de tentativas usando loops e condições em um fluxo seguro."
 topico: "loops"
 topicoNome: "Loops"
 variacao: "V2"
 tempo: 25
 nivel: "iniciante"
 execucao: "navegador"
-palavrasChave: ["python", "loops", "random", "jogo"]
+palavrasChave: ["python", "loops", "random", "jogo", "tentativas"]
 ---
 
 # Adivinhe o número
 
 ## Contexto
-Você quer criar um jogo simples em que o computador escolhe um número e o jogador tenta descobrir com dicas ao longo das tentativas.
+Você foi contratado para criar um mini jogo para uma plataforma de aprendizagem. O objetivo é tornar a lógica de adivinhação divertida, mas também clara: o computador escolhe um número, o jogador tenta várias vezes e recebe dicas sobre se o valor é maior ou menor.
 
 ## O que você vai construir
-Um mini jogo de adivinhação com sorteio aleatório, comparação de valores e feedback para o jogador.
+Um jogo em que o computador sorteia um número entre 1 e 100, o usuário tenta adivinhar e recebe feedback até acertar ou atingir o limite de tentativas. A ideia é praticar `while`, condição de parada e contador de tentativas em um cenário de decisão simples.
+
+Exemplo de execução real:
+
+```text
+Adivinhe o número (1 a 100)
+Tentativa 1: 50
+O número é menor.
+Tentativa 2: 25
+O número é maior.
+Tentativa 3: 35
+Parabéns! Você acertou em 3 tentativas.
+```
 
 ## Requisitos
-- Gerar um número aleatório.
-- Receber a tentativa do jogador.
-- Dar dicas do tipo "maior" ou "menor".
-- Encerrar quando o jogador acertar.
+1. Sortear um número aleatório entre 1 e 100.
+2. Permitir que o jogador insira tentativas até acertar.
+3. Dar dicas "maior" ou "menor" conforme a comparação.
+4. Registrar o número de tentativas.
+5. Encerrar corretamente quando o jogador acertar ou quando o limite for atingido.
 
 ## Critérios de aceite
-- O programa sempre gera um valor dentro do intervalo esperado.
-- A cada tentativa, o jogador recebe uma dica útil.
-- O jogo termina corretamente ao acertar.
+- [ ] O número sorteado fica sempre dentro do intervalo pedido.
+- [ ] A cada tentativa, o programa compara o chute com o valor sorteado.
+- [ ] O programa informa se o número é maior ou menor.
+- [ ] O contador de tentativas aumenta em cada chute válido.
+- [ ] O jogo termina ao acertar ou ao esgotar as tentativas.
+- [ ] O aluno consegue repetir uma partida sem duplicar o código.
 
 ## Guia
-1. Use `random.randint` para sortear o número.
-2. Armazene a quantidade de tentativas.
-3. Compare a tentativa com o valor sorteado.
-4. Mostre uma mensagem final ao encerrar.
+### Marcos do projeto
+1. Sorteie um número com `random.randint(1, 100)`.
+2. Crie uma variável para o limite de tentativas e outra para controlar as tentativas do jogador.
+3. Use `while` para manter o jogo rodando até o jogador acertar ou até o limite ser alcançado.
+4. Compare cada tentativa com o valor sorteado e imprima a dica correta.
+5. Ao final, mostre se o jogador venceu ou perdeu e ofereça a opção de jogar novamente.
+
+### Dicas
+- Mantenha a condição de parada visível: o jogo pode continuar enquanto `tentativas < limite` e `acertou` for `False`.
+- Use `if` para testar igualdade, maior e menor; essa separação deixa o código mais claro.
+- Quando o usuário errar e o limite não foi alcançado, o programa deve pedir outra tentativa.
+
+<Callout type="importante" title="Regra central">
+O loop de adivinhação precisa controlar duas coisas ao mesmo tempo: a tentativa atual e a condição de parada. Sem isso, você pode cair em um laço que nunca termina ou em um programa que não registra o progresso do jogador.
+</Callout>
 
 <Playground title="Estrutura inicial" code={`import random
-numero = random.randint(1, 10)
-print(numero)`} />
+
+numero_sorteado = random.randint(1, 100)
+limite_tentativas = 7
+contador = 0
+acertou = False
+
+# use while para repetir enquanto não acertou e não chegou ao limite
+# compare a tentativa com numero_sorteado
+# mostre dicas: maior ou menor
+# ao final, informe se o jogador venceu ou perdeu
+`} />
 
 ## Desafio extra
-Adicione pontuação e um limite de tentativas para deixar o jogo mais interessante.
+Implemente busca binária automática no código de referência para resolver em no máximo 7 tentativas, sem depender da sorte. Isso ajuda a comparar a lógica do jogador com uma estratégia mais eficiente.
 
 ## Visão de mercado
-Jogos simples de lógica ajudam a praticar condicionais e laços em um contexto divertido e interativo.
+Jogos simples de lógica são comuns em treinamentos de programação, plataformas de educação e protótipos de aplicativos. A ideia de “tentar até acertar” também aparece em sistemas de autenticação, verificação de senha e jogos de sorteio ou quiz.
 
 ## Autoavaliação
-- [ ] Usei aleatoriedade corretamente.
-- [ ] Organizei as dicas por comparação.
-- [ ] Testei o fluxo completo do jogo.
+- [ ] Usei `random.randint` para gerar um número em intervalo válido.
+- [ ] Controlei o número de tentativas com a condição do laço.
+- [ ] Testei casos de número maior e menor com mensagens claras.
+- [ ] Verifiquei se o programa encerra corretamente ao acertar.
+- [ ] Pensei em um limite de tentativas e em como tratar a derrota.
 
 <details>
   <summary>Solução de referência</summary>
@@ -56,19 +94,35 @@ Jogos simples de lógica ajudam a praticar condicionais e laços em um contexto 
 ```python
 import random
 
-numero = random.randint(1, 10)
-tentativas = 0
+numero_sorteado = random.randint(1, 100)
+limite_tentativas = 7
+contador = 0
+acertou = False
 
-while True:
-    tentativa = int(input("Adivinhe o número: "))
-    tentativas += 1
+while contador < limite_tentativas and not acertou:
+    tentativa = int(input(f"Tentativa {contador + 1}: "))
+    contador += 1
 
-    if tentativa == numero:
-        print(f"Acertou em {tentativas} tentativas!")
-        break
-    elif tentativa < numero:
+    if tentativa == numero_sorteado:
+        acertou = True
+        print(f"Parabéns! Você acertou em {contador} tentativas.")
+    elif tentativa < numero_sorteado:
         print("O número é maior.")
     else:
         print("O número é menor.")
+
+if not acertou:
+    print(f"Você perdeu! O número era {numero_sorteado}.")
+```
+
+Saída real com entrada:
+
+```text
+Tentativa 1: 50
+O número é menor.
+Tentativa 2: 25
+O número é maior.
+Tentativa 3: 35
+Parabéns! Você acertou em 3 tentativas.
 ```
 </details>

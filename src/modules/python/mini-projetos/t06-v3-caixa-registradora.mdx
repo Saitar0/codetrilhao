@@ -1,0 +1,232 @@
+---
+titulo: "Caixa registradora"
+descricao: "Monte um caixa simples para vender itens, listar o cupom e calcular troco usando loops e validações."
+topico: "loops"
+topicoNome: "Loops"
+variacao: "V3"
+tempo: 35
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "loops", "cashier", "cupom", "menu", "pdv"]
+---
+
+# Caixa registradora
+
+## Contexto
+Uma pequena loja de conveniência quer um protótipo simples de caixa para registrar vendas sem depender de um sistema completo. O dono precisa adicionar itens, remover o último item se tiver errado, mostrar o subtotal e finalizar a compra com o valor pago e o troco calculado corretamente.
+
+## O que você vai construir
+Um programa de caixa que guarda itens vendidos, calcula o subtotal, aplica desconto ou não, finaliza a compra e entrega o troco. A lógica precisa ser clara e segura, porque erros de preço ou quantidade afetam diretamente a venda.
+
+Exemplo de execução real:
+
+```text
+=== Caixa registradora ===
+1. Adicionar item
+2. Remover último item
+3. Finalizar compra
+Escolha uma opção: 1
+Nome do item: Café
+Quantidade: 2
+Preço unitário: 12.50
+=== Caixa registradora ===
+1. Adicionar item
+2. Remover último item
+3. Finalizar compra
+Escolha uma opção: 3
+Subtotal: R$ 25.00
+Desconto: R$ 0.00
+Total: R$ 25.00
+Valor pago: 30.00
+Troco: R$ 5.00
+```
+
+## Requisitos
+1. Exibir um menu com opções claras para o vendedor.
+2. Permitir adicionar itens com nome, quantidade e preço unitário.
+3. Validar que quantidade e preço sejam positivos.
+4. Permitir remover o último item se houver erro de cadastro.
+5. Finalizar a compra e calcular subtotal, desconto, total e troco.
+
+## Critérios de aceite
+- [ ] O menu oferece as ações principais do caixa com fluxo simples.
+- [ ] Cada item é armazenado com nome, quantidade e preço unitário.
+- [ ] Quantidades e preços negativos são rejeitados.
+- [ ] O programa calcula subtotal e total corretamente.
+- [ ] O troco é mostrado com base no valor pago.
+- [ ] O vendedor consegue corrigir o último item antes de finalizar.
+
+## Histórias de usuário
+- Como vendedor, quero adicionar produtos rapidamente sem perder tempo.
+- Como gerente, quero ver o subtotal e o valor total da venda em um só lugar.
+- Como cliente, quero receber o troco correto ao final da compra.
+- Como operador, quero remover o último item se eu registrar algo errado.
+
+## Arquitetura sugerida
+- `adicionar_item(itens)` para ler nome, quantidade e preço e acrescentar ao carrinho.
+- `remover_ultimo_item(itens)` para apagar o item mais recente quando houver erro.
+- `calcular_subtotal(itens)` para somar os valores por quantidade e preço.
+- `calcular_desconto(total)` para aplicar regra simples de promoção ou desconto.
+- `finalizar_compra(itens, valor_pago)` para mostrar cupom, total e troco.
+- `main()` para controlar o menu e a execução do programa.
+
+## Casos de teste de aceitação
+- Pedido com dois itens diferentes: subtotal e total calculados corretamente.
+- Usuário tenta adicionar preço zero ou negativo: operação rejeitada.
+- Usuário adiciona item errado e remove o último: carrinho atualiza sem quebrar.
+- Valor pago menor que o total: sistema informa que o valor é insuficiente.
+- Produto sem nome ou em branco: o cadastro é recusado com mensagem clara.
+
+## Riscos
+- Não validar preço e quantidade pode gerar contas inconsistentes.
+- Remover o item errado sem controle pode causar prejuízo na venda.
+- Falhar no troco gera insatisfação e retrabalho no caixa.
+- Estruturar o código sem funções deixa a manutenção mais difícil quando a loja cresce.
+
+## Guia
+### História do cliente
+O cliente quer um protótipo leve para operação de loja pequena, sem necessidade de banco de dados nem integração externa no início. Ele precisa de uma solução simples, mas confiável, para registrar itens, calcular a conta e devolver o troco ao cliente.
+
+### Marcos do projeto
+1. Crie um menu com opções de adicionar, remover o último e finalizar.
+2. Defina uma estrutura para cada item: nome, quantidade e preço unitário.
+3. Valide entradas antes de armazenar algo em memória.
+4. Calcule subtotal, desconto e total usando regras claras.
+5. Ao finalizar, peça o valor pago e calcule o troco.
+
+### Dicas
+- Mantenha a lógica de entrada separada da lógica de cálculo para ficar mais simples de testar.
+- Use `while` para manter o menu ativo até o usuário escolher finalizar.
+- Sempre espere um valor de pagamento válido antes de calcular o troco.
+
+<Callout type="importante" title="Regra de negócio">
+Em um caixa, a segurança é tão importante quanto a funcionalidade. Quantidade, preço e valor pago devem ser validados antes de qualquer cálculo final.
+</Callout>
+
+<Playground title="Ponto de partida" code={`itens = []
+
+while True:
+    print("=== Caixa registradora ===")
+    print("1. Adicionar item")
+    print("2. Remover último item")
+    print("3. Finalizar compra")
+    opcao = input("Escolha uma opção: ")
+
+    if opcao == "1":
+        # leia nome, quantidade e preço
+        # valide quantidade e preço positivos
+        # adicione o item na lista
+        pass
+    elif opcao == "2":
+        # remova o último item se existir
+        pass
+    elif opcao == "3":
+        # finalize a compra e calcule o troco
+        break
+    else:
+        print("Opção inválida.")
+`} />
+
+## Desafio extra
+Adicione um desconto automático quando o cliente compra mais de 3 itens ou quando o total ultrapassa um valor definido. Exiba o desconto no cupom para deixar o cálculo transparente.
+
+## Visão de mercado
+Sistemas de PDV e caixa são essenciais para lojas físicas, restaurantes, farmácias e pequenas empresas. Esse tipo de problema aparece em quiosques de pagamento, pontos de venda digitais e ferramentas internas de comércio.
+
+## Autoavaliação
+- [ ] Considerei um menu com operação e finalização definidos.
+- [ ] Validei quantidade e preço antes de guardar os itens.
+- [ ] Calculei subtotal, total e troco em etapas separadas.
+- [ ] Testei pelo menos um cenário de item removido e outro de compra finalizada.
+- [ ] Mantive a lógica clara para facilitar manutenção futura.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+itens = []
+
+while True:
+    print("=== Caixa registradora ===")
+    print("1. Adicionar item")
+    print("2. Remover último item")
+    print("3. Finalizar compra")
+    opcao = input("Escolha uma opção: ")
+
+    if opcao == "1":
+        nome = input("Nome do item: ")
+        quantidade = int(input("Quantidade: "))
+        preco = float(input("Preço unitário: "))
+
+        if quantidade <= 0 or preco <= 0:
+            print("Quantidade e preço devem ser positivos.")
+            continue
+
+        itens.append({
+            "nome": nome,
+            "quantidade": quantidade,
+            "preco": preco,
+        })
+
+    elif opcao == "2":
+        if itens:
+            itens.pop()
+            print("Último item removido.")
+        else:
+            print("Nenhum item para remover.")
+
+    elif opcao == "3":
+        subtotal = sum(item["quantidade"] * item["preco"] for item in itens)
+        desconto = 0.0
+        total = subtotal - desconto
+
+        valor_pago = float(input("Valor pago: "))
+        if valor_pago < total:
+            print("Valor insuficiente para pagar a compra.")
+            continue
+
+        troco = valor_pago - total
+
+        print("\n=== Cupom fiscal ===")
+        for item in itens:
+            valor_item = item["quantidade"] * item["preco"]
+            print(f"{item['nome']} x{item['quantidade']} - R$ {valor_item:.2f}")
+
+        print(f"Subtotal: R$ {subtotal:.2f}")
+        print(f"Desconto: R$ {desconto:.2f}")
+        print(f"Total: R$ {total:.2f}")
+        print(f"Valor pago: R$ {valor_pago:.2f}")
+        print(f"Troco: R$ {troco:.2f}")
+        break
+
+    else:
+        print("Opção inválida.")
+```
+
+Saída real com entrada:
+
+```text
+=== Caixa registradora ===
+1. Adicionar item
+2. Remover último item
+3. Finalizar compra
+Escolha uma opção: 1
+Nome do item: Café
+Quantidade: 2
+Preço unitário: 12.50
+=== Caixa registradora ===
+1. Adicionar item
+2. Remover último item
+3. Finalizar compra
+Escolha uma opção: 3
+Valor pago: 30.00
+
+=== Cupom fiscal ===
+Café x2 - R$ 25.00
+Subtotal: R$ 25.00
+Desconto: R$ 0.00
+Total: R$ 25.00
+Valor pago: R$ 30.00
+Troco: R$ 5.00
+```
+</details>

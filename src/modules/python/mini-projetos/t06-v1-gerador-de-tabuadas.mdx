@@ -1,0 +1,137 @@
+---
+titulo: "Gerador de tabuadas"
+descricao: "Crie uma tabuada formatada e reutilizável usando loops com controles claros e saídas legíveis."
+topico: "loops"
+topicoNome: "Loops"
+variacao: "V1"
+tempo: 25
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "loops", "for", "tabuada", "acumulador"]
+---
+
+# Gerador de tabuadas
+
+## Contexto
+Você está ajudando uma escola e uma loja de materiais didáticos a criar uma ferramenta simples para mostrar a tabuada de qualquer número. O objetivo é deixar a resposta clara e consistente, porque alunos e professores precisam verificar rapidamente a multiplicação, sem perder tempo com cálculos manuais.
+
+## O que você vai construir
+Um programa que pede um número e mostra a tabuada completa de 1 a 10, em formato legível e pronto para uso em aula ou em uma calculadora simples.
+
+Exemplo de execução real:
+
+```text
+Digite um número para ver a tabuada: 7
+7 x 1 = 7
+7 x 2 = 14
+7 x 3 = 21
+7 x 4 = 28
+7 x 5 = 35
+7 x 6 = 42
+7 x 7 = 49
+7 x 8 = 56
+7 x 9 = 63
+7 x 10 = 70
+```
+
+## Requisitos
+1. Ler um número inteiro do usuário.
+2. Usar um loop para percorrer de 1 até 10.
+3. Multiplicar o número pela sequência do contador.
+4. Exibir cada linha em formato legível.
+5. Mantém a lógica simples e fácil de interpretar.
+
+## Critérios de aceite
+- [ ] O programa lê um número válido e não depende de entrada aleatória.
+- [ ] O loop percorre corretamente de 1 até 10.
+- [ ] Cada linha mostra o valor multiplicado e o resultado final.
+- [ ] A saída é formatada para facilitar leitura.
+- [ ] O aluno consegue testar mais de um valor usando a mesma estrutura.
+
+## Guia
+### Etapa 1: receber o número
+- Use `input()` para ler um valor inteiro.
+- Converta com `int()` para garantir que o programa trate números corretamente.
+- Vale lembrar que a entrada deve ser um número positivo ou, pelo menos, qualquer inteiro que você queira testar.
+
+### Etapa 2: construir o loop principal
+- Use `for multiplicador in range(1, 11):` para percorrer a tabuada.
+- O `range` começa em 1 e termina em 10, então ele inclui os valores que você precisa.
+- Isso evita escrever o cálculo manualmente 10 vezes.
+
+### Etapa 3: calcular cada linha
+- Faça `resultado = numero * multiplicador`.
+- A cada volta do loop, uma linha nova é gerada.
+- Isso é um excelente exemplo de acumulador simples, porque a soma não é usada, mas o cálculo é reaproveitado para cada iteração.
+
+### Etapa 4: imprimir em formato legível
+- Use `print(f"{numero} x {multiplicador} = {resultado}")`.
+- Isso cria uma saída organizada e fácil de ler em aula ou em um programa simples.
+
+### Etapa 5: ampliar a ideia
+- Se quiser ir além, você pode gerar tabelas para vários números em sequência.
+- Isso exige um loop externo para escolher o número e um loop interno para a tabuada. O padrão é um loop aninhado.
+
+<Callout type="importante" title="Dica da etapa 5">
+A tabuada de um número usa um loop simples; uma sequência com várias tabuadas usa dois loops. O mais externo decide qual número vai ser calculado; o mais interno percorre de 1 até 10.
+</Callout>
+
+<StepThrough>
+  <div>
+    <p>Primeiro, o loop externo escolhe o número que você quer calcular.</p>
+  </div>
+  <div>
+    <p>Depois, o loop interno percorre os multiplicadores de 1 a 10.</p>
+  </div>
+  <div>
+    <p>Ao final, o programa imprime a tabuada completa em linhas separadas.</p>
+  </div>
+</StepThrough>
+
+<Playground title="Estrutura inicial" code={`numero = int(input("Digite um número para ver a tabuada: "))
+
+for multiplicador in range(1, 11):
+    resultado = numero * multiplicador
+    # imprima cada linha no formato: 7 x 3 = 21
+`} />
+
+## Desafio extra
+Gere tabuadas de vários números em sequência, por exemplo, de 2 a 5, sem repetir a estrutura manualmente. Isso introduz o uso de loop aninhado em um problema real de visualização.
+
+## Visão de mercado
+Ferramentas de apoio ao ensino, calculadoras e aplicativos de estudo usam esse mesmo padrão para mostrar sequências matemáticas. Em sistemas pequenos, a lógica de tabuada também aparece em relatórios de vendas, cálculos de preço por unidade e geração de métricas simples.
+
+## Autoavaliação
+- [ ] Entendi a diferença entre `for` e `range`.
+- [ ] Usei o loop para repetir a operação sem copiar código.
+- [ ] Testei pelo menos um número e vi que a tabuada completa apareceu.
+- [ ] Consegui formatar a saída para leitura clara.
+- [ ] Relembrei que a etapa final do `range` não entra na sequência.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+numero = int(input("Digite um número para ver a tabuada: "))
+
+for multiplicador in range(1, 11):
+    resultado = numero * multiplicador
+    print(f"{numero} x {multiplicador} = {resultado}")
+```
+
+Saída real com entrada:
+
+```text
+Digite um número para ver a tabuada: 7
+7 x 1 = 7
+7 x 2 = 14
+7 x 3 = 21
+7 x 4 = 28
+7 x 5 = 35
+7 x 6 = 42
+7 x 7 = 49
+7 x 8 = 56
+7 x 9 = 63
+7 x 10 = 70
+```
+</details>
