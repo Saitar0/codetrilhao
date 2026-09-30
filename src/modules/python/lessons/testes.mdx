@@ -1,42 +1,235 @@
 ﻿---
 titulo: "Testes"
-descricao: "Valide o comportamento da sua aplicaÃ§Ã£o com testes automatizados."
+descricao: "Aprenda a validar comportamento com assert e pytest sem adivinhar."
 secao: "E. Pensamento de engenharia"
-ordem: 35
-tempo: 10
+ordem: 8
+topico: 17
+fase: "E"
+tempo: 25
 nivel: "intermediario"
-palavrasChave: ['testes', 'pytest', 'assert']
+palavrasChave: ['testes', 'assert', 'pytest', 'tdd']
 exercicios: []
 ---
 
-# Testes
+# Testes: validar sem adivinhar
 
-Valide o comportamento da sua aplicaÃ§Ã£o com testes automatizados.
+Você já escreveu uma função e ficou com aquela dúvida: “se eu mudar essa linha, o comportamento continua correto?” Esse momento aparece em qualquer código que queira evoluir com segurança. Testes são a forma mais direta de responder essa pergunta e evitar que pequenos ajustes causem erros maiores.
 
-<Callout type="importante" title="Objetivo da aula">
-  Neste bloco, vocÃª vai entender o conceito principal, ver exemplos prÃ¡ticos e testar a lÃ³gica em pequenos passos.
+<Callout type="importante" title="O que você vai aprender">
+  - Como usar `assert` como teste executável em Python.
+  - Como separar casos normais, de borda e de erro.
+  - Como pensar em TDD e em validação de comportamento.
+  - Quando `pytest` entra em cena e como ele organiza a suíte de testes.
 </Callout>
 
-<CodeBlock title="exemplo_1.py" code={`def soma(a, b):
-    return a + b
-assert soma(2, 3) == 5
-print("ok")`} />
-<CodeBlock title="exemplo_2.py" code={`import unittest
-class Teste(unittest.TestCase):
-    def test_ok(self):
-        self.assertEqual(2 + 2, 4)
-print("teste ok")`} />
-<CodeBlock title="exemplo_3.py" code={`assert abs(-5) == 5`} />
+## Por que testar?
 
-<Quiz questions={[{ question: "Qual Ã© a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prÃ¡tica", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensÃ£o e aplicaÃ§Ã£o prÃ¡tica." }, { question: "Qual hÃ¡bito Ã© mais Ãºtil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o cÃ³digo"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prÃ¡tica em Python?", options: ["clareza e execuÃ§Ã£o", "complexidade por padrÃ£o", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execuÃ§Ã£o objetiva." }]} />
+Testar não é uma “formalidade de projeto”. É a forma de transformar uma ideia em algo confiável. Quando você escreve uma regra, como “a função deve devolver 10 quando receber 2 e 5”, o teste é a prova de que a regra existe de verdade.
+
+Na prática, testes ajudam a:
+
+- confirmar que uma função faz o que promete;
+- detectar regressões ao refatorar;
+- cobrir casos de borda que às vezes passam despercebidos;
+- documentar a intenção do código para outras pessoas.
+
+O primeiro passo não precisa ser enorme. Você pode começar com `assert`, que é simples e já roda nativamente em Python.
+
+<CodeBlock title="assert_basico.py" code={`def soma(a, b):
+    return a + b
+
+assert soma(2, 3) == 5
+print("soma ok")`} />
+
+Saída:
+
+```text
+soma ok
+```
+
+Esse trecho diz: “eu espero que a soma de 2 e 3 seja 5”. Se não for, Python interrompe a execução com `AssertionError`.
+
+## `assert` executável
+
+O `assert` é ideal para validar regras simples em mini exemplos e também em funções reais do dia a dia. Ele exige que a expressão seja verdadeira; se ela for falsa, o programa se encerra imediatamente.
+
+A vantagem é clara: em vez de “parece certo”, você testa a condição exata do problema. Isso torna o código mais confiável, especialmente em funções com regras bem definidas.
+
+<CodeBlock title="assert_condicoes.py" code={`def eh_par(numero):
+    return numero % 2 == 0
+
+assert eh_par(4) is True
+assert eh_par(7) is False
+assert eh_par(0) is True
+
+print("todos os casos passaram")`} />
+
+Saída:
+
+```text
+todos os casos passaram
+```
+
+Agora imagine uma função que valida uma senha simplificada. Você pode testar vários cenários em sequência:
+
+```python
+def senha_valida(senha):
+    return len(senha) >= 8 and senha.isalnum()
+
+assert senha_valida("abc12345") is True
+assert senha_valida("123") is False
+assert senha_valida("muito_longo") is False
+```
+
+Esse padrão é simples, mas poderoso: cada `assert` é uma pequena garantia sobre a lógica.
+
+<Playground title="Experimente: testar uma função de idade" code={`def pode_votar(idade):
+    return idade >= 18
+
+for idade in [17, 18, 21, 0]:
+    print(idade, pode_votar(idade))
+    assert pode_votar(idade) == (idade >= 18)
+`} />
+
+Você pode usar esse mesmo raciocínio em praticamente qualquer função: comparar entradas, confirmar saídas e verificar erros esperados.
+
+## Casos normais, borda e erro
+
+Um bom teste não cobre só o caso feliz. Ele também cobre o que pode acontecer em situações limites. Por isso, bons testes costumam separar em três grupos:
+
+1. Caso normal: input esperado e comportamento esperado.
+2. Caso de borda: zero, negativo, vazio, limite ou valor muito grande.
+3. Caso de erro: entrada inválida ou comportamento que deve lançar exceção.
+
+<CodeBlock title="testes_de_borda.py" code={`def media(lista):
+    if not lista:
+        raise ValueError("lista vazia")
+    return sum(lista) / len(lista)
+
+assert media([2, 4, 6]) == 4
+
+try:
+    media([])
+except ValueError as erro:
+    print(str(erro))`} />
+
+Saída:
+
+```text
+lista vazia
+```
+
+Nesse exemplo, o caso normal passa, e o caso de borda foi capturado com `ValueError`. Isso é importante porque muitas funções quebram quando recebem entradas “estranhas”, e os testes ajudam a revelar isso cedo.
+
+## TDD e o teste antes do código
+
+Uma boa prática é escrever o teste antes da implementação. Isso força você a definir a regra com clareza e a pensar sobre casos reais. Em vez de codar “na sorte”, você começa com a intenção de comportamento.
+
+O ciclo de TDD fica assim:
+
+1. escrever um teste que descreva a regra;
+2. rodar e ver falhar;
+3. implementar a solução mínima;
+4. rodar novamente e confirmar que o teste passa;
+5. refatorar com segurança.
+
+Esse processo reduz a sensação de “funciona só na minha cabeça”.
+
+<CodeBlock title="tdd_exemplo.py" code={`def eh_primo(numero):
+    if numero < 2:
+        return False
+    for divisor in range(2, int(numero ** 0.5) + 1):
+        if numero % divisor == 0:
+            return False
+    return True
+
+assert eh_primo(2) is True
+assert eh_primo(3) is True
+assert eh_primo(4) is False
+assert eh_primo(1) is False
+print("primos validados")`} />
+
+Saída:
+
+```text
+primos validados
+```
+
+## `pytest` em projetos reais
+
+Quando o código cresce, escrever vários `assert` em um script simples ainda ajuda, mas a organização vira importante. É aí que entra o `pytest`: ele coleta testes em arquivos, executa cada função de teste e mostra o que falhou.
+
+O exemplo abaixo é típico do uso de `pytest` em projetos reais, mas é apenas uma ilustração de terminal. O navegador não executa `pytest` do jeito que você faz no terminal local.
+
+<CodeBlock language="bash" title="terminal" code={`python -m pytest -q
+
+# saída esperada (exemplo)
+# 2 passed in 0.06s`} />
+
+Um arquivo de teste pode ter este formato:
+
+```python
+# test_calculos.py
+from calculos import dividir
+
+
+def test_divisao_normal():
+    assert dividir(10, 2) == 5
+
+
+def test_divisao_por_zero():
+    try:
+        dividir(1, 0)
+    except ZeroDivisionError:
+        return
+    assert False, "esperava ZeroDivisionError"
+```
+
+A principal lição é esta: o `pytest` facilita a execução em lote e a leitura dos erros. Ele não substitui o uso de `assert`; na verdade, ele depende da mesma ideia: verificar que a condição é verdadeira.
+
+<Tabela data={[
+  ['Abordagem', 'Quando usar', 'Vantagem', 'Limitação'],
+  ['`assert`', 'pequenos trechos e validação direta', 'rápido e simples', 'não organiza uma grande suíte'],
+  ['`pytest`', 'projetos e funções com vários cenários', 'execução em lote e relatórios claros', 'requer ambiente local/terminal'],
+  ['manual', 'aprendizado e protótipos rápidos', 'sem configuração', 'fácil esquecer casos importantes']
+]} />
+
+## Erros comuns em testes
+
+<Callout type="erro-comum" title="Teste que sempre passa">
+  ```python
+  def calcular_desconto(preco):
+      return preco * 0.9
+
+  assert True
+  print("teste foi executado")
+  ```
+
+  Saída real:
+
+  ```text
+  teste foi executado
+  ```
+
+  O problema é que o teste não valida o comportamento de `calcular_desconto`. Ele passou por acidente. A correção é escrever uma condição real, como `assert calcular_desconto(100) == 90`.
+</Callout>
+
+Um teste útil precisa dizer algo concreto sobre o código. Se você não consegue formular a regra do que deve acontecer, o teste provavelmente não está validando um comportamento correto.
+
+## No mercado de trabalho
+
+Em projetos reais, testes são parte da qualidade do software. Eles evitam que uma correção em um ponto quebre outra área do sistema. Em times de desenvolvimento, quem entrega código com testes consegue revisar mais rápido, comunicar melhor a regra de negócio e reduzir retrabalho durante a integração.
+
+Se um time precisa mudar regras de cálculo, o teste deixa claro o que era esperado e o que foi preservado. Isso é especialmente valioso em sistemas financeiros, pagamentos, logística e APIs.
 
 <Resumo>
-  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
-  <li>Teste pequenos exemplos e avalie o resultado.</li>
-  <li>Aplica a ideia em cenÃ¡rios reais para fixar o conhecimento.</li>
+  <li>Você usou `assert` para validar regras simples de forma executável.</li>
+  <li>Você entendeu que testes cobrem casos normais, borda e de erro.</li>
+  <li>Você viu como TDD ajuda a escrever a regra antes da implementação.</li>
+  <li>Você reconheceu que `pytest` organiza testes em projeto real.</li>
 </Resumo>
 
 <Desafio>
-  Aplique esse tema em um mini cenÃ¡rio do dia a dia e confirme o resultado com um cÃ³digo simples e legÃ­vel.
+  Escreva uma pequena função que converte uma temperatura em Celsius para Fahrenheit e teste com `assert` ao menos 4 cenários: 0°C, 100°C, -10°C e um caso inválido com `ValueError`.
 </Desafio>
 

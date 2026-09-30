@@ -1,39 +1,202 @@
 ﻿---
-titulo: "Boas prÃ¡ticas"
-descricao: "Escreva cÃ³digo mais legÃ­vel, sustentÃ¡vel e fÃ¡cil de manter."
+titulo: "Boas práticas"
+descricao: "Escreva código mais legível, sustentável e fácil de manter em equipe."
 secao: "E. Pensamento de engenharia"
-ordem: 37
-tempo: 9
+ordem: 10
+topico: 17
+fase: "E"
+tempo: 25
 nivel: "intermediario"
-palavrasChave: ['pep8', 'clareza', 'manutenÃ§Ã£o']
+palavrasChave: ['pep8', 'clareza', 'refatoracao', 'manutencao']
 exercicios: []
 ---
 
-# Boas prÃ¡ticas
+# Boas práticas: código que outra pessoa consegue manter
 
-Escreva cÃ³digo mais legÃ­vel, sustentÃ¡vel e fÃ¡cil de manter.
+Você já abriu uma função curiosa e precisou adivinhar o que ela fazia? Isso acontece quando o código funciona, mas foi escrito de um jeito que exige esforço mental para entender. Boas práticas não são complicação estética; elas tornam o programa mais claro, mais seguro e mais fácil de evoluir.
 
-<Callout type="importante" title="Objetivo da aula">
-  Neste bloco, vocÃª vai entender o conceito principal, ver exemplos prÃ¡ticos e testar a lÃ³gica em pequenos passos.
+<Callout type="importante" title="O que você vai aprender">
+  - Como escrever nomes e espaçamento que ajudam na leitura.
+  - Como reduzir funções longas e números mágicos.
+  - Quando comentários são úteis e quando eles só poluem o código.
+  - Como refatorar sem mudar o comportamento, preservando a lógica.
 </Callout>
 
-<CodeBlock title="exemplo_1.py" code={`valor_total = 120.45
-if valor_total > 100:
-    print("Frete grÃ¡tis")`} />
-<CodeBlock title="exemplo_2.py" code={`def calcular_total(preco, quantidade):
-    return preco * quantidade
-print(calcular_total(12, 3))`} />
-<CodeBlock title="exemplo_3.py" code={`import this`} />
+## PEP 8 e a legibilidade
 
-<Quiz questions={[{ question: "Qual Ã© a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prÃ¡tica", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensÃ£o e aplicaÃ§Ã£o prÃ¡tica." }, { question: "Qual hÃ¡bito Ã© mais Ãºtil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o cÃ³digo"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prÃ¡tica em Python?", options: ["clareza e execuÃ§Ã£o", "complexidade por padrÃ£o", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execuÃ§Ã£o objetiva." }]} />
+A PEP 8 é a convenção de estilo do Python. Ela orienta nomes, espaçamento, tamanho de linha e outras escolhas que deixam o código mais uniforme. Isso não significa “seguir regras por seguir”; significa reduzir atrito ao ler e manter o programa.
+
+Algumas regras simples fazem muita diferença:
+
+- use nomes descritivos: `valor_total` em vez de `vt`;
+- separe blocos com linhas em branco e indentação correta;
+- limite linhas longas;
+- evite números mágicos espalhados pelo código;
+- mantenha funções curtas e com uma responsabilidade clara.
+
+<CodeBlock title="pep8_ruim.py" code={`def calc(x,a):
+    return x*a
+
+print(calc(12,3))`} />
+
+Saída:
+
+```text
+36
+```
+
+Esse código funciona, mas exige que você adivinhe o que `x` e `a` significam. Em comparação, uma versão legível diz mais sobre a intenção.
+
+<CodeBlock title="pep8_bom.py" code={`def calcular_total(preco, quantidade):
+    return preco * quantidade
+
+print(calcular_total(12, 3))`} />
+
+Saída:
+
+```text
+36
+```
+
+Podemos até ter o mesmo resultado, mas a segunda leitura comunica a regra de negócio com muito menos esforço cognitivo.
+
+## Funções curtas e nomes descritivos
+
+Uma função deve resolver uma tarefa clara. Se você precisa procurar “o que ela faz” dentro de 20 linhas de lógica misturada, provavelmente ela está fazendo demais.
+
+Em vez de criar monstros de código, vale dividir por responsabilidade. Isso melhora testes, depuração e manutenção.
+
+<CodeBlock title="funcao_curta.py" code={`def calcular_desconto(preco, percentual):
+    return preco * (percentual / 100)
+
+
+def formatar_real(valor):
+    return f"R$ {valor:.2f}"
+
+print(formatar_real(calcular_desconto(200, 10)))`} />
+
+Saída:
+
+```text
+R$ 20.00
+```
+
+A ideia central é a mesma: dividir a operação em blocos pequenos e bem nomeados, deixando o cálculo e a formatação em funções separadas.
+
+<Playground title="Experimente: refatorar nomes" code={`def c(a, b):
+    return a * b
+
+valor = 15
+qtd = 3
+print(c(valor, qtd))
+
+# refatore para nomes claros e teste a leitura do código` } />
+
+A questão não é “o código funciona?”, mas também “quem olha isso entende sem travar?” Esse é o melhor critério de qualidade para pequenas partes de software.
+
+## Comentários úteis e números mágicos
+
+Um comentário útil responde “por que isso existe” ou “qual regra estou codificando”. Já o comentário redundante só repete o óbvio. O código precisa falar por si; os comentários servem para explicar contexto e intenção.
+
+Números mágicos são outro problema clássico. Quando você escreve um valor como `365` ou `0.9` sem explicação, o código fica mais difícil de manter.
+
+<CodeBlock title="comentarios_e_constantes.py" code={`JURO_MENSAL = 0.12
+
+
+def calcular_juros(valor, meses):
+    return valor * JURO_MENSAL * meses
+
+print(calcular_juros(1000, 2))`} />
+
+Saída:
+
+```text
+240.0
+```
+
+Aqui, `JURO_MENSAL` nomeia a regra de negócio. Em vez de espalhar “0.12” por vários trechos, você concentra a intenção em uma constante.
+
+## Refatoração segura
+
+Refatorar significa melhorar o código sem mudar o comportamento. Esse é um dos exercícios mais importantes em engenharia de software. A ideia é reescrever a solução de maneira mais clara ou mais simples, sem perder a lógica.
+
+<CodeBlock title="antes_de_refatorar.py" code={`def total_com_desconto(valor, desconto, quantidade):
+    return valor * quantidade - desconto * quantidade
+
+print(total_com_desconto(100, 10, 2))`} />
+
+Saída:
+
+```text
+180
+```
+
+Você pode refatorar essa função para deixar a intenção mais clara:
+
+<CodeBlock title="depois_de_refatorar.py" code={`def calcular_total_com_desconto(preco_unitario, percentual_desconto, quantidade):
+    desconto = preco_unitario * (percentual_desconto / 100)
+    total = (preco_unitario - desconto) * quantidade
+    return total
+
+print(calcular_total_com_desconto(100, 10, 2))`} />
+
+Saída:
+
+```text
+180.0
+```
+
+A lógica continua a mesma, mas a leitura ficou melhor. Esse tipo de refatoração é valioso porque reduz chance de erro e melhora a manutenção no futuro.
+
+<StepThrough>
+  <div>
+    <p><strong>Etapa 1:</strong> você percebe que a função mistura cálculo, desconto e quantidade sem separação clara.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 2:</strong> você cria uma variável `desconto` para explicar a regra antes de se multiplicar.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 3:</strong> a função final se torna mais fácil de testar e de manter, sem alterar a regra de negócio.</p>
+  </div>
+</StepThrough>
+
+## Checklist de boas práticas
+
+Nem toda melhoria precisa ser grande. Pequenos passos já ajudam bastante:
+
+- nomes mais explícitos;
+- funções pequenas;
+- ausência de números mágicos;
+- testes para validar mudanças;
+- comentários apenas quando ajudam;
+- refatoração porque a legibilidade importa.
+
+<Tabela data={[
+  ['Prática', 'Exemplo', 'Resultado'],
+  ['nome claro', '`valor_total`', 'mais fácil de entender'],
+  ['função curta', 'uma responsabilidade por função', 'mais fácil de testar'],
+  ['constante', '`JURO_MENSAL`', 'evita espalhar valores sem contexto'],
+  ['refatoração segura', 'melhorar nome e estrutura', 'reduz risco de regressão']
+]} />
+
+<Glossario termo="PEP 8" definition="Guia oficial de estilo do Python, com recomendações sobre nomes, indentação e organização do código." />
+<Glossario termo="número mágico" definition="Valor literal sem explicação, como 365 ou 0.9, que aparece no código sem contexto." />
+<Glossario termo="refatoração" definition="Mudança no código para melhorar legibilidade e organização sem modificar a regra de negócio." />
+
+## No mercado de trabalho
+
+Em qualquer time de software, o código não é usado só por quem o escreveu. Uma função que parece “simples” hoje pode ser lida por outra pessoa amanhã, ou por você meses depois. Boas práticas reduzem essa perda de contexto. Elas aceleram a revisão de código, ajudam em integrações e evitam que pequenas mudanças gerem bugs grandes.
+
+Essa é uma habilidade que faz diferença em entrevistas, em projetos profissionais e em ambientes de trabalho com múltiplos desenvolvedores.
 
 <Resumo>
-  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
-  <li>Teste pequenos exemplos e avalie o resultado.</li>
-  <li>Aplica a ideia em cenÃ¡rios reais para fixar o conhecimento.</li>
+  <li>Você entendeu que legibilidade e consistência são parte da qualidade do código.</li>
+  <li>Você viu como nomes claros, funções pequenas e constantes deixam o programa mais simples.</li>
+  <li>Você aprendeu que comentários devem explicar intenção, não repetir o óbvio.</li>
+  <li>Você reconheceu a importância de refatorar sem mexer no comportamento.</li>
 </Resumo>
 
 <Desafio>
-  Aplique esse tema em um mini cenÃ¡rio do dia a dia e confirme o resultado com um cÃ³digo simples e legÃ­vel.
+  Pegue uma função de algum exercício anterior, reescreva com nomes melhores e com pelo menos uma constante para substituir um valor “mágico”. Depois, explique em 3 linhas por que a versão nova melhora a manutenção.
 </Desafio>
 
