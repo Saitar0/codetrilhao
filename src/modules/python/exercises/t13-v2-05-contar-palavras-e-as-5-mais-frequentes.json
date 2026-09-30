@@ -1,0 +1,52 @@
+{
+  "id": "t13-v2-05-contar-palavras-e-as-5-mais-frequentes",
+  "tipo": "codigo",
+  "titulo": "Contar palavras e listar as 5 mais frequentes",
+  "topico": "Arquivos (txt, CSV, JSON)",
+  "topicoNumero": 13,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Crie o arquivo antes de lê-lo e separa as palavras por espaços e pontuações simples.",
+    "Use um dicionário para contar ocorrências e depois ordene por frequência e nome.",
+    "O retorno final deve ser uma lista de tuplas, com apenas as 5 primeiras."
+  ],
+  "solucao": "from collections import Counter\nfrom pathlib import Path\n\ndef contar_palavras_mais_frequentes(caminho, limite=5):\n    arquivo = Path(caminho)\n    if not arquivo.exists():\n        return []\n    texto = arquivo.read_text(encoding='utf-8')\n    palavras = texto.lower().replace('.', '').replace(',', '').split()\n    contagem = Counter(palavras)\n    return sorted(contagem.items(), key=lambda item: (-item[1], item[0]))[:limite]\n",
+  "tags": [
+    "txt",
+    "contador",
+    "dicionario",
+    "frequencia"
+  ],
+  "aulaRelacionada": "arquivos",
+  "enunciado": "Implemente `contar_palavras_mais_frequentes(caminho, limite=5)` para ler um arquivo texto, contar a frequência de cada palavra e devolver as `limite` palavras mais comuns em ordem decrescente de ocorrência. Em caso de empate, use a palavra em ordem alfabética.",
+  "starterCode": "from collections import Counter\nfrom pathlib import Path\n\ndef contar_palavras_mais_frequentes(caminho, limite=5):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "(lambda: (open('t13_05_a.txt', 'w', encoding='utf-8').write('maca banana maca pera banana maca'), contar_palavras_mais_frequentes('t13_05_a.txt', 5))[1])()",
+      "esperado": "[('maca', 3), ('banana', 2), ('pera', 1)]",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (open('t13_05_b.txt', 'w', encoding='utf-8').write('java python java sql python java sql'), contar_palavras_mais_frequentes('t13_05_b.txt', 3))[1])()",
+      "esperado": "[('java', 3), ('python', 2), ('sql', 2)]",
+      "oculto": false
+    },
+    {
+      "chamada": "contar_palavras_mais_frequentes('t13_05_c_inexistente.txt', 5)",
+      "esperado": "[]",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (open('t13_05_d.txt', 'w', encoding='utf-8').write('um dois dois tres tres tres quatro cinco seis'), contar_palavras_mais_frequentes('t13_05_d.txt', 5))[1])()",
+      "esperado": "[('tres', 3), ('dois', 2), ('cinco', 1), ('quatro', 1), ('seis', 1)]",
+      "oculto": true
+    },
+    {
+      "chamada": "(lambda: (open('t13_05_e.txt', 'w', encoding='utf-8').write('alpha beta alpha beta gamma gamma'), contar_palavras_mais_frequentes('t13_05_e.txt', 2))[1])()",
+      "esperado": "[('alpha', 2), ('beta', 2)]",
+      "oculto": true
+    }
+  ]
+}

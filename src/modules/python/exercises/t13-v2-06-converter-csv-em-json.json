@@ -1,0 +1,52 @@
+{
+  "id": "t13-v2-06-converter-csv-em-json",
+  "tipo": "codigo",
+  "titulo": "Converter CSV em JSON",
+  "topico": "Arquivos (txt, CSV, JSON)",
+  "topicoNumero": 13,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Escreva o CSV em uma estrutura de linhas e use `csv.DictReader` para transformar cada linha em dicionário.",
+    "Depois da leitura, use `json.dump` para salvar a lista em um arquivo `.json`.",
+    "O retorno pode ser a própria lista de dicionários lida."
+  ],
+  "solucao": "import csv\nimport json\nfrom pathlib import Path\n\ndef csv_para_json(caminho_csv, caminho_json):\n    csv_path = Path(caminho_csv)\n    json_path = Path(caminho_json)\n\n    with csv_path.open('r', encoding='utf-8', newline='') as arquivo:\n        leitor = csv.DictReader(arquivo, delimiter=';')\n        dados = list(leitor)\n\n    with json_path.open('w', encoding='utf-8') as arquivo:\n        json.dump(dados, arquivo, ensure_ascii=False, indent=2)\n\n    return dados\n",
+  "tags": [
+    "csv",
+    "json",
+    "DictReader",
+    "arquivo"
+  ],
+  "aulaRelacionada": "arquivos",
+  "enunciado": "Implemente `csv_para_json(caminho_csv, caminho_json)` para ler um arquivo CSV separado por `;`, converter cada linha em um dicionário e salvar a lista resultante em um JSON. O retorno da função deve ser a lista de dicionários.",
+  "starterCode": "import csv\nimport json\nfrom pathlib import Path\n\ndef csv_para_json(caminho_csv, caminho_json):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "(lambda: (open('t13_06_a.csv', 'w', encoding='utf-8', newline='').write('nome;idade\\nAna;30\\nBia;25\\n'), csv_para_json('t13_06_a.csv', 't13_06_a.json'))[1])()",
+      "esperado": "[{'nome': 'Ana', 'idade': '30'}, {'nome': 'Bia', 'idade': '25'}]",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (open('t13_06_b.csv', 'w', encoding='utf-8', newline='').write('produto;preco\\nMouse;89.90\\nTeclado;150.00\\n'), csv_para_json('t13_06_b.csv', 't13_06_b.json'))[1])()",
+      "esperado": "[{'produto': 'Mouse', 'preco': '89.90'}, {'produto': 'Teclado', 'preco': '150.00'}]",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (open('t13_06_c.csv', 'w', encoding='utf-8', newline='').write('nome;cidade\\nCarlos;São Paulo\\n'), csv_para_json('t13_06_c.csv', 't13_06_c.json'))[1])()",
+      "esperado": "[{'nome': 'Carlos', 'cidade': 'São Paulo'}]",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (open('t13_06_d.csv', 'w', encoding='utf-8', newline='').write('nome;nota\\nAna;9\\nBia;8\\nCaio;7\\n'), csv_para_json('t13_06_d.csv', 't13_06_d.json'))[1])()",
+      "esperado": "[{'nome': 'Ana', 'nota': '9'}, {'nome': 'Bia', 'nota': '8'}, {'nome': 'Caio', 'nota': '7'}]",
+      "oculto": true
+    },
+    {
+      "chamada": "(lambda: (open('t13_06_e.csv', 'w', encoding='utf-8', newline='').write('nome;status\\nJoão;ativo\\n'), csv_para_json('t13_06_e.csv', 't13_06_e.json'))[1])()",
+      "esperado": "[{'nome': 'João', 'status': 'ativo'}]",
+      "oculto": true
+    }
+  ]
+}

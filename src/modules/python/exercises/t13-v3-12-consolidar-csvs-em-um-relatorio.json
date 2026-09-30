@@ -1,0 +1,51 @@
+{
+  "id": "t13-v3-12-consolidar-csvs-em-um-relatorio",
+  "tipo": "codigo",
+  "titulo": "Consolidar vários CSVs em um único relatório",
+  "topico": "Arquivos (txt, CSV, JSON)",
+  "topicoNumero": 13,
+  "variacao": "V3",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Itere sobre a lista de caminhos e leia cada arquivo em sequência.",
+    "A estratégia mais segura é acumular registros em uma lista, ignorando cabeçalhos repetidos.",
+    "Ao final, grave o relatório consolidado em um arquivo novo."
+  ],
+  "solucao": "import csv\n\ndef consolidar_csvs(caminhos, destino):\n    registros = []\n    for caminho in caminhos:\n        with open(caminho, 'r', encoding='utf-8', newline='') as arquivo:\n            leitor = csv.reader(arquivo, delimiter=';')\n            cabecalho = next(leitor, None)\n            if cabecalho is None:\n                continue\n            for linha in leitor:\n                if linha and any(item.strip() for item in linha):\n                    registros.append(linha)\n\n    with open(destino, 'w', encoding='utf-8', newline='') as arquivo:\n        escritor = csv.writer(arquivo, delimiter=';')\n        escritor.writerows(registros)\n\n    return registros\n",
+  "tags": [
+    "csv",
+    "consolidacao",
+    "relatorio"
+  ],
+  "aulaRelacionada": "arquivos",
+  "enunciado": "Implemente `consolidar_csvs(caminhos, destino)` para receber uma lista de arquivos CSV e gerar um único relatório com todas as linhas válidas, ignorando cabeçalhos repetidos. A função deve devolver a lista final de linhas consolidadas.",
+  "starterCode": "import csv\n\ndef consolidar_csvs(caminhos, destino):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_12_a1_{name}.csv', 'w', encoding='utf-8', newline='').write('mes;vendas\\njan;100\\n'), open(f't13_12_a2_{name}.csv', 'w', encoding='utf-8', newline='').write('mes;vendas\\nfev;200\\n'), consolidar_csvs([f't13_12_a1_{name}.csv', f't13_12_a2_{name}.csv'], f't13_12_a_final_{name}.csv'))[2])(__import__('uuid').uuid4().hex))()",
+      "esperado": "[['jan', '100'], ['fev', '200']]",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_12_b1_{name}.csv', 'w', encoding='utf-8', newline='').write('mes;vendas\\nmar;50\\n'), open(f't13_12_b2_{name}.csv', 'w', encoding='utf-8', newline='').write('mes;vendas\\nmar;50\\nabr;70\\n'), consolidar_csvs([f't13_12_b1_{name}.csv', f't13_12_b2_{name}.csv'], f't13_12_b_final_{name}.csv'))[2])(__import__('uuid').uuid4().hex))()",
+      "esperado": "[['mar', '50'], ['mar', '50'], ['abr', '70']]",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_12_c_{name}.csv', 'w', encoding='utf-8', newline='').write('mes;vendas\\n'), consolidar_csvs([f't13_12_c_{name}.csv'], f't13_12_c_final_{name}.csv'))[1])(__import__('uuid').uuid4().hex))()",
+      "esperado": "[]",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_12_d1_{name}.csv', 'w', encoding='utf-8', newline='').write('mes;vendas\\nmai;90\\n'), open(f't13_12_d2_{name}.csv', 'w', encoding='utf-8', newline='').write('mes;vendas\\njun;110\\n'), open(f't13_12_d3_{name}.csv', 'w', encoding='utf-8', newline='').write('mes;vendas\\njul;130\\n'), consolidar_csvs([f't13_12_d1_{name}.csv', f't13_12_d2_{name}.csv', f't13_12_d3_{name}.csv'], f't13_12_d_final_{name}.csv'))[3])(__import__('uuid').uuid4().hex))()",
+      "esperado": "[['mai', '90'], ['jun', '110'], ['jul', '130']]",
+      "oculto": true
+    },
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_12_e1_{name}.csv', 'w', encoding='utf-8', newline='').write('mes;vendas\\nset;10\\n'), open(f't13_12_e2_{name}.csv', 'w', encoding='utf-8', newline='').write('mes;vendas\\nout;15\\n'), consolidar_csvs([f't13_12_e1_{name}.csv', f't13_12_e2_{name}.csv'], f't13_12_e_final_{name}.csv'))[2])(__import__('uuid').uuid4().hex))()",
+      "esperado": "[['set', '10'], ['out', '15']]",
+      "oculto": true
+    }
+  ]
+}

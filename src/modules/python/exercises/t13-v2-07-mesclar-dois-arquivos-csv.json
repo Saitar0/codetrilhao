@@ -1,0 +1,51 @@
+{
+  "id": "t13-v2-07-mesclar-dois-arquivos-csv",
+  "tipo": "codigo",
+  "titulo": "Mesclar dois arquivos CSV sem duplicar linhas",
+  "topico": "Arquivos (txt, CSV, JSON)",
+  "topicoNumero": 13,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Leia os dois CSVs e crie um conjunto para guardar linhas já vistas.",
+    "Depois de ignorar duplicatas, grave o resultado em um novo arquivo.",
+    "A linha de cabeçalho pode entrar no conjunto e ser preservada uma única vez."
+  ],
+  "solucao": "import csv\n\ndef mesclar_csvs(caminho1, caminho2, destino):\n    linhas = []\n    vistos = set()\n    for origem in (caminho1, caminho2):\n        with open(origem, 'r', encoding='utf-8', newline='') as arquivo:\n            leitor = csv.reader(arquivo, delimiter=';')\n            for linha in leitor:\n                chave = tuple(linha)\n                if chave not in vistos:\n                    vistos.add(chave)\n                    linhas.append(linha)\n\n    with open(destino, 'w', encoding='utf-8', newline='') as arquivo:\n        escritor = csv.writer(arquivo, delimiter=';')\n        escritor.writerows(linhas)\n\n    return linhas\n",
+  "tags": [
+    "csv",
+    "deduplicacao",
+    "merge"
+  ],
+  "aulaRelacionada": "arquivos",
+  "enunciado": "Implemente `mesclar_csvs(caminho1, caminho2, destino)` para ler dois arquivos CSV separados por `;`, remover linhas duplicadas e salvar o resultado em um terceiro arquivo. A função deve devolver a lista final de linhas sem duplicatas.",
+  "starterCode": "import csv\n\ndef mesclar_csvs(caminho1, caminho2, destino):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_07_a1_{name}.csv', 'w', encoding='utf-8', newline='').write('nome;cidade\\nAna;SP\\nBia;RJ\\n'), open(f't13_07_b1_{name}.csv', 'w', encoding='utf-8', newline='').write('nome;cidade\\nBia;RJ\\nCarlos;BH\\n'), mesclar_csvs(f't13_07_a1_{name}.csv', f't13_07_b1_{name}.csv', f't13_07_merge_1_{name}.csv'))[2])(__import__('uuid').uuid4().hex))()",
+      "esperado": "[['nome', 'cidade'], ['Ana', 'SP'], ['Bia', 'RJ'], ['Carlos', 'BH']]",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_07_a2_{name}.csv', 'w', encoding='utf-8', newline='').write('id;valor\\n1;10\\n2;20\\n'), open(f't13_07_b2_{name}.csv', 'w', encoding='utf-8', newline='').write('id;valor\\n2;20\\n3;30\\n'), mesclar_csvs(f't13_07_a2_{name}.csv', f't13_07_b2_{name}.csv', f't13_07_merge_2_{name}.csv'))[2])(__import__('uuid').uuid4().hex))()",
+      "esperado": "[['id', 'valor'], ['1', '10'], ['2', '20'], ['3', '30']]",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_07_a3_{name}.csv', 'w', encoding='utf-8', newline='').write('item\\nA\\n'), open(f't13_07_b3_{name}.csv', 'w', encoding='utf-8', newline='').write('item\\nA\\nB\\n'), mesclar_csvs(f't13_07_a3_{name}.csv', f't13_07_b3_{name}.csv', f't13_07_merge_3_{name}.csv'))[2])(__import__('uuid').uuid4().hex))()",
+      "esperado": "[['item'], ['A'], ['B']]",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_07_a4_{name}.csv', 'w', encoding='utf-8', newline='').write('nome\\nAna\\n'), open(f't13_07_b4_{name}.csv', 'w', encoding='utf-8', newline='').write('nome\\nAna\\n'), mesclar_csvs(f't13_07_a4_{name}.csv', f't13_07_b4_{name}.csv', f't13_07_merge_4_{name}.csv'))[2])(__import__('uuid').uuid4().hex))()",
+      "esperado": "[['nome'], ['Ana']]",
+      "oculto": true
+    },
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_07_a5_{name}.csv', 'w', encoding='utf-8', newline='').write('x\\n1\\n2\\n'), open(f't13_07_b5_{name}.csv', 'w', encoding='utf-8', newline='').write('x\\n1\\n3\\n'), mesclar_csvs(f't13_07_a5_{name}.csv', f't13_07_b5_{name}.csv', f't13_07_merge_5_{name}.csv'))[2])(__import__('uuid').uuid4().hex))()",
+      "esperado": "[['x'], ['1'], ['2'], ['3']]",
+      "oculto": true
+    }
+  ]
+}

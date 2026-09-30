@@ -1,0 +1,48 @@
+{
+  "id": "t13-v1-04-salvar-e-carregar-dicionario-json",
+  "tipo": "prever-saida",
+  "titulo": "Salvar e carregar dicionário em JSON",
+  "topico": "Arquivos (txt, CSV, JSON)",
+  "topicoNumero": 13,
+  "variacao": "V1",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "O `json.dump()` grava o dicionário em texto JSON no arquivo.",
+    "Depois da escrita, o `json.load()` lê de volta em uma estrutura Python.",
+    "A chave `nome` e o valor `ativo` voltam em tipos reais do Python."
+  ],
+  "solucao": "import json\nfrom pathlib import Path\n\ncaminho = Path('cadastro.json')\ndados = {'nome': 'Ana', 'idade': 30, 'ativo': True}\nwith caminho.open('w', encoding='utf-8') as arquivo:\n    json.dump(dados, arquivo, ensure_ascii=False, indent=2)\nwith caminho.open('r', encoding='utf-8') as arquivo:\n    leitura = json.load(arquivo)\nprint(leitura['nome'], leitura['idade'], leitura['ativo'])\n",
+  "tags": [
+    "json",
+    "dict",
+    "dump",
+    "load"
+  ],
+  "aulaRelacionada": "arquivos",
+  "enunciado": "Considere o trecho abaixo e responda qual será a saída impressa. O dicionário `dados` contém `nome`, `idade` e `ativo`, e o programa salva esse conteúdo em um arquivo JSON e lê de volta imediatamente.",
+  "codigo": "import json\nfrom pathlib import Path\n\ncaminho = Path('cadastro.json')\ndados = {'nome': 'Ana', 'idade': 30, 'ativo': True}\nwith caminho.open('w', encoding='utf-8') as arquivo:\n    json.dump(dados, arquivo, ensure_ascii=False, indent=2)\nwith caminho.open('r', encoding='utf-8') as arquivo:\n    leitura = json.load(arquivo)\nprint(leitura['nome'], leitura['idade'], leitura['ativo'])\n",
+  "respostaEsperada": "Ana 30 True",
+  "alternativas": [
+    {
+      "texto": "Ana 30 True",
+      "correta": true,
+      "explicacao": "O JSON salva a estrutura e a leitura de volta devolve o dicionário com os tipos corretos."
+    },
+    {
+      "texto": "Ana 30 False",
+      "correta": false,
+      "explicacao": "O valor booleano foi salvo como True e permanece verdadeiro ao carregar."
+    },
+    {
+      "texto": "Ana 30",
+      "correta": false,
+      "explicacao": "O valor booleano `ativo` também está presente na estrutura lida e é impresso."
+    },
+    {
+      "texto": "Ana",
+      "correta": false,
+      "explicacao": "O programa imprime todos os três campos: nome, idade e ativo."
+    }
+  ]
+}

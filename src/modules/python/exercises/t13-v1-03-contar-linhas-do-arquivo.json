@@ -1,0 +1,51 @@
+{
+  "id": "t13-v1-03-contar-linhas-do-arquivo",
+  "tipo": "codigo",
+  "titulo": "Contar linhas do arquivo",
+  "topico": "Arquivos (txt, CSV, JSON)",
+  "topicoNumero": 13,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Leia o arquivo e transforme o texto em lista de linhas.",
+    "A função `splitlines()` remove a quebra de linha e ajuda a contar itens válidos.",
+    "Considere que uma linha vazia pode existir; normalmente você conta as linhas do texto real, não só as não vazias."
+  ],
+  "solucao": "from pathlib import Path\n\ndef contar_linhas(caminho):\n    arquivo = Path(caminho)\n    if not arquivo.exists():\n        return 0\n    texto = arquivo.read_text(encoding='utf-8')\n    return len(texto.splitlines())\n",
+  "tags": [
+    "linhas",
+    "splitlines",
+    "txt"
+  ],
+  "aulaRelacionada": "arquivos",
+  "enunciado": "Implemente `contar_linhas(caminho)` para devolver quantas linhas existem no arquivo indicado. A função deve responder de forma segura quando o arquivo ainda não existe.",
+  "starterCode": "from pathlib import Path\n\ndef contar_linhas(caminho):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "(lambda: (open('t13_03_a.txt', 'w', encoding='utf-8').write('um\\ndois\\ntrês\\n'), contar_linhas('t13_03_a.txt'))[1])()",
+      "esperado": "3",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (open('t13_03_b.txt', 'w', encoding='utf-8').write('apenas uma linha\\n'), contar_linhas('t13_03_b.txt'))[1])()",
+      "esperado": "1",
+      "oculto": false
+    },
+    {
+      "chamada": "contar_linhas('t13_03_c_inexistente.txt')",
+      "esperado": "0",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (open('t13_03_d.txt', 'w', encoding='utf-8').write('a\\n\\n b\\n'), contar_linhas('t13_03_d.txt'))[1])()",
+      "esperado": "3",
+      "oculto": true
+    },
+    {
+      "chamada": "(lambda: (open('t13_03_e.txt', 'w', encoding='utf-8').write(''), contar_linhas('t13_03_e.txt'))[1])()",
+      "esperado": "0",
+      "oculto": true
+    }
+  ]
+}

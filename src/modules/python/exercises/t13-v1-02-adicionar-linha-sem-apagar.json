@@ -1,0 +1,52 @@
+{
+  "id": "t13-v1-02-adicionar-linha-sem-apagar",
+  "tipo": "codigo",
+  "titulo": "Adicionar linha sem apagar o conteúdo",
+  "topico": "Arquivos (txt, CSV, JSON)",
+  "topicoNumero": 13,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Se o arquivo não existir, crie-o antes de escrever.",
+    "Use o modo de escrita em append para preservar o conteúdo atual.",
+    "Ao final, leia o arquivo para confirmar que a linha nova ficou no fim."
+  ],
+  "solucao": "from pathlib import Path\n\ndef adicionar_linha(caminho, nova_linha):\n    arquivo = Path(caminho)\n    if not arquivo.exists():\n        arquivo.write_text('', encoding='utf-8')\n    with arquivo.open('a', encoding='utf-8') as handle:\n        handle.write(nova_linha + '\\n')\n    return arquivo.read_text(encoding='utf-8').splitlines()\n",
+  "tags": [
+    "append",
+    "txt",
+    "arquivo",
+    "persistencia"
+  ],
+  "aulaRelacionada": "arquivos",
+  "enunciado": "Escreva a função `adicionar_linha(caminho, nova_linha)` que cria o arquivo se ele ainda não existir e acrescenta a `nova_linha` ao final, sem apagar o conteúdo anterior. A função deve devolver a lista de linhas do arquivo final.",
+  "starterCode": "from pathlib import Path\n\ndef adicionar_linha(caminho, nova_linha):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_02_a_{name}.txt', 'w', encoding='utf-8').write('um\\ndois\\n'), adicionar_linha(f't13_02_a_{name}.txt', 'terceira'))[1])(__import__('uuid').uuid4().hex))()",
+      "esperado": "['um', 'dois', 'terceira']",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_02_b_{name}.txt', 'w', encoding='utf-8').write('a\\n'), adicionar_linha(f't13_02_b_{name}.txt', 'b'))[1])(__import__('uuid').uuid4().hex))()",
+      "esperado": "['a', 'b']",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (lambda name: adicionar_linha(f't13_02_c_{name}.txt', 'nova'))(__import__('uuid').uuid4().hex))()",
+      "esperado": "['nova']",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_02_d_{name}.txt', 'w', encoding='utf-8').write('x\\ny\\n'), adicionar_linha(f't13_02_d_{name}.txt', 'z'))[1])(__import__('uuid').uuid4().hex))()",
+      "esperado": "['x', 'y', 'z']",
+      "oculto": true
+    },
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_02_e_{name}.txt', 'w', encoding='utf-8').write('inicio\\n'), adicionar_linha(f't13_02_e_{name}.txt', 'fim'))[1])(__import__('uuid').uuid4().hex))()",
+      "esperado": "['inicio', 'fim']",
+      "oculto": true
+    }
+  ]
+}

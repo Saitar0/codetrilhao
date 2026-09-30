@@ -1,0 +1,52 @@
+{
+  "id": "t13-v1-01-gravar-3-linhas-em-txt",
+  "tipo": "codigo",
+  "titulo": "Gravar 3 linhas em um TXT e ler de volta",
+  "topico": "Arquivos (txt, CSV, JSON)",
+  "topicoNumero": 13,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Use `Path` para criar o arquivo e depois leia com `read_text()`.",
+    "Escreva as três linhas com `\\n` entre elas e finalize com uma quebra de linha.",
+    "Depois da leitura, transforme o texto em lista com `splitlines()` e imprima em uma linha."
+  ],
+  "solucao": "from pathlib import Path\n\ndef gravar_3_linhas(caminho):\n    linhas = ['Python', 'CSV', 'JSON']\n    arquivo = Path(caminho)\n    arquivo.write_text('\\n'.join(linhas) + '\\n', encoding='utf-8')\n    return arquivo.read_text(encoding='utf-8').splitlines()\n",
+  "tags": [
+    "txt",
+    "arquivo",
+    "read_text",
+    "write_text"
+  ],
+  "aulaRelacionada": "arquivos",
+  "enunciado": "Crie um arquivo chamado `frases.txt` com as três linhas `Python`, `CSV` e `JSON`. Depois de escrever, leia o arquivo de volta e imprima o conteúdo em uma única linha, separado por ` | `. Lembre-se: o arquivo deve existir antes da leitura.",
+  "starterCode": "from pathlib import Path\n\ndef gravar_3_linhas(caminho):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "gravar_3_linhas('t13_01_a.txt')",
+      "esperado": "['Python', 'CSV', 'JSON']",
+      "oculto": false
+    },
+    {
+      "chamada": "gravar_3_linhas('t13_01_b.txt')",
+      "esperado": "['Python', 'CSV', 'JSON']",
+      "oculto": false
+    },
+    {
+      "chamada": "gravar_3_linhas('t13_01_c.txt')",
+      "esperado": "['Python', 'CSV', 'JSON']",
+      "oculto": false
+    },
+    {
+      "chamada": "gravar_3_linhas('t13_01_d.txt')",
+      "esperado": "['Python', 'CSV', 'JSON']",
+      "oculto": true
+    },
+    {
+      "chamada": "gravar_3_linhas('t13_01_e.txt')",
+      "esperado": "['Python', 'CSV', 'JSON']",
+      "oculto": true
+    }
+  ]
+}

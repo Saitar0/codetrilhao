@@ -1,0 +1,51 @@
+{
+  "id": "t13-v2-08-ler-arquivo-grande-linha-a-linha",
+  "tipo": "codigo",
+  "titulo": "Ler um arquivo grande linha a linha sem carregar tudo",
+  "topico": "Arquivos (txt, CSV, JSON)",
+  "topicoNumero": 13,
+  "variacao": "V2",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "A ideia é iterar com `for linha in arquivo` em vez de usar `read()`.",
+    "Use `strip()` para limpar a quebra de linha, mas mantenha o texto real.",
+    "Acumule o total em uma variável e retorne ao final."
+  ],
+  "solucao": "from pathlib import Path\n\ndef contar_linhas_em_loop(caminho):\n    arquivo = Path(caminho)\n    if not arquivo.exists():\n        return 0\n\n    total = 0\n    with arquivo.open('r', encoding='utf-8') as handle:\n        for linha in handle:\n            if linha.strip():\n                total += 1\n    return total\n",
+  "tags": [
+    "arquivo grande",
+    "readline",
+    "for linha"
+  ],
+  "aulaRelacionada": "arquivos",
+  "enunciado": "Implemente `contar_linhas_em_loop(caminho)` para contar as linhas válidas de um arquivo grande, sem ler todo o conteúdo de uma vez. A função deve apenas iterar sobre as linhas do arquivo e somar cada uma que não estiver vazia.",
+  "starterCode": "from pathlib import Path\n\ndef contar_linhas_em_loop(caminho):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "(lambda: (open('t13_08_a.txt', 'w', encoding='utf-8').write('linha 1\\nlinha 2\\nlinha 3\\n'), contar_linhas_em_loop('t13_08_a.txt'))[1])()",
+      "esperado": "3",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (open('t13_08_b.txt', 'w', encoding='utf-8').write('\\n\\nA\\n\\nB\\n'), contar_linhas_em_loop('t13_08_b.txt'))[1])()",
+      "esperado": "2",
+      "oculto": false
+    },
+    {
+      "chamada": "contar_linhas_em_loop('t13_08_c_inexistente.txt')",
+      "esperado": "0",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (open('t13_08_d.txt', 'w', encoding='utf-8').write('um\\ndois\\ntrês\\nquatro\\n'), contar_linhas_em_loop('t13_08_d.txt'))[1])()",
+      "esperado": "4",
+      "oculto": true
+    },
+    {
+      "chamada": "(lambda: (open('t13_08_e.txt', 'w', encoding='utf-8').write('um\\n\\ntrês\\n'), contar_linhas_em_loop('t13_08_e.txt'))[1])()",
+      "esperado": "2",
+      "oculto": true
+    }
+  ]
+}

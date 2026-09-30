@@ -1,0 +1,51 @@
+{
+  "id": "t13-v3-10-limpar-linhas-invalidas-e-salvar-csv-limpo",
+  "tipo": "codigo",
+  "titulo": "Limpar linhas inválidas e salvar um CSV limpo",
+  "topico": "Arquivos (txt, CSV, JSON)",
+  "topicoNumero": 13,
+  "variacao": "V3",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Valide se a linha tem todos os campos necessários antes de gravá-la no CSV limpo.",
+    "Se o campo estiver vazio, ignore essa linha e continue.",
+    "Retorne quantas linhas foram salvas válidas para facilitar a verificação."
+  ],
+  "solucao": "import csv\n\ndef limpar_csv(caminho_entrada, caminho_saida):\n    linhas_validas = []\n    with open(caminho_entrada, 'r', encoding='utf-8', newline='') as entrada:\n        leitor = csv.reader(entrada, delimiter=';')\n        cabecalho = next(leitor, None)\n        for linha in leitor:\n            if not linha or any(item.strip() == '' for item in linha):\n                continue\n            linhas_validas.append(linha)\n\n    with open(caminho_saida, 'w', encoding='utf-8', newline='') as saida:\n        escritor = csv.writer(saida, delimiter=';')\n        escritor.writerows(linhas_validas)\n\n    return len(linhas_validas)\n",
+  "tags": [
+    "csv",
+    "validacao",
+    "limpeza"
+  ],
+  "aulaRelacionada": "arquivos",
+  "enunciado": "Implemente `limpar_csv(caminho_entrada, caminho_saida)` para ler um CSV com `;`, ignorar linhas vazias ou incompletas e gravar um arquivo novo apenas com registros válidos. A função deve devolver a quantidade de linhas salvas.",
+  "starterCode": "import csv\n\ndef limpar_csv(caminho_entrada, caminho_saida):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_10_a_{name}.csv', 'w', encoding='utf-8', newline='').write('nome;idade\\nAna;30\\nBia;\\nCarlos;28\\n'), limpar_csv(f't13_10_a_{name}.csv', f't13_10_a_{name}_saida.csv'))[1])(__import__('uuid').uuid4().hex))()",
+      "esperado": "2",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_10_b_{name}.csv', 'w', encoding='utf-8', newline='').write('nome;cidade\\n\\nJoão;SP\\nMaria;\\n'), limpar_csv(f't13_10_b_{name}.csv', f't13_10_b_{name}_saida.csv'))[1])(__import__('uuid').uuid4().hex))()",
+      "esperado": "1",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_10_c_{name}.csv', 'w', encoding='utf-8', newline='').write('produto;estoque\\nMouse;12\\nTeclado;\\nMonitor;8\\n'), limpar_csv(f't13_10_c_{name}.csv', f't13_10_c_{name}_saida.csv'))[1])(__import__('uuid').uuid4().hex))()",
+      "esperado": "2",
+      "oculto": false
+    },
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_10_d_{name}.csv', 'w', encoding='utf-8', newline='').write('vendedor;mes\\nAna;jan\\n;fev\\nCarla;mar\\n'), limpar_csv(f't13_10_d_{name}.csv', f't13_10_d_{name}_saida.csv'))[1])(__import__('uuid').uuid4().hex))()",
+      "esperado": "2",
+      "oculto": true
+    },
+    {
+      "chamada": "(lambda: (lambda name: (open(f't13_10_e_{name}.csv', 'w', encoding='utf-8', newline='').write('nome;valor\\n\\n\\n'), limpar_csv(f't13_10_e_{name}.csv', f't13_10_e_{name}_saida.csv'))[1])(__import__('uuid').uuid4().hex))()",
+      "esperado": "0",
+      "oculto": true
+    }
+  ]
+}
