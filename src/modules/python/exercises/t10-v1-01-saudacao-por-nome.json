@@ -1,0 +1,51 @@
+{
+  "id": "t10-v1-01-saudacao-por-nome",
+  "tipo": "codigo",
+  "titulo": "Saudação com nome",
+  "topico": "Funções",
+  "topicoNumero": 10,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "A função recebe um nome e devolve uma string formatada.",
+    "Use f-string para montar a mensagem final com o nome informado.",
+    "Teste diferentes entradas para confirmar que a frase sempre começa com 'Olá,'."
+  ],
+  "solucao": "def saudacao(nome: str) -> str:\n    \"\"\"Retorna uma saudação personalizada com o nome informado.\"\"\"\n    return f\"Olá, {nome}!\"\n",
+  "tags": [
+    "python",
+    "funcoes",
+    "saudacao"
+  ],
+  "aulaRelacionada": "funcoes",
+  "enunciado": "Implemente `saudacao(nome)` para devolver uma mensagem no formato `Olá, <nome>!`. Use o nome passado como argumento para personalizar a frase e manter o texto amigável.",
+  "starterCode": "def saudacao(nome: str) -> str:\n    pass\n",
+  "testes": [
+    {
+      "chamada": "saudacao('Bia')",
+      "esperado": "Olá, Bia!",
+      "oculto": false
+    },
+    {
+      "chamada": "saudacao('Lucas')",
+      "esperado": "Olá, Lucas!",
+      "oculto": false
+    },
+    {
+      "chamada": "saudacao('Ana')",
+      "esperado": "Olá, Ana!",
+      "oculto": false
+    },
+    {
+      "chamada": "saudacao('Maria Clara')",
+      "esperado": "Olá, Maria Clara!",
+      "oculto": true
+    },
+    {
+      "chamada": "saudacao('Z')",
+      "esperado": "Olá, Z!",
+      "oculto": true
+    }
+  ]
+}

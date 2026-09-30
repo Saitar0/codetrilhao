@@ -1,0 +1,51 @@
+{
+  "id": "t10-v2-04-validar-cpf",
+  "tipo": "codigo",
+  "titulo": "Validar CPF com dígitos verificadores",
+  "topico": "Funções",
+  "topicoNumero": 10,
+  "variacao": "V2",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Limpe a string para remover pontos e hífen antes de validar.",
+    "Verifique se o CPF não é uma sequência repetida, como '111.111.111-11'.",
+    "Calcule os dígitos verificadores com os pesos 10, 9, ..., 2 e 11, 10, ..., 2."
+  ],
+  "solucao": "def validar_cpf(cpf: str) -> bool:\n    \"\"\"Valida um CPF brasileiro conforme os dígitos verificadores.\"\"\"\n    cpf = ''.join(ch for ch in cpf if ch.isdigit())\n\n    if len(cpf) != 11 or cpf == cpf[0] * 11:\n        return False\n\n    def digito_verificador(digitos: str, peso_inicial: int) -> int:\n        total = 0\n        for indice, digito in enumerate(digitos):\n            total += int(digito) * (peso_inicial - indice)\n        resto = total % 11\n        return 0 if resto < 2 else 11 - resto\n\n    primeiro = digito_verificador(cpf[:9], 10)\n    segundo = digito_verificador(cpf[:9] + str(primeiro), 11)\n\n    return cpf[-2:] == f\"{primeiro}{segundo}\"\n",
+  "tags": [
+    "python",
+    "funcoes",
+    "cpf"
+  ],
+  "aulaRelacionada": "funcoes-avancadas",
+  "enunciado": "Implemente `validar_cpf(cpf)` para receber uma string com ou sem máscara e devolver `True` quando o CPF for válido e `False` em caso contrário. Rejeite sequências repetidas e valide os dois dígitos verificadores do documento.",
+  "starterCode": "def validar_cpf(cpf: str) -> bool:\n    pass\n",
+  "testes": [
+    {
+      "chamada": "validar_cpf('529.982.247-25')",
+      "esperado": "True",
+      "oculto": false
+    },
+    {
+      "chamada": "validar_cpf('111.111.111-11')",
+      "esperado": "False",
+      "oculto": false
+    },
+    {
+      "chamada": "validar_cpf('000.000.000-00')",
+      "esperado": "False",
+      "oculto": false
+    },
+    {
+      "chamada": "validar_cpf('12345678900')",
+      "esperado": "False",
+      "oculto": true
+    },
+    {
+      "chamada": "validar_cpf('123.456.789-09')",
+      "esperado": "True",
+      "oculto": true
+    }
+  ]
+}

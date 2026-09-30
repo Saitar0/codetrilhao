@@ -1,0 +1,51 @@
+{
+  "id": "t10-v3-02-calcular-frete",
+  "tipo": "codigo",
+  "titulo": "Cálculo de frete por peso, região e serviço",
+  "topico": "Funções",
+  "topicoNumero": 10,
+  "variacao": "V3",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Defina uma tabela simples para cada região e um acréscimo de acordo com o serviço.",
+    "Use a região e o serviço como chaves de dicionário para deixar o cálculo legível.",
+    "O valor final deve incluir o peso multiplicado pela taxa da região e o extra do serviço."
+  ],
+  "solucao": "def calcular_frete(peso: float, regiao: str, servico: str = 'padrao') -> float:\n    \"\"\"Calcula o valor do frete com base em peso, região e tipo de serviço.\"\"\"\n    taxa_por_regiao = {\n        'norte': 4.0,\n        'sul': 5.5,\n        'nordeste': 6.5,\n        'sudeste': 7.0,\n        'centro-oeste': 6.0,\n    }\n    acrescimo_por_servico = {\n        'padrao': 0.0,\n        'expresso': 12.0,\n        'fragil': 18.0,\n    }\n    taxa = taxa_por_regiao.get(regiao.lower(), 5.0)\n    acrescimo = acrescimo_por_servico.get(servico.lower(), 0.0)\n    return round(peso * taxa + acrescimo, 2)\n",
+  "tags": [
+    "python",
+    "funcoes",
+    "frete"
+  ],
+  "aulaRelacionada": "funcoes-avancadas",
+  "enunciado": "Implemente `calcular_frete(peso, regiao, servico='padrao')` para devolver o valor do frete com base no peso, na região e no tipo de serviço. Use uma taxa por região e um acréscimo por serviço, mantendo o cálculo simples e previsível.",
+  "starterCode": "def calcular_frete(peso: float, regiao: str, servico: str = 'padrao') -> float:\n    pass\n",
+  "testes": [
+    {
+      "chamada": "calcular_frete(2, 'sul')",
+      "esperado": "11.0",
+      "oculto": false
+    },
+    {
+      "chamada": "calcular_frete(3, 'norte', 'expresso')",
+      "esperado": "24.0",
+      "oculto": false
+    },
+    {
+      "chamada": "calcular_frete(1.5, 'sudeste', 'fragil')",
+      "esperado": "28.5",
+      "oculto": false
+    },
+    {
+      "chamada": "calcular_frete(0, 'sul')",
+      "esperado": "0.0",
+      "oculto": true
+    },
+    {
+      "chamada": "calcular_frete(4, 'nordeste')",
+      "esperado": "26.0",
+      "oculto": true
+    }
+  ]
+}

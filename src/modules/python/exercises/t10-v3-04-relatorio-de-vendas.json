@@ -1,0 +1,51 @@
+{
+  "id": "t10-v3-04-relatorio-de-vendas",
+  "tipo": "codigo",
+  "titulo": "Relatório de vendas a partir de lista de dicionários",
+  "topico": "Funções",
+  "topicoNumero": 10,
+  "variacao": "V3",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Percorra a lista e some os valores de cada venda para calcular o total.",
+    "Use um dicionário temporário para contar quantas unidades cada produto vendeu.",
+    "Ao final, escolha o produto com maior quantidade e devolva esse nome no relatório."
+  ],
+  "solucao": "def relatorio_vendas(vendas: list[dict]) -> dict:\n    \"\"\"Gera um resumo com total, quantidade e produto mais vendido.\"\"\"\n    if not vendas:\n        return {\n            'total_vendas': 0.0,\n            'quantidade_itens': 0,\n            'produto_mais_vendido': 'Nenhum',\n        }\n\n    total = 0.0\n    contagem = {}\n\n    for venda in vendas:\n        valor = float(venda['valor'])\n        quantidade = int(venda['quantidade'])\n        total += valor * quantidade\n        produto = venda['produto']\n        contagem[produto] = contagem.get(produto, 0) + quantidade\n\n    produto_mais_vendido = max(contagem, key=contagem.get)\n\n    return {\n        'total_vendas': round(total, 2),\n        'quantidade_itens': sum(contagem.values()),\n        'produto_mais_vendido': produto_mais_vendido,\n    }\n",
+  "tags": [
+    "python",
+    "funcoes",
+    "vendas"
+  ],
+  "aulaRelacionada": "funcoes",
+  "enunciado": "Implemente `relatorio_vendas(vendas)` para receber uma lista de dicionários com `produto`, `quantidade` e `valor`, e devolver um relatório com o total das vendas, a quantidade total de itens vendidos e o nome do produto mais vendido. Quando a lista estiver vazia, devolva `{'total_vendas': 0.0, 'quantidade_itens': 0, 'produto_mais_vendido': 'Nenhum'}`.",
+  "starterCode": "def relatorio_vendas(vendas: list[dict]) -> dict:\n    pass\n",
+  "testes": [
+    {
+      "chamada": "relatorio_vendas([{'produto': 'Mouse', 'quantidade': 2, 'valor': 50}, {'produto': 'Teclado', 'quantidade': 1, 'valor': 120}])",
+      "esperado": "{'total_vendas': 220.0, 'quantidade_itens': 3, 'produto_mais_vendido': 'Mouse'}",
+      "oculto": false
+    },
+    {
+      "chamada": "relatorio_vendas([{'produto': 'Monitor', 'quantidade': 1, 'valor': 800}, {'produto': 'Teclado', 'quantidade': 2, 'valor': 150}])",
+      "esperado": "{'total_vendas': 1100.0, 'quantidade_itens': 3, 'produto_mais_vendido': 'Teclado'}",
+      "oculto": false
+    },
+    {
+      "chamada": "relatorio_vendas([{'produto': 'Fone', 'quantidade': 1, 'valor': 90}])",
+      "esperado": "{'total_vendas': 90.0, 'quantidade_itens': 1, 'produto_mais_vendido': 'Fone'}",
+      "oculto": false
+    },
+    {
+      "chamada": "relatorio_vendas([])",
+      "esperado": "{'total_vendas': 0.0, 'quantidade_itens': 0, 'produto_mais_vendido': 'Nenhum'}",
+      "oculto": true
+    },
+    {
+      "chamada": "relatorio_vendas([{'produto': 'Cabo', 'quantidade': 3, 'valor': 20}, {'produto': 'Cabo', 'quantidade': 2, 'valor': 20}])",
+      "esperado": "{'total_vendas': 100.0, 'quantidade_itens': 5, 'produto_mais_vendido': 'Cabo'}",
+      "oculto": true
+    }
+  ]
+}

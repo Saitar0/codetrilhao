@@ -1,0 +1,51 @@
+{
+  "id": "t10-v1-04-maior-menor-e-media",
+  "tipo": "codigo",
+  "titulo": "Maior, menor e média em retorno múltiplo",
+  "topico": "Funções",
+  "topicoNumero": 10,
+  "variacao": "V1",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Use `max()` para obter o maior valor e `min()` para o menor.",
+    "A média é calculada por `sum(numeros) / len(numeros)`.",
+    "A função pode devolver uma tupla ordenada como `(maior, menor, media)`."
+  ],
+  "solucao": "def estatisticas(numeros: list[float]) -> tuple[float, float, float]:\n    \"\"\"Retorna maior, menor e média dos números da lista.\"\"\"\n    if not numeros:\n        return (0, 0, 0)\n    maior = max(numeros)\n    menor = min(numeros)\n    media = sum(numeros) / len(numeros)\n    return (maior, menor, media)\n",
+  "tags": [
+    "python",
+    "funcoes",
+    "retorno-multiplo"
+  ],
+  "aulaRelacionada": "funcoes",
+  "enunciado": "Implemente `estatisticas(numeros)` para devolver uma tupla com o maior valor, o menor valor e a média dos números da lista. Quando a lista estiver vazia, devolva `(0, 0, 0)` para manter a função segura.",
+  "starterCode": "def estatisticas(numeros: list[float]) -> tuple[float, float, float]:\n    pass\n",
+  "testes": [
+    {
+      "chamada": "estatisticas([3, 8, 1, 6])",
+      "esperado": "(8, 1, 4.5)",
+      "oculto": false
+    },
+    {
+      "chamada": "estatisticas([10, 10, 10])",
+      "esperado": "(10, 10, 10.0)",
+      "oculto": false
+    },
+    {
+      "chamada": "estatisticas([5])",
+      "esperado": "(5, 5, 5.0)",
+      "oculto": false
+    },
+    {
+      "chamada": "estatisticas([])",
+      "esperado": "(0, 0, 0)",
+      "oculto": true
+    },
+    {
+      "chamada": "estatisticas([-2, 0, 2])",
+      "esperado": "(2, -2, 0.0)",
+      "oculto": true
+    }
+  ]
+}

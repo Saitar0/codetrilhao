@@ -1,0 +1,51 @@
+{
+  "id": "t10-v2-03-somar-numeros",
+  "tipo": "codigo",
+  "titulo": "Somar qualquer quantidade de números",
+  "topico": "Funções",
+  "topicoNumero": 10,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "O parâmetro `*numeros` agrupa todos os argumentos em uma tupla.",
+    "Use `sum(numeros)` para receber a soma total em uma linha.",
+    "Se não houver argumentos, a soma deve devolver 0 para manter a função previsível."
+  ],
+  "solucao": "def somar_numeros(*numeros: float) -> float:\n    \"\"\"Soma qualquer quantidade de números passados como argumentos.\"\"\"\n    return sum(numeros)\n",
+  "tags": [
+    "python",
+    "funcoes",
+    "args"
+  ],
+  "aulaRelacionada": "funcoes-avancadas",
+  "enunciado": "Implemente `somar_numeros(*numeros)` para aceitar qualquer quantidade de números e devolver a soma total. Quando não houver argumentos, devolva `0`.",
+  "starterCode": "def somar_numeros(*numeros: float) -> float:\n    pass\n",
+  "testes": [
+    {
+      "chamada": "somar_numeros(2, 3, 5)",
+      "esperado": "10",
+      "oculto": false
+    },
+    {
+      "chamada": "somar_numeros(3.5, 2.5)",
+      "esperado": "6.0",
+      "oculto": false
+    },
+    {
+      "chamada": "somar_numeros()",
+      "esperado": "0",
+      "oculto": false
+    },
+    {
+      "chamada": "somar_numeros(10, 20, 30, 40)",
+      "esperado": "100",
+      "oculto": true
+    },
+    {
+      "chamada": "somar_numeros(-2, 5, 7)",
+      "esperado": "10",
+      "oculto": true
+    }
+  ]
+}

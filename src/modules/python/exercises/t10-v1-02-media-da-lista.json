@@ -1,0 +1,51 @@
+{
+  "id": "t10-v1-02-media-da-lista",
+  "tipo": "codigo",
+  "titulo": "Média de uma lista",
+  "topico": "Funções",
+  "topicoNumero": 10,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Some todos os elementos e divida pela quantidade de números da lista.",
+    "Se a lista estiver vazia, devolva 0.0 para evitar erro de divisão.",
+    "A função deve retornar um valor numérico, não uma string ou lista."
+  ],
+  "solucao": "def media(numeros: list[float]) -> float:\n    \"\"\"Calcula a média aritmética de uma lista de números.\"\"\"\n    if not numeros:\n        return 0.0\n    return sum(numeros) / len(numeros)\n",
+  "tags": [
+    "python",
+    "funcoes",
+    "media"
+  ],
+  "aulaRelacionada": "funcoes",
+  "enunciado": "Implemente `media(numeros)` para calcular a média aritmética dos números recebidos em uma lista. Se a lista vier vazia, devolva `0.0` em vez de quebrar a execução.",
+  "starterCode": "def media(numeros: list[float]) -> float:\n    pass\n",
+  "testes": [
+    {
+      "chamada": "media([8, 10, 6])",
+      "esperado": "8.0",
+      "oculto": false
+    },
+    {
+      "chamada": "media([5, 7, 9, 11])",
+      "esperado": "8.0",
+      "oculto": false
+    },
+    {
+      "chamada": "media([10])",
+      "esperado": "10.0",
+      "oculto": false
+    },
+    {
+      "chamada": "media([])",
+      "esperado": "0.0",
+      "oculto": true
+    },
+    {
+      "chamada": "media([3, 3, 3])",
+      "esperado": "3.0",
+      "oculto": true
+    }
+  ]
+}

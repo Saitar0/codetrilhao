@@ -1,0 +1,51 @@
+{
+  "id": "t10-v2-02-fatorial-e-soma-digitos",
+  "tipo": "codigo",
+  "titulo": "Fatorial recursivo e soma de dígitos",
+  "topico": "Funções",
+  "topicoNumero": 10,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "O caso base do fatorial é `n == 0` ou `n == 1`.",
+    "Para a soma dos dígitos, use recursão até o número terminar em 0.",
+    "A função deve tratar `0` e `1` com comportamento específico para evitar erros." 
+  ],
+  "solucao": "def fatorial(n: int) -> int:\n    \"\"\"Calcula o fatorial de n usando recursão.\"\"\"\n    if n in (0, 1):\n        return 1\n    return n * fatorial(n - 1)\n\n\ndef soma_digitos(n: int) -> int:\n    \"\"\"Soma os dígitos de n recursivamente.\"\"\"\n    if n == 0:\n        return 0\n    return n % 10 + soma_digitos(n // 10)\n",
+  "tags": [
+    "python",
+    "funcoes",
+    "recursao"
+  ],
+  "aulaRelacionada": "funcoes-avancadas",
+  "enunciado": "Implemente duas funções recursivas: `fatorial(n)` para calcular o fatorial de um número positivo e `soma_digitos(n)` para somar todos os dígitos de um inteiro. Considere que `fatorial(0)` e `fatorial(1)` valem `1` e que `soma_digitos(0)` vale `0`.",
+  "starterCode": "def fatorial(n: int) -> int:\n    pass\n\ndef soma_digitos(n: int) -> int:\n    pass\n",
+  "testes": [
+    {
+      "chamada": "fatorial(5)",
+      "esperado": "120",
+      "oculto": false
+    },
+    {
+      "chamada": "fatorial(1)",
+      "esperado": "1",
+      "oculto": false
+    },
+    {
+      "chamada": "soma_digitos(1234)",
+      "esperado": "10",
+      "oculto": false
+    },
+    {
+      "chamada": "fatorial(0)",
+      "esperado": "1",
+      "oculto": true
+    },
+    {
+      "chamada": "soma_digitos(999)",
+      "esperado": "27",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "t10-v1-03-calcular-desconto-padrao",
+  "tipo": "prever-saida",
+  "titulo": "Parâmetro padrão e saída da função",
+  "topico": "Funções",
+  "topicoNumero": 10,
+  "variacao": "V1",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "O parâmetro `percentual` recebe 10 quando não é informado.",
+    "A expressão `1 - percentual / 100` reduz o valor do preço conforme a porcentagem.",
+    "Se o segundo argumento for enviado, ele substitui o valor padrão da função."
+  ],
+  "solucao": "def calcular_desconto(preco: float, percentual: float = 10) -> float:\n    \"\"\"Retorna o valor final após aplicar um desconto percentual.\"\"\"\n    return preco * (1 - percentual / 100)\n\nprint(calcular_desconto(200))\nprint(calcular_desconto(200, 25))\n# Saída:\n# 180.0\n# 150.0\n",
+  "tags": [
+    "python",
+    "funcoes",
+    "parametro-padrao"
+  ],
+  "aulaRelacionada": "funcoes",
+  "enunciado": "Considere este código e responda o que ele imprime na tela. A função `calcular_desconto` usa `percentual=10` como valor padrão, recebe `preco` e retorna o valor final após aplicar o desconto. O que será exibido nas duas chamadas abaixo?",
+  "codigo": "def calcular_desconto(preco: float, percentual: float = 10) -> float:\n    return preco * (1 - percentual / 100)\n\nprint(calcular_desconto(200))\nprint(calcular_desconto(200, 25))\n",
+  "respostaEsperada": "180.0\n150.0",
+  "alternativas": [
+    {
+      "texto": "180.0\n150.0",
+      "correta": true,
+      "explicacao": "O valor padrão de 10% é usado na primeira chamada e o argumento informado 25% substitui o padrão na segunda."
+    },
+    {
+      "texto": "200.0\n150.0",
+      "correta": false,
+      "explicacao": "A primeira chamada não apenas repete o preço; o desconto precisa ser aplicado sobre o valor inicial."
+    },
+    {
+      "texto": "180.0\n175.0",
+      "correta": false,
+      "explicacao": "25% de 200 é 50, então o valor final deveria ser 150, não 175."
+    },
+    {
+      "texto": "200.0\n200.0",
+      "correta": false,
+      "explicacao": "A função retorna o preço com desconto, não o preço original."
+    }
+  ]
+}

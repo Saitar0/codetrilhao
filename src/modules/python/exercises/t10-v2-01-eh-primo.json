@@ -1,0 +1,51 @@
+{
+  "id": "t10-v2-01-eh-primo",
+  "tipo": "codigo",
+  "titulo": "Verificar se um número é primo",
+  "topico": "Funções",
+  "topicoNumero": 10,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Números menores ou iguais a 1 não são primos.",
+    "Teste divisores a partir de 2 até a raiz quadrada do número.",
+    "Se encontrar qualquer divisão exata, a função deve devolver False."
+  ],
+  "solucao": "def eh_primo(n: int) -> bool:\n    \"\"\"Retorna True se n for primo e False em caso contrário.\"\"\"\n    if n <= 1:\n        return False\n    if n <= 3:\n        return True\n    if n % 2 == 0:\n        return False\n\n    divisor = 3\n    while divisor * divisor <= n:\n        if n % divisor == 0:\n            return False\n        divisor += 2\n    return True\n",
+  "tags": [
+    "python",
+    "funcoes",
+    "primos"
+  ],
+  "aulaRelacionada": "funcoes-avancadas",
+  "enunciado": "Implemente `eh_primo(n)` para verificar se o número informado é primo. A função deve retornar `True` para 2, 3, 5 e `False` para 0, 1, 4 e números compostos.",
+  "starterCode": "def eh_primo(n: int) -> bool:\n    pass\n",
+  "testes": [
+    {
+      "chamada": "eh_primo(2)",
+      "esperado": "True",
+      "oculto": false
+    },
+    {
+      "chamada": "eh_primo(9)",
+      "esperado": "False",
+      "oculto": false
+    },
+    {
+      "chamada": "eh_primo(1)",
+      "esperado": "False",
+      "oculto": false
+    },
+    {
+      "chamada": "eh_primo(29)",
+      "esperado": "True",
+      "oculto": true
+    },
+    {
+      "chamada": "eh_primo(0)",
+      "esperado": "False",
+      "oculto": true
+    }
+  ]
+}
