@@ -1,0 +1,234 @@
+---
+titulo: "Calculadora à prova de falhas"
+descricao: "Crie uma calculadora robusta que trata entradas inválidas sem quebrar o fluxo do programa."
+topico: "excecoes"
+topicoNome: "Tratamento de erros"
+variacao: "V1"
+tempo: 25
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "try", "except", "ValueError", "ZeroDivisionError", "logging"]
+---
+
+# Calculadora à prova de falhas
+
+## Contexto
+Você foi encarregado de montar uma calculadora simples para um balcão de atendimento interno. O problema é que alguns usuários digitam texto em vez de número, tentam dividir por zero ou escolhem uma opção que não existe. Em vez de travar a aplicação, você precisa manter o fluxo funcional e avisar o usuário de forma clara.
+
+## O que você vai construir
+Uma calculadora com menu, validação de entrada e tratamento de erro. O programa deve aceitar operações simples e seguir em frente mesmo quando o usuário comete um erro de digitação.
+
+Exemplo de execução real:
+
+```text
+=== Calculadora à prova de falhas ===
+1) somar
+2) subtrair
+3) multiplicar
+4) dividir
+5) sair
+Escolha uma opção: 3
+Primeiro número: 10
+Segundo número: 2
+Resultado: 20.0
+=== Calculadora à prova de falhas ===
+1) somar
+2) subtrair
+3) multiplicar
+4) dividir
+5) sair
+Escolha uma opção: 4
+Primeiro número: 8
+Segundo número: 0
+Não é possível dividir por zero.
+=== Calculadora à prova de falhas ===
+1) somar
+2) subtrair
+3) multiplicar
+4) dividir
+5) sair
+Escolha uma opção: 5
+Programa encerrado.
+```
+
+## Requisitos
+1. Mostrar um menu com operações básicas: soma, subtração, multiplicação e divisão.
+2. Validar a opção escolhida e impedir entradas fora do menu.
+3. Converter entradas do usuário em número com cuidado.
+4. Tratar `ZeroDivisionError` e informar ao usuário de forma amigável.
+5. Registrar erros importantes com `logging` e manter o programa funcionando.
+
+## Critérios de aceite
+- [ ] O menu continua funcionando mesmo com entrada inválida.
+- [ ] O programa não quebra quando o usuário digita texto em vez de número.
+- [ ] A divisão por zero gera uma mensagem clara em vez de stack trace.
+- [ ] O aluno consegue explicar a diferença entre validar e capturar exceção.
+- [ ] O código usa `try/except` específico e não engole erro silenciosamente.
+- [ ] O programa encerra corretamente quando o usuário escolhe sair.
+
+## Guia
+### Passo a passo
+1. Comece criando a função `mostrar_menu()` para exibir as opções de operação.
+2. Escreva uma função de leitura que tenta converter texto para número e repete até que o valor seja válido.
+3. Use `try/except` para resolver erros de digitação e `ZeroDivisionError` para divisão por zero.
+4. Em seguida, organize a lógica do menu em um loop para que o usuário possa fazer várias operações seguidas.
+5. Adicione `logging` para registrar falhas que precisam ser observadas, sem esconder o aviso ao usuário.
+
+### Dicas por etapa
+- O `ValueError` aparece quando `float("abc")` ou `int("texto")` tenta converter um valor que não é numérico.
+- Use `while True` para repetir a leitura até a entrada ficar válida.
+- A operação de divisão precisa checar o divisor antes de executar a conta.
+- Quando você registra um erro com `logging`, a mensagem deve informar o que aconteceu e qual parte do sistema falhou.
+- Não use `except:` sem tipo. Esse padrão esconde problemas reais no código.
+
+<Callout type="importante" title="Regra de negócio">
+Em sistemas de atendimento e automação, o usuário pode errar. O software não deve quebrar por isso; ele precisa explicar o problema e continuar em segurança.
+</Callout>
+
+<Playground title="Ponto de partida" code={`import logging
+import sys
+
+logging.basicConfig(level=logging.ERROR, format='LOG: %(message)s', stream=sys.stdout)
+
+
+def ler_numero(mensagem):
+    while True:
+        try:
+            valor = float(input(mensagem).replace(',', '.'))
+            return valor
+        except ValueError:
+            print('Digite um número válido.')
+
+
+def menu():
+    print('=== Calculadora à prova de falhas ===')
+    print('1) somar')
+    print('2) subtrair')
+    print('3) multiplicar')
+    print('4) dividir')
+    print('5) sair')
+
+
+while True:
+    menu()
+    escolha = input('Escolha uma opção: ')
+    if escolha == '5':
+        print('Programa encerrado.')
+        break
+
+    # continue aqui: validação, cálculo e tratamento de erros
+`} />
+
+## Desafio extra
+Crie uma versão que registra cada operação em um histórico e mostra ao final a quantidade de cálculos bem-sucedidos e falhas registradas. Isso ajuda a enxergar que logging não é só para depuração: ele também serve como auditoria simples.
+
+## Visão de mercado
+Calculadoras e ferramentas de operação aparecem em caixas eletrônicos, sistemas de atendimento, gestão financeira e automação de processos internos. O que diferencia um protótipo simples de um sistema útil é a capacidade de lidar com entradas ruins sem quebrar a experiência.
+
+## Autoavaliação
+- [ ] Consegui escrever uma função para ler números com validação.
+- [ ] Entendi quando `ValueError` aparece e como tratá-lo.
+- [ ] Tratei a divisão por zero de forma clara para o usuário.
+- [ ] Usei `logging` para registrar falhas sem esconder o problema.
+- [ ] O programa continua funcionando em múltiplas operações.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+import logging
+import sys
+
+logging.basicConfig(level=logging.ERROR, format='LOG: %(message)s', stream=sys.stdout)
+
+
+def ler_numero(mensagem):
+    while True:
+        try:
+            texto = input(mensagem).strip().replace(',', '.')
+            if texto == '':
+                raise ValueError('campo vazio')
+            return float(texto)
+        except ValueError as erro:
+            print(f'Digite um número válido. Detalhe: {erro}')
+
+
+def calcular(operacao, a, b):
+    if operacao == '1':
+        return a + b
+    if operacao == '2':
+        return a - b
+    if operacao == '3':
+        return a * b
+    if operacao == '4':
+        if b == 0:
+            raise ZeroDivisionError('divisão por zero')
+        return a / b
+    raise ValueError('opção inválida')
+
+
+while True:
+    print('=== Calculadora à prova de falhas ===')
+    print('1) somar')
+    print('2) subtrair')
+    print('3) multiplicar')
+    print('4) dividir')
+    print('5) sair')
+
+    try:
+        escolha = input('Escolha uma opção: ')
+        if escolha == '5':
+            print('Programa encerrado.')
+            break
+
+        if escolha not in {'1', '2', '3', '4'}:
+            raise ValueError('opção inexistente')
+
+        numero1 = ler_numero('Primeiro número: ')
+        numero2 = ler_numero('Segundo número: ')
+
+        resultado = calcular(escolha, numero1, numero2)
+        print(f'Resultado: {resultado}')
+
+    except ZeroDivisionError:
+        print('Não é possível dividir por zero.')
+        logging.error('Tentativa de divisão por zero na operação atual.')
+    except ValueError as erro:
+        print(f'Entrada inválida: {erro}')
+    except Exception as erro:
+        logging.exception('Erro inesperado na calculadora: %s', erro)
+```
+
+Saída real com execução:
+
+```text
+=== Calculadora à prova de falhas ===
+1) somar
+2) subtrair
+3) multiplicar
+4) dividir
+5) sair
+Escolha uma opção: 3
+Primeiro número: 10
+Segundo número: 2
+Resultado: 20.0
+=== Calculadora à prova de falhas ===
+1) somar
+2) subtrair
+3) multiplicar
+4) dividir
+5) sair
+Escolha uma opção: 4
+Primeiro número: 8
+Segundo número: 0
+Não é possível dividir por zero.
+=== Calculadora à prova de falhas ===
+1) somar
+2) subtrair
+3) multiplicar
+4) dividir
+5) sair
+Escolha uma opção: 5
+Programa encerrado.
+```
+</details>

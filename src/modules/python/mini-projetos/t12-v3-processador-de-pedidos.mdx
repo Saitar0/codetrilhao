@@ -1,0 +1,210 @@
+---
+titulo: "Processador de pedidos"
+descricao: "Crie um sistema que processa pedidos em lote, rejeita registros inválidos e registra os erros sem interromper o fluxo."
+topico: "excecoes"
+topicoNome: "Tratamento de erros"
+variacao: "V3"
+tempo: 35
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "logging", "pedido", "validação", "lote", "rejeicao"]
+---
+
+# Processador de pedidos
+
+## Contexto
+Uma loja online recebe centenas de pedidos por dia. Nem todos vêm corretamente: alguns têm preço negativo, outros têm quantidade zero, alguns apontam para produtos que não existem. O time precisa processar os válidos, registrar os problemas em log e seguir em frente sem derrubar a operação inteira.
+
+## O que você vai construir
+Um processador em lote que lê uma lista de pedidos, valida cada item, rejeita os inválidos com motivo claro e gera um resumo final com quantos pedidos foram processados e quantos foram rejeitados.
+
+Exemplo de execução real:
+
+```text
+=== Processador de pedidos ===
+Pedido 101: processado -> Produto: Caneta, Quantidade: 2, Valor total: R$ 18.00
+Pedido 102: rejeitado -> motivo: preço negativo
+Pedido 103: processado -> Produto: Caderno, Quantidade: 3, Valor total: R$ 60.00
+Pedido 104: rejeitado -> motivo: produto inexistente
+Pedido 105: processado -> Produto: Mochila, Quantidade: 1, Valor total: R$ 180.00
+Resumo: processados=3 | rejeitados=2
+```
+
+## Requisitos
+1. Receber uma lista de pedidos em memória, como dicionários.
+2. Validar produto, preço e quantidade antes de aceitar o pedido.
+3. Registrar os itens inválidos com `logging` e motivo específico.
+4. Continuar o processamento mesmo quando algum pedido falhar.
+5. Exibir um resumo final que mostre total processado e rejeitado.
+
+## Critérios de aceite
+- [ ] O programa continua processando mesmo com registros inválidos.
+- [ ] Cada pedido rejeitado traz uma explicação específica.
+- [ ] O processamento em lote não interrompe a execução por causa de um item ruim.
+- [ ] O aluno consegue explicar por que `logging` é útil em lotes de dados.
+- [ ] O resumo final mostra claramente a quantidade de itens aceitos e rejeitados.
+- [ ] O código separa validação, processamento e registro de erro.
+
+## Histórias de usuário
+- Como operador de e-commerce, quero processar o lote sem parar por um pedido ruim.
+- Como analista, quero saber quantos pedidos foram aceitos e quantos foram rejeitados.
+- Como suporte, quero ver o motivo de cada rejeição para corrigir os dados.
+- Como gerente, quero um resumo simples da operação para tomar decisão sem entrar em cada registro.
+
+## Arquitetura sugerida
+- `validar_pedido(pedido, catalogo)` para conferir cada item.
+- `processar_pedido(pedido)` para gerar o valor final, quando válido.
+- `registrar_rejeicao(pedido, motivo)` para escrever o erro com `logging`.
+- `processar_lote(pedidos, catalogo)` para orquestrar o fluxo principal.
+- `resumo_final` para imprimir o resultado final em um formato legível.
+
+## Casos de teste de aceitação
+- Pedido com preço negativo deve ser rejeitado e registrado.
+- Pedido com quantidade zero deve ser rejeitado.
+- Produto inexistente deve causar rejeição específica.
+- Lote misto deve processar os válidos e ignorar os inválidos sem quebrar.
+- Resumo final deve refletir exatamente a contagem de processados e rejeitados.
+
+## Riscos
+- Misturar regras de negócio com registro de logs deixa o código difícil de depurar.
+- Ignorar o motivo da rejeição torna o tratamento de erros sem valor para a operação.
+- Não separar a validação em pequenas funções aumenta a chance de inconsistência.
+- Registrar apenas no console sem contexto do pedido reduz a capacidade de auditoria.
+
+## Guia
+### História do cliente
+O cliente precisa de um processador que aceite lotes de pedidos sem exigir intervenção manual para cada erro. Ele quer confiança, rastreabilidade e uma visão rápida do que foi aceito e do que foi descartado.
+
+### Marcos do projeto
+1. Estruture a lista de pedidos em dicionários com `id`, `produto`, `quantidade` e `preco`.
+2. Crie uma regra de validação para cada campo e lance uma exceção clara quando encontrar um problema.
+3. Procure separar o processamento em duas rotas: pedidos válidos e pedidos rejeitados.
+4. Registre os rejeitados com `logging` e mostre um resumo final por lote.
+5. Revise se a lógica continua funcionando mesmo com dados misturados.
+
+### Dicas
+- Quando você processa um lote, um pedido ruim não deve derrubar o restante.
+- Use `logging.warning` para registrar falhas sem interromper a operação.
+- Guarde o motivo exato da rejeição; é o que ajuda a corrigir os dados depois.
+- A estrutura do resumo final deve ser simples e legível para o cliente.
+
+<Callout type="importante" title="Regra de negócio">
+Em produção, um erro em um registro não pode derrubar o lote inteiro. A robustez real está em processar o máximo possível e manter a informação do que falhou.
+</Callout>
+
+<Playground title="Ponto de partida" code={`import logging
+import sys
+
+logging.basicConfig(level=logging.WARNING, format='LOG: %(message)s', stream=sys.stdout)
+
+CATALOGO = {
+    'Caneta': 12.0,
+    'Caderno': 20.0,
+    'Mochila': 180.0,
+}
+
+pedidos = [
+    {'id': 101, 'produto': 'Caneta', 'quantidade': 2, 'preco': 12.0},
+    {'id': 102, 'produto': 'Lapis', 'quantidade': 1, 'preco': -5.0},
+    {'id': 103, 'produto': 'Caderno', 'quantidade': 3, 'preco': 20.0},
+]
+
+# 1. validar cada pedido
+# 2. rejeitar itens inválidos com logging
+# 3. processar os válidos
+# 4. imprimir resumo final
+`} />
+
+## Desafio extra
+Adicione um campo de `status` ao relatório final e mostre quais pedidos foram `aprovados`, `rejeitados` e `pendentes`. Isso ajuda a adaptar o mesmo mecanismo para processos mais complexos, como filas de produção ou atendimento.
+
+## Visão de mercado
+Esse padrão é comum em e-commerce, ERP, sistemas financeiros e integração entre plataformas. Em quase todo ambiente real, há dados bons e ruins misturados; quem sabe separar os dois sem perder o ritmo da operação ganha muito em confiabilidade.
+
+## Autoavaliação
+- [ ] Consegui validar cada pedido antes de processá-lo.
+- [ ] Entendi como `logging` ajuda sem interromper o fluxo.
+- [ ] Rejeitei itens com motivos específicos e claros.
+- [ ] O resumo final mostra de forma objetiva o que foi processado.
+- [ ] O algoritmo funciona mesmo quando o lote contém erros misturados.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+import logging
+import sys
+
+logging.basicConfig(level=logging.WARNING, format='LOG: %(message)s', stream=sys.stdout)
+
+CATALOGO = {
+    'Caneta': 12.0,
+    'Caderno': 20.0,
+    'Mochila': 180.0,
+}
+
+
+class PedidoInvalidoError(ValueError):
+    pass
+
+
+def validar_pedido(pedido):
+    produto = pedido.get('produto')
+    quantidade = pedido.get('quantidade')
+    preco = pedido.get('preco')
+
+    if produto not in CATALOGO:
+        raise PedidoInvalidoError('produto inexistente')
+    if not isinstance(quantidade, int) or quantidade <= 0:
+        raise PedidoInvalidoError('quantidade inválida')
+    if not isinstance(preco, (int, float)) or preco < 0:
+        raise PedidoInvalidoError('preço negativo')
+    return {'produto': produto, 'quantidade': quantidade, 'preco': preco}
+
+
+def processar_pedido(pedido):
+    pedido_valido = validar_pedido(pedido)
+    valor_total = pedido_valido['quantidade'] * pedido_valido['preco']
+    print(
+        f"Pedido {pedido['id']}: processado -> "
+        f"Produto: {pedido_valido['produto']}, Quantidade: {pedido_valido['quantidade']}, "
+        f"Valor total: R$ {valor_total:.2f}"
+    )
+
+
+pedidos = [
+    {'id': 101, 'produto': 'Caneta', 'quantidade': 2, 'preco': 12.0},
+    {'id': 102, 'produto': 'Lapis', 'quantidade': 1, 'preco': -5.0},
+    {'id': 103, 'produto': 'Caderno', 'quantidade': 3, 'preco': 20.0},
+    {'id': 104, 'produto': 'Agenda', 'quantidade': 0, 'preco': 25.0},
+    {'id': 105, 'produto': 'Mochila', 'quantidade': 1, 'preco': 180.0},
+]
+
+print('=== Processador de pedidos ===')
+processados = 0
+rejeitados = 0
+
+for pedido in pedidos:
+    try:
+        processar_pedido(pedido)
+        processados += 1
+    except PedidoInvalidoError as erro:
+        rejeitados += 1
+        logging.warning('Pedido %s rejeitado -> motivo: %s', pedido.get('id'), erro)
+        print(f"Pedido {pedido['id']}: rejeitado -> motivo: {erro}")
+
+print(f'Resumo: processados={processados} | rejeitados={rejeitados}')
+```
+
+Saída real com execução:
+
+```text
+=== Processador de pedidos ===
+Pedido 101: processado -> Produto: Caneta, Quantidade: 2, Valor total: R$ 24.00
+Pedido 102: rejeitado -> motivo: produto inexistente
+Pedido 103: processado -> Produto: Caderno, Quantidade: 3, Valor total: R$ 60.00
+Pedido 104: rejeitado -> motivo: quantidade inválida
+Pedido 105: processado -> Produto: Mochila, Quantidade: 1, Valor total: R$ 180.00
+Resumo: processados=3 | rejeitados=2
+```
+</details>

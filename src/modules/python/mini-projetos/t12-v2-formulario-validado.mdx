@@ -1,0 +1,222 @@
+---
+titulo: "Formulário validado"
+descricao: "Construa um formulário que só avança quando cada campo passa por validação e mensagens específicas."
+topico: "excecoes"
+topicoNome: "Tratamento de erros"
+variacao: "V2"
+tempo: 30
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "validação", "raise", "ValueError", "CPF", "e-mail"]
+---
+
+# Formulário validado
+
+## Contexto
+Uma startup de serviços digitais está abrindo um cadastro de novos clientes. O formulário precisa receber nome, e-mail, idade e CPF, mas não pode aceitar dados incompletos ou inconsistentes. Se alguém digitar um e-mail sem @, um CPF inválido ou uma idade fora do intervalo, a aplicação deve avisar de forma objetiva e impedir que o cadastro continue.
+
+## O que você vai construir
+Um processo de cadastro em etapas. Cada campo será validado antes de avançar para o próximo. O sistema deve mostrar mensagens específicas, rejeitar dados inválidos e só concluir quando tudo estiver correto.
+
+Exemplo de execução real:
+
+```text
+=== Cadastro de cliente ===
+Nome: A
+Erro: Nome deve ter pelo menos 2 caracteres.
+Nome: João Silva
+E-mail: joao
+Erro: E-mail inválido. Use um endereço com @ e domínio.
+E-mail: joao@empresa.com
+Idade: 200
+Erro: Idade deve estar entre 0 e 120.
+Idade: 30
+CPF: 123
+Erro: CPF inválido. Digite 11 números.
+CPF: 12345678909
+Cadastro concluído com sucesso!
+```
+
+## Requisitos
+1. Validar nome com tamanho mínimo e sem espaços vazios redundantes.
+2. Validar e-mail com presença de `@` e domínio válido.
+3. Validar idade com faixa aceitável e tipo numérico.
+4. Validar CPF com 11 dígitos e uma regra simples de consistência.
+5. Repetir a entrada até que o valor esteja correto, sem deixar exceções vazarem para o usuário.
+
+## Critérios de aceite
+- [ ] Cada campo gera uma mensagem específica e útil.
+- [ ] O programa não permite que dados inválidos avancem para a etapa seguinte.
+- [ ] O aluno usa `raise` para sinalizar falhas de regra de negócio.
+- [ ] A validação de CPF considera o caso de entrada com letras, espaços ou tamanho incorreto.
+- [ ] O usuário entende exatamente o que precisa corrigir.
+- [ ] Nenhuma exceção não tratada aparece na tela final do cadastro.
+
+## Guia
+### Marcos do projeto
+1. Defina uma exceção própria, como `DadosInvalidosError`, para representar um erro de formulário.
+2. Crie funções de validação separadas para nome, e-mail, idade e CPF.
+3. Faça cada etapa do cadastro ler o dado, chamar a validação e repetir a pergunta quando o valor for inválido.
+4. Reúna os dados somente no final, depois de todas as validações passarem.
+5. Imprima uma mensagem de sucesso com os dados confirmados.
+
+### Dicas
+- A validação pode ser mais simples do que uma regra de banco: checar `len(nome.strip()) >= 2` já elimina muitos casos ruins.
+- Para e-mail, verifique presença de `@` e se depois do `@` existe um ponto ou domínio simples.
+- Idade deve ser um número inteiro e ficar dentro de um intervalo realista.
+- CPF com menos de 11 dígitos ou com letras deve ser rejeitado imediatamente.
+- Quando a regra falha, use `raise DadosInvalidosError(...)` para deixar a falha explícita.
+
+<Callout type="importante" title="Regra de negócio">
+Validação é diferente de tratamento de exceção. Primeiro você confirma que o dado faz sentido; depois interpreta a falha e informa ao usuário como corrigir.
+</Callout>
+
+<Playground title="Ponto de partida" code={`class DadosInvalidosError(ValueError):
+    pass
+
+
+def validar_nome(nome):
+    # verificar nome vazio ou curto
+    return nome.strip()
+
+
+def validar_email(email):
+    # verificar presença de '@' e domínio
+    return email.strip()
+
+
+def validar_idade(idade):
+    # verificar inteiro e faixa aceitável
+    return int(idade)
+
+
+def validar_cpf(cpf):
+    # verificar 11 dígitos e rejeitar entrada inválida
+    return cpf.strip()
+
+
+def ler_dado(mensagem, validador):
+    while True:
+        try:
+            valor = input(mensagem)
+            return validador(valor)
+        except DadosInvalidosError as erro:
+            print(f'Erro: {erro}')
+
+
+nome = ler_dado('Nome: ', validar_nome)
+email = ler_dado('E-mail: ', validar_email)
+idade = ler_dado('Idade: ', validar_idade)
+cpf = ler_dado('CPF: ', validar_cpf)
+print('Cadastro concluído com sucesso!')
+`} />
+
+## Desafio extra
+Crie uma segunda versão que armazene o cadastro em um dicionário e depois mostre um resumo final com nome, e-mail e idade. Isso ajuda a perceber que a validação não interrompe o fluxo; ela organiza a entrada antes que os dados sejam usados.
+
+## Visão de mercado
+Formulários validados aparecem em cadastros de clientes, compras online, autenticação, aplicativos bancários e processos internos de RH. O valor real desse padrão não está só em validar: está em evitar erros em massa e dar feedback claro ao usuário.
+
+## Autoavaliação
+- [ ] Separo validações por campo em funções específicas.
+- [ ] Entendi quando uma exceção personalizada ajuda a simplificar a lógica.
+- [ ] Tratei entradas vazias, numéricas e com formato incorreto.
+- [ ] O programa repete a pergunta até que o dado seja aceito.
+- [ ] O fluxo final só continua quando tudo está validado.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+import logging
+import sys
+
+logging.basicConfig(level=logging.ERROR, format='LOG: %(message)s', stream=sys.stdout)
+
+
+class DadosInvalidosError(ValueError):
+    pass
+
+
+def validar_nome(nome):
+    nome = nome.strip()
+    if len(nome) < 2:
+        raise DadosInvalidosError('Nome deve ter pelo menos 2 caracteres.')
+    return nome
+
+
+def validar_email(email):
+    email = email.strip()
+    if '@' not in email:
+        raise DadosInvalidosError('E-mail inválido. Use um endereço com @ e domínio.')
+    local, dominio = email.split('@', 1)
+    if not local or '.' not in dominio:
+        raise DadosInvalidosError('E-mail inválido. Use um endereço com @ e domínio.')
+    return email
+
+
+def validar_idade(idade):
+    try:
+        valor = int(idade)
+    except ValueError as erro:
+        raise DadosInvalidosError('Idade deve ser um número inteiro.') from erro
+    if valor < 0 or valor > 120:
+        raise DadosInvalidosError('Idade deve estar entre 0 e 120.')
+    return valor
+
+
+def validar_cpf(cpf):
+    texto = ''.join(ch for ch in str(cpf) if ch.isdigit())
+    if len(texto) != 11:
+        raise DadosInvalidosError('CPF inválido. Digite 11 números.')
+    if texto == texto[0] * 11:
+        raise DadosInvalidosError('CPF inválido. Digite 11 números.')
+    return texto
+
+
+def ler_dado(mensagem, validador):
+    while True:
+        try:
+            valor = input(mensagem)
+            return validador(valor)
+        except DadosInvalidosError as erro:
+            print(f'Erro: {erro}')
+            logging.warning('Campo inválido: %s', erro)
+
+
+print('=== Cadastro de cliente ===')
+nome = ler_dado('Nome: ', validar_nome)
+email = ler_dado('E-mail: ', validar_email)
+idade = ler_dado('Idade: ', validar_idade)
+cpf = ler_dado('CPF: ', validar_cpf)
+
+print('Cadastro concluído com sucesso!')
+print(f'Nome: {nome}')
+print(f'E-mail: {email}')
+print(f'Idade: {idade}')
+print(f'CPF: {cpf}')
+```
+
+Saída real com execução:
+
+```text
+=== Cadastro de cliente ===
+Nome: A
+Erro: Nome deve ter pelo menos 2 caracteres.
+Nome: João Silva
+E-mail: joao
+Erro: E-mail inválido. Use um endereço com @ e domínio.
+E-mail: joao@empresa.com
+Idade: 200
+Erro: Idade deve estar entre 0 e 120.
+Idade: 30
+CPF: 123
+Erro: CPF inválido. Digite 11 números.
+CPF: 12345678909
+Cadastro concluído com sucesso!
+Nome: João Silva
+E-mail: joao@empresa.com
+Idade: 30
+CPF: 12345678909
+```
+</details>
