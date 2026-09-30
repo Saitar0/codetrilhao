@@ -1,0 +1,51 @@
+{
+  "id": "t09-v1-02-atualizar-cadastro",
+  "tipo": "codigo",
+  "titulo": "Adicionar, alterar e remover uma chave em um dicionário",
+  "topico": "Dicionários",
+  "topicoNumero": 9,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "A função pode decidir entre adicionar, atualizar e remover a partir do valor passado.",
+    "Use `if` para verificar se a chave já existe antes de decidir a operação.",
+    "Quando a instrução de remoção for usada, teste a chave antes de tentar excluir com `del`."
+  ],
+  "solucao": "def atualizar_cadastro(cadastro, chave, valor, remover=False):\n    if remover:\n        cadastro.pop(chave, None)\n        return cadastro\n    cadastro[chave] = valor\n    return cadastro\n",
+  "tags": [
+    "python",
+    "dicionarios",
+    "cadastro"
+  ],
+  "aulaRelacionada": "dicionarios",
+  "enunciado": "Implemente `atualizar_cadastro(cadastro, chave, valor, remover=False)` para adicionar ou alterar um campo em um dicionário. Se `remover` for `True`, a função deve remover a chave e retornar o dicionário atualizado. O valor de retorno deve ser o próprio dicionário modificado.",
+  "starterCode": "def atualizar_cadastro(cadastro, chave, valor, remover=False):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "atualizar_cadastro({'nome': 'Ana', 'idade': 25}, 'cidade', 'SP')",
+      "esperado": "{'nome': 'Ana', 'idade': 25, 'cidade': 'SP'}",
+      "oculto": false
+    },
+    {
+      "chamada": "atualizar_cadastro({'nome': 'Ana', 'idade': 25}, 'idade', 26)",
+      "esperado": "{'nome': 'Ana', 'idade': 26}",
+      "oculto": false
+    },
+    {
+      "chamada": "atualizar_cadastro({'nome': 'Ana', 'idade': 25}, 'idade', 0, True)",
+      "esperado": "{'nome': 'Ana'}",
+      "oculto": false
+    },
+    {
+      "chamada": "atualizar_cadastro({'nome': 'Bruno'}, 'telefone', '9999-0000')['telefone']",
+      "esperado": "9999-0000",
+      "oculto": true
+    },
+    {
+      "chamada": "atualizar_cadastro({'nome': 'Carla', 'email': 'carla@email.com'}, 'email', 'novo@email.com')['email']",
+      "esperado": "novo@email.com",
+      "oculto": true
+    }
+  ]
+}

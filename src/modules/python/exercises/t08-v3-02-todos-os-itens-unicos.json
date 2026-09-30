@@ -1,0 +1,51 @@
+{
+  "id": "t08-v3-02-todos-os-itens-unicos",
+  "tipo": "codigo",
+  "titulo": "Verificar se todos os itens são únicos",
+  "topico": "Tuplas e sets",
+  "topicoNumero": 8,
+  "variacao": "V3",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Um conjunto remove duplicatas, então comparar o tamanho da lista com o tamanho do conjunto é a chave.",
+    "Se a lista tiver qualquer repetição, a condição falha.",
+    "Uma lista vazia também é válida: todos os itens são únicos."
+  ],
+  "solucao": "def todos_unicos(itens):\n    return len(itens) == len(set(itens))\n",
+  "tags": [
+    "python",
+    "sets",
+    "unicos"
+  ],
+  "aulaRelacionada": "sets",
+  "enunciado": "Implemente `todos_unicos(itens)` para devolver `True` quando todos os elementos da lista são distintos e `False` se houver qualquer duplicata.",
+  "starterCode": "def todos_unicos(itens):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "todos_unicos([1, 2, 3, 4])",
+      "esperado": "True",
+      "oculto": false
+    },
+    {
+      "chamada": "todos_unicos(['a', 'b', 'a'])",
+      "esperado": "False",
+      "oculto": false
+    },
+    {
+      "chamada": "todos_unicos([])",
+      "esperado": "True",
+      "oculto": false
+    },
+    {
+      "chamada": "todos_unicos([10, 20, 30, 20])",
+      "esperado": "False",
+      "oculto": true
+    },
+    {
+      "chamada": "todos_unicos(['x', 'y', 'z'])",
+      "esperado": "True",
+      "oculto": true
+    }
+  ]
+}

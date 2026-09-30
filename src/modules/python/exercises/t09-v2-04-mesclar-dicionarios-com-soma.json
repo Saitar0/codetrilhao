@@ -1,0 +1,51 @@
+{
+  "id": "t09-v2-04-mesclar-dicionarios-com-soma",
+  "tipo": "codigo",
+  "titulo": "Mesclar dois dicionários somando valores de chaves repetidas",
+  "topico": "Dicionários",
+  "topicoNumero": 9,
+  "variacao": "V2",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Percorra o primeiro dicionário e copie os valores para um resultado novo.",
+    "Ao visitar o segundo, use a chave existente e some ao valor atual.",
+    "Se uma chave aparecer em apenas um dos dicionários, ela continua no resultado final."
+  ],
+  "solucao": "def mesclar_dicionarios(a, b):\n    resultado = dict(a)\n    for chave, valor in b.items():\n        if chave in resultado:\n            resultado[chave] += valor\n        else:\n            resultado[chave] = valor\n    return resultado\n",
+  "tags": [
+    "python",
+    "dicionarios",
+    "merge"
+  ],
+  "aulaRelacionada": "dicionarios",
+  "enunciado": "Implemente `mesclar_dicionarios(a, b)` para combinar dois dicionários em um único resultado. Quando a mesma chave existir em ambos, some os valores; quando a chave aparecer só em um deles, mantenha o valor original. Exemplo: `{'a': 2, 'b': 3}` e `{'b': 5, 'c': 7}` viram `{'a': 2, 'b': 8, 'c': 7}`.",
+  "starterCode": "def mesclar_dicionarios(a, b):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "mesclar_dicionarios({'a': 2, 'b': 3}, {'b': 5, 'c': 7})",
+      "esperado": "{'a': 2, 'b': 8, 'c': 7}",
+      "oculto": false
+    },
+    {
+      "chamada": "mesclar_dicionarios({'x': 1, 'y': 2}, {'y': 3, 'z': 4})",
+      "esperado": "{'x': 1, 'y': 5, 'z': 4}",
+      "oculto": false
+    },
+    {
+      "chamada": "mesclar_dicionarios({}, {'m': 2})",
+      "esperado": "{'m': 2}",
+      "oculto": false
+    },
+    {
+      "chamada": "mesclar_dicionarios({'k': 10}, {'k': 5})",
+      "esperado": "{'k': 15}",
+      "oculto": true
+    },
+    {
+      "chamada": "mesclar_dicionarios({'a': 1}, {'b': 2, 'c': 3})",
+      "esperado": "{'a': 1, 'b': 2, 'c': 3}",
+      "oculto": true
+    }
+  ]
+}

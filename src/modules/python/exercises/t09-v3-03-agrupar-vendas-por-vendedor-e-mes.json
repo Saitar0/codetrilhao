@@ -1,0 +1,51 @@
+{
+  "id": "t09-v3-03-agrupar-vendas-por-vendedor-e-mes",
+  "tipo": "codigo",
+  "titulo": "Agrupar vendas por vendedor e por mês",
+  "topico": "Dicionários",
+  "topicoNumero": 9,
+  "variacao": "V3",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Crie uma chave para o vendedor e, dentro dela, outro dicionário para os meses.",
+    "Acumule o valor da venda em `vendas[vendedor][mes] += valor`.",
+    "Teste com entradas em meses diferentes para verificar a composição da estrutura."
+  ],
+  "solucao": "def agrupar_vendas(vendas):\n    agrupado = {}\n    for vendedor, mes, valor in vendas:\n        agrupado.setdefault(vendedor, {})\n        agrupado[vendedor][mes] = agrupado[vendedor].get(mes, 0) + valor\n    return agrupado\n",
+  "tags": [
+    "python",
+    "dicionarios",
+    "vendas"
+  ],
+  "aulaRelacionada": "dicionarios",
+  "enunciado": "Implemente `agrupar_vendas(vendas)` para receber uma lista de tuplas no formato `(vendedor, mes, valor)` e devolver um dicionário em que cada vendedor tenha outro dicionário com o total vendido por mês. Exemplo: `[('Ana', 'jan', 100), ('Ana', 'fev', 50), ('Bia', 'jan', 80)]` vira `{'Ana': {'jan': 100, 'fev': 50}, 'Bia': {'jan': 80}}`.",
+  "starterCode": "def agrupar_vendas(vendas):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "agrupar_vendas([('Ana', 'jan', 100), ('Ana', 'fev', 50), ('Bia', 'jan', 80)])",
+      "esperado": "{'Ana': {'jan': 100, 'fev': 50}, 'Bia': {'jan': 80}}",
+      "oculto": false
+    },
+    {
+      "chamada": "agrupar_vendas([('Lia', 'mar', 10), ('Lia', 'mar', 5), ('Tom', 'mar', 15)])",
+      "esperado": "{'Lia': {'mar': 15}, 'Tom': {'mar': 15}}",
+      "oculto": false
+    },
+    {
+      "chamada": "agrupar_vendas([])",
+      "esperado": "{}",
+      "oculto": false
+    },
+    {
+      "chamada": "agrupar_vendas([('Zoe', 'dez', 20), ('Zoe', 'dez', 30)])[ 'Zoe' ]['dez']",
+      "esperado": "50",
+      "oculto": true
+    },
+    {
+      "chamada": "agrupar_vendas([('Nina', 'jan', 5), ('Nina', 'fev', 10), ('Nina', 'mar', 15) ])['Nina']['fev']",
+      "esperado": "10",
+      "oculto": true
+    }
+  ]
+}

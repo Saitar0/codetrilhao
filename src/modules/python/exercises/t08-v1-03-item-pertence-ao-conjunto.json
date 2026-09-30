@@ -1,0 +1,44 @@
+{
+  "id": "t08-v1-03-item-pertence-ao-conjunto",
+  "tipo": "multipla-escolha",
+  "titulo": "Testar se um item pertence a um set",
+  "topico": "Tuplas e sets",
+  "topicoNumero": 8,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "A operação `in` verifica se um elemento existe no conjunto.",
+    "Compare as alternativas com os itens reais do set.",
+    "O foco é a presença do valor, não a ordem ou a quantidade."
+  ],
+  "solucao": "Resposta correta: \"Bruno\" in turma. Como Bruno faz parte do conjunto, a expressão retorna True.",
+  "tags": [
+    "python",
+    "sets",
+    "pertencimento"
+  ],
+  "aulaRelacionada": "sets",
+  "enunciado": "Considere `turma = {\"Ana\", \"Bruno\", \"Carla\"}`. Qual expressão retorna `True`?",
+  "pergunta": "Qual expressão é verdadeira?",
+  "alternativas": [
+    {
+      "texto": "\"Bruno\" in turma",
+      "explicacao": "Correta: Bruno está no conjunto.",
+      "correta": true
+    },
+    {
+      "texto": "\"Diego\" in turma",
+      "explicacao": "Incorreta: Diego não faz parte do conjunto."
+    },
+    {
+      "texto": "len(turma) == 4",
+      "explicacao": "Incorreta: o conjunto contém 3 elementos."
+    },
+    {
+      "texto": "\"Ana\" not in turma",
+      "explicacao": "Incorreta: Ana está presente no conjunto."
+    }
+  ],
+  "respostaEsperada": "\"Bruno\" in turma"
+}

@@ -1,0 +1,51 @@
+{
+  "id": "t08-v2-02-grupos-exclusivos-e-em-comum",
+  "tipo": "codigo",
+  "titulo": "Separar quem está só em A, só em B e em ambas",
+  "topico": "Tuplas e sets",
+  "topicoNumero": 8,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Use diferença para encontrar quem está só em cada conjunto.",
+    "A interseção identifica o que está em ambos.",
+    "Devolva listas ordenadas para facilitar comparação e testes."
+  ],
+  "solucao": "def separar_grupos(a, b):\n    so_em_a = sorted(set(a) - set(b))\n    so_em_b = sorted(set(b) - set(a))\n    em_comum = sorted(set(a) & set(b))\n    return (so_em_a, so_em_b, em_comum)\n",
+  "tags": [
+    "python",
+    "sets",
+    "comparacao"
+  ],
+  "aulaRelacionada": "sets",
+  "enunciado": "Implemente `separar_grupos(a, b)` para devolver uma tupla com três listas: pessoas que estão só em A, pessoas que estão só em B e pessoas que aparecem nos dois grupos.",
+  "starterCode": "def separar_grupos(a, b):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "separar_grupos(['Ana', 'Bruno', 'Carla'], ['Bruno', 'Diego'])",
+      "esperado": "(['Ana', 'Carla'], ['Diego'], ['Bruno'])",
+      "oculto": false
+    },
+    {
+      "chamada": "separar_grupos(['A', 'B'], ['A', 'B', 'C'])",
+      "esperado": "([], ['C'], ['A', 'B'])",
+      "oculto": false
+    },
+    {
+      "chamada": "separar_grupos([], [])",
+      "esperado": "([], [], [])",
+      "oculto": false
+    },
+    {
+      "chamada": "separar_grupos(['x'], ['y'])[2]",
+      "esperado": "[]",
+      "oculto": true
+    },
+    {
+      "chamada": "separar_grupos(['m', 'n'], ['n', 'm'])[0]",
+      "esperado": "[]",
+      "oculto": true
+    }
+  ]
+}

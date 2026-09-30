@@ -1,0 +1,51 @@
+{
+  "id": "t08-v1-04-trocar-dois-valores",
+  "tipo": "codigo",
+  "titulo": "Trocar dois valores usando tuplas",
+  "topico": "Tuplas e sets",
+  "topicoNumero": 8,
+  "variacao": "V1",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "A troca pode ser feita com uma atribuição de tupla em uma única linha.",
+    "O novo valor de `a` vira o antigo `b`, e o novo de `b` vira o antigo `a`.",
+    "Não use variável temporária; a sintaxe da tupla já resolve a troca."
+  ],
+  "solucao": "def trocar(a, b):\n    return (b, a)\n",
+  "tags": [
+    "python",
+    "tuplas",
+    "troca"
+  ],
+  "aulaRelacionada": "tuplas",
+  "enunciado": "Implemente `trocar(a, b)` para devolver uma tupla com os valores invertidos: `(b, a)`. A função deve trocar os valores sem criar variável auxiliar.",
+  "starterCode": "def trocar(a, b):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "trocar(10, 20)",
+      "esperado": "(20, 10)",
+      "oculto": false
+    },
+    {
+      "chamada": "trocar('A', 'B')",
+      "esperado": "('B', 'A')",
+      "oculto": false
+    },
+    {
+      "chamada": "trocar(0, 0)",
+      "esperado": "(0, 0)",
+      "oculto": false
+    },
+    {
+      "chamada": "trocar(-3, 7)[0]",
+      "esperado": "7",
+      "oculto": true
+    },
+    {
+      "chamada": "trocar(5, 9)[1]",
+      "esperado": "5",
+      "oculto": true
+    }
+  ]
+}

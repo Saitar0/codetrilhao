@@ -1,0 +1,51 @@
+{
+  "id": "t08-v2-01-letras-em-comum",
+  "tipo": "codigo",
+  "titulo": "Descobrir letras em comum entre duas palavras",
+  "topico": "Tuplas e sets",
+  "topicoNumero": 8,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Converta cada palavra para um conjunto de letras para remover duplicatas.",
+    "A interseção entre os conjuntos mostra as letras em comum.",
+    "Ordene a resposta para manter um resultado previsível."
+  ],
+  "solucao": "def letras_em_comum(palavra_a, palavra_b):\n    return sorted(set(palavra_a) & set(palavra_b))\n",
+  "tags": [
+    "python",
+    "sets",
+    "interseccao"
+  ],
+  "aulaRelacionada": "sets",
+  "enunciado": "Implemente `letras_em_comum(palavra_a, palavra_b)` para devolver uma lista com as letras que aparecem nas duas palavras, sem repetir nenhuma e em ordem alfabética.",
+  "starterCode": "def letras_em_comum(palavra_a, palavra_b):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "letras_em_comum('casa', 'sala')",
+      "esperado": "['a', 's']",
+      "oculto": false
+    },
+    {
+      "chamada": "letras_em_comum('python', 'pato')",
+      "esperado": "['o', 'p', 't']",
+      "oculto": false
+    },
+    {
+      "chamada": "letras_em_comum('amor', 'feliz')",
+      "esperado": "[]",
+      "oculto": false
+    },
+    {
+      "chamada": "letras_em_comum('banana', 'ananas')",
+      "esperado": "['a', 'n']",
+      "oculto": true
+    },
+    {
+      "chamada": "letras_em_comum('abc', 'cba')",
+      "esperado": "['a', 'b', 'c']",
+      "oculto": true
+    }
+  ]
+}

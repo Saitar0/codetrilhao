@@ -1,0 +1,51 @@
+{
+  "id": "t09-v2-03-agrupar-por-primeira-letra",
+  "tipo": "codigo",
+  "titulo": "Agrupar nomes pela primeira letra",
+  "topico": "Dicionários",
+  "topicoNumero": 9,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Transforme cada nome em uma chave pela primeira letra maiúscula ou minúscula.",
+    "Use uma lista como valor para guardar todos os nomes dessa letra.",
+    "Ordene a lista final para tornar a saída previsível."
+  ],
+  "solucao": "def agrupar_por_primeira_letra(nomes):\n    grupos = {}\n    for nome in nomes:\n        letra = nome[0].upper()\n        grupos.setdefault(letra, [])\n        grupos[letra].append(nome)\n    return {letra: sorted(itens) for letra, itens in grupos.items()}\n",
+  "tags": [
+    "python",
+    "dicionarios",
+    "agrupamento"
+  ],
+  "aulaRelacionada": "dicionarios",
+  "enunciado": "Implemente `agrupar_por_primeira_letra(nomes)` para retornar um dicionário em que cada chave é a inicial do nome e cada valor é uma lista com todos os nomes que começam com essa letra. A lista deve ficar em ordem alfabética e os nomes devem ser tratados em caixa uniforme.",
+  "starterCode": "def agrupar_por_primeira_letra(nomes):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "agrupar_por_primeira_letra(['Ana', 'Bia', 'Arthur'])",
+      "esperado": "{'A': ['Ana', 'Arthur'], 'B': ['Bia']}",
+      "oculto": false
+    },
+    {
+      "chamada": "agrupar_por_primeira_letra(['joao', 'julia', 'maria'])",
+      "esperado": "{'J': ['joao', 'julia'], 'M': ['maria']}",
+      "oculto": false
+    },
+    {
+      "chamada": "agrupar_por_primeira_letra([])",
+      "esperado": "{}",
+      "oculto": false
+    },
+    {
+      "chamada": "agrupar_por_primeira_letra(['Zoe', 'Zico'])['Z']",
+      "esperado": "['Zico', 'Zoe']",
+      "oculto": true
+    },
+    {
+      "chamada": "agrupar_por_primeira_letra(['Luiz', 'Lia', 'Maria'])['L']",
+      "esperado": "['Lia', 'Luiz']",
+      "oculto": true
+    }
+  ]
+}

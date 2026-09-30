@@ -1,0 +1,51 @@
+{
+  "id": "t09-v1-04-buscar-chave-segura",
+  "tipo": "codigo",
+  "titulo": "Verificar se uma chave existe antes de acessá-la",
+  "topico": "Dicionários",
+  "topicoNumero": 9,
+  "variacao": "V1",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "A verificação deve começar com `if chave in dados`.",
+    "Se a chave não existir, devolva o valor padrão informado.",
+    "Esse padrão evita `KeyError` e deixa o código mais robusto."
+  ],
+  "solucao": "def buscar_chave(dados, chave, padrao='sem valor'):\n    if chave in dados:\n        return dados[chave]\n    return padrao\n",
+  "tags": [
+    "python",
+    "dicionarios",
+    "seguranca"
+  ],
+  "aulaRelacionada": "dicionarios",
+  "enunciado": "Implemente `buscar_chave(dados, chave, padrao='sem valor')` para devolver o valor da chave quando ela existir, ou o texto do valor padrão quando a chave estiver ausente. A função deve proteger o código contra `KeyError` sem exigir `try/except`.",
+  "starterCode": "def buscar_chave(dados, chave, padrao='sem valor'):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "buscar_chave({'nome': 'Ana', 'idade': 30}, 'nome')",
+      "esperado": "Ana",
+      "oculto": false
+    },
+    {
+      "chamada": "buscar_chave({'nome': 'Ana', 'idade': 30}, 'email', 'sem e-mail')",
+      "esperado": "sem e-mail",
+      "oculto": false
+    },
+    {
+      "chamada": "buscar_chave({'curso': 'Python'}, 'curso')",
+      "esperado": "Python",
+      "oculto": false
+    },
+    {
+      "chamada": "buscar_chave({'status': 'ok'}, 'status', 'indefinido')",
+      "esperado": "ok",
+      "oculto": true
+    },
+    {
+      "chamada": "buscar_chave({'valor': 7}, 'faltante', 0)",
+      "esperado": "0",
+      "oculto": true
+    }
+  ]
+}

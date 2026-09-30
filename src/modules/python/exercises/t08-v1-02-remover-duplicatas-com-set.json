@@ -1,0 +1,51 @@
+{
+  "id": "t08-v1-02-remover-duplicatas-com-set",
+  "tipo": "codigo",
+  "titulo": "Remover duplicatas de uma lista com set",
+  "topico": "Tuplas e sets",
+  "topicoNumero": 8,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Um set elimina valores repetidos automaticamente.",
+    "Para devolver algo previsível, transforme a saída em lista ordenada.",
+    "A lista original não precisa ser modificada: crie uma nova coleção."
+  ],
+  "solucao": "def sem_duplicatas(valores):\n    return sorted(set(valores))\n",
+  "tags": [
+    "python",
+    "sets",
+    "duplicatas"
+  ],
+  "aulaRelacionada": "sets",
+  "enunciado": "Implemente `sem_duplicatas(valores)` para remover elementos repetidos de uma lista usando `set` e devolver os valores únicos em ordem crescente.",
+  "starterCode": "def sem_duplicatas(valores):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "sem_duplicatas([3, 1, 3, 2, 1])",
+      "esperado": "[1, 2, 3]",
+      "oculto": false
+    },
+    {
+      "chamada": "sem_duplicatas(['maçã', 'banana', 'maçã'])",
+      "esperado": "['banana', 'maçã']",
+      "oculto": false
+    },
+    {
+      "chamada": "sem_duplicatas([])",
+      "esperado": "[]",
+      "oculto": false
+    },
+    {
+      "chamada": "sem_duplicatas([8, 8, 8])",
+      "esperado": "[8]",
+      "oculto": true
+    },
+    {
+      "chamada": "len(sem_duplicatas([5, 5, 4, 4, 3]))",
+      "esperado": "3",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": "t08-v1-01-criar-tupla-e-desempacotar",
+  "tipo": "codigo",
+  "titulo": "Criar tupla com nome e idade e desempacotar",
+  "topico": "Tuplas e sets",
+  "topicoNumero": 8,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Crie a tupla na ordem correta: nome e idade.",
+    "Use desempacotamento para receber cada valor em uma variável separada.",
+    "Teste com entradas diferentes para garantir que a ordem seja a esperada."
+  ],
+  "solucao": "def criar_registro(nome, idade):\n    return (nome, idade)\n",
+  "tags": [
+    "python",
+    "tuplas",
+    "desempacotamento"
+  ],
+  "aulaRelacionada": "tuplas",
+  "enunciado": "Implemente `criar_registro(nome, idade)` para devolver uma tupla com o nome e a idade. Depois, use desempacotamento para obter os valores em variáveis separadas.",
+  "starterCode": "def criar_registro(nome, idade):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "criar_registro('Ana', 28)",
+      "esperado": "('Ana', 28)",
+      "oculto": false
+    },
+    {
+      "chamada": "criar_registro('Bruno', 31)",
+      "esperado": "('Bruno', 31)",
+      "oculto": false
+    },
+    {
+      "chamada": "criar_registro('Carla', 22) == ('Carla', 22)",
+      "esperado": "True",
+      "oculto": false
+    },
+    {
+      "chamada": "criar_registro('Davi', 19)[0]",
+      "esperado": "Davi",
+      "oculto": true
+    },
+    {
+      "chamada": "criar_registro('Eva', 25)[1]",
+      "esperado": "25",
+      "oculto": true
+    }
+  ]
+}

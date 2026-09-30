@@ -1,0 +1,51 @@
+{
+  "id": "t09-v1-01-criar-dicionario-produto",
+  "tipo": "codigo",
+  "titulo": "Criar dicionário de produto e imprimir cada campo",
+  "topico": "Dicionários",
+  "topicoNumero": 9,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Use a ordem correta das chaves: nome, preco e estoque.",
+    "Crie o dicionário literal com pares chave: valor.",
+    "Teste com um produto real para confirmar que a estrutura saiu como o esperado."
+  ],
+  "solucao": "def criar_produto(nome, preco, estoque):\n    return {\"nome\": nome, \"preco\": preco, \"estoque\": estoque}\n",
+  "tags": [
+    "python",
+    "dicionarios",
+    "produto"
+  ],
+  "aulaRelacionada": "dicionarios",
+  "enunciado": "Implemente `criar_produto(nome, preco, estoque)` para devolver um dicionário com os campos `nome`, `preco` e `estoque`. O retorno deve manter a ordem dos campos para facilitar a leitura do cadastro do produto.",
+  "starterCode": "def criar_produto(nome, preco, estoque):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "criar_produto('Mouse', 89.9, 12)",
+      "esperado": "{'nome': 'Mouse', 'preco': 89.9, 'estoque': 12}",
+      "oculto": false
+    },
+    {
+      "chamada": "criar_produto('Teclado', 149.0, 8)",
+      "esperado": "{'nome': 'Teclado', 'preco': 149.0, 'estoque': 8}",
+      "oculto": false
+    },
+    {
+      "chamada": "criar_produto('Monitor', 799.5, 3)['nome']",
+      "esperado": "Monitor",
+      "oculto": false
+    },
+    {
+      "chamada": "criar_produto('Cabo USB', 19.9, 25)['preco']",
+      "esperado": "19.9",
+      "oculto": true
+    },
+    {
+      "chamada": "criar_produto('Fonte', 60.0, 0)['estoque']",
+      "esperado": "0",
+      "oculto": true
+    }
+  ]
+}

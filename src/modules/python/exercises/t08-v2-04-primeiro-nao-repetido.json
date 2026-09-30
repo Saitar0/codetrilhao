@@ -1,0 +1,51 @@
+{
+  "id": "t08-v2-04-primeiro-nao-repetido",
+  "tipo": "codigo",
+  "titulo": "Encontrar o primeiro caractere que não se repete",
+  "topico": "Tuplas e sets",
+  "topicoNumero": 8,
+  "variacao": "V2",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Conte quantas vezes cada caractere aparece no texto.",
+    "Depois, percorra a string na ordem original até encontrar um caractere com contagem 1.",
+    "Se não existir nenhum caractere único, retorne `None`."
+  ],
+  "solucao": "def primeiro_nao_repetido(texto):\n    contagem = {}\n    for caractere in texto:\n        contagem[caractere] = contagem.get(caractere, 0) + 1\n\n    for caractere in texto:\n        if contagem[caractere] == 1:\n            return caractere\n\n    return None\n",
+  "tags": [
+    "python",
+    "sets",
+    "caracteres"
+  ],
+  "aulaRelacionada": "sets",
+  "enunciado": "Implemente `primeiro_nao_repetido(texto)` para devolver o primeiro caractere que aparece apenas uma vez na string. Se não existir nenhum, retorne `None`.",
+  "starterCode": "def primeiro_nao_repetido(texto):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "primeiro_nao_repetido('aabbcde')",
+      "esperado": "c",
+      "oculto": false
+    },
+    {
+      "chamada": "primeiro_nao_repetido('abca')",
+      "esperado": "b",
+      "oculto": false
+    },
+    {
+      "chamada": "primeiro_nao_repetido('aaaa')",
+      "esperado": "None",
+      "oculto": false
+    },
+    {
+      "chamada": "primeiro_nao_repetido('abcabc')",
+      "esperado": "None",
+      "oculto": true
+    },
+    {
+      "chamada": "primeiro_nao_repetido('zaz')",
+      "esperado": "a",
+      "oculto": true
+    }
+  ]
+}

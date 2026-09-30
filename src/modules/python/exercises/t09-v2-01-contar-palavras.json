@@ -1,0 +1,51 @@
+{
+  "id": "t09-v2-01-contar-palavras",
+  "tipo": "codigo",
+  "titulo": "Contar quantas vezes cada palavra aparece em um texto",
+  "topico": "Dicionários",
+  "topicoNumero": 9,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Quebre o texto em palavras com `split()`.",
+    "Para cada palavra, use `freq.get(palavra, 0) + 1` para atualizar a contagem.",
+    "Em seguida, retorne o dicionário final com as frequências."
+  ],
+  "solucao": "def contar_palavras(texto):\n    frequencia = {}\n    for palavra in texto.split():\n        frequencia[palavra] = frequencia.get(palavra, 0) + 1\n    return frequencia\n",
+  "tags": [
+    "python",
+    "dicionarios",
+    "frequencia"
+  ],
+  "aulaRelacionada": "dicionarios",
+  "enunciado": "Implemente `contar_palavras(texto)` para contar quantas vezes cada palavra aparece no texto. O resultado deve ser um dicionário em que a chave é a palavra e o valor é a quantidade de ocorrências. Exemplo: `'a b a c b a'` vira `{'a': 3, 'b': 2, 'c': 1}`.",
+  "starterCode": "def contar_palavras(texto):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "contar_palavras('a b a c b a')",
+      "esperado": "{'a': 3, 'b': 2, 'c': 1}",
+      "oculto": false
+    },
+    {
+      "chamada": "contar_palavras('python python java python')",
+      "esperado": "{'python': 3, 'java': 1}",
+      "oculto": false
+    },
+    {
+      "chamada": "contar_palavras('um dois um tres')",
+      "esperado": "{'um': 2, 'dois': 1, 'tres': 1}",
+      "oculto": false
+    },
+    {
+      "chamada": "contar_palavras('solo')",
+      "esperado": "{'solo': 1}",
+      "oculto": true
+    },
+    {
+      "chamada": "contar_palavras('')",
+      "esperado": "{}",
+      "oculto": true
+    }
+  ]
+}

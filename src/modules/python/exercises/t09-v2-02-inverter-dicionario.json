@@ -1,0 +1,44 @@
+{
+  "id": "t09-v2-02-inverter-dicionario",
+  "tipo": "multipla-escolha",
+  "titulo": "Entender a inversão de dicionário",
+  "topico": "Dicionários",
+  "topicoNumero": 9,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Observe que o valor de cada item vira uma chave no resultado.",
+    "Quando há valores repetidos, o dicionário final precisa preservar todas as chaves correspondentes.",
+    "A estrutura resultante deve representar corretamente a relação entre cada valor e todas as chaves que o produziram."
+  ],
+  "tags": [
+    "python",
+    "dicionarios",
+    "inversao"
+  ],
+  "aulaRelacionada": "dicionarios",
+  "enunciado": "Considere o dicionário {'a': 1, 'b': 2, 'c': 1}. Qual é o resultado esperado ao inverter chaves e valores, preservando todas as chaves correspondentes quando houver valores repetidos?",
+  "alternativas": [
+    {
+      "texto": "{1: ['a', 'c'], 2: 'b'}",
+      "correta": true,
+      "explicacao": "Quando valores se repetem, o resultado guarda todas as chaves que compartilham esse valor em uma lista."
+    },
+    {
+      "texto": "{1: 'a', 2: 'b', 1: 'c'}",
+      "correta": false,
+      "explicacao": "Dicionários não podem ter chaves duplicadas no mesmo objeto; a ideia de inversão precisa preservar todos os valores relacionados."
+    },
+    {
+      "texto": "{'a': 1, 'b': 2, 'c': 1}",
+      "correta": false,
+      "explicacao": "Esse é o dicionário original, não a versão invertida."
+    },
+    {
+      "texto": "{1: 'c', 2: 'b'}",
+      "correta": false,
+      "explicacao": "Essa opção perde a primeira chave associada ao valor 1 e não preserva todos os relacionamentos."
+    }
+  ]
+}

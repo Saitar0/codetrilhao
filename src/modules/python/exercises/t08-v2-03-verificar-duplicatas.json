@@ -1,0 +1,51 @@
+{
+  "id": "t08-v2-03-verificar-duplicatas",
+  "tipo": "codigo",
+  "titulo": "Verificar se uma lista tem duplicatas",
+  "topico": "Tuplas e sets",
+  "topicoNumero": 8,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Se o tamanho da lista for maior do que o tamanho do set, houve repetição.",
+    "A ideia central é comparar a coleção original com a coleção deduplicada.",
+    "Listas vazias e listas com valores únicos devem retornar `False`."
+  ],
+  "solucao": "def tem_duplicatas(valores):\n    return len(valores) != len(set(valores))\n",
+  "tags": [
+    "python",
+    "sets",
+    "duplicatas"
+  ],
+  "aulaRelacionada": "sets",
+  "enunciado": "Implemente `tem_duplicatas(valores)` para devolver `True` quando uma lista contém qualquer valor repetido e `False` quando todos os elementos são únicos.",
+  "starterCode": "def tem_duplicatas(valores):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "tem_duplicatas([1, 2, 3, 2])",
+      "esperado": "True",
+      "oculto": false
+    },
+    {
+      "chamada": "tem_duplicatas([1, 2, 3, 4])",
+      "esperado": "False",
+      "oculto": false
+    },
+    {
+      "chamada": "tem_duplicatas([])",
+      "esperado": "False",
+      "oculto": false
+    },
+    {
+      "chamada": "tem_duplicatas([7])",
+      "esperado": "False",
+      "oculto": true
+    },
+    {
+      "chamada": "tem_duplicatas(['a', 'b', 'a'])",
+      "esperado": "True",
+      "oculto": true
+    }
+  ]
+}

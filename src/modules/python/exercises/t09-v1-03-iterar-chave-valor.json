@@ -1,0 +1,51 @@
+{
+  "id": "t09-v1-03-iterar-chave-valor",
+  "tipo": "codigo",
+  "titulo": "Percorrer dicionário e imprimir chave e valor",
+  "topico": "Dicionários",
+  "topicoNumero": 9,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Use `items()` para acessar cada par chave e valor juntos.",
+    "O texto final é um conjunto de linhas no formato `chave: valor`.",
+    "A ordem das linhas segue a ordem de inserção do dicionário."
+  ],
+  "solucao": "def formatar_dicionario(dados):\n    return '\\n'.join(f\"{chave}: {valor}\" for chave, valor in dados.items())\n",
+  "tags": [
+    "python",
+    "dicionarios",
+    "iteracao"
+  ],
+  "aulaRelacionada": "dicionarios",
+  "enunciado": "Implemente `formatar_dicionario(dados)` para devolver uma string com cada campo no formato `chave: valor`, separando os itens por quebra de linha. Exemplo: para `{'nome': 'Ana', 'idade': 24}` a saída deve começar com `nome: Ana` e terminar com `idade: 24`.",
+  "starterCode": "def formatar_dicionario(dados):\n    pass\n",
+  "testes": [
+    {
+      "chamada": "formatar_dicionario({'nome': 'Ana', 'idade': 24})",
+      "esperado": "nome: Ana\nidade: 24",
+      "oculto": false
+    },
+    {
+      "chamada": "formatar_dicionario({'curso': 'Python', 'ativo': True})",
+      "esperado": "curso: Python\nativo: True",
+      "oculto": false
+    },
+    {
+      "chamada": "formatar_dicionario({'cidade': 'Recife'})",
+      "esperado": "cidade: Recife",
+      "oculto": false
+    },
+    {
+      "chamada": "formatar_dicionario({'a': 1, 'b': 2, 'c': 3})",
+      "esperado": "a: 1\nb: 2\nc: 3",
+      "oculto": true
+    },
+    {
+      "chamada": "formatar_dicionario({'x': 'sim', 'y': 'nao'})",
+      "esperado": "x: sim\ny: nao",
+      "oculto": true
+    }
+  ]
+}
