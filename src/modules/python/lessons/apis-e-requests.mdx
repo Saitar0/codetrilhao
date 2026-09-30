@@ -1,0 +1,241 @@
+---
+titulo: "Consumindo APIs com requests"
+descricao: "Busque dados externos de forma segura, trate falhas e transforme JSON em decisões reais."
+secao: "D. Mundo real"
+ordem: 25
+topico: 18
+fase: "D"
+tempo: 30
+nivel: "intermediario"
+palavrasChave: ['api', 'requests', 'http', 'json', 'timeout', 'status']
+exercicios: []
+---
+
+# Consumindo APIs com requests
+
+Você já viu que um programa precisa lidar com dados de forma organizada. Agora imagine que esse dado vem de outro sistema: um serviço que responde com JSON, um endpoint de CEP, uma API pública de clima ou uma cotação de moeda. Isso é o mundo real da programação: o seu código não vive isolado em um notebook ou em um script simples; ele conversa com sistemas externos, interpreta respostas e toma decisões com base nesse retorno.
+
+A parte boa é que o fluxo é bem previsível. Você chama uma URL, recebe uma resposta, verifica o status HTTP e transforma o JSON em dicionários e listas. O cuidado está no tratamento de erros, porque rede lenta, resposta vazia e JSON incompleto são parte da rotina.
+
+<Callout type="importante" title="O que você vai aprender">
+  <ul>
+    <li>Entender o que é uma <Glossario termo="API REST" definition="Interface que expõe dados e recursos por URLs específicas, geralmente retornando JSON." /> e como ela responde a requisições HTTP.</li>
+    <li>Usar <Glossario termo="status HTTP" definition="Código de retorno do servidor, como 200 para sucesso e 404 para recurso não encontrado." /> para decidir o próximo passo.</li>
+    <li>Transformar JSON em dicionários e listas em Python.</li>
+    <li>Definir <Glossario termo="timeout" definition="Tempo máximo de espera antes de considerar a requisição falha." /> e tratar falhas com segurança.</li>
+    <li>Guardar chaves e segredos em variáveis de ambiente em vez de deixá-los no código.</li>
+  </ul>
+</Callout>
+
+## 1. API REST, endpoint e JSON
+
+Uma API REST organiza os dados em endpoints. Cada endpoint representa um recurso: clima, CEP, cotação, usuário, pedido, estoque. Quando você faz uma requisição, o servidor responde com um status HTTP e um corpo. Em muitos casos, o corpo é JSON.
+
+JSON é a linguagem do mundo real das integrações. Ele se parece com dicionário e lista em Python, então o trabalho do seu programa começa quando os dados entram como estrutura legível. Em vez de tratar a resposta como texto puro, você extrai campos específicos como cidade, preço, nome do cliente ou status.
+
+<CodeBlock title="json_ficticio.py" code={`resposta_json = {
+    "cep": "01001000",
+    "logradouro": "Praça da Sé",
+    "localidade": "São Paulo",
+    "uf": "SP"
+}
+
+print(resposta_json["localidade"], resposta_json["uf"])
+print(resposta_json.get("logradouro", "Sem logradouro"))`} />
+
+Saída esperada:
+
+```text
+São Paulo SP
+Praça da Sé
+```
+
+Se a chamada funcionar, você sabe que a resposta veio em formato estável. Se a resposta vier com um campo ausente, o problema não é do JSON em si: é da lógica que você escreveu para extrair dados. Por isso, é importante usar `get()` quando um campo pode não existir.
+
+<CodeBlock title="status_como_decisao.py" code={`status = 200
+resposta = {"codigo": "BR", "capital": "Brasília"}
+
+if status == 200:
+    print("requisição bem-sucedida")
+    print(resposta["capital"])
+else:
+    print("houve um problema")`} />
+
+Saída esperada:
+
+```text
+requisição bem-sucedida
+Brasília
+```
+
+A resposta com status 200 é a “feliz”. Em APIs reais, status 404 e 500 indicam problemas e o programa precisa reagir de forma diferente. Você nunca deve confiar em uma resposta sem checar o status.
+
+## 2. `requests.get`, `params`, `headers` e `timeout`
+
+A biblioteca `requests` é a forma mais comum de consumir API em Python. A chamada mais simples é `requests.get(url)`. Se você precisa filtrar informações, usa `params`. Se a API exige autenticação ou identifica o cliente, usa `headers`. E sempre que possível, define `timeout`.
+
+Esse ultimo ponto salva muita aplicação. Rede lenta, servidor caindo, ISP instável: nenhum desses cenários deve travar o programa por tempo indeterminado. Com `timeout`, você define um tempo limite e lida com a falha com um `try/except`.
+
+<CodeBlock title="resposta_simulada.py" code={`class RespostaHTTP:
+    def __init__(self, payload, status_code=200):
+        self.payload = payload
+        self.status_code = status_code
+
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            raise RuntimeError(f"status HTTP {self.status_code}")
+
+    def json(self):
+        return self.payload
+
+resposta = RespostaHTTP({"cidade": "Recife", "temperatura": 28}, status_code=200)
+resposta.raise_for_status()
+print(resposta.json()["cidade"])
+print(resposta.json()["temperatura"])`} />
+
+Saída esperada:
+
+```text
+Recife
+28
+```
+
+O código acima emula o que o `requests` faz na prática: a resposta chega em um objeto, o status é validado e o JSON é acessado como dicionário. Isso é o padrão que aparece em scripts e backends, mesmo quando o navegador não consegue acessar a internet no ambiente de aula.
+
+<Playground title="Experimente: resposta de API em miniatura" code={`resposta = {
+    "usuario": "Ana",
+    "tarefas": ["estudar", "praticar", "revisar"],
+    "bonus": True,
+}
+
+print(resposta["usuario"])
+print(len(resposta["tarefas"]))
+print("bonus" if resposta["bonus"] else "sem bonus")`} />
+
+## 3. Extraindo campos e tratando falhas
+
+Depois que a resposta chega, você precisa transformar isso em decisões. Talvez você queira imprimir o nome do cliente, a cidade, a cotação ou o status do pedido. Você não precisa usar toda a resposta; você pega o que interessa.
+
+O problema aparece quando a resposta vem incompleta. Um campo pode não existir, um valor pode ser `None`, a API pode responder com erro ou a rede pode cair. Nesses cenários, a lógica defensiva salva o sistema.
+
+<CodeBlock title="extrair_campos.py" code={`resposta = {
+    "id": 42,
+    "nome": "Bia",
+    "email": "bia@email.com",
+    "ativo": True,
+}
+
+print(resposta["nome"])
+print(resposta.get("telefone", "sem telefone"))
+print("usuario ativo" if resposta["ativo"] else "usuario inativo")`} />
+
+Saída esperada:
+
+```text
+Bia
+sem telefone
+usuario ativo
+```
+
+Esse exemplo mostra a diferença entre acessar a chave diretamente e acessar com `get()`. O primeiro costuma falhar se a chave não existir; o segundo devolve um valor padrão. Em APIs, isso é muito importante: a estrutura pode ser similar, mas nem sempre tem todos os campos.
+
+<StepThrough>
+  <div>
+    <strong>Passo 1:</strong> a URL define o endpoint e o tipo de informação que você quer buscar.
+  </div>
+  <div>
+    <strong>Passo 2:</strong> o cliente envia a requisição e pode incluir filtros, dados e cabeçalhos.
+  </div>
+  <div>
+    <strong>Passo 3:</strong> a API responde com status HTTP e JSON, que vira estrutura em Python.
+  </div>
+  <div>
+    <strong>Passo 4:</strong> o programa extrai os campos relevantes e toma decisão com base na resposta real.
+  </div>
+</StepThrough>
+
+## 4. Segurança, `raise_for_status` e variáveis de ambiente
+
+Além do JSON, há uma parte muito importante: segurança. Chaves de API, tokens e segredos nunca devem ficar escritos no código. O ideal é guardar esses valores em variáveis de ambiente, e só então usá-los no programa.
+
+A prática comum é: `os.getenv("API_KEY", "valor_local")` para leitura do ambiente, e `raise_for_status()` para transformar erro HTTP em exceção clara. Em desenvolvimento local, você pode usar um valor de teste; em produção, a variável de ambiente será preenchida de forma segura.
+
+<CodeBlock title="seguranca.py" code={`import os
+
+API_KEY = os.getenv("API_KEY", "chave_local_exemplo")
+
+resposta = {"status": 200, "dados": {"preco": 99.9}}
+
+def status_esperado(payload):
+    return "ok" if payload.get("status") == 200 else "erro"
+
+print(API_KEY)
+print(status_esperado(resposta))`} />
+
+Saída esperada:
+
+```text
+chave_local_exemplo
+ok
+```
+
+Esse padrão facilita muito a manutenção do projeto e reduz riscos. Quando a mesma aplicação roda em diferentes ambientes, as variáveis mudam e o código não precisa ser alterado para cada máquina.
+
+<Tabela data={[
+  ['Ponto', 'O que significa', 'Exemplo prático', 'Por que importa'],
+  ['URL', 'Recurso que você quer acessar', 'https://api.exemplo.com/cep', 'Define o endpoint'],
+  ['Método', 'Operação HTTP', 'GET', 'Indica buscar dados'],
+  ['Status', 'Resultado da resposta', '200, 404, 500', 'Mostra se houve sucesso'],
+  ['JSON', 'Corpo em formato estruturado', '{"cidade": "SP"}', 'Vira dicionário em Python'],
+  ['Timeout', 'Tempo máximo de espera', '5 segundos', 'Evita travar a aplicação']
+]} />
+
+<Callout type="erro-comum" title="Programa trava esperando resposta">
+  <p>Quando a rede demora ou o servidor não responde, sem <strong>timeout</strong> o programa pode ficar preso.</p>
+  <CodeBlock title="timeout_sem_configuracao.py" code={`import time
+
+print("inicio")
+time.sleep(10)
+print("fim")`} />
+  <p>Mensagem real:</p>
+  <pre>inicio
+... espera de 10 segundos ...
+fim</pre>
+  <p>Correção: definir <code>timeout</code> e tratar a exceção com <code>try/except</code>.</p>
+</Callout>
+
+<Callout type="erro-comum" title="JSON quebrado ou incompleto">
+  <p>Quando a API devolve uma estrutura diferente da esperada, o pedido pode quebrar ao acessar uma chave inexistente.</p>
+  <CodeBlock title="json_invalido.py" code={`resposta = {"cidade": "Curitiba"}
+print(resposta["estado"])`} />
+  <p>Mensagem real:</p>
+  <pre>KeyError: 'estado'</pre>
+  <p>Correção: validar a chave com <code>get()</code> antes de acessá-la.</p>
+</Callout>
+
+## No mercado de trabalho
+
+No mercado, consumir APIs é rotina em qualquer área que usa software conectado. E-commerce consulta estoque e preços, aplicativos financeiros consultam câmbio, plataformas de RH acessam dados de colaboradores e sistemas internos usam integrações para sincronizar informações. Quem sabe consumir dados com segurança e organizar a resposta em código ganha muita produtividade.
+
+O ponto importante é entender que o problema não é só “fazer uma requisição”. O problema real é transformar a resposta em informação útil e resiliente. Isso exige validação de status, tratamento de falhas e uso consciente de chaves e ambientes. É exatamente esse conjunto que distingue um script simples de uma aplicação robusta.
+
+<Quiz questions={[
+  { question: "O que a resposta de uma API em JSON normalmente vira em Python?", options: ["Uma string fixa", "Um dicionário ou lista", "Um arquivo em disco", "Um número inteiro"], correctIndex: 1, explanation: "JSON é uma estrutura de dados, e Python a traduz em dicionários e listas." },
+  { question: "Qual é a principal função do `timeout`?", options: ["Aumentar a velocidade da rede", "Evitar que o programa fique preso esperando resposta", "Salvar a resposta em disco", "Transformar JSON em texto"], correctIndex: 1, explanation: "Timeout limita o tempo de espera e evita bloqueios por falhas de rede." },
+  { question: "Quando `resposta['estado']` pode quebrar o programa?", options: ["Quando o dicionário não tem essa chave", "Quando a resposta está em texto", "Quando o código usa `if`", "Quando o dicionário está vazio"], correctIndex: 0, explanation: "Se a chave não existir, o Python lança `KeyError`; por isso `get()` é mais seguro." },
+  { question: "Por que guardar chaves em variáveis de ambiente é uma boa prática?", options: ["Porque deixa o programa mais curto", "Porque evita expor informações sensíveis no código", "Porque remove a necessidade de validarem status", "Porque acelera a rede"], correctIndex: 1, explanation: "Segredos como tokens e chaves devem sair do código-fonte para reduzir risco de vazamento." }
+]} />
+
+<Resumo>
+  <li>Uma API rest entrega dados por URL e responde com status HTTP.</li>
+  <li>JSON vira estruturas em Python, geralmente dicionários e listas.</li>
+  <li>Definir `timeout` evita travamento por falha de rede.</li>
+  <li>Você deve validar status e extrair campos com segurança.</li>
+  <li>Segredos e chaves ficam em variáveis de ambiente, não no código.</li>
+  <li>Consumo de API é a porta de entrada para integrações reais entre sistemas.</li>
+</Resumo>
+
+<Desafio>
+  <p>Crie um pequeno programa que simula uma resposta de API com dados de um cliente e imprime uma frase com nome, cidade e status. Depois, pense em como esse mesmo fluxo mudaria com um erro 404 ou com um JSON incompleto.</p>
+  <p>Se quiser avançar, pense em um sistema de clima, cotação de moedas ou controle de vendas usando esse padrão de integração.</p>
+</Desafio>
