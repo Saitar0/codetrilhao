@@ -1,0 +1,45 @@
+{
+  "id": "t17-v3-12-github-actions",
+  "tipo": "multipla-escolha",
+  "titulo": "Entender a finalidade do GitHub Actions",
+  "topico": "Testes, depuração, boas práticas e Git",
+  "topicoNumero": 17,
+  "variacao": "V3",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "GitHub Actions executa passos em resposta a eventos como `push` ou `pull request`.",
+    "A ideia é automatizar a validação antes que a equipe considere a entrega segura.",
+    "A automatização reduz risco de regressão em código compartilhado."
+  ],
+  "solucao": "Resposta correta: GitHub Actions roda testes e validações automáticas em cada push e pull request; isso ajuda a detectar regressões antes de integrar a mudança.",
+  "tags": [
+    "github-actions",
+    "ci",
+    "automacao",
+    "testes"
+  ],
+  "aulaRelacionada": "git-basico",
+  "enunciado": "Em projetos com GitHub, o que a integração contínua com GitHub Actions normalmente faz quando alguém faz um `push`?",
+  "pergunta": "Qual é a principal função do GitHub Actions neste contexto?",
+  "alternativas": [
+    {
+      "texto": "Executar testes e validações automaticamente para detectar regressão.",
+      "explicacao": "Correta: CI roda passos de validação no código e sinaliza falhas antes da integração.",
+      "correta": true
+    },
+    {
+      "texto": "Substituir totalmente a revisão manual de código.",
+      "explicacao": "Incorreta: a automação complementa, mas não elimina a revisão humana e a análise de contexto."
+    },
+    {
+      "texto": "Eliminar a necessidade de commits claros.",
+      "explicacao": "Incorreta: bons commits continuam sendo essenciais para histórico e entendimento do projeto."
+    },
+    {
+      "texto": "Salvar automaticamente arquivos temporários no repositório.",
+      "explicacao": "Incorreta: GitHub Actions não deve criar arquivos de cache ou temporários em um repositório sem controle."
+    }
+  ],
+  "respostaEsperada": "Executar testes e validações automaticamente para detectar regressão."
+}

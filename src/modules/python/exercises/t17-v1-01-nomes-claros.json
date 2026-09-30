@@ -1,0 +1,52 @@
+{
+  "id": "t17-v1-01-nomes-claros",
+  "tipo": "codigo",
+  "titulo": "Renomear variáveis para deixar a lógica clara",
+  "topico": "Testes, depuração, boas práticas e Git",
+  "topicoNumero": 17,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Use nomes que descrevem a regra de negócio: preço e quantidade fazem mais sentido do que `x` e `a1`.",
+    "A função calcula uma multiplicação simples; mantenha a intenção do cálculo e não mude a estrutura.",
+    "Teste com valores inteiros e com zero para confirmar que o código continua consistente."
+  ],
+  "solucao": "def calcular_total(preco, quantidade):\n    return preco * quantidade\n\nassert calcular_total(10, 3) == 30\nassert calcular_total(7, 0) == 0\nassert calcular_total(2, 5) == 10\n",
+  "tags": [
+    "pep8",
+    "nomes",
+    "clareza",
+    "funcoes"
+  ],
+  "aulaRelacionada": "boas-praticas",
+  "enunciado": "A função abaixo foi escrita com nomes ruins: `x` e `a1` não dizem o que ela calcula. Reescreva a função para deixar a intenção clara sem mudar a lógica. A ideia é que a função multiplica `preco` por `quantidade` e devolve o total.",
+  "starterCode": "def calcular_total(x, a1):\n    return x + a1\n",
+  "testes": [
+    {
+      "chamada": "calcular_total(10, 3)",
+      "esperado": "30",
+      "oculto": false
+    },
+    {
+      "chamada": "calcular_total(7, 0)",
+      "esperado": "0",
+      "oculto": false
+    },
+    {
+      "chamada": "calcular_total(2, 5)",
+      "esperado": "10",
+      "oculto": false
+    },
+    {
+      "chamada": "calcular_total(4, 4)",
+      "esperado": "16",
+      "oculto": true
+    },
+    {
+      "chamada": "calcular_total(0, 8)",
+      "esperado": "0",
+      "oculto": true
+    }
+  ]
+}

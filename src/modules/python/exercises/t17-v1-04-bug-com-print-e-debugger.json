@@ -1,0 +1,52 @@
+{
+  "id": "t17-v1-04-bug-com-print-e-debugger",
+  "tipo": "bug",
+  "titulo": "Corrigir um bug em uma média usando inspeção de estado",
+  "topico": "Testes, depuração, boas práticas e Git",
+  "topicoNumero": 17,
+  "variacao": "V1",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "A função quebra quando a lista vem vazia; esse caso precisa ser tratado antes do cálculo.",
+    "Use `print` para verificar a lista e a soma antes da divisão, ou um breakpoint para pausar a execução.",
+    "O ideal é validar a entrada e levantar uma mensagem clara em vez de deixar `ZeroDivisionError` acontecer."
+  ],
+  "solucao": "def calcular_media(valores):\n    if not valores:\n        return 'lista vazia'\n    total = sum(valores)\n    return total / len(valores)\n\nassert calcular_media([1, 2, 3]) == 2.0\nassert calcular_media([10, 10]) == 10.0\nassert calcular_media([-3, 3]) == 0.0\nassert calcular_media([]) == 'lista vazia'\nassert calcular_media([5]) == 5.0\n",
+  "tags": [
+    "depuracao",
+    "debugger",
+    "media",
+    "valueerror"
+  ],
+  "aulaRelacionada": "depuracao",
+  "enunciado": "Uma função de média foi escrita com um bug: ela divide por zero quando a lista chega vazia. Corrija a causa do problema e mantenha a lógica correta para listas com valores normais e com zeros/neutros.",
+  "starterCode": "def calcular_media(valores):\n    total = sum(valores)\n    return total / len(valores)\n",
+  "testes": [
+    {
+      "chamada": "calcular_media([1, 2, 3])",
+      "esperado": "2.0",
+      "oculto": false
+    },
+    {
+      "chamada": "calcular_media([10, 10])",
+      "esperado": "10.0",
+      "oculto": false
+    },
+    {
+      "chamada": "calcular_media([-3, 3])",
+      "esperado": "0.0",
+      "oculto": false
+    },
+    {
+      "chamada": "calcular_media([5])",
+      "esperado": "5.0",
+      "oculto": true
+    },
+    {
+      "chamada": "calcular_media([])",
+      "esperado": "lista vazia",
+      "oculto": true
+    }
+  ]
+}

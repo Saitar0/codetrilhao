@@ -1,0 +1,52 @@
+{
+  "id": "t17-v2-05-casos-de-borda-somar",
+  "tipo": "codigo",
+  "titulo": "Cobrir casos de borda de uma função de maior valor",
+  "topico": "Testes, depuração, boas práticas e Git",
+  "topicoNumero": 17,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Teste a lista vazia para confirmar que a regra do erro está explícita.",
+    "Cheque valores negativos, zeros e números muito grandes para garantir que a comparação está correta.",
+    "Um bom teste de borda mostra o limite do comportamento, não só o caso feliz."
+  ],
+  "solucao": "def maior_valor(valores):\n    if not valores:\n        return 'lista vazia'\n    return max(valores)\n\nassert maior_valor([3, 8, 1]) == 8\nassert maior_valor([0, 0, 0]) == 0\nassert maior_valor([-5, -2, -9]) == -2\nassert maior_valor([]) == 'lista vazia'\nassert maior_valor([10**9, 10**9 + 1]) == 10**9 + 1\n",
+  "tags": [
+    "testes",
+    "borda",
+    "assert",
+    "max"
+  ],
+  "aulaRelacionada": "testes",
+  "enunciado": "Escreva testes para a função `maior_valor(valores)` cobrindo os casos de borda: lista vazia, zero, negativos e valores muito grandes. A função deve lançar `ValueError` para lista vazia e devolver o maior número do restante.",
+  "starterCode": "def maior_valor(valores):\n    return max(valores)\n",
+  "testes": [
+    {
+      "chamada": "maior_valor([3, 8, 1])",
+      "esperado": "8",
+      "oculto": false
+    },
+    {
+      "chamada": "maior_valor([0, 0, 0])",
+      "esperado": "0",
+      "oculto": false
+    },
+    {
+      "chamada": "maior_valor([-5, -2, -9])",
+      "esperado": "-2",
+      "oculto": false
+    },
+    {
+      "chamada": "maior_valor([])",
+      "esperado": "lista vazia",
+      "oculto": true
+    },
+    {
+      "chamada": "maior_valor([10**9, 10**9 + 1])",
+      "esperado": "1000000001",
+      "oculto": true
+    }
+  ]
+}

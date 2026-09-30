@@ -1,0 +1,52 @@
+{
+  "id": "t17-v1-02-tres-testes-somar",
+  "tipo": "codigo",
+  "titulo": "Escrever 3 testes para a função somar",
+  "topico": "Testes, depuração, boas práticas e Git",
+  "topicoNumero": 17,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Escolha um caso normal e pelo menos dois casos de borda: zero e número negativo.",
+    "Cada `assert` deve dizer uma regra explícita, por exemplo: `somar(2, 3) == 5`.",
+    "A função deve somar os dois inteiros e não fazer nenhuma operação extra."
+  ],
+  "solucao": "def somar(a, b):\n    return a + b\n\nassert somar(2, 3) == 5\nassert somar(0, 0) == 0\nassert somar(-2, 5) == 3\nassert somar(10, -10) == 0\nassert somar(100, 200) == 300\n",
+  "tags": [
+    "assert",
+    "testes",
+    "somar",
+    "validacao"
+  ],
+  "aulaRelacionada": "testes",
+  "enunciado": "Implemente a função `somar(a, b)` e escreva testes executáveis para validar o comportamento. Considere casos normais e de borda: positivo, zero e negativo.",
+  "starterCode": "def somar(a, b):\n    return a - b\n",
+  "testes": [
+    {
+      "chamada": "somar(2, 3)",
+      "esperado": "5",
+      "oculto": false
+    },
+    {
+      "chamada": "somar(0, 0)",
+      "esperado": "0",
+      "oculto": false
+    },
+    {
+      "chamada": "somar(-2, 5)",
+      "esperado": "3",
+      "oculto": false
+    },
+    {
+      "chamada": "somar(10, -10)",
+      "esperado": "0",
+      "oculto": true
+    },
+    {
+      "chamada": "somar(100, 200)",
+      "esperado": "300",
+      "oculto": true
+    }
+  ]
+}

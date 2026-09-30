@@ -1,0 +1,52 @@
+{
+  "id": "t17-v2-06-tdd-eh-primo",
+  "tipo": "codigo",
+  "titulo": "Praticar TDD para a função eh_primo",
+  "topico": "Testes, depuração, boas práticas e Git",
+  "topicoNumero": 17,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Comece pela regra mais simples: números menores que 2 não são primos.",
+    "Depois, verifique divisibilidade por valores entre 2 e a raiz quadrada do número.",
+    "Os testes devem cobrir casos positivos e negativos, incluindo 1 e 4."
+  ],
+  "solucao": "def eh_primo(numero):\n    if numero < 2:\n        return False\n    for divisor in range(2, int(numero ** 0.5) + 1):\n        if numero % divisor == 0:\n            return False\n    return True\n\nassert eh_primo(2) is True\nassert eh_primo(3) is True\nassert eh_primo(4) is False\nassert eh_primo(1) is False\nassert eh_primo(17) is True\n",
+  "tags": [
+    "tdd",
+    "assert",
+    "primos",
+    "algoritmo"
+  ],
+  "aulaRelacionada": "testes",
+  "enunciado": "Implemente a função `eh_primo(numero)` seguindo a ideia de TDD: ela deve receber um inteiro e devolver `True` somente para números primos. Use a regra de divisibilidade para evitar erros de lógica.",
+  "starterCode": "def eh_primo(numero):\n    return True\n",
+  "testes": [
+    {
+      "chamada": "eh_primo(2)",
+      "esperado": "True",
+      "oculto": false
+    },
+    {
+      "chamada": "eh_primo(3)",
+      "esperado": "True",
+      "oculto": false
+    },
+    {
+      "chamada": "eh_primo(4)",
+      "esperado": "False",
+      "oculto": false
+    },
+    {
+      "chamada": "eh_primo(1)",
+      "esperado": "False",
+      "oculto": true
+    },
+    {
+      "chamada": "eh_primo(17)",
+      "esperado": "True",
+      "oculto": true
+    }
+  ]
+}

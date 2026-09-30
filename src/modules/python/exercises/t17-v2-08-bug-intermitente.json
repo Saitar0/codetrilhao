@@ -1,0 +1,52 @@
+{
+  "id": "t17-v2-08-bug-intermitente",
+  "tipo": "bug",
+  "titulo": "Corrigir um bug intermitente guiado por testes",
+  "topico": "Testes, depuração, boas práticas e Git",
+  "topicoNumero": 17,
+  "variacao": "V2",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "O problema está na variável acumuladora: ela é resetada quando encontra um valor zero ou negativo.",
+    "A lógica correta deve somar apenas os valores positivos, sem zerar a soma antes do fim da iteração.",
+    "Use testes com valores mistos para reproduzir o bug e validar a correção."
+  ],
+  "solucao": "def somar_positivos(valores):\n    total = 0\n    for valor in valores:\n        if valor > 0:\n            total += valor\n    return total\n\nassert somar_positivos([1, 2, 3]) == 6\nassert somar_positivos([5, -1, 2]) == 7\nassert somar_positivos([0, 4, 5]) == 9\nassert somar_positivos([-2, -3, 4]) == 4\nassert somar_positivos([]) == 0\n",
+  "tags": [
+    "bug",
+    "depuracao",
+    "teste",
+    "acumulador"
+  ],
+  "aulaRelacionada": "depuracao",
+  "enunciado": "Um código de soma acumulada passa em alguns exemplos e falha em outros. Corrija a função para somar apenas os valores positivos e nunca zerar a soma por causa de um valor zero ou negativo no meio da lista.",
+  "starterCode": "def somar_positivos(valores):\n    total = 0\n    for valor in valores:\n        if valor > 0:\n            total += valor\n        else:\n            total = 0\n    return total\n",
+  "testes": [
+    {
+      "chamada": "somar_positivos([1, 2, 3])",
+      "esperado": "6",
+      "oculto": false
+    },
+    {
+      "chamada": "somar_positivos([5, -1, 2])",
+      "esperado": "7",
+      "oculto": false
+    },
+    {
+      "chamada": "somar_positivos([0, 4, 5])",
+      "esperado": "9",
+      "oculto": false
+    },
+    {
+      "chamada": "somar_positivos([-2, -3, 4])",
+      "esperado": "4",
+      "oculto": true
+    },
+    {
+      "chamada": "somar_positivos([])",
+      "esperado": "0",
+      "oculto": true
+    }
+  ]
+}

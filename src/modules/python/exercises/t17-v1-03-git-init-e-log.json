@@ -1,0 +1,39 @@
+{
+  "id": "t17-v1-03-git-init-e-log",
+  "tipo": "ordenar",
+  "titulo": "Organizar o fluxo inicial do Git",
+  "topico": "Testes, depuração, boas práticas e Git",
+  "topicoNumero": 17,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "O repositório precisa existir antes de qualquer `commit`.",
+    "Os arquivos precisam ser preparados com `git add` para entrar no próximo ponto salvo.",
+    "Depois que o commit é registrado, o histórico pode ser consultado com `git log --oneline`."
+  ],
+  "solucao": "Resposta correta: 1) `git init`; 2) verificar o estado com `git status`; 3) preparar arquivos com `git add .`; 4) criar a primeira versão com `git commit -m \"feat: inicializa projeto\"`; 5) consultar o histórico com `git log --oneline`.",
+  "tags": [
+    "git",
+    "commit",
+    "status",
+    "log"
+  ],
+  "aulaRelacionada": "git-basico",
+  "enunciado": "Organize a sequência correta para iniciar um repositório Git, salvar a primeira versão e verificar o histórico do projeto.",
+  "linhas": [
+    "git add .",
+    "git log --oneline",
+    "git init",
+    "git status",
+    "git commit -m \"feat: inicializa projeto\""
+  ],
+  "ordemCorreta": [
+    "git init",
+    "git status",
+    "git add .",
+    "git commit -m \"feat: inicializa projeto\"",
+    "git log --oneline"
+  ],
+  "respostaEsperada": "1) git init; 2) git status; 3) git add .; 4) git commit -m \"feat: inicializa projeto\"; 5) git log --oneline."
+}

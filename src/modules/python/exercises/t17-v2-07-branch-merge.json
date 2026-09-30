@@ -1,0 +1,39 @@
+{
+  "id": "t17-v2-07-branch-merge",
+  "tipo": "ordenar",
+  "titulo": "Organizar o fluxo de branch e merge no Git",
+  "topico": "Testes, depuração, boas práticas e Git",
+  "topicoNumero": 17,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Sempre se cria uma branch para isolar a alteração antes de integrar na branch principal.",
+    "O `commit` acontece antes do `merge`, porque a alteração precisa ser salva primeiro.",
+    "O `checkout` da branch principal acontece antes da integração da alteração."
+  ],
+  "solucao": "Resposta correta: 1) `git checkout -b feature/ajuste`; 2) `git add .`; 3) `git commit -m \\\"fix: corrige regra\\\"`; 4) `git checkout main`; 5) `git merge feature/ajuste`.",
+  "tags": [
+    "git",
+    "branch",
+    "merge",
+    "workflow"
+  ],
+  "aulaRelacionada": "git-basico",
+  "enunciado": "Organize os comandos corretos para criar uma branch, quem faz a alteração, salvar a mudança e integrá-la na branch principal.",
+  "linhas": [
+    "git merge feature/ajuste",
+    "git add .",
+    "git checkout main",
+    "git commit -m \"fix: corrige regra\"",
+    "git checkout -b feature/ajuste"
+  ],
+  "ordemCorreta": [
+    "git checkout -b feature/ajuste",
+    "git add .",
+    "git commit -m \"fix: corrige regra\"",
+    "git checkout main",
+    "git merge feature/ajuste"
+  ],
+  "respostaEsperada": "1) criar a branch; 2) adicionar arquivos; 3) fazer o commit; 4) voltar para main; 5) fazer o merge da branch."
+}
