@@ -1,0 +1,116 @@
+---
+titulo: "Diário simples em arquivo"
+descricao: "Registre entradas com data e texto em um arquivo txt e leia o histórico depois."
+topico: "arquivos"
+topicoNome: "Arquivos (txt, CSV, JSON)"
+variacao: "V1"
+tempo: 25
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "arquivo", "txt", "diario", "persistencia", "with"]
+---
+
+# Diário simples em arquivo
+
+## Contexto
+Você quer manter um registro pessoal de ideias, estudos e lembretes sem depender de um aplicativo externo. Em vez de perder tudo quando a página recarrega, você guarda cada entrada em um arquivo e depois lê o conteúdo como se fosse um diário real.
+
+## O que você vai construir
+Um diário que adiciona entradas com data e texto e, em seguida, lê tudo de volta para mostrar o histórico no terminal. O objetivo é praticar escrita, leitura e controle do conteúdo em arquivos de texto simples.
+
+Exemplo de execução real:
+
+```text
+=== Diário ===
+2026-09-30 | Estudei Python e revisei arquivos.
+2026-09-30 | Pratiquei leitura e escrita em txt.
+```
+
+## Requisitos
+1. Criar um arquivo de texto em memória.
+2. Escrever uma linha com data e texto.
+3. Adicionar outra linha sem apagar a anterior.
+4. Ler o arquivo inteiro e imprimir o conteúdo.
+5. Manter cada entrada organizada em uma linha separada.
+
+## Critérios de aceite
+- [ ] O arquivo é criado antes da leitura.
+- [ ] Cada entrada fica em uma linha separada.
+- [ ] O programa usa `with` para abrir o arquivo corretamente.
+- [ ] O conteúdo antigo não é apagado quando há uma nova entrada.
+- [ ] O aluno consegue explicar a diferença entre `"w"` e `"a"`.
+- [ ] A saída mostra o diário completo em ordem cronológica ou de cadastro.
+
+## Guia
+### Passo a passo
+1. Defina o caminho do arquivo, como `diario.txt`.
+2. Crie o arquivo antes de tentar ler; esse é o comportamento esperado em Python.
+3. Use `with open(arquivo, "a", encoding="utf-8") as f:` para adicionar uma entrada.
+4. Escreva uma linha com a data e o texto, por exemplo: `2026-09-30 | Estudei Python`.
+5. Abra o arquivo em modo de leitura e percorra linha por linha com `for linha in f:`.
+6. Imprima cada linha sem perder a formatação original.
+
+### Dicas por etapa
+- A ideia do diário é simples: cada entrada é uma linha de texto.
+- Se você usar `"w"`, o arquivo inteiro será sobrescrito. Para adicionar, o modo certo é `"a"`.
+- A data pode ser um texto fixo no exemplo, mas em um programa real você pode usar `datetime.date.today()`.
+- Quando quiser mostrar o conteúdo no terminal, use `print(linha.strip())` para remover a quebra de linha.
+- O `with` garante que o arquivo será fechado automaticamente ao final.
+
+<Callout type="importante" title="Arquivos em memória">
+No Playground, os arquivos não são persistidos no disco real do computador. Em vez disso, o ambiente cria um arquivo em memória para o exercício e você deve escrever nele antes de tentar ler. Isso significa que o padrão esperado é: criar o arquivo, gravar os dados e só então abrir para leitura.
+</Callout>
+
+<Playground title="Ponto de partida" code={`from pathlib import Path
+
+arquivo = Path("diario.txt")
+
+# 1. crie o arquivo antes de ler
+# 2. use "a" para adicionar entradas
+# 3. escreva uma linha com data e texto
+# 4. leia o arquivo e imprima o conteúdo
+
+arquivo.write_text("", encoding="utf-8")
+print("Arquivo pronto para uso.")
+`} />
+
+## Desafio extra
+Adicione uma função `adicionar_entrada(texto)` que recebe a mensagem do usuário e grava a linha formatada com a data atual. Isso aproxima o projeto do uso real de um diário pessoal, sem complicar a lógica base.
+
+## Visão de mercado
+Registros em arquivos de texto continuam muito usados em automações, logs de sistema, pequenas ferramentas internas e scripts de apoio. A combinação de leitura e escrita simples costuma aparecer em tarefas de manutenção, rastreio de eventos e pequenas aplicações de produtividade.
+
+## Autoavaliação
+- [ ] Criei o arquivo antes de tentar ler.
+- [ ] Usei a abertura com `with`.
+- [ ] Entendi quando usar `"a"` em vez de `"w"`.
+- [ ] A saída mostra as entradas guardadas em linhas separadas.
+- [ ] Consigo explicar por que arquivos de texto são úteis para um diário simples.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+from pathlib import Path
+
+arquivo = Path("diario.txt")
+arquivo.write_text("", encoding="utf-8")
+
+with arquivo.open("a", encoding="utf-8") as f:
+    f.write("2026-09-30 | Estudei Python e revisei arquivos.\n")
+    f.write("2026-09-30 | Pratiquei leitura e escrita em txt.\n")
+
+print("=== Diário ===")
+with arquivo.open("r", encoding="utf-8") as f:
+    for linha in f:
+        print(linha.strip())
+```
+
+Saída real com execução:
+
+```text
+=== Diário ===
+2026-09-30 | Estudei Python e revisei arquivos.
+2026-09-30 | Pratiquei leitura e escrita em txt.
+```
+</details>

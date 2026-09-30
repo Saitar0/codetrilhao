@@ -1,0 +1,220 @@
+---
+titulo: "Analisador de vendas a partir de CSV"
+descricao: "Leia um CSV de vendas com erros propositais, limpe os dados e gere um relatório em texto e em arquivo."
+topico: "arquivos"
+topicoNome: "Arquivos (txt, CSV, JSON)"
+variacao: "V3"
+tempo: 40
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "csv", "analise", "vendas", "relatorio", "dados"]
+---
+
+# Analisador de vendas a partir de CSV
+
+## Contexto
+Uma loja envia uma planilha de vendas com alguns problemas: campos vazios, valores sem padrão e linhas inconsistentes. O time precisa transformar esse arquivo em um relatório confiável para saber quanto foi vendido, por produto e por vendedor.
+
+## O que você vai construir
+Um analisador que lê um CSV em memória, ignora registros inválidos, calcula o faturamento total e mostra um resumo por vendedor e produto. O objetivo é simular um fluxo real de limpeza e extração de dados, sem depender de planilhas manuais.
+
+Exemplo de execução real:
+
+```text
+=== Relatório de vendas ===
+Total geral: R$ 2.275,00
+Faturamento por vendedor:
+Ana: R$ 1.325,00
+Bruno: R$ 150,00
+Carla: R$ 800,00
+Produto mais vendido: Teclado
+```
+
+## Requisitos
+1. Receber um CSV em formato de texto com linha e coluna separadas por `;`.
+2. Ler cada linha com `csv.DictReader` ou `csv.reader`.
+3. Ignorar registros com campos vazios ou valores inválidos.
+4. Calcular o valor total das vendas válidas.
+5. Agrupar faturamento por vendedor e produto.
+6. Exibir um resumo final de forma legível.
+
+## Critérios de aceite
+- [ ] O programa consegue ler um CSV com `;` como separador.
+- [ ] Linhas com dados vazios ou incompletos são ignoradas.
+- [ ] O total geral considera somente registros válidos.
+- [ ] O resumo por vendedor mostra valores separados corretamente.
+- [ ] O aluno consegue explicar por que a limpeza de dados é parte do trabalho com CSV.
+- [ ] O relatório final é legível para um cliente ou gestor.
+- [ ] O código separa leitura, limpeza e cálculo em funções ou etapas claras.
+
+## Histórias de usuário
+- Como gerente, quero ver o faturamento total para decidir se a campanha foi boa.
+- Como analista, quero saber quais vendedores mais venderam no período.
+- Como suporte, quero identificar registros inválidos sem derrubar o restante da análise.
+- Como cliente, quero receber um relatório simples, sem precisar abrir a planilha manualmente.
+
+## Arquitetura sugerida
+- `ler_csv_texto(texto)` para transformar a entrada em linhas processáveis.
+- `limpar_venda(linha)` para validar campos e remover entradas incompletas.
+- `agrupar_por_vendedor(vendas)` para somar faturamento por pessoa.
+- `agrupar_por_produto(vendas)` para identificar produto mais vendido.
+- `gerar_relatorio(vendas)` para mostrar o resumo final em texto.
+
+## Casos de teste de aceitação
+- CSV com linha vazia deve ser ignorada.
+- Vendedor sem nome deve ser descartado.
+- Produto sem valor ou quantidade inválida deve ser rejeitado.
+- Arquivo misto com vendas válidas e inválidas deve processar apenas o que dá para calcular.
+- Resumo final deve refletir corretamente o total e a ordem do ranking.
+
+## Riscos
+- Aceitar valores vazios sem validar antes do cálculo gera resultados enganosos.
+- Misturar regras de parsing com regras de negócio deixa o código difícil de depurar.
+- Não separar limpeza de dados reduz a confiabilidade do relatório final.
+- Ignorar o caso de linhas inconsistentes faz o programa parecer correto sem estar.
+
+## Guia
+### História do cliente
+O cliente precisa de um resumo rápido da força de vendas, mas a planilha não chega limpa. Há linhas vazias, datas inconsistentes e campos sem valor. A solução precisa ser automatizada, clara e resiliente.
+
+### Marcos do projeto
+1. Crie uma string em Python com os dados de exemplo em CSV.
+2. Faça a leitura linha a linha e identifique quais campos são obrigatórios.
+3. Remova registros que tenham valores vazios ou `None`.
+4. Calcule o faturamento total e agrupe por vendedor/produto.
+5. Gere um texto final fácil de entender para o gestor.
+
+### Regras e casos especiais
+- Use `;` como separador para representar uma planilha simples.
+- Considere uma linha inválida se faltar vendedor, produto, quantidade ou valor.
+- Converta valores em `float` quando possível; se a conversão falhar, descarte a linha.
+- O cálculo total deve excluir registros inválidos.
+- O cliente pode pedir relatório em texto ou em CSV; o importante é guardar o resumo legível.
+
+### Dicas
+- Quando a linha tem campos vazios, ela não deve entrar no total.
+- A validação precisa acontecer antes do cálculo do faturamento.
+- `csv.DictReader` ajuda a acessar cada coluna por nome, como `"produto"` e `"valor"`.
+- Agrupar em dicionários facilita a leitura e evita repetição de lógica.
+
+<Callout type="importante" title="Arquivos em memória">
+No Playground, o CSV entra como texto embutido em uma variável. O programa cria o arquivo em memória para simular o processamento real e, em seguida, lê esse conteúdo como se fosse uma planilha externa. Isso ajuda na prática sem exigir nenhum arquivo do sistema operacional.
+</Callout>
+
+<Playground title="Ponto de partida" code={`import csv
+import io
+
+csv_texto = '''produto;vendedor;valor;quantidade
+Teclado;Ana;250;2
+Mouse;Bruno;150;1
+Monitor;;600;
+Teclado;Ana;275;3
+Webcam;Carla;400;2
+'''
+
+# 1. transformar o texto em um leitor CSV
+# 2. validar cada linha
+# 3. ignorar registros inválidos
+# 4. somar o faturamento por vendedor
+# 5. mostrar o relatório final
+
+arquivo = io.StringIO(csv_texto)
+print("CSV lido com sucesso.")
+`} />
+
+## Desafio extra
+Adicione uma segunda etapa que gere um CSV de resumo com `produto;total_vendido` e outro arquivo de texto com a mensagem final. Isso mostra como o mesmo cálculo pode servir de base para relatórios de gestão e exportação em outros sistemas.
+
+## Visão de mercado
+Automatizar relatórios de vendas com Python é uma das aplicações mais valorizadas em empresas de varejo, logística, e-commerce e consultoria. Em vez de abrir planilhas e somar colunas manualmente, o time usa script para limpar e consolidar dados com rapidez e confiabilidade.
+
+## Autoavaliação
+- [ ] Consegui ler um CSV em formato de texto.
+- [ ] Ignorei linhas com campos vazios ou inválidos.
+- [ ] Calculei faturamento total sem contar registros quebrados.
+- [ ] Agrupei os resultados por vendedor ou produto.
+- [ ] Entendi como a limpeza de dados melhora o valor do relatório.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+import csv
+import io
+
+csv_texto = '''produto;vendedor;valor;quantidade
+Teclado;Ana;250;2
+Mouse;Bruno;150;1
+Monitor;;600;
+Teclado;Ana;275;3
+Webcam;Carla;400;2
+'''
+
+
+def linha_valida(linha):
+    return (
+        linha.get("produto")
+        and linha.get("vendedor")
+        and linha.get("valor")
+        and linha.get("quantidade")
+    )
+
+
+def parse_float(valor):
+    try:
+        return float(valor.replace(",", "."))
+    except (AttributeError, ValueError):
+        return None
+
+
+leitor = csv.DictReader(io.StringIO(csv_texto), delimiter=';')
+vendas = []
+for linha in leitor:
+    if not linha_valida(linha):
+        continue
+
+    valor = parse_float(linha["valor"])
+    quantidade = parse_float(linha["quantidade"])
+    if valor is None or quantidade is None:
+        continue
+
+    vendas.append({
+        "produto": linha["produto"].strip(),
+        "vendedor": linha["vendedor"].strip(),
+        "valor": valor,
+        "quantidade": quantidade,
+    })
+
+faturamento_total = sum(venda["valor"] * venda["quantidade"] for venda in vendas)
+por_vendedor = {}
+for venda in vendas:
+    vendedor = venda["vendedor"]
+    por_vendedor[vendedor] = por_vendedor.get(vendedor, 0) + venda["valor"] * venda["quantidade"]
+
+por_produto = {}
+for venda in vendas:
+    produto = venda["produto"]
+    por_produto[produto] = por_produto.get(produto, 0) + venda["valor"] * venda["quantidade"]
+
+produto_mais_vendido = max(por_produto, key=por_produto.get)
+
+print("=== Relatório de vendas ===")
+print(f"Total geral: R$ {faturamento_total:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
+print("Faturamento por vendedor:")
+for vendedor, valor in sorted(por_vendedor.items()):
+    print(f"{vendedor}: R$ {valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", "."))
+print(f"Produto mais vendido: {produto_mais_vendido}")
+```
+
+Saída real com execução:
+
+```text
+=== Relatório de vendas ===
+Total geral: R$ 2.275,00
+Faturamento por vendedor:
+Ana: R$ 1.325,00
+Bruno: R$ 150,00
+Carla: R$ 800,00
+Produto mais vendido: Teclado
+```
+</details>

@@ -1,0 +1,163 @@
+---
+titulo: "Lista de tarefas persistente"
+descricao: "Crie uma agenda de tarefas em JSON que salva, recarrega e filtra itens pendentes entre execuções."
+topico: "arquivos"
+topicoNome: "Arquivos (txt, CSV, JSON)"
+variacao: "V2"
+tempo: 35
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "json", "tarefas", "persistencia", "arquivo", "lista"]
+---
+
+# Lista de tarefas persistente
+
+## Contexto
+Você precisa organizar tarefas pessoais, mas não quer perder o progresso quando o programa fecha. O cenário é clássico: a lista cresce, algumas tarefas são concluídas, outras ficam pendentes e o sistema precisa reaproveitar o estado anterior ao abrir novamente.
+
+## O que você vai construir
+Uma lista de tarefas que salva o estado em JSON, recarrega os dados ao abrir e permite adicionar, concluir, remover e mostrar apenas as pendentes. A lógica deve funcionar mesmo quando o arquivo ainda não existe ou quando o JSON estiver corrompido.
+
+Exemplo de execução real:
+
+```text
+=== Tarefas ===
+[ ] Estudar Python
+[x] Revisar CSV
+[ ] Organizar os exercícios do tópico 13
+Pendentes: 2
+```
+
+## Requisitos
+1. Criar ou abrir um arquivo JSON para armazenar as tarefas.
+2. Guardar cada tarefa com pelo menos `titulo` e `feito`.
+3. Adicionar novas tarefas e marcar algumas como concluídas.
+4. Remover tarefas e filtrar as pendentes.
+5. Tratar arquivo inexistente e JSON corrompido com uma resposta segura.
+6. Salvar o estado no arquivo antes de encerrar.
+
+## Critérios de aceite
+- [ ] O programa cria o arquivo quando ele ainda não existe.
+- [ ] A lista é recarregada a partir de JSON ao abrir o programa.
+- [ ] Tarefas concluídas e pendentes ficam visualmente separadas.
+- [ ] O código trata JSON inválido sem quebrar a execução.
+- [ ] O aluno consegue explicar por que `json.load` e `json.dump` são usados em persistência.
+- [ ] A contagem de pendentes reflete o estado real do arquivo.
+- [ ] O programa continua funcionando mesmo começando sem nenhuma tarefa.
+
+## Guia
+### Marcos do projeto
+1. Estruture a base da lista em Python como uma lista de dicionários.
+2. Decida o formato do arquivo JSON e crie uma função para carregá-lo com segurança.
+3. Crie rotinas para adicionar, concluir e remover tarefas.
+4. Faça uma função para listar apenas as pendentes e outra para salvar o estado.
+5. Revise os casos de arquivo inexistente e JSON quebrado antes de fechar a solução.
+
+### Regras e casos especiais
+- Se o arquivo não existir, comece com uma lista vazia.
+- Se o JSON estiver corrompido, mostre uma mensagem clara e reinicie a lista em branco.
+- Tarefas de mesma descrição podem ser aceitas, mas a lógica deve evitar duplicidade se for parte do requisito do cliente.
+- O estado salvo deve ser legível e fácil de revisar em um editor de texto.
+- Faça backup antes de sobrescrever o arquivo quando a regra do projeto pedir essa proteção extra.
+
+### Dicas
+- Use `Path` para localizar o arquivo e `json.loads` ou `json.load` para ler os dados.
+- Quando o JSON estiver quebrado, a estratégia segura é limpar a estrutura e começar de zero.
+- É mais fácil manter a lógica separada em funções: carregar, salvar, adicionar, listar e concluir.
+- A visualização das tarefas pode usar `[ ]` para pendentes e `[x]` para concluídas.
+
+<Callout type="importante" title="Arquivos em memória">
+No Playground, o arquivo de tarefas fica em memória. Isso significa que todo exercício precisa criar o arquivo antes de ler o conteúdo salvo. A mesma regra vale para JSON corrompido: o programa deve verificar sua existência e validar a estrutura antes de continuar.
+</Callout>
+
+<Playground title="Ponto de partida" code={`import json
+from pathlib import Path
+
+ARQUIVO = Path("tarefas.json")
+
+# 1. verificar se o arquivo já existe
+# 2. carregar uma lista vazia quando não existir
+# 3. adicionar tarefas com {'titulo': ..., 'feito': ...}
+# 4. salvar em JSON e listar apenas pendentes
+
+if ARQUIVO.exists():
+    try:
+        tarefas = json.loads(ARQUIVO.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        tarefas = []
+else:
+    tarefas = []
+
+print(tarefas)
+`} />
+
+## Desafio extra
+Adicione um backup automático antes de salvar a lista atual. Isso reforça a ideia de que dados de usuário precisam ser protegidos contra sobrescrita acidental ou JSON inválido.
+
+## Visão de mercado
+Esse tipo de persistência é muito comum em listas de afazeres, dashboards internos, pequenos CRMs e rotinas administrativas. Quando o programa precisa lembrar o estado entre execuções, salvar em JSON é uma solução simples e legível para equipes e clientes.
+
+## Autoavaliação
+- [ ] Entendi como criar e recarregar a lista com JSON.
+- [ ] Tratei corretamente arquivo inexistente e JSON corrompido.
+- [ ] Consegui separar tarefas concluidas e pendentes.
+- [ ] O programa salva o estado depois de cada alteração.
+- [ ] Consigo explicar por que persistir em arquivo é útil em aplicações simples.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+import json
+from pathlib import Path
+
+ARQUIVO = Path("tarefas.json")
+
+
+def carregar_tarefas():
+    if not ARQUIVO.exists():
+        return []
+
+    try:
+        dados = json.loads(ARQUIVO.read_text(encoding="utf-8"))
+        if isinstance(dados, list):
+            return dados
+        return []
+    except json.JSONDecodeError:
+        return []
+
+
+def salvar_tarefas(tarefas):
+    ARQUIVO.write_text(json.dumps(tarefas, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def listar_pendentes(tarefas):
+    return [tarefa for tarefa in tarefas if not tarefa.get("feito", False)]
+
+
+tarefas = carregar_tarefas()
+tarefas.append({"titulo": "Estudar Python", "feito": False})
+tarefas.append({"titulo": "Revisar CSV", "feito": True})
+tarefas.append({"titulo": "Organizar os exercícios do tópico 13", "feito": False})
+
+salvar_tarefas(tarefas)
+pendentes = listar_pendentes(tarefas)
+
+print("=== Tarefas ===")
+for tarefa in tarefas:
+    status = "[x]" if tarefa["feito"] else "[ ]"
+    print(f"{status} {tarefa['titulo']}")
+
+print(f"Pendentes: {len(pendentes)}")
+```
+
+Saída real com execução:
+
+```text
+=== Tarefas ===
+[ ] Estudar Python
+[x] Revisar CSV
+[ ] Organizar os exercícios do tópico 13
+Pendentes: 2
+```
+</details>
