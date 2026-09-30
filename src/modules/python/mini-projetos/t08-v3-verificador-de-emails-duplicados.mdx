@@ -1,0 +1,198 @@
+---
+titulo: "Verificador de e-mails duplicados"
+descricao: "Normalize e-mails de várias fontes, remova duplicatas e separe entradas inválidas antes de uma campanha."
+topico: "tuplas-e-sets"
+topicoNome: "Tuplas e sets"
+variacao: "V3"
+tempo: 35
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "sets", "e-mails", "deduplicacao", "marketing", "crm"]
+---
+
+# Verificador de e-mails duplicados
+
+## Contexto
+Uma equipe de marketing está preparando uma campanha para vários canais: lista de contatos da loja, lista de inscritos do site e lista de leads recebidos por WhatsApp. O problema é que os e-mails chegam com letras em caixa diferente, espaços extras e alguns registros inválidos. Antes da campanha, o time precisa produzir uma lista única, contar quantos duplicados foram removidos e separar os endereços problemáticos.
+
+## O que você vai construir
+Um programa que recebe uma lista de e-mails de diferentes fontes, normaliza cada endereço, remove duplicatas, conta quantas entradas foram repetidas e separa os e-mails inválidos.
+
+Exemplo de execução real:
+
+```text
+=== Verificador de e-mails ===
+E-mails de entrada:
+ana@exemplo.com
+Ana@Exemplo.com
+bruno@exemplo.com
+email-invalido
+carlos@exemplo.com
+bruno@exemplo.com
+=== Verificador de e-mails ===
+E-mails válidos únicos:
+1. ana@exemplo.com
+2. bruno@exemplo.com
+3. carlos@exemplo.com
+Duplicatas removidas: 2
+E-mails inválidos:
+- email-invalido
+```
+
+## Requisitos
+1. Receber uma lista de e-mails vindos de múltiplas fontes.
+2. Normalizar cada e-mail com `strip()` e `lower()`.
+3. Remover duplicatas sem perder os endereços válidos.
+4. Separar e-mails inválidos, como aqueles sem `@` ou sem domínio.
+5. Mostrar uma lista final limpa e pronta para campanha.
+
+## Critérios de aceite
+- [ ] O programa remove duplicatas mesmo quando a caixa do texto muda.
+- [ ] E-mails inválidos são separados da lista final válida.
+- [ ] A contagem de duplicatas fica clara para quem está montando a campanha.
+- [ ] A lista final aparece em ordem previsível.
+- [ ] O aluno consegue explicar por que usar `set` ajuda a deduplicar dados reais.
+- [ ] A solução trata entradas vazias sem quebrar.
+
+## Histórias de usuário
+- Como responsável de marketing, quero remover duplicatas para não enviar a mesma campanha duas vezes.
+- Como analista, quero separar e-mails inválidos antes de montar a lista final.
+- Como time de CRM, quero uma visão simples da quantidade de registros limpos e rejeitados.
+- Como gestor, quero uma saída legível para revisar a campanha antes do envio.
+
+## Arquitetura sugerida
+- `normalizar_email(email)` para remover espaços e padronizar caixa.
+- `email_valido(email)` para verificar presença de `@` e domínio simples.
+- `verificar_duplicados(emails)` para retornar lista única, duplicatas e inválidos.
+- `main()` para controlar a leitura e a apresentação dos resultados.
+
+## Casos de teste de aceitação
+- E-mail duplicado em caixa diferente: deve entrar na lista única apenas uma vez.
+- E-mail sem `@`: deve ser separado como inválido.
+- Lista com vários e-mails válidos: a lista final deve manter apenas valores únicos.
+- Duplicatas em sequência: a contagem deve refletir a quantidade removida.
+- E-mail vazio: deve ser ignorado ou tratado como inválido, sem quebrar a execução.
+
+## Riscos
+- Não normalizar os e-mails pode enviar a mesma mensagem para o mesmo cliente mais de uma vez.
+- Não separar inválidos deixa o time com filas sujas e baixa taxa de entrega.
+- Misturar validação com apresentação cria código difícil de manter.
+- Ordenar os e-mails sem padronização impede uma comparação confiável.
+
+## Guia
+### História do cliente
+O cliente quer um rotina rápida para limpar a base antes de uma campanha. Ele não precisa de banco de dados nem de integração complexa; o que importa é ter uma saída consistente, com os e-mails válidos, os duplicados removidos e os itens problemáticos separados.
+
+### Marcos do projeto
+1. Defina uma função para normalizar os e-mails.
+2. Separe os valores válidos dos inválidos.
+3. Use um conjunto para remover duplicatas e calcular o total removido.
+4. Exiba a lista final em ordem legível.
+5. Revise casos de caixa diferente, endereço vazio e e-mail quebrado.
+
+### Dicas
+- Normalizar é a etapa mais importante: `strip`, `lower` e conferência simples do formato evitam erros reais em campanhas.
+- Teste essa lógica com nomes repetidos em diferentes fontes, não apenas com uma lista pequena.
+- Mantém a validação e a apresentação em funções separadas para deixar o código mais fácil de revisar.
+
+<Callout type="importante" title="Regra de negócio">
+Em campanhas, deduplicação não é só “remover repetição”; é garantir que cada endereço apareça uma vez na lista final, sem perder o histórico de quantas entradas repetidas foram eliminadas.
+</Callout>
+
+<Playground title="Ponto de partida" code={`emails = [
+    "ana@exemplo.com",
+    "Ana@Exemplo.com",
+    "bruno@exemplo.com",
+    "email-invalido",
+    "carlos@exemplo.com",
+    "bruno@exemplo.com",
+]
+
+# normalize os e-mails
+# separe válidos e inválidos
+# remova duplicatas com set
+# mostre contagem e lista final
+pass`} />
+
+## Desafio extra
+Crie uma contagem por domínio, como `@gmail.com`, `@outlook.com` e `@empresa.com`, para entender melhor a distribuição dos contatos da campanha. Isso prepara o aluno para trabalhar com agrupamentos e relatórios em dados reais.
+
+## Visão de mercado
+Deduplicação de e-mails é rotina em marketing digital, CRM, automações de vendas, gestão de leads e engenharia de dados. Quando a base da campanha é grande, a diferença entre “lista com duplicatas” e “lista limpinha” afeta custo, qualidade e reputação do envio.
+
+## Autoavaliação
+- [ ] Normalizei e-mails com `strip()` e `lower()` antes de comparar.
+- [ ] Separam os válidos dos inválidos com critérios simples e claros.
+- [ ] Usei `set` para remover duplicatas sem perder a contagem de repetições.
+- [ ] Revisei pelo menos um e-mail quebrado e um duplicado em caixa diferente.
+- [ ] Consegui explicar como essa rotina aparece em campanhas e CRM de verdade.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+
+def normalizar_email(email):
+    return email.strip().lower()
+
+
+def email_valido(email):
+    return "@" in email and email.count("@") == 1 and "." in email.split("@")[-1]
+
+
+emails = [
+    "ana@exemplo.com",
+    "Ana@Exemplo.com",
+    "bruno@exemplo.com",
+    "email-invalido",
+    "carlos@exemplo.com",
+    "bruno@exemplo.com",
+]
+
+normalizados = [normalizar_email(email) for email in emails if email.strip()]
+validos = []
+invalidos = []
+for email in normalizados:
+    if email_valido(email):
+        validos.append(email)
+    else:
+        invalidos.append(email)
+
+lista_unica = sorted(set(validos))
+duplicatas = len(validos) - len(lista_unica)
+
+print("=== Verificador de e-mails ===")
+print("E-mails de entrada:")
+for email in emails:
+    print(email)
+print("=== Verificador de e-mails ===")
+print("E-mails válidos únicos:")
+for indice, email in enumerate(lista_unica, start=1):
+    print(f"{indice}. {email}")
+print(f"Duplicatas removidas: {duplicatas}")
+print("E-mails inválidos:")
+for email in sorted(set(invalidos)):
+    print(f"- {email}")
+```
+
+Saída real com entrada:
+
+```text
+=== Verificador de e-mails ===
+E-mails de entrada:
+ana@exemplo.com
+Ana@Exemplo.com
+bruno@exemplo.com
+email-invalido
+carlos@exemplo.com
+bruno@exemplo.com
+=== Verificador de e-mails ===
+E-mails válidos únicos:
+1. ana@exemplo.com
+2. bruno@exemplo.com
+3. carlos@exemplo.com
+Duplicatas removidas: 2
+E-mails inválidos:
+- email-invalido
+```
+</details>

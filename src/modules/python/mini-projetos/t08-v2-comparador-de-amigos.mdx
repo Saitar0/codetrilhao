@@ -1,0 +1,154 @@
+---
+titulo: "Comparador de amigos"
+descricao: "Compare duas listas de nomes, normalize diferenças de caixa e espaços e sugira conexões entre grupos."
+topico: "tuplas-e-sets"
+topicoNome: "Tuplas e sets"
+variacao: "V2"
+tempo: 30
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "sets", "comparacao", "amigos", "normalizacao", "interseccao"]
+---
+
+# Comparador de amigos
+
+## Contexto
+Uma organização está montando dois grupos para uma atividade social: uma lista de convidados do time A e outra lista do time B. A equipe quer saber quem já se conhece, quem está só em um grupo e quem pode ser apresentado a alguém do outro grupo. Como nomes podem vir em caixa diferente e com espaços extras, o programa precisa normalizar os dados antes de comparar os grupos.
+
+## O que você vai construir
+Um programa que recebe duas listas de nomes, normaliza os valores e mostra:
+- amigos em comum;
+- nomes exclusivos de cada lista;
+- sugestões de apresentação entre grupos.
+
+Exemplo de execução real:
+
+```text
+=== Comparador de amigos ===
+Lista A: Ana, Bruno, Carla, Daniel
+Lista B: bruno, Diego, ana, Érica
+Amigos em comum: ['ana', 'bruno']
+Só em A: ['carla', 'daniel']
+Só em B: ['diego', 'érica']
+Sugestão de apresentação:
+- Carla deve conhecer Diego.
+- Daniel deve conhecer Érica.
+```
+
+## Requisitos
+1. Receber duas listas de nomes por entrada ou dados embutidos.
+2. Normalizar cada nome para comparar sem depender de maiúsculas/minúsculas ou espaços extras.
+3. Mostrar a interseção, a diferença e os valores exclusivos nas duas listas.
+4. Sugerir uma apresentação entre os nomes exclusivos de cada grupo.
+5. Tratar listas vazias e nomes repetidos sem quebrar o programa.
+
+## Critérios de aceite
+- [ ] Os nomes são normalizados com `lower()` e `split()` antes da comparação.
+- [ ] O programa consegue distinguir interseção, diferença e exclusividade.
+- [ ] A sugestão de apresentação é clara e baseada em nomes exclusivos.
+- [ ] Nomes duplicados dentro da mesma lista são ignorados.
+- [ ] O aluno consegue explicar a diferença entre `set` e `list` neste contexto.
+- [ ] O sistema não falha quando uma lista fica vazia.
+
+## Regras de negócio e casos especiais
+- Nomes devem ser comparados sem diferenciar maiúsculas/minúsculas.
+- Espaços extras no começo ou no fim devem ser removidos.
+- Se o mesmo nome aparecer em ambas as listas, ele entra em “em comum”.
+- Se uma lista ficar vazia, o resultado mostra “nenhum nome exclusivo”.
+- A sugestão de apresentação pode usar o primeiro valor exclusivo de cada conjunto para gerar uma recomendação simples.
+
+## Guia
+### Marcos do projeto
+1. Normalizar cada lista com uma função que remove espaços e converte para minúsculas.
+2. Transformar as listas em conjuntos para facilitar interseção e diferença.
+3. Comparar o conjunto de amigos em comum com a regra de exclusividade.
+4. Escolher uma regra simples para gerar sugestões de apresentação.
+5. Revisar casos com nomes repetidos, caixa diferente e lista vazia.
+
+### Dicas
+- Use `set` para comparar grupos porque ele ignora duplicatas e cuida bem de interseção e diferença.
+- Evite comparar strings “como estão na entrada”; normalize antes de qualquer decisão.
+- Se quiser uma sugestão, faça uma lista de nomes exclusivos em cada grupo e combine os primeiros elementos.
+
+<Callout type="importante" title="Regra de negócio">
+No comparador de amigos, a normalização não é um detalhe opcional. Sem ela, `Ana`, ` ana ` e `ANA` seriam tratados como nomes diferentes, o que distorce a lógica real de comparação.
+</Callout>
+
+<Playground title="Ponto de partida" code={`lista_a = ["Ana", " Bruno ", "Carla", "Ana"]
+lista_b = ["bruno", "Diego", "ana", "Érica"]
+
+# normalize os nomes
+# transforme as listas em conjuntos
+# mostre os amigos em comum, os exclusivos e a sugestão
+pass`} />
+
+## Desafio extra
+Adicione uma terceira lista com pessoas que já participaram de uma reunião anterior e mostre quem ainda não foi apresentado a ninguém do grupo B. Essa extensão prepara o aluno para comparar múltiplos subconjuntos em vez de apenas dois grupos.
+
+## Visão de mercado
+Comparação de conjuntos é rotina em CRM, marketing, programas de relacionamento, sistemas de matrícula e listas de participantes em eventos. A mesma lógica aparece em anúncios segmentados, deduplicação de contatos, classificação de usuários por afinidade e identificação de grupos que precisam ser cruzados.
+
+## Autoavaliação
+- [ ] Entendi que `set` resolve comparação entre grupos com menos código.
+- [ ] Normalizei nomes antes de comparar listas.
+- [ ] Testei um caso com repetição e outro com caixa e espaço diferentes.
+- [ ] Consegui explicar a diferença entre interseção e exclusividade.
+- [ ] Revisei a sugestão de apresentação como uma regra simples e compreensível.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+
+def normalizar_nome(nome):
+    return " ".join(nome.strip().lower().split())
+
+
+def gerar_sugestoes(set_a, set_b):
+    sugestoes = []
+    nomes_a = sorted(set_a)
+    nomes_b = sorted(set_b)
+    for nome_a in nomes_a[:2]:
+        for nome_b in nomes_b[:2]:
+            sugestoes.append(f"- {nome_a.title()} deve conhecer {nome_b.title()}.")
+    return sugestoes
+
+
+lista_a = ["Ana", " Bruno ", "Carla", "Ana", "Daniel"]
+lista_b = ["bruno", "Diego", "ana", "Érica"]
+
+norm_a = {normalizar_nome(nome) for nome in lista_a}
+norm_b = {normalizar_nome(nome) for nome in lista_b}
+
+em_comum = sorted(norm_a & norm_b)
+so_a = sorted(norm_a - norm_b)
+so_b = sorted(norm_b - norm_a)
+
+print("=== Comparador de amigos ===")
+print(f"Lista A: {lista_a}")
+print(f"Lista B: {lista_b}")
+print(f"Amigos em comum: {em_comum}")
+print(f"Só em A: {so_a}")
+print(f"Só em B: {so_b}")
+print("Sugestão de apresentação:")
+if so_a and so_b:
+    for linha in gerar_sugestoes(set(so_a), set(so_b)):
+        print(linha)
+else:
+    print("- Nenhuma sugestão de apresentação no momento.")
+```
+
+Saída real com entrada:
+
+```text
+=== Comparador de amigos ===
+Lista A: ['Ana', ' Bruno ', 'Carla', 'Ana', 'Daniel']
+Lista B: ['bruno', 'Diego', 'ana', 'Érica']
+Amigos em comum: ['ana', 'bruno']
+Só em A: ['carla', 'daniel']
+Só em B: ['diego', 'érica']
+Sugestão de apresentação:
+- Carla deve conhecer Diego.
+- Daniel deve conhecer Érica.
+```
+</details>

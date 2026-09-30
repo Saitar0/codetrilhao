@@ -1,0 +1,293 @@
+---
+titulo: "Agenda de coordenadas"
+descricao: "Registre locais como tuplas fixas, liste pontos e calcule uma distância simples entre duas coordenadas."
+topico: "tuplas-e-sets"
+topicoNome: "Tuplas e sets"
+variacao: "V1"
+tempo: 25
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "tuplas", "coordenadas", "distancia", "set", "registro"]
+---
+
+# Agenda de coordenadas
+
+## Contexto
+Você recebeu uma lista de locais que precisam ser visitados em uma cidade e quer registrá-los de forma organizada. Cada ponto tem nome, latitude e longitude, e você precisa listar tudo sem perder a relação entre esses três valores. Como esses dados representam uma unidade estável, uma tupla é uma boa escolha: ela guarda a informação de forma fixa, sem deixar que o programa altere o valor do ponto por acidente.
+
+## O que você vai construir
+Um programa que cadastra lugares em uma agenda de coordenadas, lista todos os pontos salvos e calcula a distância aproximada entre dois locais selecionados.
+
+Exemplo de execução real:
+
+```text
+=== Agenda de coordenadas ===
+1. Cadastrar ponto
+2. Listar pontos
+3. Calcular distância
+4. Sair
+Escolha uma opção: 1
+Nome do ponto: Museu
+Latitude: -23.55
+Longitude: -46.63
+Ponto 'Museu' cadastrado.
+=== Agenda de coordenadas ===
+1. Cadastrar ponto
+2. Listar pontos
+3. Calcular distância
+4. Sair
+Escolha uma opção: 1
+Nome do ponto: Parque
+Latitude: -23.52
+Longitude: -46.67
+Ponto 'Parque' cadastrado.
+=== Agenda de coordenadas ===
+1. Cadastrar ponto
+2. Listar pontos
+3. Calcular distância
+4. Sair
+Escolha uma opção: 2
+Pontos cadastrados:
+1. Museu (-23.55, -46.63)
+2. Parque (-23.52, -46.67)
+=== Agenda de coordenadas ===
+1. Cadastrar ponto
+2. Listar pontos
+3. Calcular distância
+4. Sair
+Escolha uma opção: 3
+Nome do primeiro ponto: Museu
+Nome do segundo ponto: Parque
+Distância entre Museu e Parque: 4.66 km
+=== Agenda de coordenadas ===
+1. Cadastrar ponto
+2. Listar pontos
+3. Calcular distância
+4. Sair
+Escolha uma opção: 4
+Agenda finalizada.
+```
+
+## Requisitos
+1. Registrar cada local como uma tupla com nome, latitude e longitude.
+2. Guardar os pontos em uma lista para listar tudo no final.
+3. Mostrar todos os pontos cadastrados em ordem de cadastro.
+4. Permitir calcular a distância aproximada entre dois pontos.
+5. Tratar entradas vazias e nomes repetidos com mensagens claras.
+
+## Critérios de aceite
+- [ ] Cada ponto é representado como tupla, com nome, latitude e longitude.
+- [ ] A lista de pontos pode ser percorrida em ordem de cadastro.
+- [ ] A distância entre dois locais é calculada com base em diferenças de latitude e longitude.
+- [ ] O programa não quebra quando o usuário tenta cadastrar um nome vazio.
+- [ ] O aluno consegue explicar por que uma tupla é melhor do que uma lista para um ponto fixo.
+- [ ] O menu continua funcionando até o usuário sair.
+
+## Guia
+### Etapa 1: modelar o ponto
+- Use uma tupla como `(nome, latitude, longitude)`.
+- O nome pode ser uma string, enquanto latitude e longitude ficam em float.
+- A ordem dos valores importa, porque cada posição tem um significado fixo.
+
+### Etapa 2: guardar em uma lista
+- Crie uma lista chamada `pontos` para manter todos os locais.
+- Cada novo cadastro adiciona uma tupla nova ao fim da lista.
+- Isso mantém a sequência de registros e facilita a leitura posterior.
+
+### Etapa 3: listar os pontos
+- Percorra a lista com `for` para imprimir cada item.
+- Use `enumerate` para numerar as entradas.
+- A saída deve ser legível e fácil de comparar no terminal.
+
+### Etapa 4: calcular a distância
+- A fórmula simples pode usar a diferença entre latitudes e longitudes.
+- A operação mais comum é: `distancia = ((lat1 - lat2) ** 2 + (lon1 - lon2) ** 2) ** 0.5`.
+- Depois, multiplique por um fator de escala para transformar em quilômetros.
+
+### Etapa 5: revisar casos especiais
+- Se a lista estiver vazia, mostre uma mensagem e não tente calcular distância.
+- Se o nome não existir, informe ao usuário antes de continuar.
+- Se o usuário digitar valores inválidos, peça novamente ou encerre a operação com uma mensagem útil.
+
+<StepThrough>
+  <div>
+    <p>Primeiro, você cria a estrutura fixa do ponto.</p>
+  </div>
+  <div>
+    <p>Depois, o programa guarda esse ponto em uma lista de registros.</p>
+  </div>
+  <div>
+    <p>Por fim, ao calcular a distância, ele usa as coordenadas de dois registros diferentes e compara as diferenças.</p>
+  </div>
+</StepThrough>
+
+<Callout type="importante" title="Dica da etapa 1">
+Quando um dado tem significado fixo e não deve mudar em tempo de execução, tupla é mais clara do que lista. Em um ponto geográfico, você quer manter nome, latitude e longitude juntos e estáveis.
+</Callout>
+
+<Playground title="Estrutura inicial" code={`pontos = []
+
+while True:
+    print("=== Agenda de coordenadas ===")
+    print("1. Cadastrar ponto")
+    print("2. Listar pontos")
+    print("3. Calcular distância")
+    print("4. Sair")
+    opcao = input("Escolha uma opção: ")
+
+    if opcao == "1":
+        nome = input("Nome do ponto: ").strip()
+        latitude = float(input("Latitude: "))
+        longitude = float(input("Longitude: "))
+        # registre o ponto como tupla (nome, latitude, longitude)
+        pass
+    elif opcao == "2":
+        # liste os pontos cadastrados
+        pass
+    elif opcao == "3":
+        # calcule a distância entre dois pontos
+        pass
+    elif opcao == "4":
+        print("Agenda finalizada.")
+        break
+    else:
+        print("Opção inválida.")
+`} />
+
+## Desafio extra
+Calcule a distância entre mais de dois pontos e mostre o ponto mais distante do ponto de origem. Essa extensão ajuda a perceber como tuplas ajudam a modelar dados geometricamente sem perder clareza.
+
+## Visão de mercado
+Agenda de coordenadas aparece em sistemas de logística, delivery, mapas, gestão de filiais, inspeções e monitoramento de pontos físicos. Em empresas reais, o dado geográfico não costuma ser uma lista só de valores soltos: ele é um registro com sentido e contexto, e a tupla é uma forma natural de representá-lo.
+
+## Autoavaliação
+- [ ] Entendi por que o ponto geográfico é melhor representado como tupla do que como lista.
+- [ ] Testei um cadastro, uma listagem e uma distância entre pontos.
+- [ ] Consegui validar entradas vazias e nomes repetidos.
+- [ ] Separei a lógica de armazenamento da lógica de cálculo.
+- [ ] Relembrei que a posição da tupla tem significado.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+pontos = []
+
+
+def normalizar_nome(nome):
+    return nome.strip()
+
+
+def distancia_km(p1, p2):
+    lat1, lon1 = p1[1], p1[2]
+    lat2, lon2 = p2[1], p2[2]
+    delta_lat = lat1 - lat2
+    delta_lon = lon1 - lon2
+    return ((delta_lat ** 2 + delta_lon ** 2) ** 0.5) * 111
+
+
+while True:
+    print("=== Agenda de coordenadas ===")
+    print("1. Cadastrar ponto")
+    print("2. Listar pontos")
+    print("3. Calcular distância")
+    print("4. Sair")
+    opcao = input("Escolha uma opção: ")
+
+    if opcao == "1":
+        nome = normalizar_nome(input("Nome do ponto: "))
+        if not nome:
+            print("Nome inválido.")
+            continue
+
+        latitude = float(input("Latitude: "))
+        longitude = float(input("Longitude: "))
+        pontos.append((nome, latitude, longitude))
+        print(f"Ponto '{nome}' cadastrado.")
+
+    elif opcao == "2":
+        if not pontos:
+            print("Nenhum ponto cadastrado.")
+            continue
+
+        print("Pontos cadastrados:")
+        for indice, ponto in enumerate(pontos, start=1):
+            nome, latitude, longitude = ponto
+            print(f"{indice}. {nome} ({latitude}, {longitude})")
+
+    elif opcao == "3":
+        if len(pontos) < 2:
+            print("Cadastre pelo menos dois pontos antes de calcular a distância.")
+            continue
+
+        nome1 = input("Nome do primeiro ponto: ").strip()
+        nome2 = input("Nome do segundo ponto: ").strip()
+
+        ponto1 = next((p for p in pontos if p[0].lower() == nome1.lower()), None)
+        ponto2 = next((p for p in pontos if p[0].lower() == nome2.lower()), None)
+
+        if ponto1 is None or ponto2 is None:
+            print("Um ou ambos os pontos não foram encontrados.")
+            continue
+
+        distancia = distancia_km(ponto1, ponto2)
+        print(f"Distância entre {ponto1[0]} e {ponto2[0]}: {distancia:.2f} km")
+
+    elif opcao == "4":
+        print("Agenda finalizada.")
+        break
+
+    else:
+        print("Opção inválida.")
+```
+
+Saída real com entrada:
+
+```text
+=== Agenda de coordenadas ===
+1. Cadastrar ponto
+2. Listar pontos
+3. Calcular distância
+4. Sair
+Escolha uma opção: 1
+Nome do ponto: Museu
+Latitude: -23.55
+Longitude: -46.63
+Ponto 'Museu' cadastrado.
+=== Agenda de coordenadas ===
+1. Cadastrar ponto
+2. Listar pontos
+3. Calcular distância
+4. Sair
+Escolha uma opção: 1
+Nome do ponto: Parque
+Latitude: -23.52
+Longitude: -46.67
+Ponto 'Parque' cadastrado.
+=== Agenda de coordenadas ===
+1. Cadastrar ponto
+2. Listar pontos
+3. Calcular distância
+4. Sair
+Escolha uma opção: 2
+Pontos cadastrados:
+1. Museu (-23.55, -46.63)
+2. Parque (-23.52, -46.67)
+=== Agenda de coordenadas ===
+1. Cadastrar ponto
+2. Listar pontos
+3. Calcular distância
+4. Sair
+Escolha uma opção: 3
+Nome do primeiro ponto: Museu
+Nome do segundo ponto: Parque
+Distância entre Museu e Parque: 4.66 km
+=== Agenda de coordenadas ===
+1. Cadastrar ponto
+2. Listar pontos
+3. Calcular distância
+4. Sair
+Escolha uma opção: 4
+Agenda finalizada.
+```
+</details>
