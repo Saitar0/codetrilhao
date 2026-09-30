@@ -1,0 +1,283 @@
+---
+titulo: "Algoritmos: busca e ordenação"
+descricao: "Entenda como encontrar dados e organizar listas com estratégias simples e eficientes."
+secao: "E. Pensamento de engenharia"
+ordem: 1
+topico: 15
+fase: "E"
+tempo: 25
+nivel: "intermediario"
+palavrasChave: ['busca', 'ordenação', 'algoritmos', 'complexidade']
+exercicios: []
+---
+
+# Algoritmos: busca e ordenação
+
+Você já precisou localizar um tên do cadastro, organizar uma lista de preços ou decidir quem entra primeiro em uma fila? Problemas dessa natureza aparecem em sistemas simples e complexos. A boa notícia é que a solução começa sempre com a mesma ideia: descrever a entrada, o processamento e a saída antes de codar.
+
+<Callout type="importante" title="O que você vai aprender">
+  - Como decompor um problema em entrada, processamento e saída.
+  - Como implementar busca linear e busca binária.
+  - Como ordenar listas com algoritmos didáticos e com `sorted`.
+  - Como pensar em custo de execução usando noções de $O(1)$, $O(log n)$ e $O(n^2)$.
+</Callout>
+
+## Decompondo o problema
+
+Antes de escrever código, vale transformar o problema em passos claros. Em vez de pensar só em “como fazer?”, você pergunta: qual é a entrada? o que deve mudar? qual é a resposta final? Esse tipo de descrição ajuda muito na hora de depurar.
+
+Em pseudocódigo, a lógica de uma busca costuma ser:
+
+```text
+entrada: lista e alvo
+para cada elemento:
+    comparar com o alvo
+    se encontrar -> retornar a posição
+fim
+se não encontrar -> retornar -1
+```
+
+A ordem da lista também importa. A busca binária só faz sentido em uma lista já organizada.
+
+<CodeBlock title="processar_pedido.py" code={`def processar_pedido(precos):
+    precos_ordenados = sorted(precos)
+    return precos_ordenados[0]
+
+print(processar_pedido([45, 10, 28, 19]))
+`} />
+
+Saída:
+
+```text
+10
+```
+
+Essa função pega a entrada, ordena os valores e devolve o menor. É um exemplo simples de como organizar dados antes de tomar uma decisão.
+
+<Glossario termo="Pré-condição" definition="Requisito que precisa ser verdadeiro antes de usar um algoritmo; por exemplo, lista ordenada para busca binária." />
+<Glossario termo="Busca linear" definition="Percorrer a lista item por item até encontrar o alvo ou chegar ao fim." />
+<Glossario termo="Custo de algoritmo" definition="Medida de como o tempo e o espaço crescem conforme a entrada aumenta." />
+
+## Busca linear
+
+A busca linear é a estratégia mais direta. Você percorre a lista do início ao fim e compara cada valor com o alvo. Se encontrar, retorna a posição; se não aparecer, devolve `-1`.
+
+Ela funciona com qualquer lista, ordenada ou não, e por isso é fácil de entender. O custo cresce proporcionalmente ao tamanho da lista: no pior caso, você compara até $n$ elementos.
+
+<CodeBlock title="busca_linear.py" code={`def busca_linear(lista, alvo):
+    for indice, valor in enumerate(lista):
+        if valor == alvo:
+            return indice
+    return -1
+
+print(busca_linear([9, 5, 3, 8, 12], 8))
+print(busca_linear([9, 5, 3, 8, 12], 7))
+`} />
+
+Saída:
+
+```text
+3
+-1
+```
+
+Quando você precisa de algo rápido e a lista é pequena, busca linear é uma escolha simples e previsível.
+
+## Busca binária
+
+A busca binária reduz o espaço de busca a cada passo. Ela só funciona quando a lista está ordenada. O algoritmo calcula o meio, compara com o alvo e descarta a metade que não pode conter a resposta.
+
+Esse tipo de estratégia tem custo $O(log n)$, porque a busca reduz pela metade a cada iteração. Em listas grandes, isso muda bastante o desempenho.
+
+<CodeBlock title="busca_binaria.py" code={`def busca_binaria(lista, alvo):
+    inicio, fim = 0, len(lista) - 1
+    while inicio <= fim:
+        meio = (inicio + fim) // 2
+        if lista[meio] == alvo:
+            return meio
+        if lista[meio] < alvo:
+            inicio = meio + 1
+        else:
+            fim = meio - 1
+    return -1
+
+numeros = [2, 4, 6, 8, 10, 12, 14]
+print(busca_binaria(numeros, 10))
+print(busca_binaria(numeros, 11))
+`} />
+
+Saída:
+
+```text
+4
+-1
+```
+
+<Playground title="Experimente: compare busca linear e binária" code={`def busca_linear(lista, alvo):
+    for indice, valor in enumerate(lista):
+        if valor == alvo:
+            return indice
+    return -1
+
+def busca_binaria(lista, alvo):
+    inicio, fim = 0, len(lista) - 1
+    while inicio <= fim:
+        meio = (inicio + fim) // 2
+        if lista[meio] == alvo:
+            return meio
+        if lista[meio] < alvo:
+            inicio = meio + 1
+        else:
+            fim = meio - 1
+    return -1
+
+lista = list(range(1, 101, 2))
+print(busca_linear(lista, 59))
+print(busca_binaria(lista, 59))
+`} />
+
+<Callout type="erro-comum" title="Busca binária em lista desordenada">
+  ```python
+  def busca_binaria_errada(lista, alvo):
+      inicio, fim = 0, len(lista) - 1
+      while inicio <= fim:
+          meio = (inicio + fim) // 2
+          if lista[meio] == alvo:
+              return meio
+          if lista[meio] < alvo:
+              inicio = meio + 1
+          else:
+              fim = meio - 1
+      return -1
+
+  numeros = [8, 2, 6, 4, 10]
+  print(busca_binaria_errada(numeros, 6))
+  ```
+
+  Saída real:
+
+  ```text
+  -1
+  ```
+
+  A lógica depende da lista estar ordenada. Sem essa condição, a metade do problema que você descarta pode estar errada.
+</Callout>
+
+<Callout type="erro-comum" title="Erro de atualização dos limites">
+  ```python
+  def busca_binaria_infinita(lista, alvo):
+      inicio, fim = 0, len(lista) - 1
+      while inicio <= fim:
+          meio = (inicio + fim) // 2
+          if lista[meio] == alvo:
+              return meio
+          if lista[meio] < alvo:
+              inicio = meio
+          else:
+              fim = meio
+      return -1
+
+  print(busca_binaria_infinita([2, 4, 6, 8, 10], 8))
+  ```
+
+  Esse código pode entrar em loop infinito porque `inicio` e `fim` não avançam. A correção é usar `inicio = meio + 1` ou `fim = meio - 1`.
+</Callout>
+
+## Ordenação didática
+
+Ordenar dados é outro problema clássico. O bubble sort compara elementos vizinhos e troca a ordem quando necessário. Ele é fácil de entender, mas cresce em $O(n^2)$ e fica lento em listas grandes.
+
+<CodeBlock title="bubble_sort.py" code={`def bubble_sort(lista):
+    n = len(lista)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if lista[j] > lista[j + 1]:
+                lista[j], lista[j + 1] = lista[j + 1], lista[j]
+    return lista
+
+print(bubble_sort([5, 1, 4, 2, 8]))
+`} />
+
+Saída:
+
+```text
+[1, 2, 4, 5, 8]
+```
+
+<StepThrough>
+  <div>
+    <p><strong>Etapa 1:</strong> a lista começa em [5, 1, 4, 2]. O maior valor vai “subindo” passo a passo.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 2:</strong> o algoritmo compara pares vizinhos e troca quando a ordem está errada.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 3:</strong> depois de várias passadas, a lista fica ordenada: [1, 2, 4, 5].</p>
+  </div>
+</StepThrough>
+
+No dia a dia, você geralmente usa `sorted` ou `list.sort()`. Esses métodos já resolvem a maioria dos casos de forma eficiente.
+
+<CodeBlock title="sorted_simples.py" code={`notas = [7, 3, 9, 1, 6]
+print(sorted(notas))
+print(sorted(notas, reverse=True))
+`} />
+
+Saída:
+
+```text
+[1, 3, 6, 7, 9]
+[9, 7, 6, 3, 1]
+```
+
+<Glossario termo="Timsort" definition="Algoritmo de ordenação usado pelo Python para lidar bem com dados reais e parcialmente ordenados." />
+<Glossario termo="FIFO" definition="First In, First Out: a primeira informação a entrar é a primeira a sair, como em uma fila." />
+
+## Pilhas e filas
+
+Pilha e fila são estruturas úteis em vários problemas. Em uma pilha, o último elemento a entrar sai primeiro. Em uma fila, o primeiro a entrar sai primeiro.
+
+<CodeBlock title="pilha_e_fila.py" code={`pilha = [10, 20]
+pilha.append(30)
+print(pilha.pop())
+
+from collections import deque
+fila = deque(['Ana', 'Bia'])
+fila.append('Caio')
+print(fila.popleft())
+`} />
+
+Saída:
+
+```text
+30
+Ana
+```
+
+Essas estruturas são úteis em filas de atendimento, processamento de eventos e até em problemas mais complexos de análise.
+
+<Tabela data={[
+  ['Estratégia', 'Ideia', 'Custo típico', 'Quando usar'],
+  ['Busca linear', 'percorre item por item', 'O(n)', 'lista pequena ou sem ordem'],
+  ['Busca binária', 'divide a faixa pela metade', 'O(log n)', 'lista ordenada'],
+  ['Bubble sort', 'troca vizinhos repetidamente', 'O(n²)', 'listas pequenas e didáticas'],
+  ['sorted', 'ordenação nativa do Python', 'O(n log n) em geral', 'caso real de produção'],
+]} />
+
+## No mercado de trabalho
+
+Em tecnologia, busca e ordenação aparecem em bancos, e-commerces, sistemas de atendimento e relatórios. O importante não é memorizar nomes isolados, mas saber escolher a estratégia certa. A busca linear é simples e robusta; a busca binária é mais eficiente quando a estrutura já está pronta; a ordenação ajuda a preparar dados para análise e decisão.
+
+<Quiz questions={[{ question: "Qual é a principal diferença entre busca linear e busca binária?", options: ["Busca linear ignora comparação; busca binária nunca compara.", "Busca linear percorre a lista em sequência; busca binária exige lista ordenada e reduz a busca pela metade.", "Busca binária funciona em qualquer lista e busca linear exige ordenação.", "Busca linear sempre é mais rápida."], correctIndex: 1, explanation: "Busca linear percorre itens um a um. A busca binária reduz a faixa de busca e depende da lista estar ordenada." }, { question: "Qual estrutura representa melhor uma fila de atendimento?", options: ["set", "deque", "dict", "tuple"], correctIndex: 1, explanation: "A classe deque atende à lógica FIFO, primeiro a entrar, primeiro a sair." }, { question: "Qual é o custo típico da busca binária?", options: ["O(1)", "O(log n)", "O(n)", "O(n²)"], correctIndex: 1, explanation: "A busca binária descarta metade da lista em cada passo, então o custo cresce logaritmicamente." }, { question: "Qual algoritmo é mais didático para aprender ordenação?", options: ["Bubble sort", "Busca linear", "Fatorial recursivo", "deque"], correctIndex: 0, explanation: "Bubble sort mostra a ideia de trocar elementos vizinhos até a lista ficar ordenada." }]} />
+
+<Resumo>
+  <li>Você aprendeu a decompor problemas em entrada, processamento e saída.</li>
+  <li>Busca linear é simples e funciona em qualquer lista; busca binária exige lista ordenada.</li>
+  <li>Bubble sort ajuda a entender ordenação, mas `sorted` costuma ser a melhor escolha do dia a dia.</li>
+  <li>Pilhas e filas organizam dados em padrões úteis, como LIFO e FIFO.</li>
+  <li>Entender custo de algoritmo ajuda a escolher uma solução que escala.</li>
+</Resumo>
+
+<Desafio>
+  Crie uma função que procura um nome em uma lista e outra que ordena uma lista de números. Compare o número de passos de cada uma e escreva em uma frase quando cada abordagem faz sentido.
+</Desafio>
