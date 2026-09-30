@@ -1,0 +1,224 @@
+---
+titulo: "Cadastro de pets"
+descricao: "Organize uma agenda simples de pets com cadastro, busca, remoção e persistência em JSON em memória."
+topico: "orientacao-a-objetos"
+topicoNome: "Orientação a Objetos"
+variacao: "V1"
+tempo: 30
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "classes", "objetos", "pets", "json", "lista"]
+---
+
+# Cadastro de pets
+
+## Contexto
+Você trabalha em uma clínica veterinária pequena. A recepcionista precisa cadastrar pets, verificar se já existe um registro, remover animais que saíram do atendimento e guardar a lista em memória para não perder dados ao fechar o programa. O desafio é modelar cada pet em uma classe e manter a agenda organizada.
+
+## O que você vai construir
+Um programa que representa pets com nome, espécie e idade e permite adicionar, listar, buscar e remover animais. O objetivo não é só guardar dados em listas: é organizar a lógica em uma classe e tornar o código mais legível e fácil de evoluir.
+
+Exemplo de execução real:
+
+```text
+Cadastro de pets
+1. Bella | cachorro | 4 anos
+2. Mingau | gato | 2 anos
+3. Luna | cachorro | 5 anos
+Busca por 'Bella': Bella | cachorro | 4 anos
+Remoção de 'Mingau': pet removido
+Lista final:
+- Bella | cachorro | 4 anos
+- Luna | cachorro | 5 anos
+```
+
+## Requisitos
+1. Criar uma classe `Pet` com nome, espécie e idade.
+2. Guardar vários pets em uma estrutura de dados da agenda.
+3. Adicionar, buscar e remover pets por nome.
+4. Exibir a lista em ordem legível para o usuário.
+5. Serializar a agenda em JSON em memória para demonstrar como guardar dados sem depender de arquivos reais.
+
+## Critérios de aceite
+- [ ] A classe `Pet` representa corretamente os dados do animal.
+- [ ] A agenda aceita mais de um pet ao mesmo tempo.
+- [ ] A busca por nome encontra o pet correto.
+- [ ] A remoção funciona e não deixa dados duplicados.
+- [ ] A saída do programa é legível no terminal.
+- [ ] O código separa dados e regras de negócio em métodos claros.
+
+## Guia
+### Etapa 1: defina a estrutura do pet
+Comece criando uma classe `Pet` com `__init__` para receber `nome`, `especie` e `idade`. Faça também uma representação em texto com `__str__` para imprimir o pet sem repetir código.
+
+### Etapa 2: organize a agenda
+Crie uma classe `AgendaPets` ou uma lista simples dentro do programa. O mais importante aqui é manter a responsabilidade certa: a agenda cuida dos pets, e a classe `Pet` cuida dos dados do animal.
+
+### Etapa 3: adicione e busque registros
+Você vai precisar de um método para adicionar um pet e outro para buscar pelo nome. Use a comparação em minúsculas para evitar erros por capitalização.
+
+### Etapa 4: remova e liste
+Quando remover um pet, vale testar se ele existe antes de tentar apagar. Depois, liste os pets em ordem de cadastro ou em ordem alfabética, como preferir.
+
+### Etapa 5: salve em JSON em memória
+Uma ideia boa é usar `json.dumps` para transformar a lista em string e `json.loads` para recuperar os dados. Isso mostra, no navegador, como a serialização trabalha sem depender de um arquivo real no disco.
+
+### Dicas
+- Valide `idade` para que ela não seja negativa.
+- Nome e espécie devem ser normalizados com `strip()` e uma padronização simples.
+- Preserve a regra de não duplicar pets com o mesmo nome.
+- Use `return` em métodos que precisam dizer se a operação deu certo.
+- Mantenha a lógica de impressão em métodos próprios para evitar repetição.
+
+<Playground title="Estrutura inicial" code={`import json
+
+pets_em_memoria = [
+    {"nome": "Bella", "especie": "cachorro", "idade": 4},
+    {"nome": "Mingau", "especie": "gato", "idade": 2},
+    {"nome": "Luna", "especie": "cachorro", "idade": 5},
+]
+
+class Pet:
+    def __init__(self, nome, especie, idade):
+        self.nome = nome
+        self.especie = especie
+        self.idade = idade
+
+    def __str__(self):
+        return f"{self.nome} | {self.especie} | {self.idade} anos"
+
+class AgendaPets:
+    def __init__(self, pets=None):
+        self.pets = []
+        # carregue os pets iniciais
+        # adicione os métodos: adicionar, buscar, remover e listar
+
+    def salvar_json(self):
+        return json.dumps([{"nome": p.nome, "especie": p.especie, "idade": p.idade} for p in self.pets])
+
+agenda = AgendaPets(pets_em_memoria)
+print("Cadastro de pets")
+# liste os pets, busque um nome, remova outro e imprima a lista final
+`} />
+
+## Desafio extra
+Adicione um campo `status` para cada pet, como `"ativo"` ou `"inativo"`, e faça a busca ignorar letras maiúsculas/minúsculas. Depois, mostre como a agenda pode exportar uma lista em JSON pronta para outra tela ou API.
+
+## Visão de mercado
+Modelagem de domínio é o que se cobra em qualquer vaga de backend. Em sistemas reais, pets, clientes, produtos e pedidos são modelados como objetos com regras de negócio. Quando a modelagem está clara, o código fica mais fácil de evoluir, testar e manter.
+
+## Autoavaliação
+- [ ] Defini uma classe para os dados do pet.
+- [ ] Implementei busca e remoção por nome.
+- [ ] Validei idade e nomes vazios.
+- [ ] Entendo como a serialização em JSON funciona em memória.
+- [ ] Consigo explicar por que separar a classe `Pet` da agenda deixa o código mais organizado.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+import json
+
+pet_inicial = [
+    {"nome": "Bella", "especie": "cachorro", "idade": 4},
+    {"nome": "Mingau", "especie": "gato", "idade": 2},
+    {"nome": "Luna", "especie": "cachorro", "idade": 5},
+]
+
+
+class Pet:
+    def __init__(self, nome, especie, idade):
+        if not nome or not nome.strip():
+            raise ValueError("Nome do pet não pode ficar vazio.")
+        if idade < 0:
+            raise ValueError("Idade não pode ser negativa.")
+
+        self.nome = nome.strip().title()
+        self.especie = especie.strip().lower()
+        self.idade = idade
+
+    def __str__(self):
+        return f"{self.nome} | {self.especie} | {self.idade} anos"
+
+
+class AgendaPets:
+    def __init__(self, pets=None):
+        self.pets = []
+        for pet in pets or []:
+            self.adicionar(Pet(pet["nome"], pet["especie"], pet["idade"]))
+
+    def adicionar(self, pet):
+        if any(p.nome.lower() == pet.nome.lower() for p in self.pets):
+            raise ValueError(f"Pet já cadastrado: {pet.nome}")
+        self.pets.append(pet)
+
+    def buscar(self, nome):
+        for pet in self.pets:
+            if pet.nome.lower() == nome.lower():
+                return pet
+        return None
+
+    def remover(self, nome):
+        pet = self.buscar(nome)
+        if pet is None:
+            return False
+        self.pets.remove(pet)
+        return True
+
+    def listar(self):
+        return [str(pet) for pet in self.pets]
+
+    def salvar_json(self):
+        return json.dumps(
+            [{"nome": pet.nome, "especie": pet.especie, "idade": pet.idade} for pet in self.pets],
+            ensure_ascii=False,
+            indent=2,
+        )
+
+
+agenda = AgendaPets(pet_inicial)
+print("Cadastro de pets")
+for indice, pet in enumerate(agenda.pets, start=1):
+    print(f"{indice}. {pet}")
+
+pet_encontrado = agenda.buscar("Bella")
+print(f"Busca por 'Bella': {pet_encontrado}")
+removido = agenda.remover("Mingau")
+print(f"Remoção de 'Mingau': {'pet removido' if removido else 'pet não encontrado'}")
+print("Lista final:")
+for pet in agenda.pets:
+    print(f"- {pet}")
+
+json_em_memoria = agenda.salvar_json()
+print("JSON em memória:")
+print(json_em_memoria)
+```
+
+Saída real com execução:
+
+```text
+Cadastro de pets
+1. Bella | cachorro | 4 anos
+2. Mingau | gato | 2 anos
+3. Luna | cachorro | 5 anos
+Busca por 'Bella': Bella | cachorro | 4 anos
+Remoção de 'Mingau': pet removido
+Lista final:
+- Bella | cachorro | 4 anos
+- Luna | cachorro | 5 anos
+JSON em memória:
+[
+  {
+    "nome": "Bella",
+    "especie": "cachorro",
+    "idade": 4
+  },
+  {
+    "nome": "Luna",
+    "especie": "cachorro",
+    "idade": 5
+  }
+]
+```
+</details>

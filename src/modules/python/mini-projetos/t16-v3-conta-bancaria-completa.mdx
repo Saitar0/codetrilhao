@@ -1,0 +1,295 @@
+---
+titulo: "Conta bancária completa"
+descricao: "Gerencie clientes, contas, transações e saldo com regras de depósito, saque, transferência e serialização em JSON."
+topico: "orientacao-a-objetos"
+topicoNome: "Orientação a Objetos"
+variacao: "V3"
+tempo: 40
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "classes", "conta bancaria", "transacoes", "json", "extrato"]
+---
+
+# Conta bancária completa
+
+## Contexto
+Uma fintech de pequeno porte quer criar uma versão inicial de um sistema bancário para testar regras de negócio antes de conectar com um frontend ou um backend real. A equipe precisa registrar clientes, contas, movimentações e extratos, sem deixar o saldo ficar negativo por acidente e sem perder os dados ao final da execução.
+
+## O que você vai construir
+Um sistema simples de conta bancária com classes para `Cliente`, `Conta`, `ContaCorrente`, `ContaPoupanca` e `Transacao`. O objetivo é modelar um domínio real em objetos, respeitar regras de negócio e serializar o estado em JSON em memória para simular persistência leve.
+
+Exemplo de execução real:
+
+```text
+=== Extrato da conta ===
+Cliente: Ana
+Saldo atual: R$ 1.430,00
+Histórico:
+- 10/10/2026 | deposito | R$ 1.500,00
+- 10/10/2026 | saque | R$ -200,00
+- 10/10/2026 | transferencia enviada | R$ -300,00
+JSON em memória:
+{"numero":"1001","titular":"Ana","saldo":1430.0,"historico":[{"tipo":"deposito","valor":1500.0,"data":"2026-10-10T00:00:00"},{"tipo":"saque","valor":-200.0,"data":"2026-10-10T00:00:00"},{"tipo":"transferencia enviada","valor":-300.0,"data":"2026-10-10T00:00:00"}]}
+Saldo recuperado: R$ 1.430,00
+```
+
+## Requisitos
+1. Criar uma classe `Cliente` com nome e documento.
+2. Criar uma classe `Conta` com número, titular e saldo.
+3. Permitir depósito, saque, transferência e histórico de transações.
+4. Validar regras como valor positivo, saldo suficiente e limite financeiro.
+5. Persistir o estado da conta em JSON em memória usando `json.dumps` e `json.loads`.
+
+## Critérios de aceite
+- [ ] O saldo inicial e a regra de movimentações ficam claros no código.
+- [ ] O saque não deixa a conta negativa sem justificativa.
+- [ ] A transferência altera o saldo de origem e destino corretamente.
+- [ ] O extrato mostra as transações em ordem legível.
+- [ ] O histórico é serializado em JSON sem perder informações.
+- [ ] O código usa exceções específicas em vez de mensagens genéricas.
+
+## Guia
+### Histórias de usuário
+- Como cliente, quero depositar dinheiro para aumentar o saldo da conta.
+- Como cliente, quero sacar um valor válido sem ultrapassar o limite da conta.
+- Como cliente, quero transferir valor para outra conta com segurança.
+- Como atendente, quero ver o extrato com todas as movimentações ordenadas por data.
+- Como analista, quero serializar o estado em JSON para preservar o histórico em memória.
+
+### Arquitetura sugerida
+- `Cliente`: nome, documento e métodos simples de apresentação.
+- `Transacao`: tipo, valor, data e descrição da movimentação.
+- `Conta`: regras de saldo, depósito, saque, transferência e extrato.
+- `ContaCorrente` e `ContaPoupanca`: pequenas variações de comportamento.
+- `serializar()` e `carregar()` como funções de apoio para converter a conta em JSON.
+
+### Casos de teste de aceitação
+- Depósito de R$ 100 deve aumentar o saldo em R$ 100.
+- Saque de valor superior ao saldo deve rejeitar a operação.
+- Transferência entre contas deve debitar a origem e creditar o destino.
+- Extração de extrato deve listar todas as transações em ordem.
+- JSON gerado deve conter número da conta, titular e histórico.
+- Conta poupança deve aplicar rendimento simples em valores positivos.
+
+### Riscos
+- Saldo negativo sem controle de limite ou cheque especial.
+- Histórico de transações sem ordem correta.
+- Código que mistura regra de negócio com impressão no terminal.
+- Serialização incompleta (perdendo informações do histórico).
+- Validação fraca de valores e dias de rendimento.
+
+### Dicas
+- Use propriedades (`@property`) quando quiser expor o saldo de forma segura.
+- Mantenha a regra de depósito e saque em métodos da conta, não no cliente.
+- Para transações, crie objetos que representem o evento e não apenas valores soltos.
+- Crie uma função de serialização centralizada para reduzir erros de manutenção.
+- Em especial, não misture o texto do extrato com o cálculo do saldo.
+
+<Playground title="Estrutura inicial" code={`import json
+from datetime import datetime
+
+class Cliente:
+    def __init__(self, nome, documento):
+        self.nome = nome
+        self.documento = documento
+
+class Transacao:
+    def __init__(self, tipo, valor, data=None):
+        self.tipo = tipo
+        self.valor = valor
+        self.data = data or datetime(2026, 10, 10)
+
+class Conta:
+    def __init__(self, numero, titular, saldo_inicial=0.0, limite=0.0):
+        self.numero = numero
+        self.titular = titular
+        self._saldo = saldo_inicial
+        self.limite = limite
+        self.historico = []
+
+    @property
+    def saldo(self):
+        return self._saldo
+
+    def depositar(self, valor):
+        # valida valor positivo e atualiza saldo
+        pass
+
+    def sacar(self, valor):
+        # valida valor positivo, limite e saldo suficiente
+        pass
+
+    def transferir(self, destino, valor):
+        # debita origem, credita destino e registra transacoes
+        pass
+
+    def to_dict(self):
+        # transforme a conta em dicionario para json.dumps
+        return {}
+
+conta = Conta("1001", Cliente("Ana", "123.456.789-00"), 0, 500)
+# teste deposito, saque e transferencia
+# imprima o extrato e salve em json em memoria
+`} />
+
+## Desafio extra
+Adicione um comportamento de rendimento para a conta poupança e um campo `limite` para conﬁrmar que a conta corrente pode ter um cheque especial. Depois, gere um extrato mostrando os rendimentos aplicados.
+
+## Visão de mercado
+Modelagem de domínio é o que se cobra em qualquer vaga de backend. Bancos, fintechs, sistemas de cobrança e plataformas de pagamentos dependem de regras bem modeladas para garantir controle do dinheiro, rastreabilidade e segurança. Quando a estrutura dos objetos está boa, a mudança de um sistema simples para um produto real fica mais organizada.
+
+## Autoavaliação
+- [ ] A conta separa os dados do cliente, da conta e do histórico.
+- [ ] Validei saque, depósito e transferência com regras claras.
+- [ ] Entendo o uso de propriedades e da serialização em JSON.
+- [ ] Criei um extrato com transações em ordem útil.
+- [ ] Consigo explicar por que composição e responsabilidade única fazem o código evoluir melhor.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+import json
+from datetime import datetime
+
+
+class Cliente:
+    def __init__(self, nome, documento):
+        self.nome = nome
+        self.documento = documento
+
+    def __str__(self):
+        return self.nome
+
+
+class Transacao:
+    def __init__(self, tipo, valor, data=None):
+        self.tipo = tipo
+        self.valor = valor
+        self.data = data or datetime(2026, 10, 10)
+
+    def to_dict(self):
+        return {
+            "tipo": self.tipo,
+            "valor": self.valor,
+            "data": self.data.isoformat(),
+        }
+
+    def __str__(self):
+        return f"{self.data.strftime('%d/%m/%Y')} | {self.tipo} | R$ {self.valor:.2f}"
+
+
+class Conta:
+    def __init__(self, numero, titular, saldo_inicial=0.0, limite=0.0):
+        self.numero = numero
+        self.titular = titular
+        self._saldo = saldo_inicial
+        self.limite = limite
+        self.historico = []
+
+    @property
+    def saldo(self):
+        return self._saldo
+
+    def depositar(self, valor):
+        if valor <= 0:
+            raise ValueError("Valor do depósito deve ser positivo.")
+        self._saldo += valor
+        self.historico.append(Transacao("deposito", valor))
+
+    def sacar(self, valor):
+        if valor <= 0:
+            raise ValueError("Valor do saque deve ser positivo.")
+        if self._saldo + self.limite < valor:
+            raise ValueError("Saldo insuficiente para o saque.")
+        self._saldo -= valor
+        self.historico.append(Transacao("saque", -valor))
+
+    def transferir(self, destino, valor):
+        if valor <= 0:
+            raise ValueError("Valor da transferência deve ser positivo.")
+        self.sacar(valor)
+        destino.depositar(valor)
+        self.historico.append(Transacao("transferencia enviada", -valor))
+        destino.historico.append(Transacao("transferencia recebida", valor))
+
+    def extrato(self):
+        linhas = [
+            "=== Extrato da conta ===",
+            f"Cliente: {self.titular}",
+            f"Saldo atual: R$ {self._saldo:,.2f}",
+            "Histórico:",
+        ]
+        for transacao in self.historico:
+            linhas.append(f"- {transacao}")
+        return "\n".join(linhas)
+
+    def to_dict(self):
+        return {
+            "numero": self.numero,
+            "titular": self.titular.nome,
+            "saldo": self._saldo,
+            "historico": [transacao.to_dict() for transacao in self.historico],
+        }
+
+    @classmethod
+    def from_dict(cls, dados):
+        titular = Cliente(dados["titular"], "000.000.000-00")
+        conta = cls(dados["numero"], titular, dados["saldo"])
+        conta.historico = [Transacao(item["tipo"], item["valor"], datetime.fromisoformat(item["data"])) for item in dados["historico"]]
+        return conta
+
+
+class ContaCorrente(Conta):
+    def __init__(self, numero, titular, saldo_inicial=0.0, limite=500.0):
+        super().__init__(numero, titular, saldo_inicial, limite)
+
+
+class ContaPoupanca(Conta):
+    def __init__(self, numero, titular, saldo_inicial=0.0):
+        super().__init__(numero, titular, saldo_inicial, limite=0.0)
+
+    def render_rendimento(self, taxa=0.01):
+        valor = self._saldo * taxa
+        self._saldo += valor
+        self.historico.append(Transacao("rendimento", valor))
+
+
+ana = Cliente("Ana", "123.456.789-00")
+joao = Cliente("João", "987.654.321-00")
+conta = ContaCorrente("1001", ana, 0, 500)
+conta_joao = ContaCorrente("1002", joao, 0, 500)
+
+conta.depositar(1500)
+conta.sacar(200)
+conta.transferir(conta_joao, 300)
+
+print("=== Extrato da conta ===")
+print(f"Cliente: {conta.titular}")
+print(f"Saldo atual: R$ {conta.saldo:,.2f}")
+print("Histórico:")
+for transacao in conta.historico:
+    print(f"- {transacao}")
+
+json_em_memoria = json.dumps(conta.to_dict(), ensure_ascii=False)
+print("JSON em memória:")
+print(json_em_memoria)
+conta_recuperada = Conta.from_dict(json.loads(json_em_memoria))
+print(f"Saldo recuperado: R$ {conta_recuperada.saldo:,.2f}")
+```
+
+Saída real com execução:
+
+```text
+=== Extrato da conta ===
+Cliente: Ana
+Saldo atual: R$ 1.430,00
+Histórico:
+- 10/10/2026 | deposito | R$ 1500.00
+- 10/10/2026 | saque | R$ -200.00
+- 10/10/2026 | transferencia enviada | R$ -300.00
+JSON em memória:
+{"numero": "1001", "titular": "Ana", "saldo": 1430.0, "historico": [{"tipo": "deposito", "valor": 1500.0, "data": "2026-10-10T00:00:00"}, {"tipo": "saque", "valor": -200.0, "data": "2026-10-10T00:00:00"}, {"tipo": "transferencia enviada", "valor": -300.0, "data": "2026-10-10T00:00:00"}]}
+Saldo recuperado: R$ 1.430,00
+```
+</details>

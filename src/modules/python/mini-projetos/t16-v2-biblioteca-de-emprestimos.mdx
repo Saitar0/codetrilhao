@@ -1,0 +1,252 @@
+---
+titulo: "Biblioteca de empréstimos"
+descricao: "Modelagem de livros, usuários e empréstimos com regras de limite, prazo e multa por atraso."
+topico: "orientacao-a-objetos"
+topicoNome: "Orientação a Objetos"
+variacao: "V2"
+tempo: 35
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "classes", "emprestimo", "biblioteca", "validacao", "polimorfismo"]
+---
+
+# Biblioteca de empréstimos
+
+## Contexto
+Uma biblioteca comunitária quer controlar melhor os livros que saem para empréstimo. A equipe está cansada de anotar tudo em papel, e o sistema precisa impedir que um usuário leve mais de três livros ao mesmo tempo, controlar a data de devolução e cobrar multa quando o prazo for ultrapassado.
+
+## O que você vai construir
+Um programa de gestão de biblioteca com classes para Livro, Usuário, Empréstimo e Biblioteca. A ideia é manter cada responsabilidade em um lugar certo, usando objetos que representam entidades reais do domínio.
+
+Exemplo de execução real:
+
+```text
+Biblioteca de empréstimos
+Ana emprestou: Dom Casmurro
+Ana emprestou: Memórias Póstumas
+Ana emprestou: O Pequeno Príncipe
+Ana tentou pegar 1984: empréstimo negado (limite de 3 livros)
+João emprestou: 1984
+Resumo da biblioteca:
+- Ana: 3 livros em posse
+- João: 1 livro em posse
+```
+
+## Requisitos
+1. Criar uma classe `Livro` com título, autor e ano.
+2. Criar uma classe `Usuario` com nome e limite de 3 empréstimos.
+3. Criar uma classe `Emprestimo` com livro, usuário, data de saída e data de devolução.
+4. Criar uma classe `Biblioteca` para registrar livros, usuários e empréstimos.
+5. Validar regras de negócio: limite por usuário, prazo padrão e multa por atraso.
+
+## Critérios de aceite
+- [ ] Cada classe tem uma responsabilidade clara.
+- [ ] Um usuário não consegue pegar mais de 3 livros ao mesmo tempo.
+- [ ] O programa calcula a data de devolução com base no prazo do empréstimo.
+- [ ] O atraso gera multa ou alerta explícito.
+- [ ] A biblioteca mostra um resumo de usuários e livros ativos.
+- [ ] O código usa exceções para erros de regra de negócio e não apenas `print` genérico.
+
+## Guia
+### Marcos do projeto
+1. Defina as classes e os atributos principais: `Livro`, `Usuario`, `Emprestimo` e `Biblioteca`.
+2. Decida como a biblioteca guarda os usuários e a lista de livros disponíveis.
+3. Implemente a regra do limite de 3 livros por usuário.
+4. Calcule a data de devolução e a multa por atraso.
+5. Mostre um resumo amigável da situação da biblioteca.
+
+### Regras e casos especiais
+- Um usuário não pode pegar o mesmo livro duas vezes ao mesmo tempo.
+- O prazo padrão pode ser de 7 dias.
+- Se a devolução acontecer depois do prazo, a multa é cobrada por dia de atraso.
+- Um livro inexistente deve causar erro claro.
+- Usuário sem cadastro não pode solicitar empréstimo.
+- O sistema deve separar a lógica de validação da lógica de impressão.
+
+### Dicas
+- O melhor ponto de partida é criar o `__init__` de cada classe e testar um objeto de cada vez.
+- Quando a lógica de regra de negócio fica grande, ela deve estar em métodos da biblioteca e não espalhada em várias funções soltas.
+- Uma listagem de empréstimos ativos é ideal para checar o limite por usuário.
+- Ao definir a multa, pense em um cálculo simples: valor por dia × dias em atraso.
+- Use exceções personalizadas para falhas como `UsuarioNaoEncontrado` ou `LimiteExcedido`.
+
+<Playground title="Estrutura inicial" code={`from datetime import date, timedelta
+
+class Livro:
+    def __init__(self, titulo, autor, ano):
+        self.titulo = titulo
+        self.autor = autor
+        self.ano = ano
+
+class Usuario:
+    def __init__(self, nome, limite=3):
+        self.nome = nome
+        self.limite = limite
+
+class Emprestimo:
+    def __init__(self, livro, usuario, data_emprestimo):
+        self.livro = livro
+        self.usuario = usuario
+        self.data_emprestimo = data_emprestimo
+        # calcule a data de devolucao e a multa por atraso
+
+class Biblioteca:
+    def __init__(self):
+        self.livros = {}
+        self.usuarios = {}
+        self.emprestimos = []
+
+    def emprestar(self, titulo, nome_usuario, data_emprestimo):
+        # valide livro, usuario, limite e prazo
+        pass
+
+biblioteca = Biblioteca()
+# cadastre livros e usuarios
+# teste os primeiros emprestimos
+# mostre um resumo final da biblioteca
+`} />
+
+## Desafio extra
+Adicione um `status` para cada empréstimo, como `"ativo"`, `"atrasado"` e `"finalizado"`. Em seguida, gere um relatório mostrando quantos empréstimos estão em atraso e qual usuário teve mais livros em posse no mês.
+
+## Visão de mercado
+Bibliotecas, escolas, editais, sistemas de locação e pequenas empresas usam o mesmo padrão de modelagem: um objeto para a entidade, outro para o controle do processo e outro para a regra de negócio. Isso é exatamente o que aparece em vagas de backend e em sistemas de gestão interna.
+
+## Autoavaliação
+- [ ] Entendi a responsabilidade de cada classe.
+- [ ] Validei o limite de 3 livros por usuário.
+- [ ] Implementei a data de devolução e a multa por atraso.
+- [ ] Tratei casos de livro inexistente e usuário não cadastrado.
+- [ ] Consigo explicar por que herança não é sempre a melhor solução quando o domínio é simples.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+from datetime import date, timedelta
+
+
+class Livro:
+    def __init__(self, titulo, autor, ano):
+        self.titulo = titulo
+        self.autor = autor
+        self.ano = ano
+
+    def __str__(self):
+        return f"{self.titulo} ({self.autor})"
+
+
+class Usuario:
+    def __init__(self, nome, limite=3):
+        self.nome = nome
+        self.limite = limite
+
+    def __str__(self):
+        return self.nome
+
+
+class Emprestimo:
+    def __init__(self, livro, usuario, data_emprestimo, prazo_dias=7):
+        self.livro = livro
+        self.usuario = usuario
+        self.data_emprestimo = data_emprestimo
+        self.data_devolucao = data_emprestimo + timedelta(days=prazo_dias)
+        self.devolvido = False
+
+    def calcular_atraso(self, data_entrega):
+        if data_entrega <= self.data_devolucao:
+            return 0
+        return (data_entrega - self.data_devolucao).days
+
+    def calcular_multa(self, data_entrega, valor_por_dia=2.5):
+        return self.calcular_atraso(data_entrega) * valor_por_dia
+
+
+class Biblioteca:
+    def __init__(self):
+        self.livros = {}
+        self.usuarios = {}
+        self.emprestimos = []
+
+    def adicionar_livro(self, livro):
+        self.livros[livro.titulo] = livro
+
+    def adicionar_usuario(self, usuario):
+        self.usuarios[usuario.nome] = usuario
+
+    def emprestar(self, titulo_livro, nome_usuario, data_emprestimo):
+        if titulo_livro not in self.livros:
+            raise ValueError("Livro não encontrado na biblioteca.")
+        if nome_usuario not in self.usuarios:
+            raise ValueError("Usuário não cadastrado.")
+
+        usuario = self.usuarios[nome_usuario]
+        ativos = [
+            emprestimo
+            for emprestimo in self.emprestimos
+            if emprestimo.usuario.nome == nome_usuario and not emprestimo.devolvido
+        ]
+
+        if len(ativos) >= usuario.limite:
+            raise ValueError("Empréstimo negado: limite de 3 livros.")
+
+        livro = self.livros[titulo_livro]
+        emprestimo = Emprestimo(livro, usuario, data_emprestimo)
+        self.emprestimos.append(emprestimo)
+        return emprestimo
+
+    def relatorio_usuarios(self):
+        resumo = []
+        for nome, usuario in self.usuarios.items():
+            ativos = [
+                emprestimo
+                for emprestimo in self.emprestimos
+                if emprestimo.usuario.nome == nome and not emprestimo.devolvido
+            ]
+            resumo.append(f"- {nome}: {len(ativos)} livro(es) em posse")
+        return resumo
+
+
+biblioteca = Biblioteca()
+
+biblioteca.adicionar_livro(Livro("Dom Casmurro", "Machado de Assis", 1899))
+biblioteca.adicionar_livro(Livro("Memórias Póstumas", "Machado de Assis", 1881))
+biblioteca.adicionar_livro(Livro("O Pequeno Príncipe", "Antoine de Saint-Exupéry", 1943))
+biblioteca.adicionar_livro(Livro("1984", "George Orwell", 1949))
+
+biblioteca.adicionar_usuario(Usuario("Ana"))
+biblioteca.adicionar_usuario(Usuario("João"))
+
+base = date(2026, 10, 1)
+
+print("Biblioteca de empréstimos")
+for titulo in ["Dom Casmurro", "Memórias Póstumas", "O Pequeno Príncipe"]:
+    emp = biblioteca.emprestar(titulo, "Ana", base)
+    print(f"Ana emprestou: {emp.livro.titulo}")
+
+try:
+    biblioteca.emprestar("1984", "Ana", base)
+except ValueError as erro:
+    print(f"Ana tentou pegar 1984: {erro}")
+
+emp = biblioteca.emprestar("1984", "João", base)
+print(f"João emprestou: {emp.livro.titulo}")
+print("Resumo da biblioteca:")
+for linha in biblioteca.relatorio_usuarios():
+    print(linha)
+```
+
+Saída real com execução:
+
+```text
+Biblioteca de empréstimos
+Ana emprestou: Dom Casmurro
+Ana emprestou: Memórias Póstumas
+Ana emprestou: O Pequeno Príncipe
+Ana tentou pegar 1984: Empréstimo negado: limite de 3 livros.
+João emprestou: 1984
+Resumo da biblioteca:
+- Ana: 3 livro(es) em posse
+- João: 1 livro(es) em posse
+```
+</details>
