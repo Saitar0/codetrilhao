@@ -1,46 +1,320 @@
 ﻿---
-titulo: "ExceÃ§Ãµes"
-descricao: "Capture erros com seguranÃ§a para deixar o cÃ³digo mais robusto."
+titulo: "Tratamento de erros"
+descricao: "Capture falhas com clareza e mantenha o programa funcionando mesmo com entrada ruim."
 secao: "C. Organização de código"
-ordem: 20
-tempo: 10
+ordem: 7
+topico: 12
+fase: "C"
+tempo: 30
 nivel: "intermediario"
-palavrasChave: ['try', 'except', 'erro', 'exceÃ§Ã£o']
+palavrasChave: ['try', 'except', 'raise', 'ValueError', 'logging']
 exercicios: []
 ---
 
-# ExceÃ§Ãµes
+# Tratamento de erros
 
-Capture erros com seguranÃ§a para deixar o cÃ³digo mais robusto.
+Você já escreveu programas que começam bem e depois quebram quando alguém digita um valor fora do esperado. Isso acontece o tempo inteiro em sistemas reais: idade em texto, zero em divisão, chave inexistente em dicionário, arquivo que não existe. O ponto não é evitar erros para sempre — é tratar a falha de forma organizada, mostrar uma mensagem útil e continuar o programa quando isso fizer sentido.
 
-<Callout type="importante" title="Objetivo da aula">
-  Neste bloco, vocÃª vai entender o conceito principal, ver exemplos prÃ¡ticos e testar a lÃ³gica em pequenos passos.
+Quando você trata erros com atenção, o código deixa de ser frágil e vira uma ferramenta mais confiável. Em vez de “quebrar e parar”, você decide: “se isso acontecer, eu mostro uma mensagem, registro o problema e sigo em frente”.
+
+<Callout type="importante" title="O que você vai aprender">
+  <ul>
+    <li>Entender como <Glossario termo="try" definition="Bloco onde você coloca código que pode falhar." /> e <Glossario termo="except" definition="Bloco que trata a exceção caso ela aconteça." /> trabalham juntos.</li>
+    <li>Capturar exceções específicas sem esconder erros reais do programa.</li>
+    <li>Usar <Glossario termo="raise" definition="Instrução para provocar uma exceção manualmente quando a regra de negócio falha." /> com exceções personalizadas.</li>
+    <li>Valer o ciclo de entrada do usuário e registrar falhas com <Glossario termo="logging" definition="Mecanismo de registro que grava mensagens úteis para depuração e auditoria." />.</li>
+  </ul>
 </Callout>
 
-<CodeBlock title="exemplo_1.py" code={`try:
-    int("abc")
+## 1. O que são exceções?
+
+Em Python, uma exceção é um evento que interrompe o fluxo normal do programa quando algo inesperado acontece. Por exemplo, tentar converter texto em número com `int("abc")` dá `ValueError`; tentar dividir por zero dá `ZeroDivisionError`; tentar acessar uma chave que não existe em um dicionário dá `KeyError`.
+
+Esses erros não são “bugs” no sentido de código mal escrito necessariamente. Eles são sinais de que a aplicação recebeu um dado, uma condição ou uma sequência de operações que não eram válidas. O papel do tratamento de erros é transformar esse sinal em informação útil.
+
+<CodeBlock title="excecao_basica.py" code={`try:
+    numero = int("abc")
+    print(numero)
 except ValueError:
-    print("Entrada invÃ¡lida")`} />
-<CodeBlock title="exemplo_2.py" code={`def dividir(a, b):
-    return a / b
+    print("Entrada inválida. Digite apenas números.")`} />
+
+Saída esperada:
+
+```text
+Entrada inválida. Digite apenas números.
+```
+
+A estrutura é simples: o código “perigoso” fica dentro de `try`, e a ação de recuperação fica em `except`. Isso permite que o programa continue executando em vez de parar com uma stack trace grande.
+
+Quando você escreve um programa verdadeiro, você não quer apenas “pegar tudo”. Você quer capturar o tipo certo de erro, porque cada exceção informa uma situação diferente. A regra é clara: `except ValueError` para dados inválidos; `except ZeroDivisionError` para divisão por zero; `except FileNotFoundError` para arquivo ausente.
+
+## 2. `try`, `except`, `else` e `finally`
+
+O bloco `try` guarda a parte que pode falhar. O `except` captura a exceção e decide como reagir. O `else` executa somente quando o bloco principal não lança erro. Já o `finally` roda sempre, independentemente de ter ou não acontecido falha.
+
+Esse conjunto é muito útil para processos que precisam terminar com uma limpeza ou com um registro final, por exemplo: fechar conexão, imprimir um banner final ou liberar um recurso.
+
+<CodeBlock title="try_except_else_finally.py" code={`def dividir(a, b):
+    try:
+        resultado = a / b
+    except ZeroDivisionError:
+        return "Não é possível dividir por zero."
+    else:
+        return f"Resultado: {resultado}"
+    finally:
+        print("Bloco finally executado.")
+
+print(dividir(10, 2))
+print(dividir(10, 0))`} />
+
+Saída esperada:
+
+```text
+Bloco finally executado.
+Resultado: 5.0
+Bloco finally executado.
+Não é possível dividir por zero.
+```
+
+Você percebe o comportamento importante: o `finally` sempre roda. Isso ajuda a garantir que a limpeza ou o registro ocorra mesmo quando houver falha. Em cenários reais, isso é muito usado para fechar arquivos, encerrar conexões de banco, ou gravar logs de finalização.
+
+<Playground title="Experimente: validar número sem quebrar" code={`def ler_inteiro(msg):
+    while True:
+        try:
+            valor = int(input(msg))
+            return valor
+        except ValueError:
+            print("Digite um número inteiro válido.")
+
+idade = ler_inteiro("Idade: ")
+print(f"Sua idade é {idade}.")`} />
+
+## 3. Capturando exceções específicas e validando entradas
+
+A maioria dos programas interage com usuário; aí a validação de entrada vira parte do comportamento normal. Em vez de deixar o programa quebrar, você pode repetir a pergunta até que o dado seja aceitável.
+
+Esse é o padrão da função `ler_inteiro` do currículo. A ideia é bem simples: pedir uma entrada, tentar converter para inteiro e, se falhar, mostrar uma mensagem clara e repetir. O loop continua até o dado ser válido.
+
+<CodeBlock title="ler_inteiro.py" code={`def ler_inteiro(msg):
+    while True:
+        try:
+            return int(input(msg))
+        except ValueError:
+            print("Digite um número inteiro válido.")
+
+idade = ler_inteiro("Idade: ")
+print(f"Você tem {idade} anos.")`} />
+
+Se o usuário digitar `vinte`, a função não quebra. Ela mostra a instrução, volta ao início do loop e pede novamente. Se o usuário digitar `30`, a função retorna `30` e o programa continua normalmente.
+
+<StepThrough>
+  <div>
+    <strong>Passo 1:</strong> o programa entra em <code>while True</code> e executa <code>input(msg)</code>.
+  </div>
+  <div>
+    <strong>Passo 2:</strong> se o valor for um texto como <code>"abc"</code>, a conversão com <code>int()</code> lança <code>ValueError</code>.
+  </div>
+  <div>
+    <strong>Passo 3:</strong> o <code>except ValueError</code> imprime uma mensagem útil e o loop continua, sem derrubar o programa.
+  </div>
+  <div>
+    <strong>Passo 4:</strong> quando o valor for válido, o <code>return</code> sai da função e o programa imprime a idade confirmada.
+  </div>
+</StepThrough>
+
+A mesma lógica vale para outros tipos de entrada, como `float`, `list`, `dict` e até valores com limites. O importante é escrever uma regra “repete até estar correto”. Isso costuma ser a melhor maneira de deixar a aplicação amigável e robusta.
+
+## 4. `raise` e exceções personalizadas
+
+Existem situações em que o problema não está em uma conversão de tipo, e sim na regra de negócio. Por exemplo: uma conta não pode sacar um valor maior que o saldo ou um pedido não pode ser processado com quantidade negativa. Nesses casos, você pode criar uma exceção personalizada com `class NomeErro(Exception): ...` e usar `raise NomeErro(...)`.
+
+Isso deixa o código mais explícito. Em vez de deixar qualquer erro “aparecer” como um detalhe técnico genérico, você lança um problema de negócio com nome e mensagem apropriados.
+
+<CodeBlock title="saldo_insuficiente.py" code={`class SaldoInsuficienteError(Exception):
+    pass
+
+class Conta:
+    def __init__(self, saldo):
+        self.saldo = saldo
+
+    def sacar(self, valor):
+        if valor > self.saldo:
+            raise SaldoInsuficienteError("Saldo insuficiente para este saque.")
+        self.saldo -= valor
+        return self.saldo
+
+conta = Conta(100)
+try:
+    print(conta.sacar(150))
+except SaldoInsuficienteError as erro:
+    print(erro)`} />
+
+Saída esperada:
+
+```text
+Saldo insuficiente para este saque.
+```
+
+Observe que a exceção personalizada serviu como linguagem da regra de negócio. Em vez de dizer “alguma coisa deu errado”, o sistema comunica que o problema foi a falta de saldo. Isso ajuda quem está desenvolvendo, testando e usando a aplicação.
+
+Você também pode criar exceções para regras de domínio, como `CadastroInvalidoError`, `PedidoSemItemError` ou `ArquivoCorrompidoError`. O nome da exceção comunica o problema sem depender de mensagens genéricas do Python.
+
+## 5. LBYL e EAFP
+
+Esses termos são uma forma elegante de falar sobre duas maneiras diferentes de validar antes de agir.
+
+- LBYL significa “Look Before You Leap” (olhe antes de pular). Você valida primeiro e só depois executa a ação.
+- EAFP significa “Easier to Ask for Forgiveness than Permission” (é mais fácil pedir perdão do que permissão). Você tenta a operação e trata a exceção se ela falhar.
+
+Na prática, as duas abordagens existem e têm bons momentos de uso.
+
+<CodeTabs>
+  <CodeBlock title="LBYL.py" code={`def acessar_chave(dicionario, chave):
+    if chave in dicionario:
+        return dicionario[chave]
+    return "Chave ausente."
+
+print(acessar_chave({"nome": "Ana"}, "nome"))
+print(acessar_chave({"nome": "Ana"}, "idade"))`} />
+  <CodeBlock title="EAFP.py" code={`def acessar_chave(dicionario, chave):
+    try:
+        return dicionario[chave]
+    except KeyError:
+        return "Chave ausente."
+
+print(acessar_chave({"nome": "Ana"}, "nome"))
+print(acessar_chave({"nome": "Ana"}, "idade"))`} />
+</CodeTabs>
+
+No exemplo acima, o estilo LBYL verifica se a chave existe antes de acessar. Já o EAFP tenta acessar e, se a chave não existir, trata a exceção com `KeyError`. Em Python, o EAFP costuma ser mais idiomático e legível, especialmente quando você quer uma ação simples e a falha é uma situação esperada.
+
+Por outro lado, verificar antes pode ser mais claro quando a condição é comum e barata de checar, como “lista vazia”, “valor é None” ou “texto não pode estar em branco”. A regra prática é: use validação explícita quando a condição é parte do seu fluxo normal; use captura de exceção quando a falha realmente é um caso excepcional e você quer tratar com clareza.
+
+## 6. `logging` e a regra de ouro para erros
+
+No código em produção, você normalmente não quer apenas imprimir mensagens na tela. Você quer registrar o evento para análise posterior. O módulo `logging` faz isso de forma organizada, e no runner do CodeTrilha ele aparece no `stdout`, ou seja, na saída padrão do ambiente de execução.
+
+Isso é importante porque você pode gerar um log sem interromper a execução do programa. A mensagem informa o que aconteceu e em qual nível de severidade: `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`.
+
+<CodeBlock title="logging_basico.py" code={`import logging
+import sys
+
+logging.basicConfig(level=logging.INFO, format='%(levelname)s:%(message)s', stream=sys.stdout)
+
+for item in [10, 0, 5]:
+    try:
+        print(f"Resultado: {10 / item}")
+    except ZeroDivisionError:
+        logging.warning("Tentativa de divisão por zero: item=%s", item)`} />
+
+Saída esperada:
+
+```text
+Resultado: 1.0
+WARNING: Tentativa de divisão por zero: item=0
+Resultado: 2.0
+```
+
+A mensagem de log aparece no stdout, então no runner do navegador você vê isso na área de saída. O mais importante é não engolir o erro silenciosamente. Se você faz `except: pass`, o programa parece funcionar, mas você perde a informação do que foi errado. Em sistemas reais, esse tipo de falha silenciosa é muito perigosa.
+
+A regra de ouro é simples: nunca engolir o erro sem registrar, mostrar ou re-levantar. Você pode:
+
+- mostrar uma mensagem amigável ao usuário;
+- registrar a falha em log;
+- re-lançar a exceção no nível correto, se ela for crítica.
+
+<Playground title="Experimente: validar dados até o valor ficar correto" code={`def ler_float(msg, minimo, maximo):
+    while True:
+        try:
+            valor = float(input(msg))
+            if valor < minimo or valor > maximo:
+                raise ValueError(f"Valor fora do intervalo [{minimo}, {maximo}].")
+            return valor
+        except ValueError as erro:
+            print(erro)
+
+peso = ler_float("Peso (kg): ", 0, 200)
+print(f"Peso registrado: {peso} kg")`} />
+
+<Callout type="erro-comum" title="Erro: `except:` sem tipo">
+  Essa forma pega qualquer exceção e esconde o real problema.
+  <CodeBlock title="except_generico.py" code={`try:
+    valor = int("abc")
+except:
+    pass
+
+print("Programa continua...")`} />
+  A mensagem real do erro não aparece porque ela foi engolida. O código fica mais difícil de depurar e você pode perder o diagnóstico da falha. A correção é capturar a exceção específica, como `ValueError`, e deixar o restante da aplicação continuar funcionando de forma consciente.
+</Callout>
+
+<Callout type="erro-comum" title="Erro: `try` muito grande">
+  Quando você envolve muito código dentro de um único `try`, fica difícil saber onde a falha realmente ocorreu.
+  <CodeBlock title="try_gigante.py" code={`try:
+    nome = "Ana"
+    idade = int("abc")
+    saldo = 1000 / idade
+    print(nome.upper(), saldo)
+except ValueError:
+    print("Erro de conversão.")`} />
+  O problema aqui é que o `except` responde a qualquer `ValueError`, mas o código dessa área pode ter várias responsabilidades diferentes. A correção é isolar cada bloqueio perigoso em um `try` menor, com uma mensagem clara para a causa específica.
+</Callout>
+
+<Callout type="erro-comum" title="Erro: `pass` no `except`">
+  `pass` parece “não fazer nada”, mas em regra isso também esconde a falha.
+  <CodeBlock title="except_pass.py" code={`dados = {"nome": "Ana"}
 
 try:
-    print(dividir(10, 0))
-except ZeroDivisionError:
-    print("NÃ£o Ã© possÃ­vel dividir por zero")`} />
-<CodeBlock title="exemplo_3.py" code={`valor = 0
-if valor == 0:
-    raise ValueError("valor nÃ£o pode ser zero")`} />
+    print(dados["idade"])
+except KeyError:
+    pass
 
-<Quiz questions={[{ question: "Qual Ã© a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prÃ¡tica", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensÃ£o e aplicaÃ§Ã£o prÃ¡tica." }, { question: "Qual hÃ¡bito Ã© mais Ãºtil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o cÃ³digo"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prÃ¡tica em Python?", options: ["clareza e execuÃ§Ã£o", "complexidade por padrÃ£o", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execuÃ§Ã£o objetiva." }]} />
+print("Continuando sem saber o que aconteceu...")`} />
+  Nesse caso, o programa continua, mas o problema foi ignorado. A correção é registrar o evento com `logging.warning(...)`, exibir uma mensagem útil ou tomar uma decisão deliberada em vez de silenciar o erro.
+</Callout>
+
+<Tabela data={[
+  ['Situação', 'Abordagem recomendada', 'Por que funciona'],
+  ['Converter texto em número', 'try/except com ValueError', 'Se a entrada for inválida, você pede novamente ou mostra mensagem clara'],
+  ['Divisão por zero', 'except ZeroDivisionError', 'Evita quebrar a execução sem diagnóstico'],
+  ['Regras de negócio', 'raise com exceção customizada', 'Deixa a falha sem ambiguidade para a aplicação'],
+  ['Logs e auditoria', 'logging', 'Registra eventos sem interromper o fluxo do sistema'],
+  ['Acesso a dicionário', 'EAFP com try/except', 'É idiomático e simples em Python']
+]} />
+
+<Glossario termo="Exceção" definition="Evento que sinaliza que uma operação não pôde ser concluída como o programa esperava." />
+<Glossario termo="Exception" definition="Classe base para a maioria das exceções do Python; serve como categoria geral para erros" />
+<Glossario termo="LBYL" definition="Look Before You Leap: validar antes de realizar uma operação." />
+<Glossario termo="EAFP" definition="Easier to Ask for Forgiveness than Permission: tentar primeiro e tratar a exceção depois." />
+<Glossario termo="Logging" definition="Sistema de registrar mensagens de informação, aviso, erro e depuração durante a execução." />
+
+## No mercado de trabalho
+
+Em sistemas reais, tratamento de erros é parte do que separa um código simples de um código que escala. Em APIs, formulários de cadastro, dashboards, processamento de arquivos e integrações com serviços externos, erros aparecem em qualquer etapa. Quem sabe tratar essa situação com `try/except`, validação de entrada e `logging` consegue entregar software mais confiável e mais fácil de manter.
+
+Um bom time de engenharia não tenta eliminar todas as falhas. Ele constrói mecanismos para que cada falha seja reconhecida, classificada e tratada. Em um formulário de cadastro, por exemplo, `ValueError` pode indicar que a idade está em um formato inválido. Em um sistema financeiro, `SaldoInsuficienteError` comunica uma regra de negócio específica e impede que o usuário continue sem a devida validação. Em um processamento em lote, `logging` permite continuar mesmo quando alguns registros falham, sem perder todo o processo.
+
+Essa prática também melhora a experiência do usuário. Em vez de aparecer uma mensagem bruta do Python, a aplicação responde com uma instrução objetiva: “Digite um número inteiro válido”, “Saldo insuficiente para este saque” ou “Arquivo não encontrado”. Isso é o que transforma um programa em uma ferramenta útil.
+
+<Quiz questions={[
+  { question: "O que acontece quando `int('abc')` é executado sem tratamento?", options: ["O programa ignora o valor e continua", "Python lança `ValueError`", "Python transforma em zero", "Python troca por `None`"], correctIndex: 1, explanation: "A conversão de texto não numérico para inteiro gera `ValueError` porque a operação não é válida." },
+  { question: "Qual é a diferença principal entre `try` e `except`?", options: ["`try` define a função e `except` a chama", "`try` guarda o trecho perigoso e `except` trata a exceção", "`try` imprime o erro e `except` o corrige", "Não há diferença"], correctIndex: 1, explanation: "O `try` encapsula a operação arriscada; o `except` define como responder quando ela falha." },
+  { question: "O que este código imprime?\n\n```python\ndef dividir(a, b):\n    try:\n        return a / b\n    except ZeroDivisionError:\n        return 'erro'\n\nprint(dividir(8, 2))\nprint(dividir(8, 0))\n```", options: ["4.0\n4.0", "4.0\nerro", "erro\n4.0", "erro\nerro"], correctIndex: 1, explanation: "A primeira divisão resulta em 4.0; a segunda dispara `ZeroDivisionError` e o `except` retorna a string 'erro'." },
+  { question: "Qual abordagem melhor descreve `raise`?", options: ["Cria um novo valor de retorno", "Lança uma exceção manualmente quando a regra de negócio falha", "Fecha automaticamente um arquivo", "Substitui o `print`"], correctIndex: 1, explanation: "`raise` é usado para sinalizar um problema específico e explícito na lógica do programa." },
+  { question: "Por que `except:` sem tipo é perigoso?", options: ["Porque ele não funciona em Python", "Porque ele esconde erros reais e dificulta a depuração", "Porque ele só trata `ValueError`", "Porque ele roda o `finally` duas vezes"], correctIndex: 1, explanation: "Capturar todas as exceções sem distinguir o tipo torna a causa do problema invisível e pode esconder bugs importantes." }
+]} />
 
 <Resumo>
-  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
-  <li>Teste pequenos exemplos e avalie o resultado.</li>
-  <li>Aplica a ideia em cenÃ¡rios reais para fixar o conhecimento.</li>
+  <li>Exceções sinalizam falhas em operações que não puderam ser concluídas.</li>
+  <li>`try` e `except` permitem controlar o fluxo quando algo dá errado.</li>
+  <li>`else` e `finally` ajudam a separar sucesso, falha e limpeza final.</li>
+  <li>`raise` e classes de exceção personalizadas deixam regras de negócio explícitas.</li>
+  <li>Validação interativa em loop é a base para entradas de usuário mais confiáveis.</li>
+  <li>`logging` registra falhas sem interromper o programa, mas não deve silenciar erros.</li>
 </Resumo>
 
-<Desafio>
-  Aplique esse tema em um mini cenÃ¡rio do dia a dia e confirme o resultado com um cÃ³digo simples e legÃ­vel.
+Checklist de domínio: ☐ uso `try/except` específico ☐ trato `finally` quando preciso ☐ crio exceções próprias quando a regra de negócio exige ☐ valido entradas em loop ☐ registro erros com `logging` sem engolir a falha
+
+<Desafio title="Desafio da aula">
+  Crie uma função `ler_float_entre` que recebe uma mensagem, um mínimo e um máximo. Ela deve repetir a leitura até que o usuário digite um número válido dentro do intervalo; se a entrada for inválida, mostre uma mensagem clara e registre a falha com `logging.warning`. Depois teste com valores fora do intervalo, textos inválidos e um valor aceitável.
 </Desafio>
 
