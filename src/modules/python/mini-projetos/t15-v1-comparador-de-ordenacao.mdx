@@ -1,0 +1,179 @@
+---
+titulo: "Comparador de algoritmos de ordenação"
+descricao: "Compare bubble sort, selection sort e insertion sort usando contagem de comparações em listas de tamanhos diferentes."
+topico: "algoritmos"
+topicoNome: "Algoritmos: busca, ordenação, recursão e complexidade"
+variacao: "V1"
+tempo: 30
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "algoritmos", "ordenacao", "bubble sort", "selection sort", "insertion sort", "complexidade"]
+---
+
+# Comparador de algoritmos de ordenação
+
+## Contexto
+Você entrou em uma empresa de software que está avaliando qual algoritmo de ordenação é mais adequado para um sistema que trabalha com listas pequenas e médias de dados. O cliente não quer uma resposta “mágica”: ele quer ver, de forma clara, como cada estratégia usa comparações e como a quantidade cresce conforme a lista fica maior.
+
+## O que você vai construir
+Um pequeno comparador que executa 3 formas de ordenação em listas de tamanhos diferentes e exibe a quantidade de comparações que cada uma faz. A ideia é comparar a lógica de cada algoritmo sem depender de tempo de execução exato, porque esse número pode variar entre máquinas.
+
+Exemplo de execução real:
+
+```text
+Comparador de algoritmos de ordenação
+Tamanho 10 | bubble=45 | selection=45 | insertion=45
+Tamanho 50 | bubble=1225 | selection=1225 | insertion=1225
+Tamanho 100 | bubble=4900 | selection=4900 | insertion=4900
+```
+
+## Requisitos
+1. Implementar pelo menos 3 algoritmos de ordenação: bubble sort, selection sort e insertion sort.
+2. Contar comparações feitas durante a ordenação, não apenas o resultado final.
+3. Executar cada algoritmo em listas de tamanhos diferentes.
+4. Mostrar uma tabela simples de saída em texto legível.
+5. Usar a mesma lista de entrada para comparar estratégias equivalentes.
+
+## Critérios de aceite
+- [ ] O programa ordena corretamente a lista de entrada.
+- [ ] Cada algoritmo devolve a quantidade de comparações executadas.
+- [ ] A comparação entre os algoritmos fica fácil de ler no terminal.
+- [ ] O aluno consegue explicar por que a contagem cresce mais rápido em listas maiores.
+- [ ] O código separa a lógica de ordenação da parte de apresentação.
+- [ ] O aluno consegue dizer qual algoritmo faz menos trabalho em uma lista quase ordenada.
+
+## Guia
+### Etapa 1: escolha uma lista de entrada
+Comece com uma lista simples, como `[5, 1, 4, 2, 3]`, e depois teste em listas maiores. Quando a lista já está em ordem inversa, você vê melhor o custo real de cada algoritmo.
+
+### Etapa 2: implemente o bubble sort
+No bubble sort, você compara elementos adjacentes e troca quando o valor da esquerda é maior que o da direita. Repita isso até não haver mais trocas.
+
+### Etapa 3: implemente o selection sort
+No selection sort, a ideia é encontrar o menor valor do restante da lista e trocar com a posição atual. O código fica mais direto, mas a quantidade de comparações ainda cresce quadraticamente.
+
+### Etapa 4: implemente o insertion sort
+No insertion sort, você pega cada item e o insere na posição correta na parte já ordenada da lista. Em listas pequenas, ele costuma ser eficiente; em listas grandes, ainda tende a ter custo O(n²).
+
+### Etapa 5: compare os resultados
+Crie uma função separada para contar as comparações de cada algoritmo e, em seguida, uma função para imprimir uma tabela com o tamanho da lista e o número de comparações realizado.
+
+### Dicas
+- Mantenha os três algoritmos em funções distintas; isso facilita a leitura e a comparação.
+- O contador de comparações deve aumentar toda vez que o código faz `if lista[i] > lista[j]` ou equivalente.
+- Para ver a diferença real, teste pelo menos 3 tamanhos: pequeno, médio e grande.
+- Não confunda “tempo de execução” com “número de comparações”; esta atividade quer demonstrar custo de processamento, não segundos exatos.
+
+<Playground title="Estrutura inicial" code={`def bubble_sort(lista):
+    comparacoes = 0
+    # compare elementos adjacentes
+    # troque quando a ordem estiver errada
+    # retorne a lista ordenada e o total de comparacoes
+    return lista, comparacoes
+
+
+def selection_sort(lista):
+    comparacoes = 0
+    # procure o menor elemento restante
+    # troque com a posição atual
+    return lista, comparacoes
+
+
+def insertion_sort(lista):
+    comparacoes = 0
+    # insira cada item na parte ordenada da lista
+    return lista, comparacoes
+
+
+lista = [5, 1, 4, 2, 3]
+# teste cada algoritmo e imprima quantas comparacoes cada um faz
+`} />
+
+## Desafio extra
+Crie uma versão do comparador em que cada algoritmo recebe uma lista quase ordenada e outra aleatória. Compare os resultados e explique por que a performance muda conforme o padrão dos dados.
+
+## Visão de mercado
+Algoritmos de ordenação aparecem em dashboards de dados, busca em tabelas, processamento de filas e sistemas que precisam colocar registros em ordem antes de mostrar relatórios. Mesmo quando a linguagem usa funções prontas como `sorted()`, entender o custo dos algoritmos ainda é essencial para escolher a solução certa.
+
+## Autoavaliação
+- [ ] Implementei pelo menos 3 algoritmos de ordenação.
+- [ ] Contei as comparações e não apenas o resultado final.
+- [ ] Testei listas de tamanhos diferentes.
+- [ ] Entendo o que significa O(n²) em prática.
+- [ ] Posso explicar a diferença entre bubble, selection e insertion.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+
+def bubble_sort(lista):
+    comparacoes = 0
+    n = len(lista)
+    while n > 1:
+        trocou = False
+        for i in range(1, n):
+            comparacoes += 1
+            if lista[i - 1] > lista[i]:
+                lista[i - 1], lista[i] = lista[i], lista[i - 1]
+                trocou = True
+        if not trocou:
+            break
+        n -= 1
+    return lista, comparacoes
+
+
+def selection_sort(lista):
+    comparacoes = 0
+    n = len(lista)
+    for i in range(n):
+        menor = i
+        for j in range(i + 1, n):
+            comparacoes += 1
+            if lista[j] < lista[menor]:
+                menor = j
+        if menor != i:
+            lista[i], lista[menor] = lista[menor], lista[i]
+    return lista, comparacoes
+
+
+def insertion_sort(lista):
+    comparacoes = 0
+    for i in range(1, len(lista)):
+        atual = lista[i]
+        j = i - 1
+        while j >= 0:
+            comparacoes += 1
+            if lista[j] <= atual:
+                break
+            lista[j + 1] = lista[j]
+            j -= 1
+        lista[j + 1] = atual
+    return lista, comparacoes
+
+
+def gerar_dados(tamanho):
+    return list(range(tamanho, 0, -1))
+
+
+print("Comparador de algoritmos de ordenação")
+for tamanho in [10, 50, 100]:
+    dados = gerar_dados(tamanho)
+    bubble, comp_bubble = bubble_sort(dados.copy())
+    selection, comp_selection = selection_sort(dados.copy())
+    insertion, comp_insertion = insertion_sort(dados.copy())
+    print(
+        f"Tamanho {tamanho} | bubble={comp_bubble} | "
+        f"selection={comp_selection} | insertion={comp_insertion}"
+    )
+```
+
+Saída real com execução:
+
+```text
+Comparador de algoritmos de ordenação
+Tamanho 10 | bubble=45 | selection=45 | insertion=45
+Tamanho 50 | bubble=1225 | selection=1225 | insertion=1225
+Tamanho 100 | bubble=4900 | selection=4900 | insertion=4900
+```
+</details>

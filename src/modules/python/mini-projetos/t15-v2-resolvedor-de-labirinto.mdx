@@ -1,0 +1,179 @@
+---
+titulo: "Resolvedor de labirinto"
+descricao: "Encontre um caminho em um labirinto usando busca em profundidade ou em largura, sem perder de vista as regras do mapa."
+topico: "algoritmos"
+topicoNome: "Algoritmos: busca, ordenação, recursão e complexidade"
+variacao: "V2"
+tempo: 35
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "labirinto", "busca em profundidade", "busca em largura", "pilha", "fila", "recursao"]
+---
+
+# Resolvedor de labirinto
+
+## Contexto
+Uma equipe de logística quer testar um pequeno sistema de navegação interna para um centro de distribuição. O mapa é um labirinto simples em texto, e a solução precisa encontrar um caminho válido entre a entrada e a saída sem atravessar paredes, sem repetir posições e sem ficar preso em um ciclo.
+
+## O que você vai construir
+Um programa que recebe um labirinto como matriz e decide se existe um caminho da entrada até a saída. A solução pode usar busca em profundidade, busca em largura ou alguma variação de pilha/fila. O ideal é que o programa também mostre o caminho encontrado, quando ele existe.
+
+Exemplo de execução real:
+
+```text
+Labirinto:
+#####
+#S..#
+#.#E#
+#...#
+#####
+Caminho encontrado: 3 passos
+Sequência: [(1, 1), (1, 2), (1, 3), (2, 3)]
+```
+
+## Requisitos
+1. Representar o labirinto como uma matriz de strings ou lista de listas.
+2. Marcar a entrada e a saída com símbolos claros.
+3. Explorar vizinhos válidos sem cair em paredes ou posições já visitadas.
+4. Controlar a busca com pilha ou fila, dependendo da estratégia escolhida.
+5. Mostrar o caminho encontrado ou uma mensagem de que ele não existe.
+
+## Critérios de aceite
+- [ ] O programa identifica o ponto de início e o de saída.
+- [ ] O algoritmo não entra em paredes nem em posições fora do mapa.
+- [ ] O mapa é percorrido sem ficar em loop infinito.
+- [ ] O programa informa se existe caminho ou se o labirinto é impossível.
+- [ ] O caminho final pode ser desenhado ou listado em ordem.
+- [ ] O aluno consegue explicar a diferença entre DFS e BFS em um labirinto.
+
+## Guia
+### Marcos do projeto
+1. Defina a estrutura do labirinto e as regras de movimentação.
+2. Escolha a estratégia de busca: DFS com pilha ou BFS com fila.
+3. Marque a posição atual como visitada e explore os vizinhos válidos.
+4. Quando encontrar a saída, reconstrua o caminho percorrido.
+5. Mostre o resultado final em texto e, se quiser, desenhe o caminho no mapa.
+
+### Regras e casos especiais
+- O mapa pode ter paredes representadas por `#`.
+- A entrada pode ser `S` e a saída `E`.
+- Se houver mais de um caminho, qualquer solução válida é aceitável.
+- Labirintos sem solução devem resultar em mensagem clara.
+- Evite repetir posições; caso contrário, o algoritmo pode ficar preso em um ciclo.
+- Se o mapa for muito pequeno ou quase vazio, o programa deve funcionar sem falhas.
+
+### Dicas
+- A lógica mais segura começa sempre pela posição inicial.
+- Uma fila ou pilha simples resolve a maior parte do problema; você não precisa de biblioteca especial.
+- Para mostrar o caminho, vale guardar o ponto anterior de cada posição visitada.
+- Se o algoritmo não encontrar a saída, o programa deve dizer “sem caminho” em vez de parar sem feedback.
+
+<Playground title="Estrutura inicial" code={`from collections import deque
+
+labirinto = [
+    "######",
+    "#S...#",
+    "#.##.#",
+    "#....#",
+    "#####E",
+]
+
+inicio = (1, 1)
+saida = (4, 5)
+visitados = {inicio}
+filas = deque([inicio])
+origem = {}
+
+# 1) explore vizinhos válidos
+# 2) marque cada posição visitada
+# 3) quando chegar na saída, reconstrua o caminho
+# 4) imprima o caminho encontrado ou 'sem solução'
+`} />
+
+## Desafio extra
+Implementar a versão que desenha o caminho no próprio mapa com `*` e mostra a sequência de passos. Esse passo deixa o projeto mais parecido com um painel de navegação real.
+
+## Visão de mercado
+Problemas de roteamento e navegação aparecem em sistemas de logística, otimização de rotas, robótica e jogos. A mesma lógica usada para um labirinto aparece em buscas em grafos, mapas digitais e análise de redes.
+
+## Autoavaliação
+- [ ] Escolhi uma estratégia de busca e expliquei por que ela funciona.
+- [ ] Tratei paredes, passos repetidos e ciclos.
+- [ ] Verifiquei a existência de rota da entrada até a saída.
+- [ ] Posso mostrar o caminho final ou indicar que não existe solução.
+- [ ] Sei quando uma busca em profundidade é útil e quando BFS pode ser melhor.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+from collections import deque
+
+labirinto = [
+    "#####",
+    "#S..#",
+    "#.#E#",
+    "#...#",
+    "#####",
+]
+
+linhas = len(labirinto)
+colunas = len(labirinto[0])
+visitados = set()
+filas = deque()
+origem = {}
+
+for r, linha in enumerate(labirinto):
+    for c, caractere in enumerate(linha):
+        if caractere == 'S':
+            inicio = (r, c)
+        if caractere == 'E':
+            fim = (r, c)
+
+filas.append(inicio)
+visitados.add(inicio)
+
+while filas:
+    r, c = filas.popleft()
+    if (r, c) == fim:
+        break
+
+    for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+        nr, nc = r + dr, c + dc
+        if 0 <= nr < linhas and 0 <= nc < colunas:
+            if labirinto[nr][nc] != '#' and (nr, nc) not in visitados:
+                visitados.add((nr, nc))
+                origem[(nr, nc)] = (r, c)
+                filas.append((nr, nc))
+
+if fim not in origem and fim != inicio:
+    print("Labirinto sem solução.")
+else:
+    caminho = []
+    atual = fim
+    while atual != inicio:
+        caminho.append(atual)
+        atual = origem[atual]
+    caminho.append(inicio)
+    caminho.reverse()
+
+    print("Labirinto:")
+    for linha in labirinto:
+        print(linha)
+    print(f"Caminho encontrado: {len(caminho) - 1} passos")
+    print("Sequência:", caminho)
+```
+
+Saída real com execução:
+
+```text
+Labirinto:
+#####
+#S..#
+#.#E#
+#...#
+#####
+Caminho encontrado: 3 passos
+Sequência: [(1, 1), (1, 2), (1, 3), (2, 3)]
+```
+</details>

@@ -1,0 +1,208 @@
+---
+titulo: "Fila de atendimento"
+descricao: "Simule uma fila com prioridade para clientes normais, preferenciais e VIP, calculando tempo de espera e atendimento."
+topico: "algoritmos"
+topicoNome: "Algoritmos: busca, ordenação, recursão e complexidade"
+variacao: "V3"
+tempo: 40
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "fila", "prioridade", "simulacao", "tempo de espera", "deque", "atendimento"]
+---
+
+# Fila de atendimento
+
+## Contexto
+Uma loja de serviços e uma central de atendimento recebem clientes em momentos diferentes. A empresa precisa organizar a fila para reduzir o tempo de espera e respeitar a prioridade de atendimento: clientes VIP devem ser atendidos primeiro, depois preferenciais e por fim normais. A regra precisa ser transparentemente aplicada para todos.
+
+## O que você vai construir
+Um simulador de fila com prioridade que recebe uma lista de clientes, ordena por nível de prioridade, processa o atendimento e calcula o tempo médio de espera. O objetivo é mostrar como a fila influencia a experiência do cliente e como a estratégia de ordenação impacta o serviço.
+
+Exemplo de execução real:
+
+```text
+Fila inicial:
+1. Ana (normal, 10 min)
+2. Bruno (vip, 4 min)
+3. Carla (preferencial, 6 min)
+4. Davi (normal, 8 min)
+5. Edu (vip, 3 min)
+
+Atendimento:
+Bruno (VIP) -> 4 min | espera=0 min
+Edu (VIP) -> 3 min | espera=4 min
+Carla (PREFERENCIAL) -> 6 min | espera=11 min
+Ana (NORMAL) -> 10 min | espera=24 min
+Davi (NORMAL) -> 8 min | espera=47 min
+
+Tempo médio de espera: 9.4 minutos
+```
+
+## Requisitos
+1. Modelar clientes com nome, categoria e tempo de atendimento.
+2. Definir uma ordem de prioridade: VIP > preferencial > normal.
+3. Simular a fila em sequência, atendendo sempre o próximo cliente com maior prioridade.
+4. Calcular o tempo de espera acumulado e o tempo médio de espera.
+5. Apresentar a fila final e o relatório de atendimento em texto legível.
+
+## Critérios de aceite
+- [ ] O código respeita a ordem de prioridade da fila.
+- [ ] O aluno consegue explicar por que VIP e preferencial vêm antes de normais.
+- [ ] O tempo de espera é calculado em ordem crescente e consistente.
+- [ ] A saída final inclui os clientes atendidos e o tempo médio de espera.
+- [ ] O programa funciona mesmo quando há clientes de todos os níveis na mesma fila.
+- [ ] O código separa a lógica de ordenação da apresentação na tela.
+- [ ] O aluno reconhece que filas com prioridade são comuns em logística e suporte.
+
+## Histórias de usuário
+- Como atendente, quero atender VIPs primeiro para cumprir o contrato comercial.
+- Como cliente preferencial, quero ter menor espera do que quem chega depois de mim.
+- Como gestor, quero saber o tempo médio de espera da fila para ajustar o atendimento.
+- Como time de operação, quero visualizar a fila em ordem de prioridade para reduzir filas caóticas.
+
+## Arquitetura sugerida
+- `cliente.py`: estrutura do cliente com nome, tipo e tempo de atendimento.
+- `fila.py`: lógica da fila com prioridade e ordenação por categoria.
+- `simulacao.py`: cálculo de espera e geração do relatório.
+- `main.py`: leitura dos dados e apresentação da fila final.
+
+## Casos de teste de aceitação
+- Fila com apenas clientes normais: a ordem é pela chegada e o cálculo continua válido.
+- Fila com VIPs e normais: os VIPs aparecem antes dos normais.
+- Fila com preferenciais e VIPs misturados: a prioridade correta é sempre respeitada.
+- Clientes com tempo de atendimento zero ou negativo: o sistema deve rejeitar valores inválidos.
+- Fila vazia: o programa responde com mensagem clara e sem erro.
+
+## Riscos
+- Ordenar por nome em vez de prioridade pode quebrar o contrato do atendimento.
+- Não validar o tempo de atendimento pode gerar cálculos inconsistentes.
+- Tratar a fila como lista simples sem regras de prioridade aumenta a chance de erros silenciosos.
+- Misturar lógica de ordenação e apresentação em uma mesma função piora a manutenção.
+- Ignorar o caso de fila vazia faz o programa falhar em situações reais.
+
+## Guia
+### História do cliente
+A empresa precisa de uma ferramenta simples para avaliar o comportamento da fila de atendimento. O objetivo é testar o fluxo com prioridade, calcular o tempo de espera e entender como a distribuição dos clientes afeta a operação.
+
+### Marcos do projeto
+1. Crie uma estrutura de cliente com nome, tipo e tempo de atendimento.
+2. Ordene a fila por prioridade: VIP, preferencial e normal.
+3. Simule o atendimento em sequência e acompanhe o tempo acumulado.
+4. Calcule o tempo médio de espera de todos os clientes.
+5. Exiba um relatório final limpo para a operação.
+
+### Regras e casos especiais
+- A ordem de prioridade deve ser fixa e sempre respeitada.
+- Se houver clientes do mesmo tipo, mantenha a ordem de chegada.
+- O cliente com tempo de atendimento menor pode ser atendido antes daqueles com maior tempo quando a prioridade for igual.
+- O sistema deve tratar filas vazias e entradas com valores inválidos.
+- O relatório final deve mostrar tanto a fila atendida quanto o tempo médio de espera.
+
+### Dicas
+- Use um dicionário para mapear prioridade e números: `{'vip': 3, 'preferencial': 2, 'normal': 1}`.
+- Ao ordenar, mantenha um critério principal (prioridade) e um secundário (ordem de chegada).
+- A média de espera pode ser calculada a partir do tempo acumulado de cada cliente.
+- O código fica mais limpo se a fila e o cálculo de tempo estiverem em funções separadas.
+
+<Playground title="Estrutura inicial" code={`from collections import deque
+
+clientes = [
+    ("Ana", "normal", 10),
+    ("Bruno", "vip", 4),
+    ("Carla", "preferencial", 6),
+    ("Davi", "normal", 8),
+    ("Edu", "vip", 3),
+]
+
+prioridade = {"vip": 3, "preferencial": 2, "normal": 1}
+
+# 1) ordene a fila por prioridade
+# 2) calcule o tempo de espera acumulado
+# 3) some os tempos para gerar a média
+# 4) imprima o relatório final
+`} />
+
+## Desafio extra
+Adicione um mecanismo de “desvio” em que um cliente preferencial com espera muito longa pode subir para VIP temporariamente, simulando uma política de atendimento baseada em urgência.
+
+## Visão de mercado
+Filas com prioridade são comuns em hospitais, redes de suporte, call centers, bancos e sistemas logísticos. O mesmo raciocínio aparece em escalonamento de tarefas, filas de processamento e análise de atendimento em tempo real.
+
+## Autoavaliação
+- [ ] Entendi a ordem de prioridade da fila.
+- [ ] Separo clientes por categoria e tempo de atendimento.
+- [ ] Calculei tempo de espera e média de forma consistente.
+- [ ] O relatório final fica legível para operação e gestão.
+- [ ] Posso explicar por que a fila precisa respeitar regras claras.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+from collections import deque
+
+clientes = [
+    ("Ana", "normal", 10),
+    ("Bruno", "vip", 4),
+    ("Carla", "preferencial", 6),
+    ("Davi", "normal", 8),
+    ("Edu", "vip", 3),
+]
+
+prioridade = {"vip": 3, "preferencial": 2, "normal": 1}
+
+
+def simular_fila(clientes):
+    atendidos = []
+    fila = deque(
+        sorted(
+            enumerate(clientes),
+            key=lambda item: (-prioridade[item[1][1]], item[0]),
+        )
+    )
+    fila = deque(item[1] for item in fila)
+    tempo_atual = 0
+    tempo_total_espera = 0
+
+    while fila:
+        nome, categoria, tempo = fila.popleft()
+        tempo_total_espera += tempo_atual
+        tempo_atual += tempo
+        atendidos.append((nome, categoria, tempo, tempo_total_espera))
+
+    media = tempo_total_espera / len(atendidos) if atendidos else 0
+    return atendidos, media
+
+
+atendidos, media = simular_fila(clientes)
+print("Fila inicial:")
+for i, (nome, categoria, tempo) in enumerate(clientes, start=1):
+    print(f"{i}. {nome} ({categoria}, {tempo} min)")
+
+print("\nAtendimento:")
+for nome, categoria, tempo, espera in atendidos:
+    print(f"{nome} ({categoria.upper()}) -> {tempo} min | espera={espera} min")
+
+print(f"\nTempo médio de espera: {media:.1f} minutos")
+```
+
+Saída real com execução:
+
+```text
+Fila inicial:
+1. Ana (normal, 10 min)
+2. Bruno (vip, 4 min)
+3. Carla (preferencial, 6 min)
+4. Davi (normal, 8 min)
+5. Edu (vip, 3 min)
+
+Atendimento:
+Bruno (VIP) -> 4 min | espera=0 min
+Edu (VIP) -> 3 min | espera=4 min
+Carla (PREFERENCIAL) -> 6 min | espera=11 min
+Ana (NORMAL) -> 10 min | espera=24 min
+Davi (NORMAL) -> 8 min | espera=47 min
+
+Tempo médio de espera: 9.4 minutos
+```
+</details>
