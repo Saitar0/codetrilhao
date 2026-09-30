@@ -1,0 +1,27 @@
+{
+  "id": "t06-v2-01-fatorial-de-n",
+  "tipo": "codigo",
+  "titulo": "Cálculo do fatorial",
+  "topico": "Loops",
+  "topicoNumero": 6,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Comece com o resultado em 1, porque 0! e 1! valem 1.",
+    "Multiplique o total por cada número do intervalo.",
+    "A parada acontece quando o contador chega ao valor de `n`."
+  ],
+  "solucao": "def fatorial(n):\n    resultado = 1\n    for numero in range(1, n + 1):\n        resultado *= numero\n    return resultado\n",
+  "tags": ["python", "loops", "fatorial"],
+  "aulaRelacionada": "loops",
+  "enunciado": "Implemente `fatorial(n)` para devolver o fatorial de `n` usando um loop. Considere que `0!` e `1!` valem 1.",
+  "starterCode": "def fatorial(n):\n    pass\n",
+  "testes": [
+    { "chamada": "fatorial(0)", "esperado": "1", "oculto": false },
+    { "chamada": "fatorial(1)", "esperado": "1", "oculto": false },
+    { "chamada": "fatorial(5)", "esperado": "120", "oculto": false },
+    { "chamada": "fatorial(7)", "esperado": "5040", "oculto": true },
+    { "chamada": "fatorial(3) == 6", "esperado": "True", "oculto": true }
+  ]
+}

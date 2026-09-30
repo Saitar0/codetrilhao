@@ -1,0 +1,27 @@
+{
+  "id": "t06-v1-01-contagem-regressiva-de-10-a-0",
+  "tipo": "codigo",
+  "titulo": "Contagem regressiva de 10 a 0",
+  "topico": "Loops",
+  "topicoNumero": 6,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Comece em 10 e reduza em 1 em cada passo.",
+    "O critério de parada é quando o valor chega a 0.",
+    "Use `range` para montar a sequência de forma direta e segura."
+  ],
+  "solucao": "def contagem_regressiva():\n    return list(range(10, -1, -1))\n",
+  "tags": ["python", "loops", "range"],
+  "aulaRelacionada": "loops",
+  "enunciado": "Implemente `contagem_regressiva()` para devolver a sequência de 10 até 0, em ordem decrescente. O resultado deve ser uma lista com todos os valores do intervalo.",
+  "starterCode": "def contagem_regressiva():\n    pass\n",
+  "testes": [
+    { "chamada": "contagem_regressiva()", "esperado": "[10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]", "oculto": false },
+    { "chamada": "len(contagem_regressiva())", "esperado": "11", "oculto": false },
+    { "chamada": "contagem_regressiva()[0]", "esperado": "10", "oculto": false },
+    { "chamada": "contagem_regressiva()[-1]", "esperado": "0", "oculto": true },
+    { "chamada": "contagem_regressiva() == list(range(10, -1, -1))", "esperado": "True", "oculto": true }
+  ]
+}

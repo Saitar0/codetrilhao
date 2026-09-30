@@ -1,0 +1,27 @@
+{
+  "id": "t06-v2-03-primos-ate-n",
+  "tipo": "codigo",
+  "titulo": "Listar primos até N",
+  "topico": "Loops",
+  "topicoNumero": 6,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Um número primo é maior que 1 e não é divisível por nenhum número entre 2 e a sua raiz quadrada.",
+    "Teste cada número com um divisor em um laço interno.",
+    "Se encontrar qualquer divisor, o número não é primo."
+  ],
+  "solucao": "import math\n\ndef primos_ate_n(n):\n    if n < 2:\n        return []\n\n    primos = []\n    for numero in range(2, n + 1):\n        eh_primo = True\n        for divisor in range(2, int(math.sqrt(numero)) + 1):\n            if numero % divisor == 0:\n                eh_primo = False\n                break\n        if eh_primo:\n            primos.append(numero)\n    return primos\n",
+  "tags": ["python", "loops", "primos"],
+  "aulaRelacionada": "loops",
+  "enunciado": "Implemente `primos_ate_n(n)` para devolver uma lista com todos os números primos entre 2 e `n`, inclusive.",
+  "starterCode": "import math\n\ndef primos_ate_n(n):\n    pass\n",
+  "testes": [
+    { "chamada": "primos_ate_n(10)", "esperado": "[2, 3, 5, 7]", "oculto": false },
+    { "chamada": "primos_ate_n(1)", "esperado": "[]", "oculto": false },
+    { "chamada": "primos_ate_n(2)", "esperado": "[2]", "oculto": false },
+    { "chamada": "primos_ate_n(25)", "esperado": "[2, 3, 5, 7, 11, 13, 17, 19, 23]", "oculto": true },
+    { "chamada": "primos_ate_n(4)", "esperado": "[2, 3]", "oculto": true }
+  ]
+}

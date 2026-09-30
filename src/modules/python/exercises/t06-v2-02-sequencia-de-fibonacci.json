@@ -1,0 +1,27 @@
+{
+  "id": "t06-v2-02-sequencia-de-fibonacci",
+  "tipo": "codigo",
+  "titulo": "N primeiros termos de Fibonacci",
+  "topico": "Loops",
+  "topicoNumero": 6,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "A sequência começa em 0 e 1.",
+    "Cada novo termo é a soma dos dois anteriores.",
+    "Você pode guardar os dois últimos valores e avançar passo a passo."
+  ],
+  "solucao": "def fibonacci_n(n):\n    if n <= 0:\n        return []\n    if n == 1:\n        return [0]\n\n    sequencia = [0, 1]\n    while len(sequencia) < n:\n        prox = sequencia[-1] + sequencia[-2]\n        sequencia.append(prox)\n    return sequencia\n",
+  "tags": ["python", "loops", "fibonacci"],
+  "aulaRelacionada": "loops",
+  "enunciado": "Implemente `fibonacci_n(n)` para devolver os `n` primeiros termos da sequência de Fibonacci, começando em `[0, 1]`.",
+  "starterCode": "def fibonacci_n(n):\n    pass\n",
+  "testes": [
+    { "chamada": "fibonacci_n(0)", "esperado": "[]", "oculto": false },
+    { "chamada": "fibonacci_n(1)", "esperado": "[0]", "oculto": false },
+    { "chamada": "fibonacci_n(7)", "esperado": "[0, 1, 1, 2, 3, 5, 8]", "oculto": false },
+    { "chamada": "fibonacci_n(10)", "esperado": "[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]", "oculto": true },
+    { "chamada": "fibonacci_n(3)", "esperado": "[0, 1, 1]", "oculto": true }
+  ]
+}

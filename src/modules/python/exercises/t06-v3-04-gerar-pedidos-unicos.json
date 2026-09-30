@@ -1,0 +1,27 @@
+{
+  "id": "t06-v3-04-gerar-pedidos-unicos",
+  "tipo": "codigo",
+  "titulo": "Gerar pedidos únicos com prefixo e ano",
+  "topico": "Loops",
+  "topicoNumero": 6,
+  "variacao": "V3",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "A estrutura dos códigos pode ser `PREFIXO-ANO-NÚMERO`.",
+    "Use um contador que começa em 1 e cresce a cada pedido gerado.",
+    "Para gerar 100 pedidos, o laço deve repetir exatamente esse número de vezes."
+  ],
+  "solucao": "def gerar_pedidos(prefixo, ano, quantidade):\n    pedidos = []\n    for numero in range(1, quantidade + 1):\n        pedidos.append(f\"{prefixo}-{ano}-{numero:03d}\")\n    return pedidos\n",
+  "tags": ["python", "loops", "geracao"],
+  "aulaRelacionada": "loops",
+  "enunciado": "Implemente `gerar_pedidos(prefixo, ano, quantidade)` para criar uma lista com `quantidade` códigos de pedido únicos no formato `PREFIXO-ANO-NÚMERO`, sendo `NÚMERO` sempre preenchido com três dígitos (por exemplo, `001`, `002`, ...).",
+  "starterCode": "def gerar_pedidos(prefixo, ano, quantidade):\n    pass\n",
+  "testes": [
+    { "chamada": "gerar_pedidos('PED', 2026, 3)", "esperado": "['PED-2026-001', 'PED-2026-002', 'PED-2026-003']", "oculto": false },
+    { "chamada": "gerar_pedidos('ABC', 2024, 1)", "esperado": "['ABC-2024-001']", "oculto": false },
+    { "chamada": "len(gerar_pedidos('X', 2025, 100))", "esperado": "100", "oculto": false },
+    { "chamada": "gerar_pedidos('Q', 2025, 2)[1]", "esperado": "Q-2025-002", "oculto": true },
+    { "chamada": "gerar_pedidos('Z', 2023, 5)[-1]", "esperado": "Z-2023-005", "oculto": true }
+  ]
+}

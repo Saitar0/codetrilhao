@@ -1,0 +1,27 @@
+{
+  "id": "t06-v2-04-triangulo-asteriscos",
+  "tipo": "codigo",
+  "titulo": "Desenhar triângulo com asteriscos",
+  "topico": "Loops",
+  "topicoNumero": 6,
+  "variacao": "V2",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "O loop externo controla a linha; o interno controla os asteriscos da linha atual.",
+    "Para desenhar um triângulo, a quantidade de estrelas cresce a cada linha.",
+    "Use `print` com `end=''` ou montando uma string antes de imprimir."
+  ],
+  "solucao": "def triangulo(n):\n    linhas = []\n    for linha in range(1, n + 1):\n        linhas.append('*' * linha)\n    return '\\n'.join(linhas)\n",
+  "tags": ["python", "loops", "aninhados"],
+  "aulaRelacionada": "loops",
+  "enunciado": "Implemente `triangulo(n)` para devolver um triângulo de asteriscos com `n` linhas. A primeira linha deve ter 1 asterisco, a última, `n` asteriscos.",
+  "starterCode": "def triangulo(n):\n    pass\n",
+  "testes": [
+    { "chamada": "triangulo(3)", "esperado": "*\n**\n***", "oculto": false },
+    { "chamada": "triangulo(1)", "esperado": "*", "oculto": false },
+    { "chamada": "triangulo(2)", "esperado": "*\n**", "oculto": false },
+    { "chamada": "triangulo(4)", "esperado": "*\n**\n***\n****", "oculto": true },
+    { "chamada": "triangulo(5).splitlines()[4]", "esperado": "*****", "oculto": true }
+  ]
+}

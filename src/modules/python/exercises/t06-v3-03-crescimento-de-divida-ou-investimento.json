@@ -1,0 +1,27 @@
+{
+  "id": "t06-v3-03-crescimento-de-divida-ou-investimento",
+  "tipo": "codigo",
+  "titulo": "Simular crescimento de dívida ou investimento",
+  "topico": "Loops",
+  "topicoNumero": 6,
+  "variacao": "V3",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "A cada mês, a nova quantia é a anterior multiplicada por `(1 + taxa)`.",
+    "Repita a operação para cada mês do período solicitado.",
+    "Armazene o valor final em uma lista ou retorne apenas o montante final."
+  ],
+  "solucao": "def crescimento(valor_inicial, taxa, meses):\n    saldo = float(valor_inicial)\n    for _ in range(meses):\n        saldo *= 1 + taxa\n    return round(saldo, 2)\n",
+  "tags": ["python", "loops", "juros"],
+  "aulaRelacionada": "loops",
+  "enunciado": "Implemente `crescimento(valor_inicial, taxa, meses)` para simular o crescimento mensal de um investimento ou de uma dívida. A taxa deve ser decimal, como `0.05` para 5% ao mês. O valor retornado deve ser o montante final arredondado em 2 casas.",
+  "starterCode": "def crescimento(valor_inicial, taxa, meses):\n    pass\n",
+  "testes": [
+    { "chamada": "crescimento(1000, 0.05, 1)", "esperado": "1050.0", "oculto": false },
+    { "chamada": "crescimento(1000, 0.05, 2)", "esperado": "1102.5", "oculto": false },
+    { "chamada": "crescimento(500, 0, 12)", "esperado": "500.0", "oculto": false },
+    { "chamada": "crescimento(200, 0.1, 3)", "esperado": "266.2", "oculto": true },
+    { "chamada": "crescimento(500, -0.1, 2)", "esperado": "405.0", "oculto": true }
+  ]
+}

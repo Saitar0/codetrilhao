@@ -1,0 +1,27 @@
+{
+  "id": "t06-v1-03-soma-de-1-a-n",
+  "tipo": "codigo",
+  "titulo": "Somar de 1 até N",
+  "topico": "Loops",
+  "topicoNumero": 6,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Acumule os valores em uma variável que começa em zero.",
+    "A cada passo, some o número atual ao total.",
+    "O intervalo deve ir de 1 até `n`, inclusive."
+  ],
+  "solucao": "def soma_ate_n(n):\n    total = 0\n    for numero in range(1, n + 1):\n        total += numero\n    return total\n",
+  "tags": ["python", "loops", "acumulador"],
+  "aulaRelacionada": "loops",
+  "enunciado": "Implemente `soma_ate_n(n)` para devolver a soma de todos os números inteiros de 1 até `n`, inclusive.",
+  "starterCode": "def soma_ate_n(n):\n    pass\n",
+  "testes": [
+    { "chamada": "soma_ate_n(5)", "esperado": "15", "oculto": false },
+    { "chamada": "soma_ate_n(1)", "esperado": "1", "oculto": false },
+    { "chamada": "soma_ate_n(0)", "esperado": "0", "oculto": false },
+    { "chamada": "soma_ate_n(10)", "esperado": "55", "oculto": true },
+    { "chamada": "soma_ate_n(3) == 6", "esperado": "True", "oculto": true }
+  ]
+}

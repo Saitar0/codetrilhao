@@ -1,0 +1,27 @@
+{
+  "id": "t06-v1-02-tabuada-de-numero",
+  "tipo": "codigo",
+  "titulo": "Tabuada de um número",
+  "topico": "Loops",
+  "topicoNumero": 6,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Repita 10 vezes para os fatores de 1 a 10.",
+    "Use o número informado como base da multiplicação.",
+    "Acumule cada linha em uma string com quebra de linha."
+  ],
+  "solucao": "def tabuada(numero):\n    linhas = []\n    for fator in range(1, 11):\n        linhas.append(f\"{numero} x {fator} = {numero * fator}\")\n    return '\\n'.join(linhas)\n",
+  "tags": ["python", "loops", "tabuada"],
+  "aulaRelacionada": "loops",
+  "enunciado": "Implemente `tabuada(numero)` para devolver a tabuada de 1 a 10 do número informado, em formato de texto com uma linha por operação.",
+  "starterCode": "def tabuada(numero):\n    pass\n",
+  "testes": [
+    { "chamada": "tabuada(3)", "esperado": "3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n3 x 4 = 12\n3 x 5 = 15\n3 x 6 = 18\n3 x 7 = 21\n3 x 8 = 24\n3 x 9 = 27\n3 x 10 = 30", "oculto": false },
+    { "chamada": "tabuada(1).splitlines()[0]", "esperado": "1 x 1 = 1", "oculto": false },
+    { "chamada": "tabuada(0).splitlines()[-1]", "esperado": "0 x 10 = 0", "oculto": false },
+    { "chamada": "len(tabuada(5).splitlines())", "esperado": "10", "oculto": true },
+    { "chamada": "tabuada(7).splitlines()[9]", "esperado": "7 x 10 = 70", "oculto": true }
+  ]
+}
