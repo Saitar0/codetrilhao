@@ -1,41 +1,191 @@
 ﻿---
-titulo: "FunÃ§Ãµes"
-descricao: "Organize seu cÃ³digo em blocos reutilizÃ¡veis com funÃ§Ãµes."
+titulo: "Funções"
+descricao: "Organize seu código em blocos reutilizáveis com funções bem definidas."
 secao: "C. Organização de código"
 ordem: 15
-tempo: 12
+topico: 10
+fase: "C"
+tempo: 25
 nivel: "iniciante"
-palavrasChave: ['funÃ§Ã£o', 'def', 'retorno', 'parÃ¢metros']
+palavrasChave: ['função', 'def', 'return', 'parâmetros', 'docstring']
 exercicios: []
 ---
 
-# FunÃ§Ãµes
+# Funções
 
-Organize seu cÃ³digo em blocos reutilizÃ¡veis com funÃ§Ãµes.
+Você já viu que Python aceita instruções em sequência, mas quando o programa cresce, repetir trechos quase iguais vira manutenção difícil. Imagine um sistema de cadastro que precisa cumprimentar clientes, calcular descontos em vários lugares e validar nomes em diferentes telas. Em vez de copiar o mesmo bloco, você encapsula a lógica em uma função: um nome, um comportamento e um resultado previsível.
 
-<Callout type="importante" title="Objetivo da aula">
-  Neste bloco, vocÃª vai entender o conceito principal, ver exemplos prÃ¡ticos e testar a lÃ³gica em pequenos passos.
+Isso muda o jeito de pensar em programação. Você deixa o código mais legível, mais testável e mais fácil de reutilizar. A ideia central é simples: uma função recebe entradas, processa elas e devolve um valor quando faz sentido.
+
+<Callout type="importante" title="O que você vai aprender">
+  <ul>
+    <li>Definir funções com <Glossario termo="def" definition="Palavra-chave usada para criar uma função em Python." />.</li>
+    <li>Entender a diferença entre <Glossario termo="print" definition="Mostra valor na tela, mas não devolve esse valor para o restante do programa." /> e <Glossario termo="return" definition="Devolve um valor para quem chamou a função." />.</li>
+    <li>Trabalhar com parâmetros, valores padrão e argumentos nomeados.</li>
+    <li>Escrever docstrings e type hints para deixar a função mais clara.</li>
+  </ul>
 </Callout>
 
-<CodeBlock title="exemplo_1.py" code={`def saudacao(nome):
-    return f"OlÃ¡, {nome}!"
-print(saudacao("Lia"))`} />
-<CodeBlock title="exemplo_2.py" code={`def soma(a, b):
-    return a + b
-print(soma(2, 3))`} />
-<CodeBlock title="exemplo_3.py" code={`def dobro(x):
-    return x * 2
-print(dobro(5))`} />
+## 1. Definindo uma função
 
-<Quiz questions={[{ question: "Qual Ã© a ideia central desta aula?", options: ["memorizar sintaxe sem testar", "entender o conceito e aplicar em contexto", "evitar prÃ¡tica", "ignorar exemplos"], correctIndex: 1, explanation: "A aula enfoca compreensÃ£o e aplicaÃ§Ã£o prÃ¡tica." }, { question: "Qual hÃ¡bito Ã© mais Ãºtil?", options: ["testar pequenos trechos", "copiar sem entender", "ignorar erros", "nunca revisar o cÃ³digo"], correctIndex: 0, explanation: "Testar pequenas partes ajuda a confirmar o comportamento." }, { question: "Qual frase melhor resume a prÃ¡tica em Python?", options: ["clareza e execuÃ§Ã£o", "complexidade por padrÃ£o", "evitar leitura", "nomear tudo ao acaso"], correctIndex: 0, explanation: "Python valoriza clareza e execuÃ§Ã£o objetiva." }]} />
+A sintaxe começa com `def`, seguida do nome e parênteses. Dentro da função, você escreve o bloco de instruções. Quando a função é chamada, a execução salta para esse trecho e volta para o ponto de origem depois do `return`.
+
+<CodeBlock title="saudacao.py" code={`def saudacao(nome):
+    return f"Olá, {nome}!"
+
+print(saudacao("Lia"))
+print(saudacao("Pedro"))`} />
+
+O código acima imprime duas saudações. A função `saudacao` recebe uma entrada chamada `nome` e devolve uma string pronta para ser impressa. Veja a lógica: a função não “escreve no console” por conta própria; ela retorna um valor que o programa usa depois.
+
+A primeira vantagem é a reutilização. Você não precisa repetir aquele trecho de mensagem em vários lugares. Em vez disso, chama a função toda vez que quiser. Outra vantagem é testar isoladamente. Se a função está certa, seu comportamento fica previsível.
+
+<Playground title="Experimente: mudar o nome da função" code={`def cumprimentar(pessoa):
+    return f"Bem-vindo(a), {pessoa}!"
+
+print(cumprimentar("Ana"))
+print(cumprimentar("Bruno"))`} />
+
+## 2. `return` vs `print`
+
+Essa é uma confusão muito comum no começo. `print` apenas exibe algo para o usuário. `return` entrega um valor para quem chamou a função. Isso importa porque a função pode gerar um resultado que outro pedaço do programa usa como entrada de outra operação.
+
+<CodeBlock title="print_vs_return.py" code={`def imprimir_soma(a, b):
+    print(a + b)
+
+def devolver_soma(a, b):
+    return a + b
+
+imprimir_soma(10, 5)
+resultado = devolver_soma(10, 5)
+print(resultado)
+print(devolver_soma(20, 7))`} />
+
+A função `imprimir_soma` mostra o total na tela, mas não o devolve. Já `devolver_soma` produz um valor útil para armazenar em variável ou passar para outra expressão. A saída mostra isso claramente.
+
+<StepThrough>
+  <div>
+    <strong>Passo 1:</strong> o programa chama <code>imprimir_soma(10, 5)</code>. A função executa <code>print(a + b)</code> e mostra 15.
+  </div>
+  <div>
+    <strong>Passo 2:</strong> a função <code>devolver_soma(10, 5)</code> calcula 15, mas em vez de mostrar na tela, entrega esse valor para a variável <code>resultado</code>.
+  </div>
+  <div>
+    <strong>Passo 3:</strong> a expressão <code>print(resultado)</code> mostra 15 novamente, e a próxima chamada usa esse valor em outra operação.
+  </div>
+</StepThrough>
+
+A regra prática é: use `print` quando você quer mostrar algo para o usuário; use `return` quando você quer produzir um valor para o restante do programa. Se uma função não retorna nada, ela normalmente retorna `None` implicitamente.
+
+## 3. Parâmetros, argumentos e valores padrão
+
+Uma função geralmente recebe entradas em forma de parâmetros. No momento da chamada, você passa argumentos. Quando você define um valor padrão, a função consegue funcionar mesmo sem o argumento ser informado.
+
+<CodeBlock title="parametros_padrao.py" code={`def calcular_desconto(preco: float, percentual: float = 10) -> float:
+    return preco * (1 - percentual / 100)
+
+print(calcular_desconto(200))
+print(calcular_desconto(200, 25))
+print(calcular_desconto(percentual=15, preco=100))`} />
+
+Aqui, o parâmetro `percentual` tem valor padrão de `10`. Se o argumento não for passado, o código usa esse valor. A chamada com argumentos nomeados também funciona porque Python permite que você diga explicitamente qual valor vai para qual nome. Isso melhora a legibilidade, especialmente em funções com muitos parâmetros.
+
+Você também pode escrever funções mais flexíveis usando parâmetros opcionais ou nomes autoexplicativos. O importante é manter a assinatura clara: o que a função recebe e o que devolve.
+
+## 4. Docstrings e type hints
+
+Documentar uma função não é luxo: é uma forma de deixar o contrato da função inteligível. A docstring é uma string curta logo no início da função, explicando o que ela faz. Já os `type hints` dizem ao Python e a você qual tipo cada parâmetro e retorno deve ter.
+
+<CodeBlock title="docstring_e_type_hints.py" code={`def media(numeros: list[float]) -> float:
+    """Calcula a média aritmética de uma lista de números."""
+    return sum(numeros) / len(numeros)
+
+print(media([8.0, 10.0, 6.0]))
+print(media([5.0, 7.0, 9.0, 11.0]))`} />
+
+A docstring descreve a intenção da função, e os type hints deixam a API mais clara para quem lê o código. Isso ajuda em manutenção, revisão e na própria experiência de desenvolvimento. Em projetos maiores, isso reduz erros e facilita a leitura rápida.
+
+<Playground title="Experimente: criar uma função de resumo" code={`def resumo_pedido(nome_cliente: str, itens: list[str]) -> str:
+    """Gera uma linha de resumo do pedido."""
+    return f"{nome_cliente}: {', '.join(itens)}"
+
+print(resumo_pedido("Maria", ["pão", "leite", "ovos"]))`} />
+
+## 5. Quando uma função é útil?
+
+Funções são especialmente valiosas quando você precisa dividir responsabilidades. Em vez de um programa enorme, com tudo misturado, você organiza blocos com propósito único. Isso facilita a leitura, a depuração e a reutilização. Uma função pura, por exemplo, recebe dados e retorna um resultado sem modificar estado externo; já uma função com efeito colateral pode alterar uma variável global, salvar arquivo ou atualizar um contador.
+
+Você não precisa transformar tudo em função imediatamente. O princípio é separar trechos que têm nomes claros e fazem uma ação específica. Se você consegue dizer em uma frase o que a função faz, ela provavelmente está bem definida.
+
+<Callout type="erro-comum" title="Erro: função retorna None">
+  O problema aparece quando você cria uma função sem `return` e espera um valor de volta. Em vez de receber um resultado, você recebe `None`.
+  <CodeBlock title="erro_none.py" code={`def mensagem(nome):
+    print(f"Olá, {nome}!")
+
+resultado = mensagem("Lia")
+print(resultado)`} />
+  A mensagem real do programa é a saída em que `resultado` aparece como `None`. A correção é retornar o valor quando a função deveria produzir algo, e não só exibí-lo.
+</Callout>
+
+<Callout type="erro-comum" title="Erro: modificar variável global sem declarar">
+  Quando uma função tenta alterar uma variável externa sem receber o valor como parâmetro, Python cria uma variável local e você vê `UnboundLocalError`.
+  <CodeBlock title="erro_unbound.py" code={`contador = 1
+
+def aumentar():
+    contador = contador + 1
+    return contador
+
+print(aumentar())`} />
+  A mensagem real é `UnboundLocalError: local variable 'contador' referenced before assignment`. A correção é receber o valor por parâmetro e devolver o resultado, em vez de tentar mexer no dado externo sem avisar explicitamente ao Python.
+</Callout>
+
+<Callout type="erro-comum" title="Erro: valor padrão mutável">
+  Esse é um clássico de funções. Quando você usa uma lista como valor padrão, ela fica “presa” à função entre chamadas.
+  <CodeBlock title="erro_default_mutavel.py" code={`def registrar(item, itens=[]):
+    itens.append(item)
+    return itens
+
+print(registrar("a"))
+print(registrar("b"))`} />
+  A saída real mostra que a segunda chamada reaproveita a lista da primeira: `['a']` e `['a', 'b']`. A correção é usar `None` e criar a lista dentro da função, se a intenção for um estado novo a cada chamada.
+</Callout>
+
+<Tabela data={[
+  ['Situação', 'Uso de print', 'Uso de return'],
+  ['Objetivo', 'Mostrar na tela', 'Entregar valor para o programa'],
+  ['Uso em variável', 'Não funciona bem como dado', 'Funciona como dado reutilizável'],
+  ['Exemplo', 'print(5 + 3)', 'resultado = 5 + 3'],
+  ['Quando usar', 'Interação com usuário', 'Cálculo ou processamento']
+]} />
+
+<Glossario termo="Parâmetro" definition="Nome que aparece na definição da função e representa a entrada esperada." />
+<Glossario termo="Argumento" definition="Valor real passado na chamada da função." />
+<Glossario termo="Contrato da função" definition="A ideia de entrada, processamento e saída que a função fornece para o código que a chama." />
+
+### No mercado de trabalho
+
+Funções são a base da organização de código em projetos reais. Em APIs, scripts de automação, ferramentas de análise e sistemas grandes, elas são usadas para separar regras de negócio, validar dados, calcular resultados e reaproveitar lógica entre módulos. Um código com funções bem pensadas é mais fácil de testar, menos sujeito a erro e mais simples de evoluir quando o projeto cresce.
+
+Em uma empresa, você geralmente encontra funções que validam campos, calculam frete, geram relatórios e extraem dados. Nessa prática, uma boa função tem nome claro, poucas responsabilidades e retorno previsível. Isso é o que torna um sistema fácil de manter e de auditar.
+
+<Quiz questions={[
+  { question: "Qual das opções melhor descreve o papel de uma função em Python?", options: ["Um bloco que só imprime dados na tela", "Um bloco reutilizável que recebe entradas e devolve resultados", "Uma variável especial com nomes complexos", "Uma estrutura de repetição"], correctIndex: 1, explanation: "Funções encapsulam lógica e podem receber entradas e retornar valores reutilizáveis." },
+  { question: "Qual é a diferença principal entre print e return?", options: ["print cria uma função, return lê o código", "print mostra na tela e return entrega um valor para o programa", "return só funciona fora de funções", "Não existe diferença"], correctIndex: 1, explanation: "print exibe e return devolve um valor que pode ser usado em expressões e variáveis." },
+  { question: "O que acontece se uma função não tiver return e você tentar guardar seu resultado?", options: ["O programa trava antes de executar", "Ela retorna None", "Ela retorna uma lista vazia", "Ela transforma o valor em string"], correctIndex: 1, explanation: "Funções que não retornam explicitamente terminam com None implícito." },
+  { question: "Quando a chamada abaixo imprime 30?\n\n```python\ndef soma(a, b=10):\n    return a + b\nprint(soma(20))\n```", options: ["Sempre imprime 30", "Imprime 30 porque b vale 10 por padrão", "Imprime 30 porque a e b são iguais", "Imprime 30 só se a chamada for nomeada"], correctIndex: 1, explanation: "Como o argumento b não foi passado, a função usa o valor padrão 10." }
+]} />
 
 <Resumo>
-  <li>Entenda o conceito antes de memorizar a sintaxe.</li>
-  <li>Teste pequenos exemplos e avalie o resultado.</li>
-  <li>Aplica a ideia em cenÃ¡rios reais para fixar o conhecimento.</li>
+  <li>Funções permitem organizar melhor o código por responsabilidade.</li>
+  <li>`def` cria a estrutura da função, e `return` entrega o resultado.</li>
+  <li>Parâmetros e argumentos deixam a função mais flexível e reutilizável.</li>
+  <li>Valores padrão evitam repetições em chamadas simples.</li>
+  <li>Docstrings e type hints deixam a intenção do código explícita.</li>
+  <li>Evitar `None` e default mutável ajuda a manter previsibilidade.</li>
 </Resumo>
 
-<Desafio>
-  Aplique esse tema em um mini cenÃ¡rio do dia a dia e confirme o resultado com um cÃ³digo simples e legÃ­vel.
-</Desafio>
+Checklist de domínio: ☐ defino funções pequenas e com propósito claro ☐ uso `return` para devolver valores ☐ trabalho com parâmetros e defaults ☐ escrevo docstrings e hints quando fazem sentido ☐ evito armadilhas como default mutável
 
+<Desafio title="Desafio da aula">
+  Crie uma função chamada `calcular_total` que recebe o preço de um produto e uma quantidade, usa um desconto opcional de 10% e retorna o valor final. Depois teste com 3 chamadas diferentes, incluindo uma com argumento nomeado.
+</Desafio>

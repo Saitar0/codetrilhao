@@ -4,8 +4,14 @@ import { pathToFileURL } from 'node:url'
 
 const root = process.cwd()
 const modulesDir = path.join(root, 'src', 'modules')
-const mapaTopicosPath = path.join(root, 'scripts', 'mapa-topicos.json')
-const mapaTopicos = JSON.parse(fs.readFileSync(mapaTopicosPath, 'utf8'))
+
+function loadMapaTopicos(rootDir = root) {
+  const mapaTopicosPath = path.join(rootDir, 'scripts', 'mapa-topicos.json')
+  if (!fs.existsSync(mapaTopicosPath)) {
+    return {}
+  }
+  return JSON.parse(fs.readFileSync(mapaTopicosPath, 'utf8'))
+}
 
 function parseArgs(argv) {
   const args = { topico: null, estrito: false, global: false }
@@ -61,7 +67,8 @@ function parseFrontmatterValue(value) {
 }
 
 function parseFrontmatter(text) {
-  const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/)
+  const normalizedText = String(text ?? '').replace(/^\uFEFF/, '')
+  const match = normalizedText.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/)
   if (!match) {
     return { raw: '', data: {} }
   }
@@ -85,8 +92,9 @@ function normalizeTopicKey(value) {
   return String(value).trim()
 }
 
-function getTopicSlugs(topic) {
+function getTopicSlugs(topic, rootDir = root) {
   if (topic === null) return null
+  const mapaTopicos = loadMapaTopicos(rootDir)
   const key = normalizeTopicKey(topic)
   const match = mapaTopicos[key]
   if (Array.isArray(match)) {
@@ -118,7 +126,7 @@ function listLessonFiles({ rootDir = root, topic = null, global = false } = {}) 
         files.push(fullPath)
         continue
       }
-      if (getTopicSlugs(topic).has(slug)) {
+      if (getTopicSlugs(topic, rootDir).has(slug)) {
         files.push(fullPath)
       }
     }
@@ -173,14 +181,15 @@ function validateLessonFile(filePath, { strict = false } = {}) {
     errors.push(`${fileName}: exercicios deve ser array.`)
   }
 
-  const body = text.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '')
+  const normalizedText = String(text ?? '').replace(/^\uFEFF/, '')
+  const body = normalizedText.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '')
   const sections = [
     /#\s+/,
     /<Callout\s+type="importante"/,
     /##\s+/,
-    /<Quiz/i,
-    /<Resumo>/i,
-    /<Desafio>/i,
+    /<Quiz\b/i,
+    /<Resumo\b/i,
+    /<Desafio\b/i,
     /No mercado de trabalho/i,
   ]
 
@@ -209,6 +218,7 @@ function validateLessonFile(filePath, { strict = false } = {}) {
 function runGlobalLessonChecks({ rootDir = root } = {}) {
   const errors = []
   const files = listLessonFiles({ rootDir, global: true })
+  const mapaTopicos = loadMapaTopicos(rootDir)
   const mapSlugs = new Set(Object.values(mapaTopicos).flatMap((list) => Array.isArray(list) ? list : []))
   const found = new Set(files.map((file) => path.basename(file, '.mdx')))
 
