@@ -1,0 +1,197 @@
+---
+titulo: "Cadastro de produtos"
+descricao: "Crie um catálogo de produtos com busca, filtro por categoria e relatório de valor para um cenário de loja digital."
+topico: "dicionarios"
+topicoNome: "Dicionários"
+variacao: "V3"
+tempo: 35
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "dicionarios", "produtos", "catalogo", "api", "relatorio"]
+---
+
+# Cadastro de produtos
+
+## Contexto
+Uma loja de tecnologia precisa organizar o catálogo de produtos em um sistema simples, mas confiável. O time quer cadastrar novos itens, buscar por código ou nome, filtrar por categoria e gerar relatórios de valor sem perder as informações de preço, estoque e identificadores.
+
+## O que você vai construir
+Um sistema de cadastro de produtos usando dicionários, listas de dicionários e um relatório por categoria. A ideia é representar um produto como um item com dados nomeados e, em seguida, montar operações que ajudem a loja a tomar decisões rápidas.
+
+Exemplo de execução real:
+
+```text
+=== Cadastro de produtos ===
+Produto cadastrado: P-104 | WebCam 4K | categoria: Acessórios | preço: R$ 420.00 | estoque: 9
+
+Busca por código: P-102
+- P-102 | Mouse sem fio | Acessórios | R$ 120.00 | estoque: 6
+
+Relatório por categoria:
+- Acessórios: 3 produtos | valor total: R$ 1.070.00
+- Periféricos: 2 produtos | valor total: R$ 1.140.00
+```
+
+## Requisitos
+1. Cada produto deve ser representado por um dicionário com código, nome, categoria, preço e estoque.
+2. A loja deve manter uma lista de produtos em memória.
+3. O sistema precisa cadastrar produtos com código único.
+4. Deve ser possível buscar por código ou por parte do nome.
+5. Deve haver relatório por categoria com soma total de valores.
+6. A solução precisa validar preço positivo e estoque inteiro maior ou igual a zero.
+
+## Critérios de aceite
+- [ ] Cada produto é um dicionário e a loja é uma lista de dicionários.
+- [ ] O código do produto não se repete em nenhum item.
+- [ ] O sistema rejeita preço menor ou igual a zero.
+- [ ] A busca por código e por nome funciona mesmo com letras em caixa diferente.
+- [ ] O relatório por categoria mostra soma de valores e quantidade de produtos.
+- [ ] O aluno consegue explicar por que listas de dicionários são tão comuns em respostas de API e arquivos JSON.
+
+## Histórias de usuário
+- Como gestor da loja, quero cadastrar produtos com código único para evitar duplicações.
+- Como atendente, quero buscar um produto por código ou nome para responder rapidamente uma dúvida.
+- Como analista, quero filtrar por categoria e ver o valor total do estoque para tomar decisões de compra.
+- Como responsável de vendas, quero um relatório de categoria para comparar quais grupos geram mais faturamento.
+
+## Arquitetura sugerida
+- `cadastrar_produto(produtos, produto)` para validar os dados e inserir um item.
+- `buscar_por_codigo(produtos, codigo)` para encontrar um produto específico.
+- `buscar_por_nome(produtos, termo)` para localizar itens por parte do nome.
+- `filtrar_por_categoria(produtos, categoria)` para retornar produtos de um grupo.
+- `relatorio_por_categoria(produtos)` para somar valores e gerar um resumo legível.
+- `main()` para controlar a interação e exibir os resultados finais.
+
+## Casos de teste de aceitação
+- Produto com código duplicado: deve ser rejeitado.
+- Preço negativo: deve ser tratado como inválido.
+- Busca por nome parcial: deve encontrar itens mesmo sem digitar o nome completo.
+- Categoria vazia: deve ser ignorada ou informar erro claro.
+- Relatório por categoria: soma total por grupo deve refletir os produtos atuais.
+- Estoque negativo: deve ser rejeitado para evitar inconsistência.
+
+## Riscos
+- Não validar código único pode duplicar itens e gerar confusão operacional.
+- Não controlar preço e estoque pode criar relatórios financeiros incorretos.
+- Misturar lógica de cadastro com apresentação deixa o código frágil e mais difícil de testar.
+- Agrupar tudo em uma única estrutura sem separação de responsabilidade torna o sistema difícil de evoluir.
+
+## Guia
+### História do cliente
+O cliente quer uma solução simples sem banco de dados, mas com estrutura profissional. Ele prefere manter tudo em memória para uma demo no navegador, mas com regras claras de validação e relatórios que tenham cara de sistema real.
+
+### Marcos do projeto
+1. Defina a estrutura do produto como dicionário e a lista de produtos como conjunto de registros.
+2. Valide código, preço e estoque antes de guardar cada produto.
+3. Implemente busca por código e por nome parcial.
+4. Agrupe produtos por categoria e gere um relatório resumido.
+5. Revise casos de item duplicado, preço inválido e categoria vazia.
+
+### Dicas
+- Uma lista de dicionários representa bem uma resposta de API: cada item é um registro com campos nomeados.
+- Regra simples e clara para preço: o valor deve ser maior que zero, antes de entrar no catálogo.
+- Se quiser testar a lógica em estruturas mais reais, pense em `dados = {"produtos": [...]}` e em como você extraíria os campos do JSON.
+
+<Callout type="importante" title="Regra de negócio">
+O catálogo de produtos é um exemplo clássico de estrutura aninhada em formato de API: a coleção fica em uma lista, cada elemento é um dicionário e cada campo é um valor nomeado. Isso aparece em JSON, integrações e sistemas de e-commerce.
+</Callout>
+
+<Playground title="Ponto de partida" code={`produtos = [
+    {"codigo": "P-101", "nome": "Teclado mecânico", "categoria": "Periféricos", "preco": 320.0, "estoque": 12},
+    {"codigo": "P-102", "nome": "Mouse sem fio", "categoria": "Acessórios", "preco": 120.0, "estoque": 6},
+]
+
+# valide código único, preço e estoque
+# busque por código e por nome parcial
+# filtre por categoria
+# gere um relatório por categoria
+pass`} />
+
+## Desafio extra
+Crie uma exportação em formato JSON do relatório final para que outra ferramenta consuma os dados do catálogo. Essa extensão prepara o aluno para trabalhar com a mesma estrutura que aparece em APIs e integrações reais.
+
+## Visão de mercado
+Produtos, listas de estoque, catálogos e relatórios de varejo usam a mesma lógica de organização. Em sistemas de e-commerce, ERP, marketplace e CRM, a estrutura de dicionários aninhados e listas de objetos é tão comum que, ao aprender isso, você já está pensando em dados do mundo real e em integrações entre sistemas.
+
+## Autoavaliação
+- [ ] Estruturei cada produto como dicionário.
+- [ ] Validei código único, preço positivo e estoque válido.
+- [ ] Implementei busca por código e por parte do nome.
+- [ ] Gerei um relatório agregado por categoria.
+- [ ] Consegui relacionar essa estrutura com JSON e respostas de API reais.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+produtos = [
+    {"codigo": "P-101", "nome": "Teclado mecânico", "categoria": "Periféricos", "preco": 320.0, "estoque": 12},
+    {"codigo": "P-102", "nome": "Mouse sem fio", "categoria": "Acessórios", "preco": 120.0, "estoque": 6},
+    {"codigo": "P-103", "nome": "Monitor 24\"", "categoria": "Periféricos", "preco": 850.0, "estoque": 5},
+]
+
+
+def cadastrar_produto(lista, produto):
+    if produto["preco"] <= 0:
+        return False, "Preço precisa ser maior que zero."
+    if produto["estoque"] < 0:
+        return False, "Estoque não pode ser negativo."
+    if any(item["codigo"] == produto["codigo"] for item in lista):
+        return False, "Código duplicado."
+    lista.append(produto)
+    return True, "Produto cadastrado com sucesso."
+
+
+def buscar_por_codigo(lista, codigo):
+    for produto in lista:
+        if produto["codigo"].lower() == codigo.lower():
+            return produto
+    return None
+
+
+def buscar_por_nome(lista, termo):
+    termo = termo.lower()
+    return [produto for produto in lista if termo in produto["nome"].lower()]
+
+
+def relatorio_por_categoria(lista):
+    relatorio = {}
+    for produto in lista:
+        categoria = produto["categoria"]
+        relatorio.setdefault(categoria, {"quantidade": 0, "valor_total": 0.0})
+        relatorio[categoria]["quantidade"] += 1
+        relatorio[categoria]["valor_total"] += produto["preco"]
+    return relatorio
+
+
+novo = {"codigo": "P-104", "nome": "WebCam 4K", "categoria": "Acessórios", "preco": 420.0, "estoque": 9}
+status, mensagem = cadastrar_produto(produtos, novo)
+print("=== Cadastro de produtos ===")
+print(mensagem)
+print(f"{novo['codigo']} | {novo['nome']} | categoria: {novo['categoria']} | preço: R$ {novo['preco']:.2f} | estoque: {novo['estoque']}")
+
+produto = buscar_por_codigo(produtos, "P-102")
+print("\nBusca por código: P-102")
+print(f"- {produto['codigo']} | {produto['nome']} | {produto['categoria']} | R$ {produto['preco']:.2f} | estoque: {produto['estoque']}")
+
+relatorio = relatorio_por_categoria(produtos)
+print("\nRelatório por categoria:")
+for categoria, resumo in relatorio.items():
+    print(f"- {categoria}: {resumo['quantidade']} produtos | valor total: R$ {resumo['valor_total']:.2f}")
+```
+
+Saída real com execução:
+
+```text
+=== Cadastro de produtos ===
+Produto cadastrado com sucesso.
+P-104 | WebCam 4K | categoria: Acessórios | preço: R$ 420.00 | estoque: 9
+
+Busca por código: P-102
+- P-102 | Mouse sem fio | Acessórios | R$ 120.00 | estoque: 6
+
+Relatório por categoria:
+- Periféricos: 2 produtos | valor total: R$ 1170.00
+- Acessórios: 2 produtos | valor total: R$ 540.00
+```
+</details>

@@ -1,0 +1,155 @@
+---
+titulo: "Contador de votos"
+descricao: "Conte votos, trate nulos e brancos e descubra como dicionários ajudam a avaliar um resultado em tempo real."
+topico: "dicionarios"
+topicoNome: "Dicionários"
+variacao: "V2"
+tempo: 30
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "dicionarios", "votos", "eleicao", "agrupamento"]
+---
+
+# Contador de votos
+
+## Contexto
+Uma escola está organizando uma eleição para escolher o representante de turma. A comissão precisa contar os votos de cada candidato, separar votos em branco e nulos e decidir se houve empate ou se existe um vencedor claro. Como a quantidade de votos pode crescer rapidamente, a solução precisa ser organizada e legível.
+
+## O que você vai construir
+Um programa que recebe uma lista de votos, conta quantas vezes cada candidato apareceu, separa votos em branco e nulos, calcula porcentagens e mostra o resultado final com tratamento para empates.
+
+Exemplo de execução real:
+
+```text
+=== Contador de votos ===
+Ana: 4 votos (40.0%)
+Bruno: 3 votos (30.0%)
+Carla: 2 votos (20.0%)
+Branco: 1 voto (10.0%)
+Nulo: 0 votos (0.0%)
+
+Resultado: Ana venceu com 4 votos.
+```
+
+## Requisitos
+1. Guardar os candidatos e os votos em um dicionário.
+2. Contar cada voto recebido por candidato.
+3. Separar os votos nulos e em branco antes de decidir o vencedor.
+4. Mostrar o percentual de cada opção.
+5. Tratar empate sem quebrar a lógica.
+
+## Critérios de aceite
+- [ ] O programa usa dicionário para armazenar o total de votos por candidato.
+- [ ] Votos em branco e nulos são contados e exibidos separadamente.
+- [ ] O cálculo de porcentagem usa o total de votos válidos ou o total geral, dependendo da regra escolhida.
+- [ ] O algoritmo identifica corretamente quando houve empate.
+- [ ] O aluno consegue explicar por que `dict.get()` é útil para contar frequências.
+- [ ] A saída final fica legível para a comissão da eleição.
+
+## Regras de negócio e casos especiais
+- Votos em branco não contam como candidato e devem ser registrados separadamente.
+- Votos nulos também entram em uma categoria própria.
+- Se dois candidatos empatarem, o programa precisa dizer isso de forma clara.
+- Se uma eleição tiver apenas votos em branco e nulo, o sistema deve informar que não houve vencedor.
+- O programa deve funcionar mesmo quando o número de candidatos é pequeno ou grande.
+
+## Guia
+### Marcos do projeto
+1. Crie um dicionário com todos os candidatos e valores iniciais em zero.
+2. Passe por cada voto e aumente o total da chave correspondente.
+3. Trate votos vazios, nulos e letras em caixa diferente.
+4. Calcule a porcentagem e compare os valores para decidir o vencedor.
+5. Revise empate, ausência de votos válidos e dados com nomes em caixa diferente.
+
+### Dicas
+- Use `dict.get(chave, 0)` para iniciar contagens sem escrever lógica repetida.
+- Normalizar entradas com `strip().lower()` evita problemas com espaços e maiúsculas.
+- Calcule o total geral e o total de votos válidos separadamente para saber se o empate ou a ausência de vencedor foram tratados corretamente.
+
+<Callout type="importante" title="Regra de negócio">
+Em eleições reais, votos em branco e nulos não pertencem a nenhum candidato. Eles aparecem como categorias separadas e ajudam a auditar a votação e a explicar o resultado final.
+</Callout>
+
+<Playground title="Ponto de partida" code={`votos = ["Ana", "Bruno", "Ana", "Branco", "Nulo", "Ana", "Bruno"]
+
+# inicialize um dicionario para os candidatos
+# conte cada voto
+# trate branco e nulo
+# calcule porcentagens e descubra o vencedor
+pass`} />
+
+## Desafio extra
+Adicione uma regra de segundo turno automático: se houver empate entre os dois primeiros candidatos, o programa deve indicar que a eleição vai para um segundo turno em vez de declarar um vencedor definitivo.
+
+## Visão de mercado
+Sistemas de votação, pesquisas de opinião, apuração de eventos e dashboards de engajamento usam a mesma lógica de contagem por dicionário. Isso é comum em campanhas, votações internas, pesquisas de preferências e relatórios de canais digitais, onde os dados são agrupados por categoria e comparados rapidamente.
+
+## Autoavaliação
+- [ ] Usei dicionários para acumular votos por candidato.
+- [ ] Separei votos em branco e nulos da contagem principal.
+- [ ] Calculei porcentagem e comparei valores com clareza.
+- [ ] Testei pelo menos um caso de empate.
+- [ ] Entendi que `get` ajuda a contar ocorrências sem repetir código.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+votos = [
+    "Ana", "Bruno", "Ana", "Carla", "Branco",
+    "Ana", "Nulo", "Bruno", "Ana", "Carla",
+    "Bruno", "Bruno", "Ana"
+]
+
+candidatos = {"Ana": 0, "Bruno": 0, "Carla": 0}
+branco = 0
+nulo = 0
+
+for voto in votos:
+    texto = voto.strip().lower()
+    if texto == "":
+        branco += 1
+    elif texto == "branco":
+        branco += 1
+    elif texto == "nulo":
+        nulo += 1
+    elif texto in {c.lower() for c in candidatos}:
+        nome = next(c for c in candidatos if c.lower() == texto)
+        candidatos[nome] += 1
+    else:
+        nulo += 1
+
+votos_validos = sum(candidatos.values())
+total_geral = votos_validos + branco + nulo
+
+print("=== Contador de votos ===")
+for nome, total in candidatos.items():
+    percentual = (total / total_geral * 100) if total_geral else 0
+    print(f"{nome}: {total} votos ({percentual:.1f}%)")
+print(f"Branco: {branco} voto(s)")
+print(f"Nulo: {nulo} voto(s)")
+
+maior = max(candidatos.values())
+empatados = [nome for nome, total in candidatos.items() if total == maior]
+
+if len(empatados) == 1:
+    print(f"\nResultado: {empatados[0]} venceu com {maior} votos.")
+elif maior == 0:
+    print("\nResultado: não houve vencedor. Todos os votos foram brancos, nulos ou não válidos.")
+else:
+    print(f"\nResultado: empate entre {', '.join(empatados)} com {maior} votos.")
+```
+
+Saída real com execução:
+
+```text
+=== Contador de votos ===
+Ana: 5 votos (41.7%)
+Bruno: 3 votos (25.0%)
+Carla: 2 votos (16.7%)
+Branco: 1 voto(s)
+Nulo: 1 voto(s)
+
+Resultado: Ana venceu com 5 votos.
+```
+</details>

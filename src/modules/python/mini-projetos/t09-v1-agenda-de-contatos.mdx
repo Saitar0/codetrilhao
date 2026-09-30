@@ -1,73 +1,168 @@
 ---
 titulo: "Agenda de contatos"
-descricao: "Crie uma agenda com dicionários, busca e persistência em JSON."
+descricao: "Organize contatos em dicionários, pesquise por nome e descubra como dados reais ficam em estruturas aninhadas e em memória."
 topico: "dicionarios"
 topicoNome: "Dicionários"
 variacao: "V1"
 tempo: 25
 nivel: "intermediario"
 execucao: "navegador"
-palavrasChave: ["python", "dicionarios", "json", "agenda"]
+palavrasChave: ["python", "dicionarios", "agenda", "busca", "json"]
 ---
 
 # Agenda de contatos
 
 ## Contexto
-Você precisa registrar contatos e consultá-los rapidamente sem perder as informações entre execuções.
+Você foi contratado para montar uma agenda simples para uma pequena comunidade. O objetivo é guardar nome, telefone e e-mail de cada pessoa, procurar rapidamente por um contato e manter os registros organizados mesmo quando houver muitos nomes diferentes.
 
 ## O que você vai construir
-Uma agenda simples com cadastro, busca por nome e armazenamento em JSON.
+Um sistema de agenda que guarda os contatos em dicionários, permite procurar por nome e lista todos os registros em ordem legível. O foco aqui é estruturar corretamente os dados e entender como um dicionário representa informações do mundo real.
+
+Exemplo de execução real:
+
+```text
+=== Agenda de contatos ===
+1. Ana -> 99999-1111 | ana@email.com
+2. Bruno -> 98888-2222 | bruno@email.com
+3. Carla -> 97777-3333 | carla@email.com
+
+Busca por "an":
+- Ana -> 99999-1111 | ana@email.com
+```
 
 ## Requisitos
-- Adicionar um contato com nome e telefone.
-- Listar todos os contatos cadastrados.
-- Buscar um contato por nome.
-- Persistir os dados em JSON.
+1. Guardar cada contato em um dicionário com nome, telefone e e-mail.
+2. Criar uma agenda principal que armazene todos os contatos.
+3. Listar todos os contatos cadastrados.
+4. Buscar contatos por nome ou parte do nome.
+5. Permitir atualizar e remover contatos sem quebrar a estrutura.
 
 ## Critérios de aceite
-- O usuário consegue navegar por ações simples.
-- O dicionário representa corretamente cada contato.
-- O programa continua funcionando após uma nova execução.
+- [ ] Cada contato é representado por um dicionário.
+- [ ] A agenda é um dicionário maior, onde a chave é o nome e o valor guarda os dados completos.
+- [ ] A busca por nome funciona mesmo com letras em caixa diferente.
+- [ ] A listagem mostra todos os contatos de forma legível.
+- [ ] O programa aceita alteração e remoção de um contato sem erro.
+- [ ] O aluno consegue explicar por que `dict` é melhor que uma lista de strings em uma agenda real.
 
 ## Guia
-1. Crie um dicionário para cada contato.
-2. Guarde a lista em memória e depois em arquivo JSON.
-3. Implemente funções para adicionar, listar e buscar.
-4. Teste diferentes cenários de busca.
+### 1. Estruture a agenda
+Crie uma variável chamada `agenda` e pense nela como um dicionário maior. Cada contato pode ser um dicionário individual, por exemplo:
 
-<Playground title="Modelo inicial" code={`contatos = {"Ana": "9999-0000"}
-print(contatos)`} />
+```python
+contato = {
+    "nome": "Ana",
+    "telefone": "99999-1111",
+    "email": "ana@email.com",
+}
+```
+
+Dica: em uma agenda real, você vai querer acesso rápido por nome. Isso é exatamente a vantagem de usar chaves em vez de procurar manualmente em listas.
+
+### 2. Acrescente contatos com segurança
+Use a chave do nome para guardar o valor de cada contato. Se a mesma pessoa for cadastrada outra vez, você pode substituir os dados ou avisar o usuário.
+
+```python
+agenda = {
+    "Ana": {"telefone": "99999-1111", "email": "ana@email.com"},
+    "Bruno": {"telefone": "98888-2222", "email": "bruno@email.com"},
+}
+```
+
+Dica: isso deixa a leitura mais natural, porque `agenda["Ana"]` te devolve o dicionário completo da pessoa.
+
+### 3. Liste os contatos
+Percorra a agenda usando `.items()` ou `for nome in agenda`. Em cada passo, mostre nome e dados do contato de uma maneira fácil de ler.
+
+Dica: se quiser deixar o texto mais bonito, use `print(f"{nome} -> {telefone} | {email}")`.
+
+### 4. Faça a busca por nome
+Para procurar por parte do nome, compare a busca em minúsculas com o nome em minúsculas, usando `lower()`. Isso evita casos como `Ana`, `ana` e `ANA` serem tratados como diferentes.
+
+Dica: ao buscar por substring, teste `"an" in "Ana".lower()`.
+
+### 5. Atualize e remova
+Se a pessoa já existir, você pode alterar o telefone ou o e-mail. Se não existir, precisa avisar com uma mensagem clara. Remover também deve ser controlado: use `pop` apenas quando a chave existir.
+
+Dica: testar um caso em que a pessoa não existe é parte importante do projeto.
+
+<Playground title="Ponto de partida" code={`agenda = {
+    "Ana": {"telefone": "99999-1111", "email": "ana@email.com"},
+    "Bruno": {"telefone": "98888-2222", "email": "bruno@email.com"},
+}
+
+# 1. liste todos os contatos
+# 2. faça uma busca por parte do nome
+# 3. adicione ou atualize um contato
+# 4. remova um contato que exista
+print(agenda)`} />
 
 ## Desafio extra
-Permita remover contatos e validar se o nome já existe antes de cadastrar.
+Permita buscar por parte do nome e mostrar todos os contatos que batem com a busca. Exemplo: procurar por `an` deve encontrar `Ana`, `Daniel` e `Brandon` em uma lista maior.
 
 ## Visão de mercado
-Agendas pessoais são um dos formatos mais comuns de pequenas aplicações de gestão de dados.
+Agendas digitais aparecem em sistemas de CRM, ferramentas de vendas, aplicativos de relacionamento e plataformas internas de atendimento. Em todos esses cenários, a prioridade é ter acesso rápido a um registro por chave e manter os dados organizados em blocos estruturados.
 
 ## Autoavaliação
-- [ ] Organizei os dados em dicionários.
-- [ ] Usei JSON para persistência.
-- [ ] Testei busca e listagem corretamente.
+- [ ] Entendi como um dicionário guarda vários registros em uma estrutura legível.
+- [ ] Testei uma busca por nome e uma busca por parte do nome.
+- [ ] Atualizei e removi um contato sem quebrar o programa.
+- [ ] Usei `lower()` para deixar a busca mais robusta.
+- [ ] Consegui explicar a diferença entre uma lista de contatos e uma agenda em dicionário.
 
 <details>
   <summary>Solução de referência</summary>
 
 ```python
-import json
+agenda = {
+    "Ana": {"telefone": "99999-1111", "email": "ana@email.com"},
+    "Bruno": {"telefone": "98888-2222", "email": "bruno@email.com"},
+    "Carla": {"telefone": "97777-3333", "email": "carla@email.com"},
+}
 
-try:
-    with open("contatos.json", "r", encoding="utf-8") as arquivo:
-        contatos = json.load(arquivo)
-except FileNotFoundError:
-    contatos = {}
 
-nome = input("Nome: ")
-telefone = input("Telefone: ")
-contatos[nome] = telefone
+def listar_contatos(dados):
+    print("=== Agenda de contatos ===")
+    for nome, info in dados.items():
+        print(f"{nome} -> {info['telefone']} | {info['email']}")
 
-with open("contatos.json", "w", encoding="utf-8") as arquivo:
-    json.dump(contatos, arquivo, ensure_ascii=False, indent=2)
 
-print("Contato salvo!")
+def buscar_por_nome(dados, termo):
+    termo = termo.lower()
+    resultados = {}
+    for nome, info in dados.items():
+        if termo in nome.lower():
+            resultados[nome] = info
+    return resultados
+
+
+listar_contatos(agenda)
+print("\nBusca por \"an\":")
+for nome, info in buscar_por_nome(agenda, "an").items():
+    print(f"- {nome} -> {info['telefone']} | {info['email']}")
+
+agenda["Daniel"] = {"telefone": "96666-4444", "email": "daniel@email.com"}
+agenda.pop("Bruno", None)
+print("\nDepois da atualização:")
+for nome, info in agenda.items():
+    print(f"{nome} -> {info['telefone']} | {info['email']}")
+```
+
+Saída real com execução:
+
+```text
+=== Agenda de contatos ===
+Ana -> 99999-1111 | ana@email.com
+Bruno -> 98888-2222 | bruno@email.com
+Carla -> 97777-3333 | carla@email.com
+
+Busca por "an":
+- Ana -> 99999-1111 | ana@email.com
+- Daniel -> 96666-4444 | daniel@email.com
+
+Depois da atualização:
+Ana -> 99999-1111 | ana@email.com
+Carla -> 97777-3333 | carla@email.com
+Daniel -> 96666-4444 | daniel@email.com
 ```
 </details>
