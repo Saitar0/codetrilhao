@@ -1,0 +1,27 @@
+{
+  "id": "t15-v3-03-fila-de-atendimento-com-prioridade",
+  "tipo": "codigo",
+  "titulo": "Fila de atendimento com prioridade",
+  "topico": "Algoritmos",
+  "topicoNumero": 15,
+  "variacao": "V3",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "A prioridade mais alta deve sair primeiro.",
+    "Se duas pessoas têm a mesma prioridade, mantenha a ordem de chegada.",
+    "Você pode classificar a fila para decidir quem será atendido."
+  ],
+  "solucao": "def proximo_atendimento(fila):\n    if not fila:\n        return None\n    menor = min(fila, key=lambda cliente: cliente[0])\n    return menor[1]\n",
+  "tags": ["algoritmos", "fila", "prioridade", "atendimento"],
+  "aulaRelacionada": "algoritmos-busca-e-ordenacao",
+  "enunciado": "Implemente `proximo_atendimento(fila)` para retornar o nome da próxima pessoa da fila, obedecendo à prioridade: `1` é mais urgente, `3` é menos urgente. Em caso de empate, mantenha a ordem de chegada.",
+  "starterCode": "def proximo_atendimento(fila):\n    pass\n",
+  "testes": [
+    { "chamada": "proximo_atendimento([(2, \"Ana\"), (1, \"Bia\"), (3, \"Caio\")])", "esperado": "Bia", "oculto": false },
+    { "chamada": "proximo_atendimento([(2, \"Ana\"), (2, \"Bruno\"), (1, \"Carla\")])", "esperado": "Carla", "oculto": false },
+    { "chamada": "proximo_atendimento([])", "esperado": "None", "oculto": false },
+    { "chamada": "proximo_atendimento([(3, \"Dani\"), (3, \"Eli\"), (2, \"Fábio\")])", "esperado": "Fábio", "oculto": true },
+    { "chamada": "proximo_atendimento([(1, \"Gabi\"), (1, \"Hugo\")])", "esperado": "Gabi", "oculto": true }
+  ]
+}

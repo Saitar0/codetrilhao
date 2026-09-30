@@ -1,0 +1,27 @@
+{
+  "id": "t15-v2-01-fibonacci-recursivo",
+  "tipo": "codigo",
+  "titulo": "Fibonacci recursivo com cache",
+  "topico": "Algoritmos",
+  "topicoNumero": 15,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Defina o caso base para `0` e `1`.",
+    "A recursão precisa reduzir o problema para `n - 1` e `n - 2`.",
+    "Use `lru_cache` para evitar recalcular os mesmos valores."
+  ],
+  "solucao": "from functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef fibonacci(n):\n    if n in (0, 1):\n        return n\n    return fibonacci(n - 1) + fibonacci(n - 2)\n",
+  "tags": ["algoritmos", "recursao", "fibonacci", "cache"],
+  "aulaRelacionada": "recursao-e-complexidade",
+  "enunciado": "Implemente `fibonacci(n)` para devolver o n-ésimo termo da sequência de Fibonacci, usando recursão com cache para evitar contas repetidas.",
+  "starterCode": "from functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef fibonacci(n):\n    pass\n",
+  "testes": [
+    { "chamada": "fibonacci(0)", "esperado": "0", "oculto": false },
+    { "chamada": "fibonacci(1)", "esperado": "1", "oculto": false },
+    { "chamada": "fibonacci(7)", "esperado": "13", "oculto": false },
+    { "chamada": "fibonacci(10)", "esperado": "55", "oculto": true },
+    { "chamada": "fibonacci(12)", "esperado": "144", "oculto": true }
+  ]
+}

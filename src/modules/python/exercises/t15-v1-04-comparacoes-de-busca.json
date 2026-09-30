@@ -1,0 +1,21 @@
+{
+  "id": "t15-v1-04-comparacoes-de-busca",
+  "tipo": "prever-saida",
+  "titulo": "Comparações de busca",
+  "topico": "Algoritmos",
+  "topicoNumero": 15,
+  "variacao": "V1",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Em vez de segundos, use o número de comparações como proxy de custo.",
+    "A busca linear compara um item por vez até achar ou chegar ao fim.",
+    "A busca binária compara o meio e reduz o intervalo pela metade."
+  ],
+  "solucao": "def comparacoes_buscas(lista, alvo):\n    ordenada = sorted(lista)\n    linear = 0\n    for valor in lista:\n        linear += 1\n        if valor == alvo:\n            break\n\n    binaria = 0\n    inicio, fim = 0, len(ordenada) - 1\n    while inicio <= fim:\n        binaria += 1\n        meio = (inicio + fim) // 2\n        if ordenada[meio] == alvo:\n            break\n        if ordenada[meio] < alvo:\n            inicio = meio + 1\n        else:\n            fim = meio - 1\n\n    return linear, binaria\n\nprint(comparacoes_buscas([8, 3, 5, 1, 9], 9))\n# Saída: (5, 3)\n",
+  "tags": ["algoritmos", "busca", "complexidade", "comparacoes"],
+  "aulaRelacionada": "algoritmos-busca-e-ordenacao",
+  "enunciado": "Preveja a saída do programa abaixo. A ideia não é medir tempo em segundos, e sim contar quantas comparações cada busca faz. Observe o caso com lista `[8, 3, 5, 1, 9]` e alvo `9`.",
+  "codigo": "def comparacoes_buscas(lista, alvo):\n    ordenada = sorted(lista)\n    linear = 0\n    for valor in lista:\n        linear += 1\n        if valor == alvo:\n            break\n\n    binaria = 0\n    inicio, fim = 0, len(ordenada) - 1\n    while inicio <= fim:\n        binaria += 1\n        meio = (inicio + fim) // 2\n        if ordenada[meio] == alvo:\n            break\n        if ordenada[meio] < alvo:\n            inicio = meio + 1\n        else:\n            fim = meio - 1\n\n    return linear, binaria\n\nprint(comparacoes_buscas([8, 3, 5, 1, 9], 9))\n",
+  "respostaEsperada": "(5, 3)"
+}

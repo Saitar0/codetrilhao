@@ -1,0 +1,27 @@
+{
+  "id": "t15-v1-01-busca-linear",
+  "tipo": "codigo",
+  "titulo": "Busca linear",
+  "topico": "Algoritmos",
+  "topicoNumero": 15,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Percorra a lista em ordem e compare cada valor com o alvo.",
+    "Ao encontrar igualdade, devolva o índice imediatamente.",
+    "Se o loop terminar sem encontrar nada, retorne -1."
+  ],
+  "solucao": "def busca_linear(lista, alvo):\n    for indice, valor in enumerate(lista):\n        if valor == alvo:\n            return indice\n    return -1\n",
+  "tags": ["algoritmos", "busca", "lista", "python"],
+  "aulaRelacionada": "algoritmos-busca-e-ordenacao",
+  "enunciado": "Implemente `busca_linear(lista, alvo)` para devolver o índice do primeiro valor igual ao alvo. Se o valor não aparecer, retorne `-1`.",
+  "starterCode": "def busca_linear(lista, alvo):\n    pass\n",
+  "testes": [
+    { "chamada": "busca_linear([9, 5, 3, 8, 12], 8)", "esperado": "3", "oculto": false },
+    { "chamada": "busca_linear([9, 5, 3, 8, 12], 7)", "esperado": "-1", "oculto": false },
+    { "chamada": "busca_linear([4, 4, 4], 4)", "esperado": "0", "oculto": false },
+    { "chamada": "busca_linear([], 5)", "esperado": "-1", "oculto": true },
+    { "chamada": "busca_linear([10, 20, 30, 40], 40)", "esperado": "3", "oculto": true }
+  ]
+}

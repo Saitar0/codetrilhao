@@ -1,0 +1,27 @@
+{
+  "id": "t15-v2-03-parenteses-balanceados",
+  "tipo": "codigo",
+  "titulo": "Parênteses balanceados",
+  "topico": "Algoritmos",
+  "topicoNumero": 15,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Use uma pilha para guardar aberturas.",
+    "Ao encontrar um fechamento, ele deve combinar com o último item aberto.",
+    "Se a lista terminar com desempates, a expressão está incorreta."
+  ],
+  "solucao": "def parenteses_balanceados(texto):\n    pilha = []\n    pares = {')': '(', ']': '[', '}': '{'}\n    for caractere in texto:\n        if caractere in '([{':\n            pilha.append(caractere)\n        elif caractere in ')]}':\n            if not pilha or pilha[-1] != pares[caractere]:\n                return False\n            pilha.pop()\n    return not pilha\n",
+  "tags": ["algoritmos", "pilha", "parenteses", "recursao"],
+  "aulaRelacionada": "recursao-e-complexidade",
+  "enunciado": "Implemente `parenteses_balanceados(texto)` para verificar se uma expressão com parênteses, colchetes e chaves está balanceada.",
+  "starterCode": "def parenteses_balanceados(texto):\n    pass\n",
+  "testes": [
+    { "chamada": "parenteses_balanceados(\"(())\")", "esperado": "True", "oculto": false },
+    { "chamada": "parenteses_balanceados(\"([{}])\")", "esperado": "True", "oculto": false },
+    { "chamada": "parenteses_balanceados(\"([)]\")", "esperado": "False", "oculto": false },
+    { "chamada": "parenteses_balanceados(\"\")", "esperado": "True", "oculto": true },
+    { "chamada": "parenteses_balanceados(\"{[()]}\")", "esperado": "True", "oculto": true }
+  ]
+}

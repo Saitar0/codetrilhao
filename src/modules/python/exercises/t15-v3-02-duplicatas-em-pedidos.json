@@ -1,0 +1,27 @@
+{
+  "id": "t15-v3-02-duplicatas-em-pedidos",
+  "tipo": "codigo",
+  "titulo": "Duplicatas em pedidos",
+  "topico": "Algoritmos",
+  "topicoNumero": 15,
+  "variacao": "V3",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Use um conjunto para lembrar quais IDs já apareceram.",
+    "Quando um pedido voltar a aparecer, marque a duplicata.",
+    "Retorne os IDs duplicados sem repetir elementos."
+  ],
+  "solucao": "def duplicatas_em_pedidos(pedidos):\n    vistos = set()\n    duplicados = set()\n    for pedido in pedidos:\n        if pedido in vistos:\n            duplicados.add(pedido)\n        else:\n            vistos.add(pedido)\n    return sorted(duplicados)\n",
+  "tags": ["algoritmos", "duplicatas", "pedidos", "eficiencia"],
+  "aulaRelacionada": "algoritmos-busca-e-ordenacao",
+  "enunciado": "Implemente `duplicatas_em_pedidos(pedidos)` para devolver uma lista com os IDs que aparecem mais de uma vez, sem repetir o mesmo valor.",
+  "starterCode": "def duplicatas_em_pedidos(pedidos):\n    pass\n",
+  "testes": [
+    { "chamada": "duplicatas_em_pedidos([\"P-01\", \"P-02\", \"P-01\", \"P-03\", \"P-02\"])", "esperado": "['P-01', 'P-02']", "oculto": false },
+    { "chamada": "duplicatas_em_pedidos([\"A\", \"B\", \"C\"])", "esperado": "[]", "oculto": false },
+    { "chamada": "duplicatas_em_pedidos([\"X\", \"X\"])", "esperado": "['X']", "oculto": false },
+    { "chamada": "duplicatas_em_pedidos([])", "esperado": "[]", "oculto": true },
+    { "chamada": "duplicatas_em_pedidos([\"P-10\", \"P-11\", \"P-10\", \"P-11\", \"P-12\"])", "esperado": "['P-10', 'P-11']", "oculto": true }
+  ]
+}

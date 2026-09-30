@@ -1,0 +1,27 @@
+{
+  "id": "t15-v1-03-bubble-sort",
+  "tipo": "codigo",
+  "titulo": "Bubble sort",
+  "topico": "Algoritmos",
+  "topicoNumero": 15,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "Compare pares vizinhos e troque a ordem quando um valor estiver maior que o próximo.",
+    "Você precisa repetir a varredura várias vezes para empurrar valores grandes para o fim.",
+    "Retorne a própria lista ordenada ao final."
+  ],
+  "solucao": "def bubble_sort(lista):\n    n = len(lista)\n    for i in range(n):\n        for j in range(0, n - i - 1):\n            if lista[j] > lista[j + 1]:\n                lista[j], lista[j + 1] = lista[j + 1], lista[j]\n    return lista\n",
+  "tags": ["algoritmos", "ordenacao", "lista", "bubble-sort"],
+  "aulaRelacionada": "algoritmos-busca-e-ordenacao",
+  "enunciado": "Implemente `bubble_sort(lista)` usando o algoritmo de bolha para ordenar uma lista em ordem crescente.",
+  "starterCode": "def bubble_sort(lista):\n    pass\n",
+  "testes": [
+    { "chamada": "bubble_sort([5, 1, 4, 2, 8])", "esperado": "[1, 2, 4, 5, 8]", "oculto": false },
+    { "chamada": "bubble_sort([3, 3, 1, 2, 1])", "esperado": "[1, 1, 2, 3, 3]", "oculto": false },
+    { "chamada": "bubble_sort([10, 20, 30])", "esperado": "[10, 20, 30]", "oculto": false },
+    { "chamada": "bubble_sort([])", "esperado": "[]", "oculto": true },
+    { "chamada": "bubble_sort([9, 8, 7, 6, 5])", "esperado": "[5, 6, 7, 8, 9]", "oculto": true }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "t15-v2-02-torre-de-hanoi",
+  "tipo": "codigo",
+  "titulo": "Torre de Hanói",
+  "topico": "Algoritmos",
+  "topicoNumero": 15,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Resolva o problema movendo `n - 1` discos para uma torre auxiliar.",
+    "Mova o disco maior para a torre final e depois resolva o restante.",
+    "O caso base é quando restou apenas um disco."
+  ],
+  "solucao": "def torre_de_hanoi(n):\n    if n <= 0:\n        return 0\n    if n == 1:\n        return 1\n    return 2 * torre_de_hanoi(n - 1) + 1\n",
+  "tags": ["algoritmos", "recursao", "torre-de-hanoi"],
+  "aulaRelacionada": "recursao-e-complexidade",
+  "enunciado": "Implemente `torre_de_hanoi(n)` para devolver o número mínimo de movimentos necessários para resolver a Torre de Hanói com `n` discos.",
+  "starterCode": "def torre_de_hanoi(n):\n    pass\n",
+  "testes": [
+    { "chamada": "torre_de_hanoi(1)", "esperado": "1", "oculto": false },
+    { "chamada": "torre_de_hanoi(2)", "esperado": "3", "oculto": false },
+    { "chamada": "torre_de_hanoi(3)", "esperado": "7", "oculto": false },
+    { "chamada": "torre_de_hanoi(4)", "esperado": "15", "oculto": true },
+    { "chamada": "torre_de_hanoi(0)", "esperado": "0", "oculto": true }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "t15-v1-02-busca-binaria",
+  "tipo": "codigo",
+  "titulo": "Busca binária em lista ordenada",
+  "topico": "Algoritmos",
+  "topicoNumero": 15,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "A lista precisa estar ordenada antes de começar a busca.",
+    "Calcule o índice do meio e decida se vai procurar na metade esquerda ou direita.",
+    "Atualize `inicio` e `fim` corretamente para garantir que a busca avance."
+  ],
+  "solucao": "def busca_binaria(lista, alvo):\n    inicio, fim = 0, len(lista) - 1\n    while inicio <= fim:\n        meio = (inicio + fim) // 2\n        if lista[meio] == alvo:\n            return meio\n        if lista[meio] < alvo:\n            inicio = meio + 1\n        else:\n            fim = meio - 1\n    return -1\n",
+  "tags": ["algoritmos", "busca", "ordenacao", "python"],
+  "aulaRelacionada": "algoritmos-busca-e-ordenacao",
+  "enunciado": "Implemente `busca_binaria(lista, alvo)` para buscar um valor em uma lista ordenada. Deve retornar o índice do alvo ou `-1` se ele não existir.",
+  "starterCode": "def busca_binaria(lista, alvo):\n    pass\n",
+  "testes": [
+    { "chamada": "busca_binaria([2, 4, 6, 8, 10, 12, 14], 10)", "esperado": "4", "oculto": false },
+    { "chamada": "busca_binaria([2, 4, 6, 8, 10, 12, 14], 11)", "esperado": "-1", "oculto": false },
+    { "chamada": "busca_binaria([3, 7, 9, 15], 3)", "esperado": "0", "oculto": false },
+    { "chamada": "busca_binaria([], 42)", "esperado": "-1", "oculto": true },
+    { "chamada": "busca_binaria([1, 3, 5, 7, 9], 9)", "esperado": "4", "oculto": true }
+  ]
+}

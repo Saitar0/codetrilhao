@@ -1,0 +1,27 @@
+{
+  "id": "t15-v2-04-permutacoes-de-string",
+  "tipo": "codigo",
+  "titulo": "Permutações de uma string",
+  "topico": "Algoritmos",
+  "topicoNumero": 15,
+  "variacao": "V2",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Escolha cada letra para ficar na primeira posição e gere as permutações do restante.",
+    "A recursão reduz o problema removendo um caractere por vez.",
+    "Ordene o resultado final para ter uma sequência previsível na saída."
+  ],
+  "solucao": "def permutacoes(texto):\n    if len(texto) <= 1:\n        return [texto]\n\n    resultado = []\n    for indice, caractere in enumerate(texto):\n        for resto in permutacoes(texto[:indice] + texto[indice + 1:]):\n            resultado.append(caractere + resto)\n    return sorted(set(resultado))\n",
+  "tags": ["algoritmos", "recursao", "permutacao", "string"],
+  "aulaRelacionada": "recursao-e-complexidade",
+  "enunciado": "Implemente `permutacoes(texto)` para gerar todas as permutações de uma string, sem repetir resultados e em ordem ordenada.",
+  "starterCode": "def permutacoes(texto):\n    pass\n",
+  "testes": [
+    { "chamada": "permutacoes(\"ab\")", "esperado": "['ab', 'ba']", "oculto": false },
+    { "chamada": "permutacoes(\"abc\")", "esperado": "['abc', 'acb', 'bac', 'bca', 'cab', 'cba']", "oculto": false },
+    { "chamada": "permutacoes(\"a\")", "esperado": "['a']", "oculto": false },
+    { "chamada": "permutacoes(\"aa\")", "esperado": "['aa']", "oculto": true },
+    { "chamada": "len(permutacoes(\"abcd\"))", "esperado": "24", "oculto": true }
+  ]
+}

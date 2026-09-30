@@ -1,0 +1,27 @@
+{
+  "id": "t15-v3-04-pedidos-por-multiplos-criterios",
+  "tipo": "codigo",
+  "titulo": "Pedidos por múltiplos critérios",
+  "topico": "Algoritmos",
+  "topicoNumero": 15,
+  "variacao": "V3",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Ordene por prioridade primeiro, depois pelo prazo e, por fim, pelo valor.",
+    "Use uma chave de ordenação com múltiplos campos.",
+    "A maior urgência costuma vir antes da menor."
+  ],
+  "solucao": "def ordenar_pedidos(pedidos):\n    return sorted(\n        pedidos,\n        key=lambda pedido: (pedido['prioridade'], pedido['prazo'], -pedido['valor'], pedido['nome'])\n    )\n",
+  "tags": ["algoritmos", "ordenacao", "prioridade", "pedidos"],
+  "aulaRelacionada": "algoritmos-busca-e-ordenacao",
+  "enunciado": "Implemente `ordenar_pedidos(pedidos)` para ordenar uma lista de dicionários por prioridade, prazo e valor. O critério é: prioridade crescente, prazo crescente e valor decrescente.",
+  "starterCode": "def ordenar_pedidos(pedidos):\n    pass\n",
+  "testes": [
+    { "chamada": "ordenar_pedidos([{'nome':'A','prioridade':2,'prazo':5,'valor':40},{'nome':'B','prioridade':1,'prazo':3,'valor':80},{'nome':'C','prioridade':1,'prazo':3,'valor':60}])", "esperado": "[{'nome': 'B', 'prioridade': 1, 'prazo': 3, 'valor': 80}, {'nome': 'C', 'prioridade': 1, 'prazo': 3, 'valor': 60}, {'nome': 'A', 'prioridade': 2, 'prazo': 5, 'valor': 40}]", "oculto": false },
+    { "chamada": "ordenar_pedidos([{'nome':'A','prioridade':3,'prazo':1,'valor':30},{'nome':'B','prioridade':2,'prazo':1,'valor':50}])", "esperado": "[{'nome': 'B', 'prioridade': 2, 'prazo': 1, 'valor': 50}, {'nome': 'A', 'prioridade': 3, 'prazo': 1, 'valor': 30}]", "oculto": false },
+    { "chamada": "ordenar_pedidos([])", "esperado": "[]", "oculto": false },
+    { "chamada": "ordenar_pedidos([{'nome':'A','prioridade':1,'prazo':2,'valor':10},{'nome':'B','prioridade':1,'prazo':2,'valor':20}])", "esperado": "[{'nome': 'B', 'prioridade': 1, 'prazo': 2, 'valor': 20}, {'nome': 'A', 'prioridade': 1, 'prazo': 2, 'valor': 10}]", "oculto": true },
+    { "chamada": "len(ordenar_pedidos([{'nome':'A','prioridade':2,'prazo':4,'valor':9},{'nome':'B','prioridade':1,'prazo':1,'valor':10},{'nome':'C','prioridade':2,'prazo':4,'valor':12}]))", "esperado": "3", "oculto": true }
+  ]
+}
