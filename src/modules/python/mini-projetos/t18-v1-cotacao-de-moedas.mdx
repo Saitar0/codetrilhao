@@ -1,0 +1,171 @@
+---
+titulo: "Cotação de moedas no terminal"
+descricao: "Consuma uma API de câmbio em Python, salve a resposta em SQLite e compare a variação entre moedas em um histórico simples."
+topico: 18
+topicoNome: "APIs e persistência com SQLite"
+variacao: "V1"
+tempo: 45
+nivel: "intermediario"
+execucao: "local"
+palavrasChave: ["python", "api", "requests", "sqlite", "cotacao", "historico"]
+---
+
+# Cotação de moedas no terminal
+
+## Contexto
+Você foi contratado para montar uma checagem rápida de câmbio para uma pequena operação de importação. A pessoa que vai usar o programa não quer abrir o navegador toda vez para consultar dólar, euro e iene. Ela precisa de um script simples que consulte uma fonte de dados, salvá-la em um banco local e mostrar um resumo rápido.
+
+## O que você vai construir
+Um pequeno script que faz a consulta de câmbio, grava o resultado em SQLite e imprime a cotação atual de 3 moedas. O objetivo é praticar duas ideias ao mesmo tempo: consumir uma API em Python e persistir os dados em um banco local para construir um histórico útil.
+
+Exemplo de execução real:
+
+```text
+=== Cotação atual ===
+USDBRL: R$ 5.41
+EURBRL: R$ 5.96
+JPYBRL: R$ 0.04
+Histórico salvo: 3 registros
+```
+
+## Requisitos
+1. Simular uma resposta de API em dicionário para não depender de rede em tempo real.
+2. Conectar a um banco SQLite em memória ou em arquivo local.
+3. Criar uma tabela para guardar moeda, valor e data/hora da consulta.
+4. Inserir as cotações consultadas.
+5. Mostrar a cotação atual em um formato claro para o usuário.
+6. Guardar pelo menos 3 registros no histórico para comparar no futuro.
+
+## Critérios de aceite
+- [ ] O script consulta uma resposta em formato de dicionário antes de salvar no banco.
+- [ ] Há uma tabela chamada `historico` ou equivalente com pelo menos `moeda`, `valor` e `data_hora`.
+- [ ] O programa imprime as moedas com o valor atual em reais.
+- [ ] O banco recebe os dados com `INSERT` e `commit()`.
+- [ ] O aluno consegue explicar por que o banco ajuda a manter um histórico a longo prazo.
+- [ ] O código separa a consulta, o armazenamento e a apresentação em funções ou etapas claras.
+- [ ] A execução funciona sem precisar abrir um navegador ou fazer rede real no ambiente do aluno.
+
+## Guia
+### Passo a passo
+1. Crie uma função `buscar_cotacao()` que retorna um dicionário com as moedas e valores fictícios.
+2. Abra uma conexão com `sqlite3.connect("sqlite:///cotacoes.db")` ou `sqlite3.connect(":memory:")` para praticar o banco local.
+3. Faça uma tabela com `CREATE TABLE IF NOT EXISTS historico (...)`.
+4. Itere sobre as moedas e use `INSERT INTO ...` para guardar o valor informado pela API.
+5. Use `conn.commit()` para persistir a transação.
+6. Leia o histórico com `SELECT moeda, valor FROM historico` e imprima no terminal.
+7. Mostre uma mensagem final com o total de registros salvos.
+
+### Dicas por etapa
+- Dica 1: comece pelo dicionário da resposta. Mesmo que a API seja real, você pode começar com um retorno em memória para testar a lógica.
+- Dica 2: para a tabela, pense em colunas simples: `id`, `moeda`, `valor`, `registrado_em`.
+- Dica 3: se você usar `"%Y-%m-%d %H:%M:%S"`, a data fica fácil de ler no terminal.
+- Dica 4: use `f"{moeda}: R$ {valor:.2f}"` para manter o visual limpo.
+- Dica 5: imprima o número de registros salvos no final; isso ajuda a validar se a inserção ocorreu.
+
+### Regras e casos especiais
+- Evite usar dados vazios. Se a moeda não vier na resposta, ignore a linha.
+- Trate o valor como `float` para conseguir mostrar centavos corretamente.
+- Use `:memory:` se quiser um banco rápido para treinar sem criar arquivo no computador.
+- O banco deve ser usado para persistência, não para substituir a lógica de consulta.
+
+## Estrutura sugerida
+```text
+projeto-cotacao/
+├── cotacao.py
+├── sqlite_historico.py
+└── main.py
+```
+
+## Como executar no computador
+```bash
+python -m venv .venv
+# Windows
+.venv\Scripts\activate
+# macOS/Linux
+source .venv/bin/activate
+
+python cotacao.py
+```
+
+## Desafio extra
+Adicione uma função que calcula a variação percentual entre a última cotação e a anterior da mesma moeda. Depois, mostre uma linha como `USDBRL: +0.3%` para praticar também análise temporal.
+
+## Visão de mercado
+Situações como essa aparecem em pequenas lojas, fintechs, serviços de importação e ferramentas financeiras internas. Em vez de consultar a API em cada operação manualmente, o time salva o histórico para analisar tendência, verificar falhas e construir relatórios mais confiáveis.
+
+## Autoavaliação
+- [ ] Consigo montar uma resposta fictícia de API em dicionário.
+- [ ] Entendo como criar e inserir dados em SQLite.
+- [ ] Sei usar `commit()` para persistir as alterações.
+- [ ] Consigo listar as cotações em um formato legível.
+- [ ] Entendo o papel do histórico para comparar valores ao longo do tempo.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+import sqlite3
+from datetime import datetime
+
+
+def buscar_cotacao():
+    return {
+        "USDBRL": {"code": "USDBRL", "bid": 5.41},
+        "EURBRL": {"code": "EURBRL", "bid": 5.96},
+        "JPYBRL": {"code": "JPYBRL", "bid": 0.0369},
+    }
+
+
+def criar_banco(conn):
+    conn.execute(
+        """
+        CREATE TABLE IF NOT EXISTS historico (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            moeda TEXT NOT NULL,
+            valor REAL NOT NULL,
+            registrado_em TEXT NOT NULL
+        )
+        """
+    )
+    conn.commit()
+
+
+def salvar_historico(conn, resposta):
+    for moeda, dados in resposta.items():
+        valor = float(dados["bid"])
+        agora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        conn.execute(
+            "INSERT INTO historico (moeda, valor, registrado_em) VALUES (?, ?, ?)",
+            (moeda, valor, agora),
+        )
+    conn.commit()
+
+
+def listar_cotacoes(conn):
+    return conn.execute(
+        "SELECT moeda, valor FROM historico ORDER BY id DESC LIMIT 3"
+    ).fetchall()
+
+
+if __name__ == "__main__":
+    resposta = buscar_cotacao()
+    conn = sqlite3.connect(":memory:")
+    criar_banco(conn)
+    salvar_historico(conn, resposta)
+
+    print("=== Cotação atual ===")
+    for moeda, valor in listar_cotacoes(conn):
+        print(f"{moeda}: R$ {valor:.2f}")
+    print(f"Histórico salvo: {len(resposta)} registros")
+```
+
+Saída real com execução:
+
+```text
+=== Cotação atual ===
+JPYBRL: R$ 0.04
+EURBRL: R$ 5.96
+USDBRL: R$ 5.41
+Histórico salvo: 3 registros
+```
+</details>

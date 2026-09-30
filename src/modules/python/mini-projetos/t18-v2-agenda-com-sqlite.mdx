@@ -1,0 +1,180 @@
+---
+titulo: "Agenda com SQLite"
+descricao: "Crie uma agenda de contatos em Python com banco em memória, regras de validação e operações de busca, edição e remoção."
+topico: 18
+topicoNome: "APIs e persistência com SQLite"
+variacao: "V2"
+tempo: 50
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "sqlite", "agenda", "dados", "persistencia", "banco"]
+---
+
+# Agenda com SQLite
+
+## Contexto
+Uma pequena empresa quer manter uma agenda de contatos em um sistema simples, sem depender de planilhas ou de um banco externo. A funcionalidade central é cadastrar pessoas, pesquisar por nome e ordenar a lista. Como a regra exige que você use banco de dados e ainda tenha uma camada de acesso separada, a estrutura do código precisa ser clara desde o começo.
+
+## O que você vai construir
+Uma agenda de contatos com banco em memória, usando SQLite para guardar nome, telefone e e-mail. O programa deve permitir inserir, listar, editar e remover contatos, além de ordenar por nome. Nos testes no navegador, os dados chegam como resposta JSON fictícia, e o banco do Python fica em memória para simular o ambiente real sem rede.
+
+Exemplo de execução real:
+
+```text
+=== Agenda de contatos ===
+Ana: 11999990000
+Bruno: 11888887777
+Carla: 11777776666
+```
+
+## Requisitos
+1. Crie uma tabela `contatos` com `id`, `nome`, `telefone` e `email`.
+2. Receba uma lista de contatos em formato de dicionário, como se fosse uma resposta JSON da API.
+3. Salve os contatos em SQLite com `INSERT` e `commit()`.
+4. Faça busca por nome, ordenação por nome e remoção por id.
+5. Trate duplicatas e dados vazios antes de inserir no banco.
+6. Separe a lógica de acesso ao banco da lógica de interface do usuário.
+
+## Critérios de aceite
+- [ ] O banco é criado com `sqlite3.connect(":memory:")` e não depende de arquivo externo.
+- [ ] A resposta JSON fictícia entra como dicionário ou lista de dicionários.
+- [ ] O código ignora contatos vazios ou incompletos antes de inserir.
+- [ ] O programa consegue listar os contatos em ordem alfabética.
+- [ ] Exite uma função ou módulo para inserir, consultar e remover dados do banco.
+- [ ] A busca por nome funciona mesmo com diferentes capitalizações.
+- [ ] O aluno consegue explicar por que usar parâmetros em SQL é melhor do que concatenar strings.
+
+## Guia
+### Marcos do projeto
+1. Defina a estrutura da tabela e o modelo inicial de contato.
+2. Transforme a resposta JSON fictícia em registros para inserir no banco.
+3. Crie uma camada de acesso ao banco para listar, buscar e remover contatos.
+4. Ordene os resultados por nome e valide nomes e e-mails simples.
+5. Teste casos especiais como contato duplicado, nome vazio e busca parcial.
+
+### Regras e casos especiais
+- Não permitir inserir contato com `nome` vazio ou `telefone` em branco.
+- O e-mail pode ser comparado em caixa baixa para evitar duplicatas por maiúsculas/minúsculas.
+- A busca por nome deve ignorar acentos ou normalizar com `lower()`.
+- Se um contato for removido por `id`, a lista precisa refletir a mudança imediatamente.
+- O programa deve separar a lógica de acesso ao banco da parte de apresentação.
+
+### Dicas
+- Comece pela tabela; se ela não estiver certa, o restante do código fica frágil.
+- Para validar dados, uma função `contato_valido(dados)` reduz erros e deixa o código legível.
+- Use `.lower()` antes de comparar nomes e e-mails para padronizar as entradas.
+- Para buscar por parte do nome, `SELECT ... WHERE nome LIKE ?` é suficiente.
+- Mantenha as consultas em uma camada específica; isso facilita futuras mudanças no projeto.
+
+## Código inicial
+<Playground title="Ponto de partida" code={`import sqlite3
+
+DB = sqlite3.connect(":memory:")
+
+resposta_json = {
+    "contatos": [
+        {"nome": "Ana", "telefone": "11999990000", "email": "ana@email.com"},
+        {"nome": "Bruno", "telefone": "11888887777", "email": "bruno@email.com"},
+        {"nome": "Carla", "telefone": "11777776666", "email": "carla@email.com"},
+    ]
+}
+
+# 1. criar a tabela
+# 2. validar e inserir cada contato
+# 3. listar ordenado por nome
+# 4. buscar por nome e remover por id
+# 5. imprimir a lista final
+`} />
+
+## Desafio extra
+Adicione a função de edição de contato por `id` e uma busca por parte do nome, como `"an"` encontrando `"Ana"`. Com isso, o aluno entende que a agenda pode evoluir do estado simples para um sistema mais parecido com um CRM.
+
+## Visão de mercado
+Agenda de contatos e cadastros simples são o início de muitos sistemas reais: CRM, ferramentas internas, suporte ao cliente e gestão de pedidos. A prática de separar a camada de banco da camada de negócio é o que torna esse código reutilizável e mais fácil de manter.
+
+## Autoavaliação
+- [ ] Consegui criar a tabela em SQLite em memória.
+- [ ] Validei nome, telefone e e-mail antes de inserir dados.
+- [ ] Listei os contatos em ordem alfabética.
+- [ ] Busquei e removi registros corretamente.
+- [ ] Separei a lógica do banco da interface do usuário.
+- [ ] Entendo por que usar SQL parametrizado é mais seguro e legível.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+import sqlite3
+
+
+def criar_tabela(conn):
+    conn.execute(
+        """
+        CREATE TABLE IF NOT EXISTS contatos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT NOT NULL,
+            telefone TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE
+        )
+        """
+    )
+    conn.commit()
+
+
+def contato_valido(contato):
+    return (
+        isinstance(contato, dict)
+        and contato.get("nome", "").strip()
+        and contato.get("telefone", "").strip()
+        and contato.get("email", "").strip()
+    )
+
+
+def importar_contatos(conn, resposta_json):
+    contatos = resposta_json.get("contatos", [])
+    for contato in contatos:
+        if not contato_valido(contato):
+            continue
+        nome = contato["nome"].strip()
+        telefone = contato["telefone"].strip()
+        email = contato["email"].strip().lower()
+        conn.execute(
+            "INSERT OR IGNORE INTO contatos (nome, telefone, email) VALUES (?, ?, ?)",
+            (nome, telefone, email),
+        )
+    conn.commit()
+
+
+def listar_contatos(conn):
+    return conn.execute(
+        "SELECT nome, telefone FROM contatos ORDER BY nome ASC"
+    ).fetchall()
+
+
+if __name__ == "__main__":
+    conn = sqlite3.connect(":memory:")
+    criar_tabela(conn)
+
+    resposta_json = {
+        "contatos": [
+            {"nome": "Ana", "telefone": "11999990000", "email": "ana@email.com"},
+            {"nome": "Bruno", "telefone": "11888887777", "email": "bruno@email.com"},
+            {"nome": "Carla", "telefone": "11777776666", "email": "carla@email.com"},
+        ]
+    }
+
+    importar_contatos(conn, resposta_json)
+    print("=== Agenda de contatos ===")
+    for nome, telefone in listar_contatos(conn):
+        print(f"{nome}: {telefone}")
+```
+
+Saída real com execução:
+
+```text
+=== Agenda de contatos ===
+Ana: 11999990000
+Bruno: 11888887777
+Carla: 11777776666
+```
+</details>

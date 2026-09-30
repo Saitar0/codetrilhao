@@ -1,0 +1,203 @@
+---
+titulo: "Monitor com histórico"
+descricao: "Consuma dados de um serviço externo, grave o resultado em SQLite e mostre a evolução do valor com um histórico simples."
+topico: 18
+topicoNome: "APIs e persistência com SQLite"
+variacao: "V3"
+tempo: 55
+nivel: "intermediario"
+execucao: "local"
+palavrasChave: ["python", "api", "sqlite", "monitoramento", "historico", "temperatura"]
+---
+
+# Monitor com histórico
+
+## Contexto
+Um cliente pediu um painel simples para acompanhar a temperatura e a umidade de uma cidade em tempo real. O problema é que, em muitas empresas, a rede falha, a API responde vazia ou o serviço trava por alguns segundos. O programa precisa tratar essas falhas com segurança e ainda guardar o histórico para mostrar evolução no tempo.
+
+## O que você vai construir
+Um monitor de dados com histórico local. Ele consulta uma API fictícia de clima, grava os resultados em SQLite e mostra o último conjunto de dados e a variação em relação ao registro anterior. O objetivo é aplicar o que o tópico ensina sobre APIs, banco de dados e tratamento de falhas de rede.
+
+Exemplo de execução real:
+
+```text
+=== Monitor de clima ===
+São Paulo: 28.2°C
+Recife: 31.4°C
+Rio: 27.8°C
+Últimos 3 registros gravados com sucesso.
+```
+
+## Requisitos
+1. Simular a resposta de uma API em dicionário para não depender de rede real durante o desenvolvimento.
+2. Definir uma tabela `historico_clima` com cidade, temperatura, umidade e data/hora.
+3. Salvar cada resposta em SQLite com `INSERT` e `commit()`.
+4. Mostrar os valores mais recentes para cada cidade.
+5. Tratar falhas de rede ou resposta vazia com mensagens claras.
+6. Permitir uma comparação simples entre registros recentes.
+
+## Critérios de aceite
+- [ ] O script consegue receber uma resposta fictícia em dicionário de API.
+- [ ] O banco SQLite guarda `cidade`, `temperatura`, `umidade` e `registrado_em`.
+- [ ] O programa trata resposta vazia ou dados ausentes sem crashar.
+- [ ] Há um passo para mostrar o histórico recente e a variação entre registros.
+- [ ] A estrutura do código separa a consulta da persistência e da apresentação.
+- [ ] O aluno consegue descrever como isso se conecta com um backend real de monitoramento.
+- [ ] O histórico funciona mesmo com múltiplas cidades no mesmo banco.
+
+## Histórias de usuário
+1. Como operador, quero ver a temperatura atual das cidades monitoradas.
+2. Como analista, quero guardar cada consulta para comparar mudanças ao longo do tempo.
+3. Como cliente, quero receber uma mensagem clara quando a API falhar.
+4. Como time de suporte, quero saber se os dados são válidos antes de armazená-los.
+
+## Arquitetura sugerida
+- `api.py` ou `consultar_dados()` — recebe a resposta da API e valida os campos.
+- `banco.py` ou `salvar_historico()` — cria a tabela e grava os registros.
+- `relatorio.py` ou `mostrar_historico()` — mostra os últimos dados e a variação.
+- `main.py` — coordena a execução e lida com falhas.
+
+## Casos de teste de aceitação
+- API vazia deve gerar mensagem de erro e não interromper o programa.
+- Cidade sem temperatura deve ser ignorada do banco.
+- Resposta com 3 cidades deve salvar 3 registros em uma única execução.
+- Registro anterior ausente deve ser tratado como primeiro dado e não gerar erro.
+- O relatório final deve mostrar as cidades e as temperaturas em ordem legível.
+
+## Riscos
+- Tratar os campos da resposta de forma automática sem validar pode quebrar o programa.
+- Não salvar a data/hora dificulta comparar evolução no tempo.
+- Banco e API em mesma função deixam o código difícil de manter.
+- Ignorar falhas de rede faz o programa parecer funcional, mas rasa em produção.
+
+## Guia
+### História do cliente
+O cliente quer um monitor simples para cidades que ele acompanha em um dashboard. Ele precisa que a execução funcione mesmo quando a API falha e que o sistema salve os dados para analisar tendências.
+
+### Marcos do projeto
+1. Defina a resposta JSON fictícia da API com cidades, temperatura e umidade.
+2. Crie a tabela `historico_clima` com campos mínimos para gravar a ocorrência.
+3. Salve os registros no banco e confirme que cada linha foi persistida.
+4. Leia o histórico mais recente e mostre os dados em ordem legível.
+5. Avalie falhas e dados vazios antes de gravar as informações.
+
+### Regras e casos especiais
+- A resposta da API deve ter uma lista de cidades, cada uma com `nome`, `temperatura` e `umidade`.
+- Se a resposta vier vazia, imprima `API indisponível` sem quebrar o script.
+- Se a temperatura for `None` ou vazia, ignore a cidade do registro.
+- O histórico deve mostrar as cidades de forma legível e sem duplicar o mesmo valor do registro imediatamente anterior.
+- Use `SELECT * FROM historico_clima ORDER BY id DESC LIMIT 3` para mostrar apenas os últimos itens.
+
+### Dicas
+- Em vez de `requests.get()` direto na função principal, envolva a consulta em uma função dedicada.
+- Use `datetime.now()` para registrar o momento da coleta e facilitar a comparação.
+- Se a API responder vazia, trate isso na camada de consulta e não deixe o banco receber dados inválidos.
+- `float` e `round()` ajudam a mostrar temperatura com apenas 1 ou 2 casas decimais.
+- Teste um caso simples primeiro: uma cidade, depois duas, depois três.
+
+## Como executar no computador
+```bash
+python -m venv .venv
+# Windows
+.venv\Scripts\activate
+# macOS/Linux
+source .venv/bin/activate
+
+python monitor.py
+```
+
+## Desafio extra
+Adicione uma função que calcula a variação percentual da temperatura da última consulta em relação à anterior para a mesma cidade e mostra um resumo, como `São Paulo: +1.2%`.
+
+## Visão de mercado
+Monitoramento com histórico é a base de dashboards empresariais, alertas de temperatura, rastreio de preços, observabilidade e sistemas de automação. O mesmo padrão aparece quando a empresa precisa controlar estoque, analisar clima, acompanhar indicadores de negócio ou registrar mudanças de estado.
+
+## Autoavaliação
+- [ ] Consegui separar consulta, armazenamento e apresentação em funções.
+- [ ] Tratei resposta vazia e campos ausentes sem quebrar a execução.
+- [ ] Gravei dados em SQLite com data e hora da coleta.
+- [ ] Mostrei o histórico recente em um formato legível.
+- [ ] Entendo como esse padrão se conecta a um backend real de monitoramento.
+- [ ] Consigo defender a importância do histórico para análise de tendência.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+import sqlite3
+from datetime import datetime
+
+
+def consultar_api_ficticia():
+    return {
+        "cidades": [
+            {"nome": "São Paulo", "temperatura": 28.2, "umidade": 62},
+            {"nome": "Recife", "temperatura": 31.4, "umidade": 70},
+            {"nome": "Rio", "temperatura": 27.8, "umidade": 68},
+        ]
+    }
+
+
+def criar_tabela(conn):
+    conn.execute(
+        """
+        CREATE TABLE IF NOT EXISTS historico_clima (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            cidade TEXT NOT NULL,
+            temperatura REAL NOT NULL,
+            umidade INTEGER NOT NULL,
+            registrado_em TEXT NOT NULL
+        )
+        """
+    )
+    conn.commit()
+
+
+def salvar_historico(conn, dados):
+    if not dados or "cidades" not in dados:
+        print("API indisponível")
+        return
+
+    for cidade in dados["cidades"]:
+        nome = cidade.get("nome", "").strip()
+        temperatura = cidade.get("temperatura")
+        umidade = cidade.get("umidade")
+        if not nome or temperatura is None or umidade is None:
+            continue
+
+        conn.execute(
+            "INSERT INTO historico_clima (cidade, temperatura, umidade, registrado_em) VALUES (?, ?, ?, ?)",
+            (nome, float(temperatura), int(umidade), datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
+        )
+    conn.commit()
+
+
+def mostrar_ultimas_cidades(conn):
+    registros = conn.execute(
+        "SELECT cidade, temperatura, umidade FROM historico_clima ORDER BY id DESC LIMIT 3"
+    ).fetchall()
+
+    print("=== Monitor de clima ===")
+    for cidade, temperatura, umidade in registros:
+        print(f"{cidade}: {temperatura:.1f}°C | {umidade}%")
+
+
+if __name__ == "__main__":
+    conn = sqlite3.connect(":memory:")
+    criar_tabela(conn)
+    dados = consultar_api_ficticia()
+    salvar_historico(conn, dados)
+    mostrar_ultimas_cidades(conn)
+    print("Últimos 3 registros gravados com sucesso.")
+```
+
+Saída real com execução:
+
+```text
+=== Monitor de clima ===
+Rio: 27.8°C | 68%
+Recife: 31.4°C | 70%
+São Paulo: 28.2°C | 62%
+Últimos 3 registros gravados com sucesso.
+```
+</details>
