@@ -1,0 +1,186 @@
+---
+titulo: "Finanças pessoais"
+descricao: "Crie um sistema local para controlar receitas, despesas, categorias e metas de economia com relatórios mensais e regras de saldo."
+topico: 99
+topicoNome: "Projeto final"
+variacao: "V1"
+tempo: 80
+nivel: "intermediario"
+execucao: "local"
+palavrasChave: ["financas", "sqlite", "relatorio", "classificacao", "economia", "projeto-final"]
+---
+
+# Finanças pessoais
+
+## Contexto
+Você foi contratado para montar um painel simples para uma pessoa que quer tomar controle da vida financeira sem depender de planilhas complexas. A meta não é criar um sistema enorme; é construir um lugar confiável para registrar receitas, despesas, categorias e metas de economia. Com o tempo, esse programa pode virar um assistente pessoal para decisões de orçamento.
+
+## O que você vai construir
+Um gerenciador de finanças pessoais em terminal. O sistema permite registrar movimentações, classificar gastos, calcular saldo, listar a última movimentação por categoria e gerar um relatório mensal. A ideia é manter a lógica principal separada em classes, funções e persistência em SQLite.
+
+## Requisitos
+1. Menu interativo em loop com opções para adicionar movimentação, listar, filtrar e sair.
+2. Classes para `Transacao`, `Categoria` e `Carteira` ou `ControleFinanceiro`.
+3. Persistência em SQLite com tabelas para `categorias` e `transacoes`.
+4. Validação de entradas como valor positivo, data válida e categoria obrigatória.
+5. Cálculo de saldo atual e de saldo por mês.
+6. Relatório textual ou CSV com receitas, despesas e total final.
+7. Tratamento de erros para arquivo, banco e valores inválidos.
+8. Funções separadas para cadastrar, listar, filtrar e exportar relatório.
+9. README com instruções de uso e exemplo de execução.
+10. Testes automatizados cobrindo regras de negócio principais.
+
+## Critérios de aceite
+- [ ] O programa consegue registrar receitas e despesas em uma mesma execução.
+- [ ] O usuário consegue visualizar saldo atual e por categoria.
+- [ ] O sistema salva os dados em SQLite e lê a base corretamente.
+- [ ] Valores negativos ou vazios são rejeitados com mensagem clara.
+- [ ] O relatório mensal mostra lucro, gasto total e saldo final.
+- [ ] O código está organizado em módulos e funções com nomes significativos.
+- [ ] Há testes cobrindo entradas válidas e inválidas.
+
+## Histórias de usuário
+1. Como usuário, quero registrar uma receita para manter o controle do saldo.
+2. Como usuário, quero separar despesas por categoria para entender onde o dinheiro está indo.
+3. Como usuário, quero ver um relatório do mês para avaliar se estou economizando.
+4. Como usuário, quero receber uma mensagem clara quando o valor ou a data estiverem inválidos.
+
+## Modelo de dados
+Use classes e tabelas SQLite para separar domínio e persistência.
+
+```python
+from dataclasses import dataclass
+from datetime import date
+
+@dataclass
+class Transacao:
+    descricao: str
+    valor: float
+    categoria: str
+    tipo: str
+    data: date
+```
+
+```sql
+CREATE TABLE IF NOT EXISTS categorias (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS transacoes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    descricao TEXT NOT NULL,
+    valor REAL NOT NULL,
+    tipo TEXT NOT NULL CHECK(tipo IN ('receita', 'despesa')),
+    categoria_id INTEGER NOT NULL,
+    data TEXT NOT NULL,
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id)
+);
+```
+
+## Fluxo de menu
+1. `1. Registrar receita`
+2. `2. Registrar despesa`
+3. `3. Listar movimentações`
+4. `4. Ver saldo atual`
+5. `5. Gerar relatório mensal`
+6. `6. Sair`
+
+O menu deve validar opções numéricas e repetir até o usuário decidir sair.
+
+## Plano de marcos em 4 semanas
+1. Semana 1: decidir escopo, escolher categorias e criar estrutura de pastas.
+2. Semana 2: implementar classes e SQLite para salvar transações e categorias.
+3. Semana 3: criar relatórios mensais, filtros e validações de entrada.
+4. Semana 4: escrever testes, README e revisar UX do terminal.
+
+## Casos de teste de aceitação
+- Cadastro de receita com valor positivo deve aumentar o saldo.
+- Despesa com categoria inexistente deve solicitar criação da categoria antes do registro.
+- Valor zero ou negativo deve ser rejeitado.
+- Relatório mensal deve incluir receitas, despesas e saldo final.
+- Banco vazio deve retornar lista vazia sem quebrar o programa.
+
+## Desafios opcionais
+- Exportar relatório em CSV.
+- Adicionar meta de economia por categoria.
+- Incluir gráfico simples em terminal com `rich`.
+- Comparar o mês atual com o anterior com percentuais.
+
+## Estrutura sugerida
+```text
+projeto_financas/
+├── app/
+│   ├── __init__.py
+│   ├── banco.py
+│   ├── modelos.py
+│   ├── menu.py
+│   ├── relatorios.py
+│   └── validacoes.py
+├── tests/
+│   ├── test_validacoes.py
+│   └── test_relatorios.py
+├── main.py
+├── README.md
+├── .gitignore
+└── requirements.txt
+```
+
+## Guia
+### Como começar
+- Defina as categorias principais: alimentação, transporte, moradia, saúde e lazer.
+- Crie a interface de menu com funções pequenas e um módulo para banco de dados.
+- O saldo deve ser calculado a partir das transações e não armazenado manualmente.
+
+### Tratamento de erros
+- Se o valor não for numérico, diga `Valor inválido.`
+- Se a categoria não existir, ofereça a opção de criá-la.
+- Se a data estiver vazia ou fora do formato, rejeite a entrada.
+
+### Dicas práticas
+- Use `sqlite3.Row` para facilitar a leitura das colunas.
+- Prefira `SELECT` com filtros por mês e categoria em vez de carregar tudo.
+- Faça uma regra de negócio central para “receita aumenta o saldo; despesa reduz”.
+
+## Desafio extra
+Adicione uma função de `resumo_do_mes` que mostre percentual gasto em cada categoria e destaque a maior despesa do período.
+
+## Visão de mercado
+Sistemas de finanças pessoais e pequenos orçamentos são uma área muito valorizada em ferramentas de produtividade e auditoria. Mesmo em escala pequena, esse tipo de projeto demonstra domínio de regras de negócio, persistência e relatórios, que são pilares comuns em produtos reais de gestão financeira.
+
+## Autoavaliação
+- [ ] Separei as regras do domínio da persistência.
+- [ ] Testei entradas válidas e inválidas.
+- [ ] Usei SQLite para guardar transações e categorias.
+- [ ] Gerei um relatório mensais e salvei em texto/CSV.
+- [ ] Documentei a execução em README.
+- [ ] Coloquei commits coerentes e organização por módulos.
+
+<details>
+  <summary>Solução de referência</summary>
+
+A solução de referência pode ser uma base clara para comparar sua implementação, mas aqui o foco é estruturar o projeto, não entregar um sistema pronto. Você deve usar esse modelo como guia para decidir onde cada parte vai ficar.
+
+```python
+class Transacao:
+    def __init__(self, descricao, valor, categoria, tipo, data):
+        self.descricao = descricao
+        self.valor = valor
+        self.categoria = categoria
+        self.tipo = tipo
+        self.data = data
+
+
+def saldo_total(transacoes):
+    total = 0.0
+    for item in transacoes:
+        total += item.valor if item.tipo == 'receita' else -item.valor
+    return total
+```
+
+```text
+Saldo total: 840.50
+Receitas: 2200.00
+Despesas: 1359.50
+```
+</details>

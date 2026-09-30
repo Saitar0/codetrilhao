@@ -1,0 +1,186 @@
+---
+titulo: "Tarefas com prioridades"
+descricao: "Controle projetos, prazos, prioridades e produtividade com filtros, relatórios e persistência local em SQLite."
+topico: 99
+topicoNome: "Projeto final"
+variacao: "V3"
+tempo: 75
+nivel: "intermediario"
+execucao: "local"
+palavrasChave: ["tarefas", "prioridades", "produtividade", "sqlite", "projeto-final", "pipeline"]
+---
+
+# Tarefas com prioridades
+
+## Contexto
+Uma pessoa precisa organizar projetos, tarefas, prazos e prioridades em um único lugar. A dificuldade não é a lista em si, e sim a decisão: o que deve ir primeiro, o que pode esperar, quais tarefas estão atrasadas e como acompanhar o progresso sem perder controle.
+
+## O que você vai construir
+Um gerenciador de tarefas com prioridades e filtros. O sistema permite cadastrar projetos, criar tarefas com prazos e status, ordenar por urgência e gerar resumo de produtividade. É um projeto ideal para aplicar classes, estruturas de dados, SQLite e relatórios de acompanhamento.
+
+## Requisitos
+1. Menu em loop com opções para adicionar tarefa, listar, filtrar e sair.
+2. Classes para `Tarefa`, `Projeto` e `GerenciadorTarefas`.
+3. Persistência em SQLite com tabelas para projetos e tarefas.
+4. Prioridade com escala numérica ou qualitativa: baixa, média, alta, crítica.
+5. Tratamento de data, prazo vencido e tarefas concluídas.
+6. Relatório simples com tarefas pendentes, concluídas e atrasadas.
+7. Filtros por projeto, prioridade e status.
+8. Organização em módulos e funções pequenas com docstrings.
+9. README explicando a execução e os fluxos principais.
+10. Testes automatizados para regras de negócio e filtros.
+
+## Critérios de aceite
+- [ ] O programa cadastra projetos e tarefas com título, descrição, prioridade e prazo.
+- [ ] O usuário consegue listar apenas tarefas pendentes ou por prioridade.
+- [ ] Fila de tarefas considera prazos e prioridade para ordenar a atenção.
+- [ ] A lógica detecta tarefas vencidas ou atrasadas.
+- [ ] O sistema salva e lê dados em SQLite corretamente.
+- [ ] Há testes para tarefas concluídas, pendentes e urgentes.
+- [ ] O README orienta a execução e o fluxo principal do sistema.
+
+## Histórias de usuário
+1. Como estudante, quero separar projetos e tarefas para organizar melhor o estudo.
+2. Como profissional, quero filtrar tarefas por prioridade para decidir o que fazer primeiro.
+3. Como gestor, quero ver tarefas atrasadas e concluídas para acompanhar a produtividade.
+4. Como usuário, quero evitar erro ao cadastrar campos vazios ou data inválida.
+
+## Modelo de dados
+Use classes para representar tarefas e projetos e um banco simples para persistência.
+
+```python
+from dataclasses import dataclass
+from datetime import date
+
+@dataclass
+class Tarefa:
+    titulo: str
+    descricao: str
+    prioridade: str
+    prazo: date
+    concluida: bool = False
+```
+
+```sql
+CREATE TABLE IF NOT EXISTS projetos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS tarefas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    projeto_id INTEGER NOT NULL,
+    titulo TEXT NOT NULL,
+    descricao TEXT,
+    prioridade TEXT NOT NULL,
+    prazo TEXT NOT NULL,
+    concluida INTEGER NOT NULL DEFAULT 0,
+    FOREIGN KEY (projeto_id) REFERENCES projetos(id)
+);
+```
+
+## Fluxo de menu
+1. `1. Criar projeto`
+2. `2. Adicionar tarefa`
+3. `3. Listar tarefas`
+4. `4. Filtrar por prioridade`
+5. `5. Ver tarefas atrasadas`
+6. `6. Marcar como concluída`
+7. `7. Sair`
+
+A navegação deve ser simples, clara e segura, com validações que impedem campos vazios ou datas inválidas.
+
+## Plano de marcos em 4 semanas
+1. Semana 1: definir projetos, tarefas, prioridade e regras de negócio.
+2. Semana 2: criar banco SQLite e persistência das tarefas.
+3. Semana 3: implementar filtros, ordenação e relatórios de produtividade.
+4. Semana 4: validar regras com testes e preparar o README de uso.
+
+## Casos de teste de aceitação
+- Tarefa com prioridade alta e prazo vencido deve aparecer na lista de urgência.
+- Tarefa sem título deve ser rejeitada.
+- Tarefa concluída não deve aparecer em tarefas pendentes.
+- Projeto sem nome deve ser bloqueado.
+- Filtro por prioridade deve retornar apenas registros correspondentes.
+
+## Desafios opcionais
+- Adicionar cronograma semanal ou diário.
+- Mostrar um resumo de produtividade com porcentagem concluída.
+- Ordenar tarefas pela combinação de prioridade e prazo.
+- Gerar CSV de acompanhamento por projeto.
+
+## Estrutura sugerida
+```text
+projeto_tarefas/
+├── app/
+│   ├── __init__.py
+│   ├── banco.py
+│   ├── menu.py
+│   ├── modelos.py
+│   ├── filtros.py
+│   └── relatórios.py
+├── tests/
+│   ├── test_tarefas.py
+│   └── test_filtros.py
+├── main.py
+├── README.md
+├── .gitignore
+└── requirements.txt
+```
+
+## Guia
+### Como começar
+- Comece criando três projetos pequenos para testar a lógica: estudo, trabalho e pessoal.
+- Defina uma prioridade clara e um padrão para datas e status.
+- Não misture a lógica de filtro com a lógica de banco: cada módulo deve ter um papel bem definido.
+
+### Fluxo recomendado
+- Faça um cadastro inicial com 5 tarefas.
+- Marque uma como concluída.
+- Filtre por prioridade.
+- Veja quais tarefas ainda faltam e quais estão vencidas.
+
+### Dicas práticas
+- Use `date.today()` para comparar prazos com a data atual.
+- Exiba tarefas em ordem de urgência, mas mantenha a ordem de modo previsível.
+- A regra de “pendente vs concluída” deve estar centralizada e reutilizável.
+
+## Desafio extra
+Mostre um resumo de produtividade por projeto com número de tarefas concluídas, pendentes e percentual de avanço.
+
+## Visão de mercado
+Ferramentas de produtividade são muito usadas em equipes, estudantes e autônomos. O mesmo padrão aparece em gerenciadores de backlog, listas de tarefas e painéis de acompanhamento. Esse tipo de sistema ensina não só a persistência, mas também como transformar decisões subjetivas em regras claras, observáveis e testáveis.
+
+## Autoavaliação
+- [ ] Organizei tarefas em projetos e prioridades.
+- [ ] Fiz filtros por status e urgência.
+- [ ] Validei prazo, título e campos vazios.
+- [ ] Gravei e consultei dados em SQLite.
+- [ ] Testei regras principais de produtividade.
+- [ ] Entreguei README, estrutura modular e commits coerentes.
+
+<details>
+  <summary>Solução de referência</summary>
+
+A referência aqui deve servir como visualização da lógica que você deve manter separada em funções. O importante é manter a decisão de prioridade, prazo e conclusão fora do menu.
+
+```python
+class Tarefa:
+    def __init__(self, titulo, descricao, prioridade, prazo, concluida=False):
+        self.titulo = titulo
+        self.descricao = descricao
+        self.prioridade = prioridade
+        self.prazo = prazo
+        self.concluida = concluida
+
+    def esta_atrasada(self, hoje):
+        return not self.concluida and self.prazo < hoje
+```
+
+```text
+Tarefa: Revisar orçamento
+Prioridade: alta
+Prazo: 2026-09-30
+Status: atrasada
+```
+</details>

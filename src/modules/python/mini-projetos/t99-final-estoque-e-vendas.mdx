@@ -1,0 +1,189 @@
+---
+titulo: "Estoque e vendas"
+descricao: "Gerencie produtos, entradas, saídas e margem de lucro em um sistema local com estoque mínimo e relatório de vendas."
+topico: 99
+topicoNome: "Projeto final"
+variacao: "V2"
+tempo: 85
+nivel: "intermediario"
+execucao: "local"
+palavrasChave: ["estoque", "vendas", "sqlite", "lucro", "relatorio", "projeto-final"]
+---
+
+# Estoque e vendas
+
+## Contexto
+Uma loja pequena precisa controlar o que entra e sai do estoque sem perder o controle dos produtos e do lucro. O desafio não é só registrar vendas; é manter um fluxo seguro em que cada venda reduz o estoque, cada entrada aumenta a quantidade disponível e os alertas de mínimo ajudam a decidir novos pedidos.
+
+## O que você vai construir
+Um sistema de controle de estoque e vendas em terminal. O programa deve permitir cadastrar produtos, registrar entradas e saídas, consultar produto por nome ou código, verificar estoque mínimo e gerar relatório de vendas com ganho líquido.
+
+## Requisitos
+1. Menu em loop com opções de cadastro, venda, entrada, consulta e relatório.
+2. Classes para `Produto`, `MovimentoEstoque` e `Loja` ou `ControleEstoque`.
+3. Persistência em SQLite com tabelas para `produtos` e `movimentos`.
+4. Tratamento de erros para quantidade inválida, código inexistente e preço negativo.
+5. Alertas de estoque mínimo por produto.
+6. Cálculo de lucro por venda, considerando preço de compra e preço de venda.
+7. Relatório com produtos mais vendidos, itens em baixa e faturamento total.
+8. Organização em módulos para menu, regras e banco de dados.
+9. README com instruções, exemplo de uso e estrutura do projeto.
+10. Testes automatizados para estoque, preços e regras de venda.
+
+## Critérios de aceite
+- [ ] O sistema cadastra produtos com nome, preço de compra, preço de venda e quantidade inicial.
+- [ ] Vendas só podem ocorrer com estoque suficiente.
+- [ ] O relatório mostra itens com quantidade mínima e produtos em destaque.
+- [ ] O usuário consegue pesquisar produto por código ou nome.
+- [ ] Há validação de preço, quantidade e código inexistente.
+- [ ] O banco SQLite registra entradas e saídas em momentos distintos.
+- [ ] Há testes para casos de ausência de estoque e valor inválido.
+
+## Histórias de usuário
+1. Como dono da loja, quero cadastrar produtos para controlar o inventário.
+2. Como vendedor, quero registrar uma venda sem que o estoque fique negativo.
+3. Como gestor, quero ver quais itens estão abaixo do mínimo para comprar novamente.
+4. Como analista, quero calcular lucro por venda e faturamento total do período.
+
+## Modelo de dados
+Use classes para representar produtos e movimentações. O banco deve guardar os dados de forma organizada.
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Produto:
+    nome: str
+    preco_compra: float
+    preco_venda: float
+    estoque_atual: int
+    estoque_minimo: int
+```
+
+```sql
+CREATE TABLE IF NOT EXISTS produtos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL UNIQUE,
+    preco_compra REAL NOT NULL,
+    preco_venda REAL NOT NULL,
+    estoque_atual INTEGER NOT NULL,
+    estoque_minimo INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS movimentos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    produto_id INTEGER NOT NULL,
+    tipo TEXT NOT NULL CHECK(tipo IN ('entrada', 'saida')),
+    quantidade INTEGER NOT NULL,
+    valor_total REAL NOT NULL,
+    data TEXT NOT NULL,
+    FOREIGN KEY (produto_id) REFERENCES produtos(id)
+);
+```
+
+## Fluxo de menu
+1. `1. Cadastrar produto`
+2. `2. Registrar entrada`
+3. `3. Registrar venda`
+4. `4. Consultar produto`
+5. `5. Ver estoque mínimo`
+6. `6. Gerar relatório`
+7. `7. Sair`
+
+O fluxo deve validar a opção escolhida e impedir venda sem estoque suficiente.
+
+## Plano de marcos em 4 semanas
+1. Semana 1: modelar produtos, regra de compra/venda e estrutura mínima.
+2. Semana 2: implementar SQLite e registrar movimentações.
+3. Semana 3: criar relatórios de lucro, itens críticos e faturamento.
+4. Semana 4: executar testes de regra e documentar o uso do sistema.
+
+## Casos de teste de aceitação
+- Venda de quantidade maior que estoque deve falhar com mensagem específica.
+- Entrada de produto deve aumentar `estoque_atual` corretamente.
+- Produto sem estoque mínimo deve permitir cadastro do valor inicial.
+- Relatório de vendas deve somar faturamento por produto e período.
+- Produto com preço de venda menor que preço de compra deve ser rejeitado.
+
+## Desafios opcionais
+- Adicionar busca por categoria de produto.
+- Exportar relatório para CSV.
+- Incluir alerta visual de estoque crítico no terminal.
+- Integrar uma API de preço para comparar compra e venda.
+
+## Estrutura sugerida
+```text
+projeto_estoque/
+├── app/
+│   ├── __init__.py
+│   ├── banco.py
+│   ├── menu.py
+│   ├── modelos.py
+│   ├── regras.py
+│   └── relatorios.py
+├── tests/
+│   ├── test_produtos.py
+│   ├── test_vendas.py
+│   └── test_relatorios.py
+├── main.py
+├── README.md
+├── .gitignore
+└── requirements.txt
+```
+
+## Guia
+### Como começar
+- Defina uma regra central: a venda só deve ser validada quando o estoque for suficiente.
+- Armazene sempre a composição de preços e quantidade em `movimentos` para provar cada operação.
+- Use uma função `lucro_total()` e uma função `faturamento_total()` em vez de repetir cálculos.
+
+### Fluxo recomendado
+- Cadastre 3 a 5 produtos iniciais com nome, preço e estoque mínimo.
+- Registre uma entrada para cada produto.
+- Faça uma venda e verifique se o saldo financeiro e o estoque foram atualizados.
+- Gere um relatório com os itens mais vendidos e os produtos em alerta.
+
+### Dicas práticas
+- Evite armazenar o lucro final como valor duplicado em duas tabelas; calcule com base nos movimentos.
+- Use `CHECK` em SQL para garantir tipos válidos.
+- Separe leitura de banco e atualização de estoque em funções diferentes.
+
+## Desafio extra
+Crie um relatório que mostre os 5 produtos com melhor margem de lucro e ordene por percentual de ganho.
+
+## Visão de mercado
+Estoque e vendas são o núcleo de pequenas e médias empresas, marketplaces e negócios de varejo. Mesmo em terminal, esse tipo de projeto exige atenção à regra de negócio, às validações e à integridade dos dados, que são exatamente os mesmos desafios de sistemas reais de gestão comercial.
+
+## Autoavaliação
+- [ ] Validei estoque antes de vender.
+- [ ] Separei o modelo dos relatórios.
+- [ ] Gravei entradas e saídas no SQLite.
+- [ ] Testei valor de compra, preço de venda e estoque mínimo.
+- [ ] Documentei o uso do sistema e as regras principais.
+- [ ] Mantive commits organizados e uma estrutura modular.
+
+<details>
+  <summary>Solução de referência</summary>
+
+A referência aqui deve ser um guia de arquitetura, não um código completo substituindo seu projeto. O foco é mostrar como separar regras de negócio e arquivo de banco.
+
+```python
+class Produto:
+    def __init__(self, nome, preco_compra, preco_venda, estoque_atual, estoque_minimo):
+        self.nome = nome
+        self.preco_compra = preco_compra
+        self.preco_venda = preco_venda
+        self.estoque_atual = estoque_atual
+        self.estoque_minimo = estoque_minimo
+
+    def lucro_por_unidade(self):
+        return self.preco_venda - self.preco_compra
+```
+
+```text
+Produto: notebook
+Estoque atual: 12
+Estoque mínimo: 5
+Lucro por unidade: 500.00
+```
+</details>
