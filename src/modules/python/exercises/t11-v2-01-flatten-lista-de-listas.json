@@ -1,0 +1,52 @@
+{
+  "id": "t11-v2-01-flatten-lista-de-listas",
+  "tipo": "codigo",
+  "titulo": "Achatar lista de listas",
+  "topico": "Compreensões e funções embutidas",
+  "topicoNumero": 11,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "A função recebe uma lista com sublistas e devolve um único nível de itens.",
+    "Use dois `for` em sequência dentro da comprehension: um para percorrer cada sublista, outro para cada item dela.",
+    "A condição de filtro só deve entrar se estiver realmente necessária."
+  ],
+  "solucao": "def achatar(matriz: list[list[int]]) -> list[int]:\n    \"\"\"Transforma uma lista de listas em uma lista plana.\"\"\"\n    return [item for grupo in matriz for item in grupo]\n",
+  "tags": [
+    "python",
+    "comprehension",
+    "lista",
+    "flatten"
+  ],
+  "aulaRelacionada": "comprehensions",
+  "enunciado": "Implemente `achatar(matriz)` para transformar uma lista de listas em uma única lista plana, mantendo a ordem dos elementos de cada sublista. Exemplo: `[[1, 2], [3, 4, 5], [6]]` vira `[1, 2, 3, 4, 5, 6]`.",
+  "starterCode": "def achatar(matriz: list[list[int]]) -> list[int]:\n    pass\n",
+  "testes": [
+    {
+      "chamada": "achatar([[1, 2], [3, 4, 5], [6]])",
+      "esperado": "[1, 2, 3, 4, 5, 6]",
+      "oculto": false
+    },
+    {
+      "chamada": "achatar([[10], [20, 30], [40]])",
+      "esperado": "[10, 20, 30, 40]",
+      "oculto": false
+    },
+    {
+      "chamada": "achatar([[]])",
+      "esperado": "[]",
+      "oculto": false
+    },
+    {
+      "chamada": "achatar([[7, 8], [] , [9]])",
+      "esperado": "[7, 8, 9]",
+      "oculto": true
+    },
+    {
+      "chamada": "achatar([['a', 'b'], ['c']])",
+      "esperado": "['a', 'b', 'c']",
+      "oculto": true
+    }
+  ]
+}

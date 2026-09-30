@@ -1,0 +1,52 @@
+{
+  "id": "t11-v1-02-pares-em-comprehension",
+  "tipo": "codigo",
+  "titulo": "Filtrar pares com comprehension",
+  "topico": "Compreensões e funções embutidas",
+  "topicoNumero": 11,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "A função recebe uma lista e devolve apenas os números pares.",
+    "A condição do filtro é `numero % 2 == 0`.",
+    "A expressão do resultado é apenas `numero`, sem alterar o valor original."
+  ],
+  "solucao": "def filtrar_pares(numeros: list[int]) -> list[int]:\n    \"\"\"Retorna somente os números pares da lista informada.\"\"\"\n    return [numero for numero in numeros if numero % 2 == 0]\n",
+  "tags": [
+    "python",
+    "comprehension",
+    "pares",
+    "filtro"
+  ],
+  "aulaRelacionada": "comprehensions",
+  "enunciado": "Implemente `filtrar_pares(numeros)` para devolver uma nova lista contendo apenas os números pares da lista original. Preserve a ordem dos elementos e mantenha o filtro simples.",
+  "starterCode": "def filtrar_pares(numeros: list[int]) -> list[int]:\n    pass\n",
+  "testes": [
+    {
+      "chamada": "filtrar_pares([1, 2, 3, 4, 5, 6])",
+      "esperado": "[2, 4, 6]",
+      "oculto": false
+    },
+    {
+      "chamada": "filtrar_pares([10, 15, 20, 25])",
+      "esperado": "[10, 20]",
+      "oculto": false
+    },
+    {
+      "chamada": "filtrar_pares([3, 5, 7])",
+      "esperado": "[]",
+      "oculto": false
+    },
+    {
+      "chamada": "filtrar_pares([0, 2, 4, 6])",
+      "esperado": "[0, 2, 4, 6]",
+      "oculto": true
+    },
+    {
+      "chamada": "filtrar_pares([])",
+      "esperado": "[]",
+      "oculto": true
+    }
+  ]
+}

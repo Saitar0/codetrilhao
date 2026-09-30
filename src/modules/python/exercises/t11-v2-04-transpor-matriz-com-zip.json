@@ -1,0 +1,52 @@
+{
+  "id": "t11-v2-04-transpor-matriz-com-zip",
+  "tipo": "codigo",
+  "titulo": "Transpor matriz com zip",
+  "topico": "Compreensões e funções embutidas",
+  "topicoNumero": 11,
+  "variacao": "V2",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "A transposta de uma matriz troca linhas por colunas.",
+    "Use `zip(*matriz)` para agrupar os elementos da mesma coluna.",
+    "Converta o resultado em lista para manter uma estrutura indexável."
+  ],
+  "solucao": "def transpor_matriz(matriz: list[list[int]]) -> list[tuple[int, ...]]:\n    \"\"\"Retorna a matriz transposta usando zip.\"\"\"\n    return list(zip(*matriz))\n",
+  "tags": [
+    "python",
+    "zip",
+    "matriz",
+    "transposicao"
+  ],
+  "aulaRelacionada": "funcoes-embutidas",
+  "enunciado": "Implemente `transpor_matriz(matriz)` para criar a transposta da matriz usando `zip`. Exemplo: `[[1, 2, 3], [4, 5, 6]]` vira `[(1, 4), (2, 5), (3, 6)]`.",
+  "starterCode": "def transpor_matriz(matriz: list[list[int]]) -> list[tuple[int, ...]]:\n    pass\n",
+  "testes": [
+    {
+      "chamada": "transpor_matriz([[1, 2, 3], [4, 5, 6]])",
+      "esperado": "[(1, 4), (2, 5), (3, 6)]",
+      "oculto": false
+    },
+    {
+      "chamada": "transpor_matriz([[10, 20], [30, 40], [50, 60]])",
+      "esperado": "[(10, 30, 50), (20, 40, 60)]",
+      "oculto": false
+    },
+    {
+      "chamada": "transpor_matriz([[7]])",
+      "esperado": "[(7,)]",
+      "oculto": false
+    },
+    {
+      "chamada": "transpor_matriz([[1, 2], [3, 4], [5, 6]])",
+      "esperado": "[(1, 3, 5), (2, 4, 6)]",
+      "oculto": true
+    },
+    {
+      "chamada": "transpor_matriz([])",
+      "esperado": "[]",
+      "oculto": true
+    }
+  ]
+}

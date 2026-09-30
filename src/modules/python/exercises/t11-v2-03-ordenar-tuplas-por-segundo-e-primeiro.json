@@ -1,0 +1,52 @@
+{
+  "id": "t11-v2-03-ordenar-tuplas-por-segundo-e-primeiro",
+  "tipo": "codigo",
+  "titulo": "Ordenar tuplas por segundo e depois primeiro valor",
+  "topico": "Compreensões e funções embutidas",
+  "topicoNumero": 11,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "A função recebe uma lista de tuplas e devolve a lista ordenada.",
+    "Use `sorted(..., key=lambda item: (item[1], item[0]))` para priorizar o segundo elemento e depois o primeiro.",
+    "A saída final deve preservar a ordem correta de desempate em casos de igualdade."
+  ],
+  "solucao": "def ordenar_por_segundo_e_primeiro(itens: list[tuple[int, int]]) -> list[tuple[int, int]]:\n    \"\"\"Ordena a lista pelo segundo valor e, em caso de empate, pelo primeiro valor.\"\"\"\n    return sorted(itens, key=lambda item: (item[1], item[0]))\n",
+  "tags": [
+    "python",
+    "sorted",
+    "tupla",
+    "ordenacao"
+  ],
+  "aulaRelacionada": "funcoes-embutidas",
+  "enunciado": "Implemente `ordenar_por_segundo_e_primeiro(itens)` para ordenar os pares pela segunda posição e, em caso de empate, pela primeira. Exemplo: `[(3, 2), (1, 2), (2, 1)]` vira `[(2, 1), (1, 2), (3, 2)]`.",
+  "starterCode": "def ordenar_por_segundo_e_primeiro(itens: list[tuple[int, int]]) -> list[tuple[int, int]]:\n    pass\n",
+  "testes": [
+    {
+      "chamada": "ordenar_por_segundo_e_primeiro([(3, 2), (1, 2), (2, 1)])",
+      "esperado": "[(2, 1), (1, 2), (3, 2)]",
+      "oculto": false
+    },
+    {
+      "chamada": "ordenar_por_segundo_e_primeiro([(5, 5), (1, 2), (2, 2)])",
+      "esperado": "[(1, 2), (2, 2), (5, 5)]",
+      "oculto": false
+    },
+    {
+      "chamada": "ordenar_por_segundo_e_primeiro([])",
+      "esperado": "[]",
+      "oculto": false
+    },
+    {
+      "chamada": "ordenar_por_segundo_e_primeiro([(9, 1), (2, 1), (4, 3)])",
+      "esperado": "[(2, 1), (9, 1), (4, 3)]",
+      "oculto": true
+    },
+    {
+      "chamada": "ordenar_por_segundo_e_primeiro([(4, 0), (3, 0), (2, 1)])",
+      "esperado": "[(3, 0), (4, 0), (2, 1)]",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "t11-v2-02-dicionario-tamanhos-palavras",
+  "tipo": "codigo",
+  "titulo": "Dicionário de tamanhos de palavras",
+  "topico": "Compreensões e funções embutidas",
+  "topicoNumero": 11,
+  "variacao": "V2",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "A função recebe uma lista de palavras e devolve um dicionário.",
+    "A chave deve ser a palavra e o valor deve ser o seu tamanho.",
+    "Use a sintaxe de dict comprehension: `{palavra: len(palavra) for palavra in palavras}`."
+  ],
+  "solucao": "def tamanhos_palavras(palavras: list[str]) -> dict[str, int]:\n    \"\"\"Cria um dicionário mapeando cada palavra ao seu tamanho.\"\"\"\n    return {palavra: len(palavra) for palavra in palavras}\n",
+  "tags": [
+    "python",
+    "dict-comprehension",
+    "dicionario",
+    "palavras"
+  ],
+  "aulaRelacionada": "comprehensions",
+  "enunciado": "Implemente `tamanhos_palavras(palavras)` para devolver um dicionário em que cada palavra vira uma chave e o tamanho dela vira o valor. Exemplo: `['python', 'lista']` vira `{'python': 6, 'lista': 5}`.",
+  "starterCode": "def tamanhos_palavras(palavras: list[str]) -> dict[str, int]:\n    pass\n",
+  "testes": [
+    {
+      "chamada": "tamanhos_palavras(['python', 'dados', 'lista'])",
+      "esperado": "{'python': 6, 'dados': 5, 'lista': 5}",
+      "oculto": false
+    },
+    {
+      "chamada": "tamanhos_palavras(['a', 'bb', 'ccc'])",
+      "esperado": "{'a': 1, 'bb': 2, 'ccc': 3}",
+      "oculto": false
+    },
+    {
+      "chamada": "tamanhos_palavras([])",
+      "esperado": "{}",
+      "oculto": false
+    },
+    {
+      "chamada": "tamanhos_palavras(['loop', 'if', 'for'])",
+      "esperado": "{'loop': 4, 'if': 2, 'for': 3}",
+      "oculto": true
+    },
+    {
+      "chamada": "tamanhos_palavras(['x'])",
+      "esperado": "{'x': 1}",
+      "oculto": true
+    }
+  ]
+}

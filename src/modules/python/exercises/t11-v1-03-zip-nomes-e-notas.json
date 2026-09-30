@@ -1,0 +1,52 @@
+{
+  "id": "t11-v1-03-zip-nomes-e-notas",
+  "tipo": "codigo",
+  "titulo": "Combinar nomes e notas com zip",
+  "topico": "Compreensões e funções embutidas",
+  "topicoNumero": 11,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "A função recebe duas listas: nomes e notas.",
+    "Use `zip(nomes, notas)` para emparelhar cada nome com a nota da mesma posição.",
+    "Converta o resultado em lista para manter a estrutura pronta para uso."
+  ],
+  "solucao": "def combinar_nomes_e_notas(nomes: list[str], notas: list[int]) -> list[tuple[str, int]]:\n    \"\"\"Combina nomes e notas pela mesma posição de cada lista.\"\"\"\n    return list(zip(nomes, notas))\n",
+  "tags": [
+    "python",
+    "zip",
+    "lista",
+    "notas"
+  ],
+  "aulaRelacionada": "funcoes-embutidas",
+  "enunciado": "Implemente `combinar_nomes_e_notas(nomes, notas)` para emparelhar cada nome com a nota correspondente pela posição. A saída deve ser uma lista de tuplas `(nome, nota)`.",
+  "starterCode": "def combinar_nomes_e_notas(nomes: list[str], notas: list[int]) -> list[tuple[str, int]]:\n    pass\n",
+  "testes": [
+    {
+      "chamada": "combinar_nomes_e_notas(['Ana', 'Bia', 'Caio'], [9, 8, 7])",
+      "esperado": "[('Ana', 9), ('Bia', 8), ('Caio', 7)]",
+      "oculto": false
+    },
+    {
+      "chamada": "combinar_nomes_e_notas(['Rui', 'Lia'], [10, 6])",
+      "esperado": "[('Rui', 10), ('Lia', 6)]",
+      "oculto": false
+    },
+    {
+      "chamada": "combinar_nomes_e_notas([], [])",
+      "esperado": "[]",
+      "oculto": false
+    },
+    {
+      "chamada": "combinar_nomes_e_notas(['Dora'], [8])",
+      "esperado": "[('Dora', 8)]",
+      "oculto": true
+    },
+    {
+      "chamada": "combinar_nomes_e_notas(['Mia', 'Nilo', 'Otto'], [5, 5, 9])",
+      "esperado": "[('Mia', 5), ('Nilo', 5), ('Otto', 9)]",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "t11-v1-01-quadrados-em-comprehension",
+  "tipo": "codigo",
+  "titulo": "Quadrados com comprehension",
+  "topico": "Compreensões e funções embutidas",
+  "topicoNumero": 11,
+  "variacao": "V1",
+  "dificuldade": "fácil",
+  "xp": 10,
+  "dicas": [
+    "A função recebe um número e devolve uma lista com os quadrados de 1 até n.",
+    "Use `range(1, n + 1)` para gerar os valores que vão entrar na expressão.",
+    "A expressão central é `numero ** 2`, aplicada em cada item da sequência."
+  ],
+  "solucao": "def quadrados_ate(n: int) -> list[int]:\n    \"\"\"Retorna os quadrados de 1 até n inclusive.\"\"\"\n    return [numero ** 2 for numero in range(1, n + 1)]\n",
+  "tags": [
+    "python",
+    "comprehension",
+    "lista",
+    "quadrados"
+  ],
+  "aulaRelacionada": "comprehensions",
+  "enunciado": "Implemente `quadrados_ate(n)` para devolver uma lista com os quadrados dos valores de 1 até `n`, inclusive. Mantenha a ordem natural e use uma solução curta e legível.",
+  "starterCode": "def quadrados_ate(n: int) -> list[int]:\n    pass\n",
+  "testes": [
+    {
+      "chamada": "quadrados_ate(5)",
+      "esperado": "[1, 4, 9, 16, 25]",
+      "oculto": false
+    },
+    {
+      "chamada": "quadrados_ate(1)",
+      "esperado": "[1]",
+      "oculto": false
+    },
+    {
+      "chamada": "quadrados_ate(3)",
+      "esperado": "[1, 4, 9]",
+      "oculto": false
+    },
+    {
+      "chamada": "quadrados_ate(0)",
+      "esperado": "[]",
+      "oculto": true
+    },
+    {
+      "chamada": "quadrados_ate(8)",
+      "esperado": "[1, 4, 9, 16, 25, 36, 49, 64]",
+      "oculto": true
+    }
+  ]
+}

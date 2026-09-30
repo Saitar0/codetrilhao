@@ -1,0 +1,26 @@
+{
+  "id": "t11-v1-04-any-e-all-notas",
+  "tipo": "prever-saida",
+  "titulo": "Saída de any e all",
+  "topico": "Compreensões e funções embutidas",
+  "topicoNumero": 11,
+  "variacao": "V1",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "Observe a expressão dentro de `any()` e a condição dentro de `all()`.",
+    "`any()` responde se existe pelo menos um valor que satisfaz a condição.",
+    "`all()` responde se todos os valores satisfazem a condição."
+  ],
+  "solucao": "notas = [7, 9, 8, 5]\nprint(any(nota >= 9 for nota in notas))\nprint(all(nota >= 5 for nota in notas))\n# True\n# True",
+  "tags": [
+    "python",
+    "any",
+    "all",
+    "previsao"
+  ],
+  "aulaRelacionada": "funcoes-embutidas",
+  "enunciado": "Considere o trecho abaixo e responda qual será a saída impressa. A lista de notas é `[7, 9, 8, 5]` e as funções `any()` e `all()` verificam condições sobre cada elemento.",
+  "codigo": "notas = [7, 9, 8, 5]\nprint(any(nota >= 9 for nota in notas))\nprint(all(nota >= 5 for nota in notas))",
+  "respostaEsperada": "True\nTrue"
+}

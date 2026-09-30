@@ -1,0 +1,52 @@
+{
+  "id": "t11-v3-02-filtrar-pedidos-por-valor-e-periodo",
+  "tipo": "codigo",
+  "titulo": "Filtrar pedidos por valor e período",
+  "topico": "Compreensões e funções embutidas",
+  "topicoNumero": 11,
+  "variacao": "V3",
+  "dificuldade": "médio",
+  "xp": 20,
+  "dicas": [
+    "A função recebe pedidos, um valor mínimo e um intervalo de datas.",
+    "Use uma condição com `and` para exigir que o pedido tenha valor suficiente e data dentro do período.",
+    "A comparação de datas em ISO-8601 funciona em ordem lexicográfica."
+  ],
+  "solucao": "def filtrar_pedidos(pedidos: list[dict], valor_minimo: float, inicio: str, fim: str) -> list[dict]:\n    \"\"\"Mantém pedidos com valor acima do mínimo e data no intervalo informado.\"\"\"\n    return [\n        pedido\n        for pedido in pedidos\n        if pedido['valor'] >= valor_minimo and inicio <= pedido['data'] <= fim\n    ]\n",
+  "tags": [
+    "python",
+    "filter",
+    "data",
+    "pedidos"
+  ],
+  "aulaRelacionada": "iteradores-e-geradores",
+  "enunciado": "Implemente `filtrar_pedidos(pedidos, valor_minimo, inicio, fim)` para devolver apenas os pedidos cujo valor seja maior ou igual ao mínimo e cuja data esteja dentro do intervalo informado. O período usa datas no formato `YYYY-MM-DD`.",
+  "starterCode": "def filtrar_pedidos(pedidos: list[dict], valor_minimo: float, inicio: str, fim: str) -> list[dict]:\n    pass\n",
+  "testes": [
+    {
+      "chamada": "filtrar_pedidos([{'produto': 'mouse', 'valor': 120, 'data': '2024-02-03'}, {'produto': 'teclado', 'valor': 80, 'data': '2024-02-12'}, {'produto': 'monitor', 'valor': 150, 'data': '2024-02-20'}], 100, '2024-02-01', '2024-02-15')",
+      "esperado": "[{'produto': 'mouse', 'valor': 120, 'data': '2024-02-03'}]",
+      "oculto": false
+    },
+    {
+      "chamada": "filtrar_pedidos([{'produto': 'cadeira', 'valor': 50, 'data': '2024-02-05'}, {'produto': 'mesa', 'valor': 200, 'data': '2024-02-18'}], 100, '2024-02-01', '2024-02-10')",
+      "esperado": "[]",
+      "oculto": false
+    },
+    {
+      "chamada": "filtrar_pedidos([{'produto': 'fone', 'valor': 90, 'data': '2024-02-07'}], 90, '2024-02-01', '2024-02-28')",
+      "esperado": "[{'produto': 'fone', 'valor': 90, 'data': '2024-02-07'}]",
+      "oculto": false
+    },
+    {
+      "chamada": "filtrar_pedidos([], 50, '2024-01-01', '2024-01-31')",
+      "esperado": "[]",
+      "oculto": true
+    },
+    {
+      "chamada": "filtrar_pedidos([{'produto': 'notebook', 'valor': 2100, 'data': '2024-03-02'}], 2000, '2024-02-01', '2024-02-28')",
+      "esperado": "[]",
+      "oculto": true
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "t11-v3-04-top-3-produtos-mais-vendidos",
+  "tipo": "bug",
+  "titulo": "Corrigir top 3 produtos mais vendidos",
+  "topico": "Compreensões e funções embutidas",
+  "topicoNumero": 11,
+  "variacao": "V3",
+  "dificuldade": "difícil",
+  "xp": 30,
+  "dicas": [
+    "Agrupe a quantidade por produto antes de ordenar.",
+    "A ordenação deve ser pela quantidade em ordem decrescente; em caso de empate, o nome pode entrar em critério secundário.",
+    "O retorno final deve ser uma lista de tuplas `(produto, quantidade_total)`, com apenas os 3 primeiros."
+  ],
+  "solucao": "def top_3_produtos(vendas: list[dict]) -> list[tuple[str, int]]:\n    \"\"\"Retorna os 3 produtos com maior quantidade total vendida.\"\"\"\n    total_por_produto: dict[str, int] = {}\n    for venda in vendas:\n        produto = venda['produto']\n        quantidade = venda['quantidade']\n        total_por_produto[produto] = total_por_produto.get(produto, 0) + quantidade\n\n    return sorted(total_por_produto.items(), key=lambda item: (-item[1], item[0]))[:3]\n",
+  "tags": [
+    "python",
+    "bug",
+    "top-3",
+    "vendas"
+  ],
+  "aulaRelacionada": "iteradores-e-geradores",
+  "enunciado": "Corrija a lógica de `top_3_produtos(vendas)` para retornar os 3 produtos com maior quantidade total vendida. Cada item da lista tem `produto` e `quantidade`; o retorno final deve ser uma lista de tuplas `(produto, total_vendido)` ordenada pela quantidade em ordem decrescente.",
+  "starterCode": "def top_3_produtos(vendas: list[dict]) -> list[tuple[str, int]]:\n    return sorted(vendas, key=lambda item: item['quantidade'], reverse=True)[:3]\n",
+  "testes": [
+    {
+      "chamada": "top_3_produtos([{'produto': 'camisa', 'quantidade': 2}, {'produto': 'calca', 'quantidade': 5}, {'produto': 'camisa', 'quantidade': 3}, {'produto': 'bone', 'quantidade': 1}, {'produto': 'calca', 'quantidade': 2}, {'produto': 'jaqueta', 'quantidade': 4}])",
+      "esperado": "[('calca', 7), ('camisa', 5), ('jaqueta', 4)]",
+      "oculto": false
+    },
+    {
+      "chamada": "top_3_produtos([{'produto': 'caderno', 'quantidade': 2}, {'produto': 'lapis', 'quantidade': 4}, {'produto': 'caderno', 'quantidade': 6}])",
+      "esperado": "[('caderno', 8), ('lapis', 4)]",
+      "oculto": false
+    },
+    {
+      "chamada": "top_3_produtos([])",
+      "esperado": "[]",
+      "oculto": false
+    },
+    {
+      "chamada": "top_3_produtos([{'produto': 'caneta', 'quantidade': 5}, {'produto': 'borracha', 'quantidade': 5}, {'produto': 'papel', 'quantidade': 3}, {'produto': 'caneta', 'quantidade': 2}])",
+      "esperado": "[('caneta', 7), ('borracha', 5), ('papel', 3)]",
+      "oculto": true
+    },
+    {
+      "chamada": "top_3_produtos([{'produto': 'uva', 'quantidade': 1}, {'produto': 'pera', 'quantidade': 1}, {'produto': 'maca', 'quantidade': 1}])",
+      "esperado": "[('maca', 1), ('pera', 1), ('uva', 1)]",
+      "oculto": true
+    }
+  ]
+}
