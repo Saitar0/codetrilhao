@@ -1,0 +1,298 @@
+---
+titulo: "Controle de estoque em listas"
+descricao: "Crie um sistema simples de gestão de estoque em listas com entrada, saída, alerta de mínimo e relatório final ordenado."
+topico: "listas"
+topicoNome: "Listas"
+variacao: "V3"
+tempo: 35
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "listas", "estoque", "produtos", "relatório", "inventário"]
+---
+
+# Controle de estoque em listas
+
+## Contexto
+Uma loja de materiais de escritório precisa controlar os produtos em estoque de forma simples e confiável. O dono quer saber o que está em falta, quais itens precisam ser repostos e quanto vale o estoque total. Como o volume ainda é pequeno, uma solução em Python com listas pode resolver bem o problema, mas essa estrutura precisa ser organizada para não virar um conjunto de dados difíceis de manter.
+
+## O que você vai construir
+Um programa que registra produtos, acompanha a quantidade em estoque, calcula o valor total do inventário, detecta itens abaixo do mínimo e mostra um relatório final ordenado pela quantidade ou pelo nome do produto.
+
+Exemplo de execução real:
+
+```text
+=== Estoque ===
+1. Registrar entrada
+2. Registrar saída
+3. Verificar mínimo
+4. Relatório final
+5. Sair
+Escolha uma opção: 1
+Produto: caneta
+Quantidade: 12
+Preço unitário: 3.50
+=== Estoque ===
+1. Registrar entrada
+2. Registrar saída
+3. Verificar mínimo
+4. Relatório final
+5. Sair
+Escolha uma opção: 1
+Produto: caderno
+Quantidade: 5
+Preço unitário: 8.00
+=== Estoque ===
+1. Registrar entrada
+2. Registrar saída
+3. Verificar mínimo
+4. Relatório final
+5. Sair
+Escolha uma opção: 4
+Relatório final:
+1. caneta - 12 unidades - R$ 42.00
+2. caderno - 5 unidades - R$ 40.00
+Valor total do estoque: R$ 82.00
+=== Estoque ===
+1. Registrar entrada
+2. Registrar saída
+3. Verificar mínimo
+4. Relatório final
+5. Sair
+Escolha uma opção: 5
+Estoque encerrado.
+```
+
+## Requisitos
+1. Registrar produtos com nome, quantidade e preço unitário.
+2. Registrar entrada e saída de estoque sem permitir quantidade negativa.
+3. Detectar itens abaixo do estoque mínimo definido.
+4. Calcular o valor total do estoque.
+5. Mostrar um relatório final organizado e legível.
+6. Tratar produtos inexistentes e entradas inválidas com mensagens claras.
+
+## Critérios de aceite
+- [ ] Cada produto tem nome, quantidade e preço unitário bem definidos.
+- [ ] A entrada de estoque nunca deixa a quantidade negativa.
+- [ ] A saída só acontece quando há quantidade suficiente para retirar.
+- [ ] O relatório final mostra todos os itens e o valor total.
+- [ ] O alerta de mínimo aparece quando um produto está em situação de reposição.
+- [ ] A ordem do relatório é previsível e facilita a leitura do dono da loja.
+
+## Histórias de usuário
+- Como dono da loja, quero saber rapidamente quais produtos precisam de reposição.
+- Como operador, quero registrar entradas e saídas sem gerar inconsistências.
+- Como gestor, quero ver o valor total do estoque em um relatório final.
+- Como analista, quero separar a lógica de validação da lógica de apresentação do relatório.
+
+## Arquitetura sugerida
+- `adicionar_produto(produtos)` para registrar um novo item.
+- `registrar_entrada(produtos)` para aumentar a quantidade em estoque.
+- `registrar_saida(produtos)` para reduzir a quantidade com validação.
+- `alerta_minimo(produtos, limite)` para listar produtos abaixo do mínimo.
+- `valor_total_estoque(produtos)` para somar quantidade × preço unitário.
+- `relatorio_final(produtos)` para mostrar produtos ordenados e o total do estoque.
+- `main()` para controlar o menu principal.
+
+## Casos de teste de aceitação
+- Produto com entrada positiva e preço válido: estoque atualizado corretamente.
+- Saída maior do que a quantidade em estoque: operação rejeitada com mensagem clara.
+- Produto abaixo do mínimo: alerta listado no relatório.
+- Relatório final com vários produtos: ordem está correta e o valor total está correto.
+- Produto inexistente: a operação informa que o item não foi encontrado.
+
+## Riscos
+- Não validar a quantidade pode gerar estoques negativos.
+- Listas paralelas tornam o código mais difícil de manter.
+- Não separar funções de regra e apresentação deixa a solução menos legível.
+- Relatórios sem ordenação dificultam a leitura do estoque em situações reais.
+
+## Guia
+### História do cliente
+O cliente quer um protótipo simples para controlar itens de loja em pequenas quantidades. Ele não precisa de banco de dados nem integração imediata, mas precisa confiança: não pode haver saída maior do que o estoque disponível e o relatório final precisa ser claro.
+
+### Marcos do projeto
+1. Defina a estrutura básica de cada produto: nome, quantidade e preço unitário.
+2. Crie a lógica de entrada e saída com validação de quantidade e preço.
+3. Use uma regra simples de estoque mínimo para detectar itens em risco.
+4. Calcule o valor do estoque e gere um relatório final ordenado.
+5. Revise casos com estoque vazio, negativo e aviso de mínimo antes de entregar.
+
+### Dicas
+- Tente pensar em um produto como um registro com três campos, em vez de várias listas paralelas espalhadas pelo código.
+- Mantenha a validação separada da apresentação, porque isso torna o código mais fácil de testar.
+- Faça a ordenação do relatório em uma etapa separada, para não misturar regra de negócio com formatação.
+
+<Callout type="importante" title="Regra de negócio">
+Em estoque, o sistema não pode aceitar quantidade negativa nem deixar a validação misturada com a exibição dos dados. Validação e relatório devem ser partes diferentes do código.
+</Callout>
+
+<Playground title="Ponto de partida" code={`produtos = []
+
+while True:
+    print("=== Estoque ===")
+    print("1. Registrar entrada")
+    print("2. Registrar saída")
+    print("3. Verificar mínimo")
+    print("4. Relatório final")
+    print("5. Sair")
+    opcao = input("Escolha uma opção: ")
+
+    if opcao == "1":
+        # leia nome, quantidade e preço
+        # valide os dados antes de adicionar
+        pass
+    elif opcao == "2":
+        # reduza a quantidade do produto com validação
+        pass
+    elif opcao == "3":
+        # mostre os produtos abaixo do mínimo
+        pass
+    elif opcao == "4":
+        # mostre o relatório final ordenado
+        pass
+    elif opcao == "5":
+        print("Estoque encerrado.")
+        break
+    else:
+        print("Opção inválida.")
+`} />
+
+## Desafio extra
+Crie um relatório de alertas por categoria, por exemplo: “estoque baixo”, “estoque crítico” e “normal”, sem perder a ordenação por quantidade ou nome.
+
+## Visão de mercado
+Controle de estoque é um dos problemas mais comuns em varejo, logística, e-commerce e gestão interna de empresas. O mesmo padrão aparece em estoque de peças, produtos de loja, almoxarifado e sistemas de distribuição, e a dificuldade real é manter a integridade dos dados em listas e regras claras.
+
+## Autoavaliação
+- [ ] Defini a estrutura do produto com preço, quantidade e nome.
+- [ ] Validei entrada e saída antes de alterar o estoque.
+- [ ] Considerei a regra de estoque mínimo como critério de alerta.
+- [ ] Calculei o valor total do inventário de forma legível.
+- [ ] Revisei pelo menos um caso de erro e um de sucesso no relatório final.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+produtos = []
+
+while True:
+    print("=== Estoque ===")
+    print("1. Registrar entrada")
+    print("2. Registrar saída")
+    print("3. Verificar mínimo")
+    print("4. Relatório final")
+    print("5. Sair")
+    opcao = input("Escolha uma opção: ")
+
+    if opcao == "1":
+        nome = input("Produto: ").strip()
+        quantidade = int(input("Quantidade: "))
+        preco = float(input("Preço unitário: "))
+
+        if quantidade <= 0 or preco <= 0:
+            print("Quantidade e preço precisam ser positivos.")
+            continue
+
+        for produto in produtos:
+            if produto["nome"].lower() == nome.lower():
+                produto["quantidade"] += quantidade
+                print(f"Estoque de {nome} atualizado.")
+                break
+        else:
+            produtos.append({"nome": nome, "quantidade": quantidade, "preco": preco, "minimo": 5})
+            print(f"{nome} adicionado ao estoque.")
+
+    elif opcao == "2":
+        nome = input("Produto: ").strip()
+        quantidade = int(input("Quantidade: "))
+
+        for produto in produtos:
+            if produto["nome"].lower() == nome.lower():
+                if quantidade <= 0:
+                    print("Quantidade deve ser positiva.")
+                    break
+                if quantidade > produto["quantidade"]:
+                    print("Quantidade insuficiente em estoque.")
+                    break
+                produto["quantidade"] -= quantidade
+                print(f"Saída registrada para {nome}.")
+                break
+        else:
+            print("Produto não encontrado.")
+
+    elif opcao == "3":
+        alerta = []
+        for produto in produtos:
+            if produto["quantidade"] < produto["minimo"]:
+                alerta.append(produto["nome"])
+
+        if not alerta:
+            print("Nenhum produto abaixo do mínimo.")
+        else:
+            print("Produtos abaixo do mínimo:")
+            for nome in alerta:
+                print(f"- {nome}")
+
+    elif opcao == "4":
+        ordenado = sorted(produtos, key=lambda item: item["nome"].lower())
+        print("Relatório final:")
+        for indice, produto in enumerate(ordenado, start=1):
+            valor = produto["quantidade"] * produto["preco"]
+            print(f"{indice}. {produto['nome']} - {produto['quantidade']} unidades - R$ {valor:.2f}")
+
+        valor_total = sum(produto["quantidade"] * produto["preco"] for produto in ordenado)
+        print(f"Valor total do estoque: R$ {valor_total:.2f}")
+
+    elif opcao == "5":
+        print("Estoque encerrado.")
+        break
+
+    else:
+        print("Opção inválida.")
+```
+
+Saída real com entrada:
+
+```text
+=== Estoque ===
+1. Registrar entrada
+2. Registrar saída
+3. Verificar mínimo
+4. Relatório final
+5. Sair
+Escolha uma opção: 1
+Produto: caneta
+Quantidade: 12
+Preço unitário: 3.50
+=== Estoque ===
+1. Registrar entrada
+2. Registrar saída
+3. Verificar mínimo
+4. Relatório final
+5. Sair
+Escolha uma opção: 1
+Produto: caderno
+Quantidade: 5
+Preço unitário: 8.00
+=== Estoque ===
+1. Registrar entrada
+2. Registrar saída
+3. Verificar mínimo
+4. Relatório final
+5. Sair
+Escolha uma opção: 4
+Relatório final:
+1. caneta - 12 unidades - R$ 42.00
+2. caderno - 5 unidades - R$ 40.00
+Valor total do estoque: R$ 82.00
+=== Estoque ===
+1. Registrar entrada
+2. Registrar saída
+3. Verificar mínimo
+4. Relatório final
+5. Sair
+Escolha uma opção: 5
+Estoque encerrado.
+```
+</details>

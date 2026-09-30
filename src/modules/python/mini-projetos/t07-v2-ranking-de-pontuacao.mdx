@@ -1,0 +1,271 @@
+---
+titulo: "Ranking de pontuação"
+descricao: "Registre jogadores, atualize pontuações e mostre o topo do ranking, incluindo desempates e posição de cada participante."
+topico: "listas"
+topicoNome: "Listas"
+variacao: "V2"
+tempo: 30
+nivel: "intermediario"
+execucao: "navegador"
+palavrasChave: ["python", "listas", "ranking", "ordenação", "pontuação", "desempate"]
+---
+
+# Ranking de pontuação
+
+## Contexto
+Uma oficina de jogos quer manter um ranking simples das partidas do mês. A equipe precisa registrar jogadores e pontos, atualizar o placar quando a partida termina e mostrar quem está em primeiro lugar, sem perder a ordem correta em caso de empate. O problema está em montar uma lista organizada e em decidir o critério do desempate, porque sem isso o ranking pode ficar inconsistente.
+
+## O que você vai construir
+Um programa que guarda jogadores e pontuações, mantém o top 5 em ordem, atualiza um jogador existente e mostra a posição de qualquer nome do ranking.
+
+Exemplo de execução real:
+
+```text
+=== Ranking ===
+1. Registrar pontuação
+2. Atualizar pontuação
+3. Ver posição
+4. Mostrar top 5
+5. Sair
+Escolha uma opção: 1
+Nome do jogador: Ana
+Pontos: 120
+=== Ranking ===
+1. Registrar pontuação
+2. Atualizar pontuação
+3. Ver posição
+4. Mostrar top 5
+5. Sair
+Escolha uma opção: 1
+Nome do jogador: Bruno
+Pontos: 140
+=== Ranking ===
+1. Registrar pontuação
+2. Atualizar pontuação
+3. Ver posição
+4. Mostrar top 5
+5. Sair
+Escolha uma opção: 4
+Top 5
+1. Bruno - 140 pontos
+2. Ana - 120 pontos
+=== Ranking ===
+1. Registrar pontuação
+2. Atualizar pontuação
+3. Ver posição
+4. Mostrar top 5
+5. Sair
+Escolha uma opção: 3
+Nome do jogador: Ana
+Ana está na posição 2.
+=== Ranking ===
+1. Registrar pontuação
+2. Atualizar pontuação
+3. Ver posição
+4. Mostrar top 5
+5. Sair
+Escolha uma opção: 5
+Ranking encerrado.
+```
+
+## Requisitos
+1. Registrar jogadores com nome e pontuação.
+2. Atualizar a pontuação de um jogador já existente.
+3. Ordenar o ranking por pontuação decrescente.
+4. Em caso de empate, usar a ordem de chegada como critério de desempate.
+5. Mostrar o top 5 e a posição de um jogador específico.
+6. Tratar jogadores inexistentes e nomes duplicados de forma clara.
+
+## Critérios de aceite
+- [ ] O programa mantém a lista de jogadores em memória e atualiza pontuações sem duplicar registros.
+- [ ] A ordenação usa `sorted()` ou uma lógica equivalente baseada em maior pontuação primeiro.
+- [ ] O desempate por ordem de chegada está explícito e não depende de sorte.
+- [ ] A visualização do top 5 mostra apenas os primeiros colocados.
+- [ ] A consulta por posição consegue dizer em qual lugar o jogador está.
+- [ ] O sistema diferencia “jogador novo” de “jogador já cadastrado”.
+
+## Regras de negócio e casos especiais
+- Se um jogador já existir, não crie uma nova entrada; atualize a pontuação existente.
+- Se houver empate, quem chegou antes fica acima do que chegou depois.
+- Se o ranking tiver menos de 5 jogadores, mostre todos os registrados.
+- Se o jogador não estiver cadastrado, informe ao usuário de forma legível.
+- Ao calcular a ordem final, não use `sort()` em uma lista enquanto ainda precisa manter a ordem original de chegada em caso de empate.
+
+## Guia
+### Marcos do projeto
+1. Defina a estrutura de cada jogador: nome, pontos e ordem de chegada.
+2. Crie a lógica de registro e de atualização, evitando entradas duplicadas.
+3. Ordene o ranking com critério principal de pontuação e critério secundário de chegada.
+4. Mostre o top 5 e a posição de um nome específico.
+5. Revise casos de empate, jogador inexistente e ranking vazio antes de fechar a solução.
+
+### Dicas
+- Mantenha a ordem de chegada como um número fixo para cada cadastro.
+- O critério de desempate precisa ser determinístico: “quem chegou primeiro” é melhor do que “quem foi encontrado primeiro” em uma lista.
+- Ao calcular a posição, ordene primeiro e depois procure o nome na lista ordenada.
+
+<Callout type="importante" title="Regra de negócio">
+No ranking, o desempate não é opcional. Quando dois jogadores têm a mesma pontuação, a ordem de chegada define quem fica acima, e isso deve ser preservado em toda a solução.
+</Callout>
+
+<Playground title="Ponto de partida" code={`ranking = []
+proximo_numero = 1
+
+while True:
+    print("=== Ranking ===")
+    print("1. Registrar pontuação")
+    print("2. Atualizar pontuação")
+    print("3. Ver posição")
+    print("4. Mostrar top 5")
+    print("5. Sair")
+    opcao = input("Escolha uma opção: ")
+
+    if opcao == "1":
+        # leia nome e pontos
+        # registre o jogador com uma ordem de chegada
+        pass
+    elif opcao == "2":
+        # atualize a pontuação de um jogador existente
+        pass
+    elif opcao == "3":
+        # mostre a posição do jogador
+        pass
+    elif opcao == "4":
+        # mostre o top 5 em ordem
+        pass
+    elif opcao == "5":
+        print("Ranking encerrado.")
+        break
+    else:
+        print("Opção inválida.")
+`} />
+
+## Desafio extra
+Adicione um histórico das últimas 10 partidas, mostrando os resultados e o nome do vencedor, sem perder o ranking principal. Isso vai te preparar para lidar com listas de listas e com dados de eventos em sequência.
+
+## Visão de mercado
+Sistemas de ranking aparecem em jogos, educação, treinamentos e plataformas de produtividade. A mesma lógica se repete em dashboards de desempenho, rankings de vendas, tabela de líderes e relatórios de progresso, sempre com o cuidado de ordenar os dados e preservar regras de desempate.
+
+## Autoavaliação
+- [ ] Entendi que a mesma lista pode ser reordenada sem alterar a ordem de chegada como critério de desempate.
+- [ ] Separei a lógica de cadastro da lógica de ordenação.
+- [ ] Testei um caso com empate e um caso com atualização de pontuação.
+- [ ] Consegui identificar como localizar a posição de um jogador na lista ordenada.
+- [ ] Relembrei que o top 5 é apenas uma visão parcial do ranking completo.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+ranking = []
+proximo_numero = 1
+
+while True:
+    print("=== Ranking ===")
+    print("1. Registrar pontuação")
+    print("2. Atualizar pontuação")
+    print("3. Ver posição")
+    print("4. Mostrar top 5")
+    print("5. Sair")
+    opcao = input("Escolha uma opção: ")
+
+    if opcao == "1":
+        nome = input("Nome do jogador: ").strip()
+        pontos = int(input("Pontos: "))
+
+        for jogador in ranking:
+            if jogador["nome"].lower() == nome.lower():
+                print("Jogador já cadastrado. Use a opção de atualização.")
+                break
+        else:
+            ranking.append({"nome": nome, "pontos": pontos, "ordem": proximo_numero})
+            proximo_numero += 1
+            print(f"{nome} registrado com {pontos} pontos.")
+
+    elif opcao == "2":
+        nome = input("Nome do jogador: ").strip()
+        nova_pontuacao = int(input("Nova pontuação: "))
+
+        for jogador in ranking:
+            if jogador["nome"].lower() == nome.lower():
+                jogador["pontos"] = nova_pontuacao
+                print(f"Pontuação de {nome} atualizada para {nova_pontuacao}.")
+                break
+        else:
+            print("Jogador não encontrado.")
+
+    elif opcao == "3":
+        nome = input("Nome do jogador: ").strip()
+        ordenado = sorted(ranking, key=lambda jogador: (-jogador["pontos"], jogador["ordem"]))
+
+        for indice, jogador in enumerate(ordenado, start=1):
+            if jogador["nome"].lower() == nome.lower():
+                print(f"{jogador['nome']} está na posição {indice}.")
+                break
+        else:
+            print("Jogador não encontrado.")
+
+    elif opcao == "4":
+        ordenado = sorted(ranking, key=lambda jogador: (-jogador["pontos"], jogador["ordem"]))
+        print("Top 5")
+        for indice, jogador in enumerate(ordenado[:5], start=1):
+            print(f"{indice}. {jogador['nome']} - {jogador['pontos']} pontos")
+
+    elif opcao == "5":
+        print("Ranking encerrado.")
+        break
+
+    else:
+        print("Opção inválida.")
+```
+
+Saída real com entrada:
+
+```text
+=== Ranking ===
+1. Registrar pontuação
+2. Atualizar pontuação
+3. Ver posição
+4. Mostrar top 5
+5. Sair
+Escolha uma opção: 1
+Nome do jogador: Ana
+Pontos: 120
+=== Ranking ===
+1. Registrar pontuação
+2. Atualizar pontuação
+3. Ver posição
+4. Mostrar top 5
+5. Sair
+Escolha uma opção: 1
+Nome do jogador: Bruno
+Pontos: 140
+=== Ranking ===
+1. Registrar pontuação
+2. Atualizar pontuação
+3. Ver posição
+4. Mostrar top 5
+5. Sair
+Escolha uma opção: 4
+Top 5
+1. Bruno - 140 pontos
+2. Ana - 120 pontos
+=== Ranking ===
+1. Registrar pontuação
+2. Atualizar pontuação
+3. Ver posição
+4. Mostrar top 5
+5. Sair
+Escolha uma opção: 3
+Nome do jogador: Ana
+Ana está na posição 2.
+=== Ranking ===
+1. Registrar pontuação
+2. Atualizar pontuação
+3. Ver posição
+4. Mostrar top 5
+5. Sair
+Escolha uma opção: 5
+Ranking encerrado.
+```
+</details>

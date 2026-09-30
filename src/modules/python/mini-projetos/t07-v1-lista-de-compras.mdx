@@ -1,0 +1,259 @@
+---
+titulo: "Lista de compras"
+descricao: "Crie um menu para adicionar, remover, listar e limpar itens de uma lista de compras com lógica clara e validações simples."
+topico: "listas"
+topicoNome: "Listas"
+variacao: "V1"
+tempo: 25
+nivel: "iniciante"
+execucao: "navegador"
+palavrasChave: ["python", "listas", "menu", "compras", "append", "remove"]
+---
+
+# Lista de compras
+
+## Contexto
+Você está montando a lista de compras da semana para a casa e precisa manter o controle de forma simples. A lista precisa aceitar itens novos, remover itens errados, mostrar tudo em ordem e limpar tudo quando a compra for finalizada. Como o problema é pequeno, uma lista em Python resolve bem, mas precisa ter atenção para não perder itens ou apagar a lista inteira sem querer.
+
+## O que você vai construir
+Um programa que mostra um menu com opções para adicionar, remover, listar e limpar itens da lista de compras. O objetivo é manter a estrutura simples e prática, sem perder o controle do que já foi comprado.
+
+Exemplo de execução real:
+
+```text
+=== Lista de compras ===
+1. Adicionar item
+2. Remover item
+3. Listar itens
+4. Limpar lista
+5. Sair
+Escolha uma opção: 1
+Nome do item: arroz
+'arroz' adicionado.
+=== Lista de compras ===
+1. Adicionar item
+2. Remover item
+3. Listar itens
+4. Limpar lista
+5. Sair
+Escolha uma opção: 1
+Nome do item: feijão
+'feijão' adicionado.
+=== Lista de compras ===
+1. Adicionar item
+2. Remover item
+3. Listar itens
+4. Limpar lista
+5. Sair
+Escolha uma opção: 3
+Itens da lista:
+1. arroz
+2. feijão
+=== Lista de compras ===
+1. Adicionar item
+2. Remover item
+3. Listar itens
+4. Limpar lista
+5. Sair
+Escolha uma opção: 5
+Até a próxima compra!
+```
+
+## Requisitos
+1. Exibir um menu com opções claras para o usuário.
+2. Permitir adicionar itens novos na lista.
+3. Permitir remover um item informado pelo nome.
+4. Listar todos os itens atuais em ordem.
+5. Limpar a lista quando a compra for finalizada.
+6. Encerrar o programa quando o usuário finalizar a operação.
+
+## Critérios de aceite
+- [ ] O menu sempre aparece para o usuário escolher a próxima ação.
+- [ ] A lista aceita itens repetidos quando a regra permitir, e você consegue remover o item correto.
+- [ ] A opção de listar mostra todos os itens em ordem de cadastro.
+- [ ] A limpeza da lista é explícita e não acontece por acidente.
+- [ ] O programa não quebra quando a lista estiver vazia.
+- [ ] O aluno consegue explicar como usar `append`, `remove` e `clear` em contexto real.
+
+## Guia
+### Etapa 1: montar o menu
+- Use `while True` para manter o programa ativo até o usuário sair.
+- Exiba as opções em sequência para facilitar a leitura.
+- O menu é o centro do fluxo; ele decide qual ação executar em cada iteração.
+
+### Etapa 2: adicionar itens
+- Leia o nome do item com `input()`.
+- Remova espaços extras com `.strip()` para evitar itens vazios.
+- Use `append()` para guardar o produto na lista.
+
+### Etapa 3: remover itens com cuidado
+- Antes de remover, verifique se a lista não está vazia.
+- Se o item existir, use `remove()`. Se não existir, mostre uma mensagem útil.
+- Lembre-se de que a lista é mutável; o programa altera o conteúdo em memória, então precisa controlar essa mudança com atenção.
+
+<StepThrough>
+  <div>
+    <p>Primeiro, a lista começa vazia.</p>
+  </div>
+  <div>
+    <p>Quando você adiciona um item, ele entra no fim da estrutura, e o programa continua em execução.</p>
+  </div>
+  <div>
+    <p>Se você remover um item, a lista muda no lugar; por isso, sempre valide antes de apagar. Cópia e referência são importantes aqui: você deve decidir se está trabalhando na mesma lista ou em uma cópia dela.</p>
+  </div>
+</StepThrough>
+
+### Etapa 4: listar e limpar
+- Para listar, percorra a lista com `for` ou `enumerate`.
+- A opção de limpar pode usar `clear()`, que apaga todos os itens de uma vez.
+- Use mensagens claras para o usuário saber se a ação foi bem-sucedida.
+
+### Etapa 5: refletir sobre cópia vs referência
+- `lista_b = lista_a` faz duas variáveis apontarem para a mesma lista.
+- `lista_b = lista_a.copy()` ou `lista_b = lista_a[:]` cria uma cópia separada.
+- Isso é importante quando você quer manter uma lista original e trabalhar em uma cópia para testar, filtrar ou comparar.
+
+<Callout type="importante" title="Dica da etapa 5">
+Em listas, não confunda “nome da variável” com “conteúdo da lista”. Se duas variáveis apontam para a mesma lista, alterar uma também altera a outra. Isso é um dos erros mais comuns ao trabalhar com coleções.
+</Callout>
+
+<Playground title="Estrutura inicial" code={`lista = []
+
+while True:
+    print("=== Lista de compras ===")
+    print("1. Adicionar item")
+    print("2. Remover item")
+    print("3. Listar itens")
+    print("4. Limpar lista")
+    print("5. Sair")
+    opcao = input("Escolha uma opção: ")
+
+    if opcao == "1":
+        item = input("Nome do item: ").strip()
+        # adicione item na lista
+        pass
+    elif opcao == "2":
+        # remova um item da lista
+        pass
+    elif opcao == "3":
+        # liste os itens com numeração
+        pass
+    elif opcao == "4":
+        # limpe a lista
+        pass
+    elif opcao == "5":
+        print("Até a próxima compra!")
+        break
+    else:
+        print("Opção inválida.")
+`} />
+
+## Desafio extra
+Marque itens como comprados e mostre uma lista separada, sem apagar a compra antiga. Isso ajuda a sentir a diferença entre “armazena dados” e “organiza o estado do programa”.
+
+## Visão de mercado
+Listas aparecem em sistemas de shopping, catálogos de produtos, pequenos estoques e listas de tarefas. Em muitos softwares, o problema real não é só armazenar dados, mas também remover, ordenar e manter uma cópia segura da informação antes de aplicar alterações importantes.
+
+## Autoavaliação
+- [ ] Considerei a lista como estrutura mutável e útil para dados em sequência.
+- [ ] Entendi quando usar `append`, `remove`, `clear` e `for` para percorrer itens.
+- [ ] Testei uma lista vazia e uma lista com pelo menos dois itens.
+- [ ] Relembrei a diferença entre alterar a mesma lista e trabalhar com uma cópia.
+- [ ] Consegui explicar por que o menu faz o programa continuar em execução.
+
+<details>
+  <summary>Solução de referência</summary>
+
+```python
+lista = []
+
+while True:
+    print("=== Lista de compras ===")
+    print("1. Adicionar item")
+    print("2. Remover item")
+    print("3. Listar itens")
+    print("4. Limpar lista")
+    print("5. Sair")
+    opcao = input("Escolha uma opção: ")
+
+    if opcao == "1":
+        item = input("Nome do item: ").strip()
+        if not item:
+            print("Item inválido.")
+            continue
+        lista.append(item)
+        print(f"'{item}' adicionado.")
+
+    elif opcao == "2":
+        if not lista:
+            print("Lista vazia.")
+            continue
+
+        item = input("Nome do item para remover: ").strip()
+        if item in lista:
+            lista.remove(item)
+            print(f"'{item}' removido.")
+        else:
+            print("Item não encontrado.")
+
+    elif opcao == "3":
+        if not lista:
+            print("Lista vazia.")
+        else:
+            print("Itens da lista:")
+            for indice, item in enumerate(lista, start=1):
+                print(f"{indice}. {item}")
+
+    elif opcao == "4":
+        lista.clear()
+        print("Lista limpa.")
+
+    elif opcao == "5":
+        print("Até a próxima compra!")
+        break
+
+    else:
+        print("Opção inválida.")
+```
+
+Saída real com entrada:
+
+```text
+=== Lista de compras ===
+1. Adicionar item
+2. Remover item
+3. Listar itens
+4. Limpar lista
+5. Sair
+Escolha uma opção: 1
+Nome do item: arroz
+'arroz' adicionado.
+=== Lista de compras ===
+1. Adicionar item
+2. Remover item
+3. Listar itens
+4. Limpar lista
+5. Sair
+Escolha uma opção: 1
+Nome do item: feijão
+'feijão' adicionado.
+=== Lista de compras ===
+1. Adicionar item
+2. Remover item
+3. Listar itens
+4. Limpar lista
+5. Sair
+Escolha uma opção: 3
+Itens da lista:
+1. arroz
+2. feijão
+=== Lista de compras ===
+1. Adicionar item
+2. Remover item
+3. Listar itens
+4. Limpar lista
+5. Sair
+Escolha uma opção: 5
+Até a próxima compra!
+```
+</details>
