@@ -12,11 +12,11 @@
     "Se ocorrer divisão por zero, imprima 'Não é possível dividir por zero.' e permita nova entrada.",
     "Valide também que a entrada pode ser convertida para `float` antes de dividir." 
   ],
-  "solucao": "def dividir_segura():\n    while True:\n        try:\n            a = float(input())\n            b = float(input())\n            return print(f\"Resultado: {a/b}\")\n        except ZeroDivisionError:\n            print(\"Não é possível dividir por zero.\")\n        except ValueError:\n            print(\"Entrada inválida. Digite números válidos.\")\n",
+  "solucao": "while True:\n    try:\n        a = float(input())\n        b = float(input())\n        if b == 0:\n            raise ZeroDivisionError\n        print(f\"Resultado: {a / b}\")\n        break\n    except (ZeroDivisionError, ValueError):\n        pass\n",
   "tags": ["ZeroDivisionError", "divisao", "entrada"],
   "aulaRelacionada": "excecoes",
   "enunciado": "Leia dois números (cada um em uma linha). Mostre o resultado da divisão `a/b`. Se `b` for zero, imprima 'Não é possível dividir por zero.' e peça os dois números novamente. Se a entrada não for número, imprima 'Entrada inválida. Digite números válidos.' e peça de novo.",
-  "starterCode": "def dividir_segura():\n    pass\n",
+  "starterCode": "a = float(input())\nb = float(input())\nprint(f\"Resultado: {a / b}\")\n",
   "testes": [
     { "entrada": "10\n2\n", "esperado": "Resultado: 5.0\n", "oculto": false },
     { "entrada": "8\n0\n2\n2\n", "esperado": "Resultado: 1.0\n", "oculto": false },

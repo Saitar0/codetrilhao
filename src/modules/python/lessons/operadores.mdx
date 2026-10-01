@@ -1,283 +1,125 @@
 ---
-titulo: "Operadores e expressões"
-descricao: "Use operadores aritméticos, de comparação, lógicos e de identidade para construir expressões claras e confiáveis."
+titulo: "Operadores"
+descricao: "Entenda o conceito de operadores e aplique a l?gica em exerc?cios pr?ticos."
 secao: "A. Fundamentos"
 ordem: 6
 topico: 3
 fase: "A"
-tempo: 30
+tempo: 23
 nivel: "iniciante"
-palavrasChave: ['operadores', 'aritmética', 'comparação', 'lógicos', 'precedência']
-exercicios: [
-  "t03-v1-01-area-retangulo",
-  "t03-v1-02-eh-par",
-  "t03-v1-03-comparar-idades",
-  "t03-v1-04-minutos-para-horas",
-  "t03-v2-01-divisivel-por-3e5",
-  "t03-v2-02-separar-digitos",
-  "t03-v2-03-bissexto",
-  "t03-v2-04-dia-da-semana",
-  "t03-v3-01-parcelas-sem-juros",
-  "t03-v3-02-frete-gratis",
-  "t03-v3-03-desconto-progressivo",
-  "t03-v3-04-juros-compostos"
-]
+palavrasChave: ['python', 'l?gica', 'pr?tica']
+exercicios: []
 ---
 
-# Operadores e expressões
+# Operadores
 
-Quando você escreve um programa, ele precisa combinar valores e decidir o que fazer com eles. Isso é o papel dos <Glossario termo="operadores" definition="Símbolos que executam operações sobre valores, variáveis ou expressões." /> e das <Glossario termo="expressões" definition="Combinações de valores, variáveis e operadores que produzem um resultado." />. Em outras palavras, operadores transformam dados; expressões organizam essa transformação em uma instrução que o Python consegue avaliar.
+Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
 
-Imagine que você está calculando o total de uma compra, verificando se a idade permite votar e decidindo se um pedido pode ser enviado. Tudo isso depende de operadores e da ordem em que o Python resolve as operações. Sem entender isso, você passa a depender do “acaso” do código e acaba cometendo erros simples que são difíceis de rastrear.
-
-<Callout type="importante" title="O que você vai aprender">
-  - Entender os operadores aritméticos mais usados em Python.
-  - Saber usar atribuição composta e comparações em expressões válidas.
-  - Combinar condições com `and`, `or` e `not` sem confundir lógica.
-  - Reconhecer a diferença entre pertencimento e identidade.
-  - Aplicar a precedência correta, com parênteses quando necessário.
+<Callout type="importante" title="O que voc? vai aprender">
+  - Reconhecer a regra central do tema.
+  - Testar entradas pequenas e verificar a sa?da.
+  - Aplicar a ideia em cen?rios reais e de rotina.
+  - Aprimorar a clareza do c?digo e evitar erros comuns.
 </Callout>
 
-## 1. Operadores aritméticos: transformar valores
+## Conceito principal
 
-Os operadores aritméticos são os mais fáceis de visualizar na prática. Eles fazem cálculos com números e devolvem um resultado.
+O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
-<CodeBlock title="aritmetica_basica.py" code={`a = 10
-b = 3
-print(a + b)
-print(a - b)
-print(a * b)
-print(a / b)
-print(a // b)
-print(a % b)
-print(a ** b)`} />
+<CodeBlock title="operadores_exemplo_1.py" code={`valor = 10
+print(valor + 5)`} />
 
 ```text
-13
-7
-30
-3.3333333333333335
-3
-1
-1000
+15
 ```
 
-Aqui você vê alguns operadores muito importantes:
+Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
-- `+` para soma.
-- `-` para subtração.
-- `*` para multiplicação.
-- `/` para divisão real, que produz `float`.
-- `//` para divisão inteira, descartando o resto.
-- `%` para resto da divisão, muito útil em cálculos de paridade e divisibilidade.
-- `**` para potência.
-
-A divisão inteira e o módulo aparecem em vários problemas de lógica. Por exemplo, se você quer saber se um número é par, pode testar `n % 2 == 0`. Se quiser separar horas, minutos e segundos, `//` e `%` são ferramentas enormes.
-
-## 2. Atribuição composta: atualizar um valor sem reescrever tudo
-
-Python também oferece operadores de atribuição composta, como `+=`, `-=`, `*=`, `/=` e `%=`. Eles servem para atualizar uma variável a partir do valor atual, sem escrever a variável duas vezes.
-
-<CodeBlock title="atribuicao_composta.py" code={`saldo = 100
-saldo += 15
-saldo *= 2
-print(saldo)`} />
+<CodeBlock title="operadores_exemplo_2.py" code={`lista = [1, 2, 3]
+print(sum(lista))`} />
 
 ```text
-230
+6
 ```
 
-Esse código faz o seguinte: começa com `saldo = 100`; depois `saldo += 15` vira `115`; por fim `saldo *= 2` vira `230`. É só uma forma mais curta de escrever a mesma ideia. Isso deixa o código mais claro quando você está alterando um valor várias vezes no mesmo bloco.
+<Playground title="Experimente no navegador" code={`nome = "Ana"
+print(f"Ol?, {nome}!")`} />
 
-## 3. Comparação: verificar relações entre valores
+## Aplica??o pr?tica
 
-Operadores de comparação devolvem `True` ou `False`. Eles são a base das decisões em Python. Quando você compara valores, está perguntando: “isso é igual?”, “isso é maior?”, “isso está entre dois limites?”.
+A ideia do tema aparece em automa??o, valida??o de dados, regras de neg?cio, an?lise de arquivos e manuten??o de sistemas. O cen?rio muda, mas o racioc?nio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
 
-<CodeBlock title="comparacao_basica.py" code={`idade = 18
-print(idade == 18)
-print(idade != 18)
-print(idade < 21)
-print(idade >= 18)
-print(0 < idade < 21)`} />
+<CodeBlock title="operadores_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
 
 ```text
-True
-False
-True
-True
-True
+Maior de idade
 ```
 
-A expressão `0 < idade < 21` é um exemplo muito útil: em Python, ela funciona como “maior que 0 e menor que 21”. Em vez de escrever duas comparações separadas, você pode encadear a condição de forma mais legível. Isso é muito comum em validações e filtros.
+<Callout type="erro-comum" title="Erro comum">
+  ```python
+  valores = [0, -1, 1]
+  print(valores[0])
+  ```
 
-A leitura da expressão também importa. `idade == 18` significa “a idade é igual a 18?” e não “atribua 18 a idade”. Essa diferença é um ponto clássico de erro em Python, e vale reforçar.
-
-## 4. Operadores lógicos: combinar condições
-
-Os operadores lógicos são `and`, `or` e `not`. Eles permitem montar condições mais complexas, por exemplo: “tem idade mínima e possui documento” ou “é maior de idade ou está acompanhado”.
-
-<CodeBlock title="operadores_logicos.py" code={`idade = 18
-tem_cartao = True
-tem_veiculo = False
-
-print(idade >= 18 and tem_cartao)
-print(idade >= 18 or tem_veiculo)
-print(not tem_veiculo)`} />
-
-```text
-True
-True
-True
-```
-
-O operador `and` exige que todas as partes sejam verdadeiras. O `or` exige apenas uma. Já o `not` inverte o valor booleano: se algo é `True`, `not` transforma em `False`.
-
-Uma parte importante do Python é o <Glossario termo="curto-circuito" definition="Quando a avaliação da expressão para antes de testar tudo, porque o resultado já ficou definido." />. Por exemplo, em `False and (1 / 0)`, o Python não tenta dividir por zero, porque `False and ...` já é falso independentemente do restante. Isso evita erros desnecessários e torna expressões lógicas muito eficientes.
-
-<Playground title="Experimente a lógica com condições" code={`idade = 20
-status = 'ativo'
-print(idade >= 18 and status == 'ativo')
-print(idade < 18 or status == 'ativo')
-print(not (idade < 18))`} />
-
-## 5. Pertencimento e identidade: saber se algo existe ou se é o mesmo objeto
-
-Além dos operadores aritméticos, de comparação e lógicos, Python tem operadores de pertencimento e identidade. Eles parecem parecidos, mas têm papéis diferentes.
-
-- `in` e `not in`: verificam se um valor está dentro de outra estrutura, como texto ou lista.
-- `is` e `is not`: verificam se duas variáveis apontam para o mesmo objeto na memória.
-
-<CodeBlock title="pertencimento_e_identidade.py" code={`texto = "Python"
-lista = [1, 2, 3]
-
-print("Py" in texto)
-print("x" not in texto)
-print(2 in lista)
-
-x = [1, 2]
-y = x
-z = [1, 2]
-print(x is y)
-print(x is z)`} />
-
-```text
-True
-True
-True
-True
-False
-```
-
-Esse exemplo mostra uma diferença importante: `x is y` é `True` porque `y` recebe a mesma lista de `x`. Já `x is z` é `False` porque `z` é outra lista, mesmo com os mesmos valores. Em outras palavras, igualdade de conteúdo e identidade de objeto são coisas diferentes.
-
-## 6. Precedência: a ordem em que Python resolve expressões
-
-A precedência define qual parte da expressão o Python calcula primeiro. Se você não souber a regra, pode escrever algo que parece óbvio e obter um resultado completamente diferente do esperado.
-
-<Tabela data={[
-  ['Ordem', 'Operadores', 'Exemplo', 'Observação'],
-  ['1', 'Parênteses', '(2 + 3) * 4', 'O que estiver dentro de parênteses é resolvido primeiro.'],
-  ['2', 'Expoentes', '2 ** 3', 'Potenciação tem prioridade alta.'],
-  ['3', 'Unários', '-x, +x, ~x', '-3 * 2', 'Sinais e negação possuem precedência alta.'],
-  ['4', 'Multiplicação e divisão', '* / // %', '2 + 3 * 4', 'Essas operações vêm antes da soma.'],
-  ['5', 'Adição e subtração', '+ -', '10 - 2 + 1', 'São resolvidas depois da multiplicação.'],
-  ['6', 'Comparações', '< <= > >= == !=', '5 < x < 10', 'Comparações aparecem antes dos operadores lógicos.'],
-  ['7', 'not', 'not x', 'not idade > 18', 'Inverte a condição.'],
-  ['8', 'and', 'a and b', 'cond1 and cond2', 'Exige que todas as condições sejam verdadeiras.'],
-  ['9', 'or', 'a or b', 'cond1 or cond2', 'Basta uma condição verdadeira para o resultado ser True.'],
-  ['10', 'Atribuição', '=', 'total = 2 + 3', 'Atribui o resultado final ao nome da variável.'],
-]} />
-
-Essa tabela é a regra de ouro para não errar expressões. Você não precisa decorar tudo de memorizar, mas precisa ter esse mapa em mente e usar parênteses para deixar a hierarquia explícita. Quando a expressão fica confusa, escreva os parênteses para clareza.
-
-<Playground title="Compare precedência com e sem parênteses" code={`x = 2 + 3 * 4
-print(x)
-
-y = (2 + 3) * 4
-print(y)`} />
+  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
+</Callout>
 
 <StepThrough>
   <div>
-    <p>Primeiro, você olha a expressão <strong>2 + 3 * 4</strong>. Python resolve a multiplicação antes da soma.</p>
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
   </div>
   <div>
-    <p>Então, <strong>3 * 4</strong> vira <strong>12</strong>. A expressão agora fica <strong>2 + 12</strong>.</p>
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
   </div>
   <div>
-    <p>Por fim, ele soma os dois valores e imprime <strong>14</strong>. Se você quisesse 20, precisaria escrever <strong>(2 + 3) * 4</strong>.</p>
+    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
   </div>
 </StepThrough>
 
-## 7. `%` e `//`: truques que aparecem muito em lógica
-
-Os operadores `%` e `//` costumam causar confusão no início, mas eles são muito úteis. `//` devolve a parte inteira da divisão. `%` devolve o resto.
-
-<CodeBlock title="divisao_inteira_e_resto.py" code={`segundos = 3725
-horas = segundos // 3600
-minutos = (segundos % 3600) // 60
-resto = segundos % 60
-print(f"{horas}h {minutos}min {resto}s")` } />
+<CodeBlock title="operadores_exemplo_4.py" code={`resultado = 7 * 3
+print(resultado)`} />
 
 ```text
-1h 2min 5s
+21
 ```
 
-Esse exemplo mostra como transformar um total de segundos em horas, minutos e segundos. Quando você usa `%`, a ideia é “qual é o resto depois de tirar todos os grupos completos?”. Esse raciocínio aparece em vários exercícios, desde cálculo de parcelas até números pares e divisíveis por 3.
+<CodeBlock title="operadores_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
 
-A combinação de `%` e `//` também aparece em problemas clássicos de lógica, como separar unidade, dezena e centena de um número ou descobrir se um número é múltiplo de 5. Esse é um tipo de operação muito útil em sistemas de RH, vendas, logística e finanças, porque ela traduz regras numéricas complexas em cálculos simples.
+```text
+[1, 2, 3]
+```
 
-## Erros comuns
+<Tabela data={[
+  ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
+]} />
 
-<Callout type="erro-comum" title='Usar `=` no lugar de `==`'>
-  <CodeBlock title="operador_igualdade.py" code={`idade = 18
-print(idade = 18)`} />
-  <p>Esse erro acontece porque `=` atribui valor e `==` compara. Em Python, o código lê como “atribuir 18 a idade”, o que não faz sentido dentro de um `print`.</p>
-  <p>Correção: use `==` quando a intenção for verificar igualdade.</p>
-  <CodeBlock title="operador_igualdade_corrigido.py" code={`idade = 18
-print(idade == 18)`} />
-</Callout>
-
-<Callout type="erro-comum" title='`x > 5 and < 10`'>
-  <CodeBlock title="operador_incompleto.py" code={`x = 7
-print(x > 5 and < 10)`} />
-  <p>Esse trecho está incompleto, porque o Python precisa comparar `< 10` com algum valor. A sintaxe não é válida e o erro aparece imediatamente.</p>
-  <p>Correção: escreva a comparação completa, como `5 < x < 10`.</p>
-  <CodeBlock title="operador_incompleto_corrigido.py" code={`x = 7
-print(5 < x < 10)`} />
-</Callout>
-
-<Callout type="erro-comum" title='Resultado inesperado com `not` e `and`'>
-  <CodeBlock title="precedencia_not.py" code={`idade = 30
-print(not idade > 18 and idade < 40)`} />
-  <p>Esse código produz `False`, mesmo parecendo “idade entre 18 e 40”. Isso acontece porque `not` tem precedência maior do que `and`.</p>
-  <p>Correção: use parênteses para deixar a intenção explícita, como `not (idade > 18 and idade < 40)`.</p>
-  <CodeBlock title="precedencia_not_corrigido.py" code={`idade = 30
-print(not (idade > 18 and idade < 40))` } />
-</Callout>
+<Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
+<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
 
 ## No mercado de trabalho
 
-Operadores e expressões aparecem em quase qualquer sistema. Em um e-commerce, você pode calcular imposto, avaliar se o pedido tem frete grátis e decidir se a compra está dentro de uma promoção. Em uma plataforma de RH, você usa comparações para decidir se uma pessoa é elegível para férias ou um benefício. Numa aplicação bancária, expressões lógicas validam regras de transação, limite, risco e autenticação.
-
-Isso significa que, embora pareçam simples, operadores são uma base crítica para a lógica de negócios. Quando a expressão está bem estruturada, o programa fica fácil de testar, fácil de manter e mais difícil de quebrar. Em vez de “só funcionar”, você passa a escrever condições que podem ser lidas e revisadas por outra pessoa.
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
 
 <Quiz questions={[
-  { question: 'Qual é o resultado de `7 // 2`?', options: ['3.5', '3', '4', '2'], correctIndex: 1, explanation: 'A divisão inteira descarta o resto, então `7 // 2` resulta em 3.' },
-  { question: 'O que este código imprime? `x = 7; print(5 < x < 10)`', options: ['False', 'True', 'Erro', '10'], correctIndex: 1, explanation: 'A expressão verifica se x é maior que 5 e menor que 10 ao mesmo tempo, e 7 atende às duas condições.' },
-  { question: 'Qual expressão significa “idade maior ou igual a 18 e menor que 65”?', options: ['idade >= 18 or idade < 65', 'idade >= 18 and idade < 65', 'idade > 18 and idade <= 65', 'idade >= 18 and <= 65'], correctIndex: 1, explanation: 'A condição precisa satisfazer as duas regras ao mesmo tempo, por isso usa `and`.' },
-  { question: 'Qual operação tem precedência maior em `2 + 3 * 4`?', options: ['adição', 'comparação', 'multiplicação', 'atribuição'], correctIndex: 2, explanation: 'Em Python, a multiplicação resolve antes da soma.' },
-  { question: 'Qual é a saída de `print("a" in "banana")`?', options: ['False', 'banana', 'True', 'a'], correctIndex: 2, explanation: 'A letra "a" aparece na palavra "banana", então o resultado do operador `in` é `True`.' }
+  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
 ]} />
 
 <Resumo>
-  <li>Operadores aritméticos transformam valores numéricos e são essenciais para cálculos.</li>
-  <li>Comparações devolvem `True` ou `False` e são usadas para tomar decisões.</li>
-  <li>Operadores lógicos `and`, `or` e `not` combinam condições em expressões mais poderosas.</li>
-  <li>`in` e `not in` verificam pertencimento; `is` e `is not` verificam identidade de objeto.</li>
-  <li>A precedência resolve a ordem das operações; parênteses deixam isso claro e seguro.</li>
-  <li>`//` e `%` são fundamentais para lógica de divisibilidade e conversão de unidades.</li>
+  <li>Voc? reconheceu a regra central do tema.</li>
+  <li>Voc? validou a l?gica em um caso pequeno.</li>
+  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
+  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
 </Resumo>
 
 <Desafio>
-  Crie um script que leia a idade, a altura e a renda de uma pessoa e use expressões com comparação e lógica para responder: “ela é maior de idade?”, “ela está dentro da faixa esperada de altura?” e “a renda supera o valor mínimo?”. Depois, teste com valores diferentes e veja como a condição muda.
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
 </Desafio>
+

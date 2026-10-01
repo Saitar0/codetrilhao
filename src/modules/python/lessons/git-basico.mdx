@@ -1,200 +1,125 @@
 ---
-titulo: "Git básico"
-descricao: "Aprenda a registrar mudanças, organizar versões e colaborar com Git e GitHub."
+titulo: "Git b?sico"
+descricao: "Entenda o conceito de git b?sico e aplique a l?gica em exerc?cios pr?ticos."
 secao: "E. Pensamento de engenharia"
-ordem: 11
+ordem: 35
 topico: 17
 fase: "E"
-tempo: 25
+tempo: 22
 nivel: "intermediario"
-palavrasChave: ['git', 'github', 'commit', 'branch', 'merge']
-exercicios: [
-  't17-v1-03-git-init-e-log',
-  't17-v2-07-branch-merge',
-  't17-v3-09-readme-projeto',
-  't17-v3-10-gitignore-e-estrutura',
-  't17-v3-11-revisao-pull-request',
-  't17-v3-12-github-actions'
-]
+palavrasChave: ['python', 'l?gica', 'pr?tica']
+exercicios: []
 ---
 
-# Git básico: guardar mudanças sem perder o caminho
+# Git b?sico
 
-Programar sozinho costuma parecer simples até você precisar voltar atrás, comparar versões ou entregar um projeto para outra pessoa. Git é a ferramenta que resolve esse problema: ele registra o histórico do projeto, permite analisar mudanças e ajuda a trabalhar em equipe sem mesclar tudo em um caos.
+Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
 
-<Callout type="importante" title="O que você vai aprender">
-  - Como iniciar um repositório com `git init`.
-  - Como registrar mudanças com `add`, `commit`, `status` e `log`.
-  - Como separar trabalho com `branch` e mesclar com `merge`.
-  - Como proteger o projeto com `.gitignore` e escrever README melhor.
+<Callout type="importante" title="O que voc? vai aprender">
+  - Reconhecer a regra central do tema.
+  - Testar entradas pequenas e verificar a sa?da.
+  - Aplicar a ideia em cen?rios reais e de rotina.
+  - Aprimorar a clareza do c?digo e evitar erros comuns.
 </Callout>
 
-## Repositório e histórico
+## Conceito principal
 
-Um repositório Git guarda a linha do tempo do seu projeto. Você pode pensar nele como um caderno de versões: cada commit é um ponto salvo, com uma mensagem que explica o que mudou.
+O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
-No terminal, o fluxo mais comum começa assim:
-
-<CodeBlock language="bash" title="terminal" code={`git init
-git status
-git add .
-git commit -m "feat: inicializa projeto de cálculo"`} />
-
-Esse conjunto de comandos cria o repositório, mostra o estado atual, prepara os arquivos e registra a primeira versão. Em projetos reais, o `git status` é essencial: ele mostra o que foi modificado, o que está em staging e o que ainda precisa ser commitado.
-
-<CodeBlock language="bash" title="terminal" code={`git status
-git log --oneline
-
-# exemplo de saída
-# On branch main
-# nothing to commit, working tree clean
-# a1b2c3d feat: inicializa projeto de cálculo`} />
-
-A saída do `git log` ajuda a entender o que foi entregue e em que sequência. Isso é muito útil quando você quebra algo e precisa voltar a um ponto anterior.
-
-## Commits pequenos e descritivos
-
-O hábito mais importante de Git não é “fazer um commit por tudo”. É “fazer commits pequenos e claros”. Um commit gigante com mensagem genérica como “ajustes” deixa o histórico confuso e reduz a capacidade de analisar o que mudou.
-
-Uma boa mensagem explica a intenção. Exemplo:
+<CodeBlock title="git-basico_exemplo_1.py" code={`valor = 10
+print(valor + 5)`} />
 
 ```text
-feat: valida entrada de CPF
-fix: corrige cálculo de desconto
-docs: adiciona guia de uso no README
+15
 ```
 
-<Callout type="erro-comum" title="Commit gigante 'ajustes'">
-  ```bash
-git add .
-git commit -m "ajustes"
-  ```
+Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
-  O problema não é o comando em si; é o contexto. Esse tipo de mensagem não diz o que foi alterado, nem por quê. A correção é separar por intenção: um commit para correção, outro para documentação, outro para testes.
-</Callout>
+<CodeBlock title="git-basico_exemplo_2.py" code={`lista = [1, 2, 3]
+print(sum(lista))`} />
 
-Quando o histórico está bem organizado, a revisão do código fica muito mais fácil. Isso vai além da disciplina: é uma habilidade de comunicação com o time e com você mesmo no futuro.
-
-## Branches e merge
-
-Branches permitem trabalhar em paralelo sem mexer diretamente na linha principal do projeto. É como abrir outra trilha de trabalho em um rio: você pode experimentar uma ideia e, depois, decidir se ela entra no fluxo principal.
-
-<CodeBlock language="bash" title="terminal" code={`git checkout -b feature/validacao-cpf
-git status
-git commit -m "feat: adiciona validação de CPF"
-git checkout main
-git merge feature/validacao-cpf`} />
-
-A ideia principal é simples: você cria uma branch para uma alteração, valida o trecho, e depois integra com `merge`. Isso evita que uma alteração incompleta ou experimental afete o código principal antes do momento certo.
-
-<CodeBlock language="bash" title="terminal" code={`git branch
-git branch --merged`} />
-
-Se você olhar o histórico de um projeto profissional, verá que branches são muito usadas para novas features, correções urgentes e experimentos. Mesmo em projetos pequenos, esse fluxo ajuda a manter a organização.
-
-## `.gitignore` e proteção de dados sensíveis
-
-Um erro muito comum é subir arquivos locais como `.venv`, cache de IDE, `.env`, senhas, logs e bancos de dados para o GitHub. Isso pode expor dados sensíveis e também gerar commit ruim.
-
-O `.gitignore` serve justamente para dizer ao Git: “este arquivo não entra no histórico”.
-
-```gitignore
-# .gitignore
-.venv/
-__pycache__/
-.env
-secrets.json
-*.log
+```text
+6
 ```
 
-<Callout type="erro-comum" title="Subir .venv e senhas ao Git">
-  ```gitignore
-  .venv/
-  .env
-  secrets.txt
+<Playground title="Experimente no navegador" code={`nome = "Ana"
+print(f"Ol?, {nome}!")`} />
+
+## Aplica??o pr?tica
+
+A ideia do tema aparece em automa??o, valida??o de dados, regras de neg?cio, an?lise de arquivos e manuten??o de sistemas. O cen?rio muda, mas o racioc?nio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
+
+<CodeBlock title="git-basico_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
+
+```text
+Maior de idade
+```
+
+<Callout type="erro-comum" title="Erro comum">
+  ```python
+  valores = [0, -1, 1]
+  print(valores[0])
   ```
 
-  Se esses arquivos forem commitados, você pode expor configurações internas e dados sensíveis. A correção é configurar `.gitignore` antes do primeiro commit relevante e revisar o estado do repositório com `git status`.
+  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
 </Callout>
 
-Esse cuidado é essencial em projetos pessoais e profissionais. Uma vez que um segredo entra no histórico, ele pode ser difícil de remover totalmente sem atenção e planejamento.
-
-## README e GitHub
-
-Quando você escreve um projeto, o README funciona como porta de entrada. Ele explica para alguém novo como instalar, executar e usar o código. Isso é especialmente importante em projetos compartilhados ou em portfólio.
-
-Um README comum inclui:
-
-- descrição do projeto;
-- instruções de instalação;
-- passos de execução;
-- exemplos de uso;
-- links para documentação ou testes.
-
-<CodeBlock language="bash" title="terminal" code={`git remote add origin https://github.com/seu-usuario/seu-projeto.git
-git push -u origin main
-
-# depois:
-git pull origin main`} />
-
-O GitHub transforma o repositório em um ambiente colaborativo. Você pode enviar alterações, acompanhar a evolução do projeto e receber revisão de código ou sugestões. Isso também é parte do portfólio de um desenvolvedor.
-
-<CodeTabs>
-  <div label="Fluxo básico">
-    <CodeBlock language="bash" code={`git status
-git add .
-git commit -m "feat: adiciona lógica inicial"
-git push origin main`} />
+<StepThrough>
+  <div>
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
   </div>
-  <div label="Fluxo com branch">
-    <CodeBlock language="bash" code={`git checkout -b feature/ajustes
-git add .
-git commit -m "fix: corrige regra de validação"
-git checkout main
-git merge feature/ajustes`} />
+  <div>
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
   </div>
-  <div label="Fluxo para revisão">
-    <CodeBlock language="bash" code={`git pull origin main
-git checkout -b review/README
-git add README.md
-git commit -m "docs: melhora instruções de uso"`} />
+  <div>
+    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
   </div>
-</CodeTabs>
+</StepThrough>
+
+<CodeBlock title="git-basico_exemplo_4.py" code={`resultado = 7 * 3
+print(resultado)`} />
+
+```text
+21
+```
+
+<CodeBlock title="git-basico_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
+
+```text
+[1, 2, 3]
+```
 
 <Tabela data={[
-  ['Comando', 'Função', 'Quando usar'],
-  ['`git status`', 'mostra o estado do repositório', 'antes de qualquer commit'],
-  ['`git add`', 'prepara arquivos para o próximo commit', 'quando você decidiu salvar as mudanças'],
-  ['`git commit`', 'salva o ponto de estado', 'quando a alteração está pronta'],
-  ['`git branch`', 'cria ou mostra ramificações', 'para trabalhar em paralelo'],
-  ['`git merge`', 'integra branch na principal', 'quando a alteração foi validada']
+  ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
 ]} />
 
-<Glossario termo="commit" definition="Ponto salvo do histórico do projeto, contendo uma mensagem que descreve a mudança." />
-<Glossario termo="branch" definition="Linha paralela de desenvolvimento, útil para isolamento de tarefas, correções ou experimentos." />
-<Glossario termo="merge" definition="Ação de integrar uma branch em outra, normalmente na branch principal." />
+<Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
+<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
 
 ## No mercado de trabalho
 
-Git e GitHub são quase um requisito em projetos de software. Eles permitem que times trabalhem em paralelo, revisem mudanças e mantenham um histórico claro. Em processos reais, isso influencia produtividade, confiabilidade e comunicação. Quem domina Git consegue colaborar sem perder trabalho, entender o que foi alterado e entregar código em ambiente profissional.
-
-Além disso, um histórico limpo aumenta a credibilidade em portfólios, entrevistas e projetos colaborativos. O Git deixa evidente o seu pensamento em código e a disciplina de entrega.
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
 
 <Quiz questions={[
-  { question: "Qual comando mostra o que está pendente de commit e quais arquivos foram alterados?", options: ["git log", "git status", "git branch", "git pull"], correctIndex: 1, explanation: "`git status` mostra o estado do repositório e os arquivos modificados." },
-  { question: "Qual é a principal função de um commit?", options: ["executar o programa", "criar uma pasta nova", "salvar um ponto do histórico com uma mensagem descritiva", "remover arquivos temporários"], correctIndex: 2, explanation: "O commit registra um snapshot do projeto para poder voltar ou comparar versões." },
-  { question: "O que um `.gitignore` faz?", options: ["adiciona todos os arquivos ao Git", "ignora arquivos como `.venv` e senhas para não entrar no histórico", "apaga o repositório", "cria um branch"], correctIndex: 1, explanation: "`.gitignore` lista os arquivos que o Git deve ignorar." },
-  { question: "Quando você normalmente usa uma branch?", options: ["quando quer dar um passo em paralelo sem mexer na linha principal", "quando quer excluir o histórico", "quando não precisa usar Git", "quando quer rodar testes sem commit"], correctIndex: 0, explanation: "Branches isolam mudanças e ajudam a trabalhar em paralelo com segurança." },
-  { question: "O que é mais importante para uma mensagem de commit?", options: ["usar emojis em todos os commits", "explicar a intenção da mudança de forma clara", "ter o maior número de palavras possível", "inserir um número aleatório"], correctIndex: 1, explanation: "Mensagens descritivas ajudam a entender o processo e a revisar o histórico." }
+  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
 ]} />
 
 <Resumo>
-  <li>Você viu que Git organiza o histórico do projeto e ajuda a controlar versões.</li>
-  <li>Você entendeu que commits pequenos e descritivos são mais úteis do que mensagens vagas.</li>
-  <li>Você aprendeu a usar branches para isolar mudanças e integrar com merge.</li>
-  <li>Você reconheceu que `.gitignore` e README são essenciais para projetos profissionais.</li>
+  <li>Voc? reconheceu a regra central do tema.</li>
+  <li>Voc? validou a l?gica em um caso pequeno.</li>
+  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
+  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
 </Resumo>
 
 <Desafio>
-  Crie uma pasta de projeto simples em seu computador, inicialize o Git, adicione um arquivo `README.md`, faça um commit inicial e depois crie uma branch de correção para alterar uma linha do texto. Depois, faça o merge de volta para `main` e confira o histórico com `git log`.
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
 </Desafio>
+

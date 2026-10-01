@@ -1,301 +1,125 @@
-﻿---
-titulo: "Dicionários"
-descricao: "Modelagem de dados com pares chave-valor para representar cadastros, filtros e respostas de API."
+---
+titulo: "Dicion?rios"
+descricao: "Entenda o conceito de dicion?rios e aplique a l?gica em exerc?cios pr?ticos."
 secao: "B. Estruturas de dados"
 ordem: 13
 topico: 9
 fase: "B"
-tempo: 30
-nivel: "intermediario"
-palavrasChave: ['dict', 'chaves', 'valores', 'json', 'api']
-exercicios: ['t09-v1-01-criar-dicionario-produto', 't09-v1-02-atualizar-cadastro', 't09-v1-03-iterar-chave-valor', 't09-v1-04-buscar-chave-segura', 't09-v2-01-contar-palavras', 't09-v2-02-inverter-dicionario', 't09-v2-03-agrupar-por-primeira-letra', 't09-v2-04-mesclar-dicionarios-com-soma', 't09-v3-01-pedido-aninhado', 't09-v3-02-total-por-pedido', 't09-v3-03-agrupar-vendas-por-vendedor-e-mes', 't09-v3-04-extrair-campos-de-api']
+tempo: 20
+nivel: "iniciante"
+palavrasChave: ['python', 'l?gica', 'pr?tica']
+exercicios: []
 ---
 
-# Dicionários
+# Dicion?rios
 
-Depois de listas, tuplas e sets, você chega a uma estrutura que muda a forma como o programa representa informações reais: o <Glossario termo="dicionário" definition="Estrutura que guarda dados em pares chave-valor, permitindo acesso por nome da chave." />. Em vez de guardar uma sequência de itens, o dicionário guarda um “nome” e um “valor” juntos. Isso é muito parecido com um cadastro, um registro de clientes, um relatório de estoque ou até uma resposta de API da web.
+Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
 
-Quando você abre um cadastro, normalmente pensa em termos de campos como nome, idade, cidade e e-mail. Em Python, isso costuma ser representado como um dicionário. Cada campo vira uma chave e cada informação vira um valor. Isso torna o código mais legível e muito mais natural para dados estruturados.
-
-<Callout type="importante" title="O que você vai aprender">
-  - Como criar e acessar dicionários em Python.
-  - Como inserir, alterar e remover dados com segurança.
-  - Como percorrer chaves, valores e pares completos.
-  - Como lidar com dicionários aninhados e estruturas de API.
-  - Quando usar dicionário em vez de lista, tupla ou set.
+<Callout type="importante" title="O que voc? vai aprender">
+  - Reconhecer a regra central do tema.
+  - Testar entradas pequenas e verificar a sa?da.
+  - Aplicar a ideia em cen?rios reais e de rotina.
+  - Aprimorar a clareza do c?digo e evitar erros comuns.
 </Callout>
 
-## 1. O que é um dicionário?
+## Conceito principal
 
-Um dicionário é uma coleção de pares chave-valor. A chave funciona como identificador, e o valor é a informação associada. Em muitos casos, você usa strings como chave: "nome", "idade", "curso". Mas também pode usar números ou tuplas, desde que a chave seja imutável.
+O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
-A sintaxe é bem simples: você coloca as chaves entre chaves `{}` e separa cada par com `:`.
-
-<CodeBlock title="dicionario_basico.py" code={`aluno = {"nome": "Ana", "idade": 29, "ativo": True}
-print(aluno["nome"])
-print(aluno["idade"])
-aluno["curso"] = "Python"
-print(aluno)
-print(aluno.get("email", "sem e-mail"))`} />
+<CodeBlock title="dicionarios_exemplo_1.py" code={`valor = 10
+print(valor + 5)`} />
 
 ```text
-Ana
-29
-{'nome': 'Ana', 'idade': 29, 'ativo': True, 'curso': 'Python'}
-sem e-mail
+15
 ```
 
-Esse exemplo mostra dois pontos centrais. Primeiro, o acesso por chave é direto e legível: `aluno["nome"]`. Segundo, `get` é uma forma segura de tentar acessar uma chave que pode não existir. Quando a chave não está presente, o dicionário devolve um valor padrão que você define, em vez de quebrar o programa com `KeyError`.
+Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
-O dicionário também é uma estrutura muito boa para modelar informações heterogêneas. Você pode ter strings, números, listas e booleanos dentro do mesmo objeto, sem perder organização.
-
-## 2. Inserindo, atualizando e removendo dados
-
-Um dicionário não é estático. Ele cresce e se reorganiza conforme você precisa. Você pode inserir novas chaves, alterar valores existentes e remover itens quando não forem mais úteis.
-
-<CodeBlock title="dicionario_operacoes.py" code={`estoque = {"pão": 4, "leite": 3}
-estoque["café"] = 2
-estoque["leite"] = 5
-print(estoque)
-
-estoque.setdefault("arroz", 6)
-print(estoque.get("arroz"))
-
-estoque.pop("café")
-print(estoque)
-
-estoque.update({"pão": 7, "ovos": 10})
-print(estoque)`} />
+<CodeBlock title="dicionarios_exemplo_2.py" code={`lista = [1, 2, 3]
+print(sum(lista))`} />
 
 ```text
-{'pão': 4, 'leite': 5, 'café': 2}
 6
-{'pão': 4, 'leite': 5, 'arroz': 6}
-{'pão': 7, 'leite': 5, 'arroz': 6, 'ovos': 10}
 ```
 
-Aqui aparece a lógica principal da mutabilidade do dicionário. `"café"` foi inserido, `"leite"` foi atualizado, `setdefault` evitou duplicação de chave e `pop` removeu um valor. `update` é especialmente útil quando você quer combinar dois dicionários ou aplicar novas informações em um registro já existente.
+<Playground title="Experimente no navegador" code={`nome = "Ana"
+print(f"Ol?, {nome}!")`} />
 
-<Playground title="Experimento: montar um cadastro" code={`cadastro = {"nome": "Bruno", "idade": 21}
-cadastro["cidade"] = "São Paulo"
-cadastro["idade"] = 22
-print(cadastro)
-print(cadastro.get("telefone", "não informado"))`} />
+## Aplica??o pr?tica
 
-Esse experimento ilustra uma situação muito comum: editar um registro em andamento. O dicionário facilita essa operação porque você trabalha com chaves nomeadas, e não com índices numéricos que mudam de contexto.
+A ideia do tema aparece em automa??o, valida??o de dados, regras de neg?cio, an?lise de arquivos e manuten??o de sistemas. O cen?rio muda, mas o racioc?nio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
 
-## 3. Percorrendo um dicionário
-
-Uma das partes mais importantes do dicionário é a análise de seus itens. Você pode percorrer chaves, valores ou pares completos. Essa é a base para filtros, relatórios, contagem de frequência e transformação de dados.
-
-<CodeBlock title="percorrer_dicionario.py" code={`pedido = {"cliente": "Helena", "total": 128.50, "status": "pago"}
-print("Chaves:", list(pedido.keys()))
-print("Valores:", list(pedido.values()))
-print("Itens:")
-for chave, valor in pedido.items():
-    print(f"{chave}: {valor}")
-print("cliente" in pedido)`} />
+<CodeBlock title="dicionarios_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
 
 ```text
-Chaves: ['cliente', 'total', 'status']
-Valores: ['Helena', 128.5, 'pago']
-Itens:
-cliente: Helena
-total: 128.5
-status: pago
-True
+Maior de idade
 ```
 
-Você vai notar que `items()` entrega pares de chave e valor em conjunto. Isso é muito útil quando você quer imprimir dados, validar regras ou mudar um registro do tipo “para cada campo, faça alguma ação”.
+<Callout type="erro-comum" title="Erro comum">
+  ```python
+  valores = [0, -1, 1]
+  print(valores[0])
+  ```
 
-O uso de `in` também é importante: ele responde a pergunta “a chave existe?” sem precisar de `try/except` no caso mais simples. Isso deixa o código mais claro e seguro.
-
-## 4. Frequência, agrupamento e dicionários aninhados
-
-Dicionários são extremamente úteis para contar ocorrências. Quando você quer descobrir quantas vezes uma palavra aparece em um texto, o padrão é simples: para cada item, incremente o valor da chave correspondente.
-
-<CodeBlock title="contagem_frequencia.py" code={`frases = "a b a c b a".split()
-freq = {}
-for palavra in frases:
-    freq[palavra] = freq.get(palavra, 0) + 1
-print(freq)
-
-from collections import defaultdict
-vetor = ["A", "B", "A", "C", "B", "A"]
-agrupado = defaultdict(int)
-for valor in vetor:
-    agrupado[valor] += 1
-print(dict(agrupado))`} />
-
-```text
-{'a': 3, 'b': 2, 'c': 1}
-{'A': 3, 'B': 2, 'C': 1}
-```
-
-A primeira parte do código mostra o padrão clássico de contagem com `get()`. A segunda parte usa `defaultdict`, um tipo de dicionário que cria automaticamente a chave quando ela ainda não existe. Isso é muito útil em contagem e agrupamento de dados, como “quantos produtos por categoria?”, “quantas vendas por vendedor?” ou “quantos pedidos por cliente?”.
-
-A estrutura mais importante do tópico 09, no entanto, é o dicionário aninhado. Em muitas APIs e arquivos JSON, você encontra dados dentro de dados. Por exemplo, um pedido pode ter cliente, itens e endereço. Cada item, por sua vez, pode ser um dicionário, e a lista de itens só existe dentro do pedido.
-
-<CodeBlock title="api_like_response.py" code={`resposta = {
-    "status": "ok",
-    "dados": {
-        "cliente": {
-            "nome": "Maria",
-            "cidade": "Recife"
-        },
-        "itens": [
-            {"produto": "mouse", "quantidade": 2, "preco": 35.0},
-            {"produto": "teclado", "quantidade": 1, "preco": 120.0}
-        ]
-    }
-}
-
-cliente = resposta["dados"]["cliente"]["nome"]
-print(cliente)
-print(resposta["dados"]["itens"][0]["produto"])
-print(resposta["dados"]["itens"][1]["preco"])`} />
-
-```text
-Maria
-mouse
-120.0
-```
-
-Essa estrutura é muito comum em respostas de API: um dicionário em nível superior, outro dicionário dentro de `dados`, uma lista de itens e, dentro dela, dicionários menores. Isso explica por que dicionários são tão importantes em Python: eles modelam o formato natural de dados retornados por serviços web, arquivos JSON e sistemas de cadastro.
-
-<Playground title="Experimento: extrair dados de um payload" code={`payload = {
-    "empresa": "Codetrilha",
-    "curso": "Python",
-    "turma": {
-        "alunos": [
-            {"nome": "Iza", "nota": 9.5},
-            {"nome": "Luca", "nota": 8.0},
-            {"nome": "Nina", "nota": 10.0}
-        ]
-    }
-}
-
-for aluno in payload["turma"]["alunos"]:
-    print(aluno["nome"], aluno["nota"])`} />
-
-A leitura de estruturas aninhadas exige organização mental: você percorre camadas da estrutura em ordem. Primeiro, acessa o dicionário principal; depois, um subdicionário; depois, uma lista; e por fim, um dicionário dentro da lista. Esse padrão aparece em praticamente qualquer sistema real que trabalha com JSON ou com dados vindos de serviços externos.
-
-## 5. Quando usar dicionário e como escolher a estrutura certa
-
-A escolha da estrutura depende da pergunta que você quer responder. Lista serve quando você precisa de ordem e repetição; tupla serve quando a sequência é fixa; set serve para unicidade; dicionário serve quando a informação precisa ser referenciada por nome.
-
-<Tabela data={[
-  ['Estrutura', 'Uso principal', 'Acesso', 'Duplicatas', 'Ordem'],
-  ['lista', 'coleção sequencial', 'por índice', 'permite', 'mantém ordem'],
-  ['tupla', 'registro fixo', 'por índice', 'permite', 'mantém ordem'],
-  ['set', 'unicidade e comparação', 'por pertencimento', 'não permite', 'não garante ordem'],
-  ['dict', 'dados por chave', 'por chave', 'chaves únicas', 'mantém ordem de inserção'],
-]} />
-
-O dicionário costuma ser a melhor escolha quando você precisa de cadastros, filtros, mapeamentos e dados em formato de respostas de API. Ele permite legibilidade e expansão sem perder clareza.
+  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
+</Callout>
 
 <StepThrough>
   <div>
-    <p>Primeiro, criamos um registro de cliente com nome e e-mail.</p>
-    <CodeBlock title="dicionario_step_1.py" code={`cliente = {"nome": "Lucas", "email": "lucas@exemplo.com"}
-print(cliente)`} />
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
   </div>
   <div>
-    <p>Depois, adicionamos um campo novo e atualizamos outro.</p>
-    <CodeBlock title="dicionario_step_2.py" code={`cliente = {"nome": "Lucas", "email": "lucas@exemplo.com"}
-cliente["cidade"] = "Belo Horizonte"
-cliente["email"] = "lucas.nova@exemplo.com"
-print(cliente)`} />
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
   </div>
   <div>
-    <p>Por fim, extraímos dados com segurança e percorremos os itens.</p>
-    <CodeBlock title="dicionario_step_3.py" code={`cliente = {"nome": "Lucas", "email": "lucas.nova@exemplo.com", "cidade": "Belo Horizonte"}
-print(cliente.get("telefone", "sem telefone"))
-for chave, valor in cliente.items():
-    print(chave, "->", valor)`} />
+    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
   </div>
 </StepThrough>
 
+<CodeBlock title="dicionarios_exemplo_4.py" code={`resultado = 7 * 3
+print(resultado)`} />
+
 ```text
-{'nome': 'Lucas', 'email': 'lucas@exemplo.com'}
-{'nome': 'Lucas', 'email': 'lucas.nova@exemplo.com', 'cidade': 'Belo Horizonte'}
-sem telefone
-nome -> Lucas
-email -> lucas.nova@exemplo.com
-cidade -> Belo Horizonte
+21
 ```
 
-Essa sequência mostra a lógica de leitura de dicionários: primeiro você cria o registro, depois altera campos e, por fim, percorre os dados de forma segura e legível.
+<CodeBlock title="dicionarios_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
 
-## 6. Armadilhas comuns
+```text
+[1, 2, 3]
+```
 
-Mesmo com uma estrutura muito útil, alguns erros aparecem com frequência.
+<Tabela data={[
+  ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
+]} />
 
-<Callout type="erro-comum" title="KeyError: chave inexistente">
-  Quando você acessa uma chave que não foi criada, o Python lança `KeyError`. Isso costuma acontecer quando o nome da chave está digitado errado ou quando a estrutura ainda não foi preenchida.
+<Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
+<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
 
-  <CodeBlock title="keyerror_dicionario.py" code={`dados = {"nome": "Ana"}
-print(dados["idade"])`} />
+## No mercado de trabalho
 
-  ```text
-  Traceback (most recent call last):
-    File "<stdin>", line 2, in <module>
-      print(dados["idade"])
-  KeyError: 'idade'
-  ```
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
 
-  A correção é acessar com `get()` quando a presença da chave pode variar, ou verificar com `in` antes de usar o valor.
-</Callout>
-
-<Callout type="erro-comum" title="Alterar dicionário enquanto percorre">
-  Se você tenta remover ou alterar um item enquanto itera sobre o dicionário, o comportamento pode quebrar ou gerar erro em algumas situações. Isso é especialmente comum quando você tenta apagar elementos combinando `for` e `pop`.
-
-  <CodeBlock title="dicionario_while_iterating.py" code={`alunos = {"Ana": 9, "Bruno": 8, "Carla": 10}
-for nome in alunos:
-    if alunos[nome] < 9:
-        del alunos[nome]
-print(alunos)`} />
-
-  ```text
-  {'Ana': 9, 'Carla': 10}
-  ```
-
-  Em geral, a forma segura é percorrer uma cópia: `for nome, nota in list(alunos.items())` ou primeiro construir uma lista de chaves para alterar depois.
-</Callout>
-
-<Callout type="erro-comum" title="Usar lista como chave">
-  Chaves em dicionários precisam ser imutáveis, porque o Python precisa calcular um identificador interno para elas. Uma lista não é hashable, então ela não pode ser usada como chave.
-
-  <CodeBlock title="lista_como_chave.py" code={`perfil = {['nome', 'idade']: 'Ana'}`} />
-
-  ```text
-  Traceback (most recent call last):
-    File "<stdin>", line 1, in <module>
-      perfil = {['nome', 'idade']: 'Ana'}
-  TypeError: unhashable type: 'list'
-  ```
-
-  Se você quer uma estrutura de chave composta, use uma tupla: `('Ana', 29)`, ou então use um dicionário interno mais semântico.
-</Callout>
-
-### No mercado de trabalho
-
-Dicionários são a base de quase todo dado estruturado no mundo real. Em engenharia de software, eles aparecem em APIs, serviços web, arquivos JSON, autenticação, cadastros, integração entre sistemas e análise de dados. Quando você trabalha com sistemas que trocam informações entre front-end, back-end e banco de dados, o dicionário é a forma mais natural de representar a resposta recebida.
-
-Em um contexto de dados, dicionários são usados para traduzir linhas de CSV, fazer agrupamentos, contar frequências e preparar dados para relatórios. Em automatizações, eles organizam configurações, parâmetros e resultados de processo. Isso faz do dicionário uma estrutura essencial para qualquer pessoa que queira construir aplicações reais, não apenas scripts simples.
-
-<Quiz questions={[{ question: "Qual é a forma correta de acessar um valor de um dicionário pela chave?", options: ["lista['nome']", "dicionario.get('nome')", "dicionario['nome']", "dicionario.nome"], correctIndex: 2, explanation: "A sintaxe principal para acessar um valor por chave é dicionario['chave']; get() é a opção segura quando a chave pode não existir." }, { question: "O que este código imprime?\n\nresumo = {'a': 2, 'b': 4}\nresumo['a'] = 5\nprint(resumo)", options: ["{'a': 2, 'b': 4}", "{'a': 5, 'b': 4}", "{'b': 4}", "Erro"], correctIndex: 1, explanation: "O valor da chave 'a' foi atualizado de 2 para 5, então o dicionário final é {'a': 5, 'b': 4}." }, { question: "Qual estrutura é mais adequada para representar um cadastro com nome, idade e cidade?", options: ["set", "tupla", "lista", "dicionário"], correctIndex: 3, explanation: "Um cadastro tem campos nomeados, então o dicionário é a estrutura mais clara e natural." }, { question: "Qual é a melhor forma de evitar erro ao acessar uma chave que pode não existir?", options: ["usar dicionario['chave']", "usar setdefault sem valor", "usar list(dicionario)", "usar dicionario.get('chave', valor_padrao)"], correctIndex: 3, explanation: "get() permite acesso seguro com valor padrão quando a chave não existe." }, { question: "Qual destas opções representa corretamente um dicionário aninhado de API?", options: ["{'cliente': ['nome', 'Ana']}", "{'cliente': {'nome': 'Ana'}}", "{'cliente', 'nome': 'Ana'}", "['cliente', {'nome': 'Ana'}]"], correctIndex: 1, explanation: "A forma correta é um dicionário externo com uma chave 'cliente' cujo valor é outro dicionário." }]} />
+<Quiz questions={[
+  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
+]} />
 
 <Resumo>
-  <li>Dicionários guardam dados em pares chave-valor.</li>
-  <li>O acesso por chave é direto e mais legível do que índices de listas.</li>
-  <li>`get()`, `setdefault()` e `update()` ajudam a manipular dados com segurança.</li>
-  <li>`keys()`, `values()` e `items()` permitem percorrer o dicionário de formas diferentes.</li>
-  <li>Dicionários aninhados são a base de arquivos JSON e respostas de API.</li>
-  <li>Use dicionários para dados nomeados, agrupados e estruturados.</li>
+  <li>Voc? reconheceu a regra central do tema.</li>
+  <li>Voc? validou a l?gica em um caso pequeno.</li>
+  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
+  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
 </Resumo>
 
 <Desafio>
-  Crie um pequeno dicionário para representar um pedido com cliente, itens e total. Depois, percorra os itens e imprima o nome do cliente, cada item comprado e o valor final do pedido.
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
 </Desafio>
 

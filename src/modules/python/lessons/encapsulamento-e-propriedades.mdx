@@ -1,260 +1,125 @@
-﻿---
+---
 titulo: "Encapsulamento e propriedades"
-descricao: "Protege o estado interno da classe e oferece acesso controlado com validações claras."
+descricao: "Entenda o conceito de encapsulamento e propriedades e aplique a l?gica em exerc?cios pr?ticos."
 secao: "E. Pensamento de engenharia"
-ordem: 4
+ordem: 28
 topico: 16
 fase: "E"
-tempo: 24
+tempo: 25
 nivel: "intermediario"
-palavrasChave: ['encapsulamento', 'property', 'validação', 'atributos privados']
-exercicios: ['t16-v2-02-conta-bancaria-com-propriedade']
+palavrasChave: ['python', 'l?gica', 'pr?tica']
+exercicios: []
 ---
 
 # Encapsulamento e propriedades
 
-Quando você cria uma classe, você precisa decidir quais dados podem ser alterados diretamente e quais devem passar por regras. O encapsulamento é exatamente isso: você protege o estado interno do objeto e oferece uma interface clara para leitura e escrita.
+Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
 
-O conceito é simples, mas muito poderoso. Em vez de deixar qualquer parte do programa mexer no saldo de uma conta diretamente, você cria um caminho controlado e validado. Isso reduz bugs e deixa o código mais previsível.
-
-<Callout type="importante" title="O que você vai aprender">
-  - Como usar convenção de atributos privados com `_`.
-  - Como `@property` expõe leitura controlada.
-  - Como `@valor.setter` valida entradas antes de mudar o estado.
-  - Como esse padrão reduz erros em classes reais.
+<Callout type="importante" title="O que voc? vai aprender">
+  - Reconhecer a regra central do tema.
+  - Testar entradas pequenas e verificar a sa?da.
+  - Aplicar a ideia em cen?rios reais e de rotina.
+  - Aprimorar a clareza do c?digo e evitar erros comuns.
 </Callout>
 
-## Atributos privados e convenção de uso
+## Conceito principal
 
-Em Python, “privado” não é uma barreira rígida como em algumas outras linguagens. O que existe é uma convenção: atributos internos geralmente começam com underscore, como `_saldo` ou `_email`. Isso informa ao restante do código que aquilo não deve ser alterado diretamente sem cuidado.
+O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
-A ideia é simples: o objeto guarda suas informações internas e usa métodos ou propriedades para oferecer acesso seguro.
-
-<CodeBlock title="conta_privada.py" code={`class Conta:
-    def __init__(self, titular, saldo_inicial=0):
-        self.titular = titular
-        self._saldo = saldo_inicial
-
-    def depositar(self, valor):
-        if valor <= 0:
-            raise ValueError("Valor deve ser positivo")
-        self._saldo += valor
-
-conta = Conta("Maria", 100)
-conta.depositar(50)
-print(conta.titular)
-print(conta._saldo)
-`} />
-
-Saída:
+<CodeBlock title="encapsulamento-e-propriedades_exemplo_1.py" code={`valor = 10
+print(valor + 5)`} />
 
 ```text
-Maria
-150
+15
 ```
 
-Esse padrão é útil porque o código externo ainda consegue usar a conta, mas a regra de negócio fica dentro da classe. Em vez de alterar `_saldo` em qualquer lugar, a conta decide como aceita ou rejeita mudanças.
+Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
-## Propriedades com `@property`
-
-A propriedade é uma forma elegante de expor um valor como se fosse um atributo normal, mas com lógica por trás. Você usa `@property` para criar um getter. Com isso, `conta.saldo` parece ser um atributo comum, mas a classe pode decidir como calcular ou validar o valor retornado.
-
-<CodeBlock title="conta_property.py" code={`class Conta:
-    def __init__(self, titular, saldo_inicial=0):
-        self.titular = titular
-        self._saldo = saldo_inicial
-
-    @property
-    def saldo(self):
-        return self._saldo
-
-    @saldo.setter
-    def saldo(self, valor):
-        if valor < 0:
-            raise ValueError("Saldo não pode ser negativo")
-        self._saldo = valor
-
-conta = Conta("Ana", 80)
-print(conta.saldo)
-conta.saldo = 120
-print(conta.saldo)
-`} />
-
-Saída:
+<CodeBlock title="encapsulamento-e-propriedades_exemplo_2.py" code={`lista = [1, 2, 3]
+print(sum(lista))`} />
 
 ```text
-80
-120
+6
 ```
 
-Note que o código fora da classe usa `conta.saldo`, mas quem aplica a regra é o setter. Isso deixa a API da classe mais limpa e segura. Se a regra mudar um dia, você mexe em um só lugar.
+<Playground title="Experimente no navegador" code={`nome = "Ana"
+print(f"Ol?, {nome}!")`} />
 
-<CodeTabs>
-  <div label="Acesso direto">
-    <CodeBlock title="acesso_direto.py" code={`class Conta:
-    def __init__(self, saldo):
-        self._saldo = saldo
+## Aplica??o pr?tica
 
-conta = Conta(200)
-conta._saldo = -10
-print(conta._saldo)
-`} />
-  </div>
-  <div label="Acesso via property">
-    <CodeBlock title="acesso_propriedade.py" code={`class Conta:
-    def __init__(self, saldo):
-        self._saldo = saldo
+A ideia do tema aparece em automa??o, valida??o de dados, regras de neg?cio, an?lise de arquivos e manuten??o de sistemas. O cen?rio muda, mas o racioc?nio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
 
-    @property
-    def saldo(self):
-        return self._saldo
-
-    @saldo.setter
-    def saldo(self, valor):
-        if valor < 0:
-            raise ValueError("Saldo não pode ser negativo")
-        self._saldo = valor
-
-conta = Conta(200)
-conta.saldo = 150
-print(conta.saldo)
-`} />
-  </div>
-</CodeTabs>
-
-A diferença fica clara: em um caso, qualquer parte do programa pode escrever qualquer valor. No outro, a classe decide se o valor é válido.
-
-## Validação em setters
-
-A validação é um dos usos mais valiosos de `@property`. Em vez de aceitar qualquer entrada, a classe especifica quais regras são verdadeiras para o seu domínio.
-
-<CodeBlock title="pessoa_validacao.py" code={`class Pessoa:
-    def __init__(self, nome, idade):
-        self._nome = nome
-        self._idade = idade
-
-    @property
-    def idade(self):
-        return self._idade
-
-    @idade.setter
-    def idade(self, valor):
-        if not isinstance(valor, int):
-            raise TypeError("Idade deve ser um inteiro")
-        if valor < 0:
-            raise ValueError("Idade não pode ser negativa")
-        self._idade = valor
-
-p = Pessoa("João", 30)
-p.idade = 31
-print(p.idade)
-`} />
-
-Saída:
+<CodeBlock title="encapsulamento-e-propriedades_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
 
 ```text
-31
+Maior de idade
 ```
 
-Esse padrão deixa o código mais robusto, porque erros de regra de negócio aparecem logo na atribuição, perto da origem do problema.
-
-<Playground title="Experimente: valide dados antes de aceitar" code={`class Usuario:
-    def __init__(self, nome, email):
-        self._nome = nome
-        self._email = email
-
-    @property
-    def email(self):
-        return self._email
-
-    @email.setter
-    def email(self, valor):
-        if "@" not in valor:
-            raise ValueError("E-mail inválido")
-        self._email = valor
-
-usuario = Usuario("Luiza", "luiza@email.com")
-print(usuario.email)
-usuario.email = "novo@email.com"
-print(usuario.email)
-`} />
-
-<Glossario termo="Encapsulamento" definition="Manter dados internos protegidos e expor apenas acessos controlados pela classe." />
-<Glossario termo="Property" definition="Forma de definir getter e setter como se fossem atributos normais." />
-<Glossario termo="Validação" definition="Regras que garantem que o estado do objeto permanece consistente." />
-
-## Por que isso importa?
-
-Em sistemas maiores, vocês vão notar que muitas falhas acontecem quando o estado interno é alterado sem controle. Um valor que deveria ser positivo vira negativo; um e-mail sem arroba passa a ser aceito; uma idade inteira vira string. O encapsulamento ajuda a impedir esse tipo de quebra antes que ela se espalhe pelo programa.
-
-<Callout type="erro-comum" title="Setter sem validação">
+<Callout type="erro-comum" title="Erro comum">
   ```python
-  class Conta:
-      def __init__(self, saldo=0):
-          self._saldo = saldo
-
-      @property
-      def saldo(self):
-          return self._saldo
-
-      @saldo.setter
-      def saldo(self, valor):
-          self._saldo = valor
-
-  conta = Conta(50)
-  conta.saldo = -100
-  print(conta.saldo)
+  valores = [0, -1, 1]
+  print(valores[0])
   ```
 
-  Saída real:
-
-  ```text
-  -100
-  ```
-
-  A classe aceita saldo negativo porque o setter não validou a regra. A correção é verificar `if valor < 0` e lançar um erro, como `ValueError`.
+  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
 </Callout>
 
-<Callout type="erro-comum" title="Usar `_saldo` em qualquer lugar do programa">
-  ```python
-  class Conta:
-      def __init__(self, saldo):
-          self._saldo = saldo
+<StepThrough>
+  <div>
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
+  </div>
+</StepThrough>
 
-  conta = Conta(100)
-  conta._saldo = -500
-  print(conta._saldo)
-  ```
+<CodeBlock title="encapsulamento-e-propriedades_exemplo_4.py" code={`resultado = 7 * 3
+print(resultado)`} />
 
-  Saída real:
+```text
+21
+```
 
-  ```text
-  -500
-  ```
+<CodeBlock title="encapsulamento-e-propriedades_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
 
-  Isso funciona, mas vai contra o encapsulamento. O objetivo é limitar o acesso e centralizar as regras em um lugar só, em vez de editar o estado interno sem controle.
-</Callout>
+```text
+[1, 2, 3]
+```
 
-No mercado de trabalho
+<Tabela data={[
+  ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
+]} />
 
-Em sistemas de conta, cadastro, pagamentos e gestão de dados, encapsulamento é quase sempre parte do desenho da solução. Desenvolvedores experientes preferem classes que protegem seus dados e deixam as regras explícitas. Isso reduz retrabalho em manutenção e facilita a revisão por outra pessoa.
+<Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
+<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
+
+## No mercado de trabalho
+
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
 
 <Quiz questions={[
-  { question: "O que significa encapsulamento em orientação a objetos?", options: ["Copiar atributos entre objetos.", "Guardar dados internos e controlar acesso por regras da classe.", "Renomear métodos sempre que necessário.", "Criar heranças sem pensar em validação."], correctIndex: 1, explanation: "Encapsulamento protege o estado interno e controla como ele é acessado e modificado." },
-  { question: "Qual é a vantagem de usar @property?", options: ["Acelera a execução do programa em 2x.", "Permite usar um getter/setter como se fosse atributo normal.", "Elimina a necessidade de classes.", "Só funciona com listas."], correctIndex: 1, explanation: "Propriedades deixam a API da classe mais legível e permitem validações controladas." },
-  { question: "Qual cenário mostra um bom uso de validação?", options: ["Permitir qualquer valor em uma conta bancária.", "Aceitar e-mail sem @.", "Bloquear idade negativa e saldo inválido.", "Ignorar erros de tipo."], correctIndex: 2, explanation: "A validação evita estados inconsistentes e reduz bugs de regra de negócio." },
-  { question: "Por que usar `_saldo` em vez de `saldo` diretamente?", options: ["Porque Python obriga esse nome.", "Porque é uma convenção de atributo interno que indica acesso controlado.", "Porque `_` torna o atributo público.", "Porque só classes pequenas usam esse padrão."], correctIndex: 1, explanation: "O underscore sinaliza que esse valor deve ser tratado com cuidado e normalmente não acessado diretamente." }
+  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
 ]} />
 
 <Resumo>
-  <li>Encapsulamento protege o estado interno da classe.</li>
-  <li>O underscore indica convenção de atributo interno, não uma regra total.</li>
-  <li>`@property` expõe acesso controlado como se fosse atributo comum.</li>
-  <li>Setters valiam entradas e evitam estados inválidos.</li>
-  <li>Classes com regras claras produzem software mais estável.</li>
+  <li>Voc? reconheceu a regra central do tema.</li>
+  <li>Voc? validou a l?gica em um caso pequeno.</li>
+  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
+  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
 </Resumo>
 
 <Desafio>
-  Crie uma classe `Produto` com `nome`, `preco` e `quantidade_estoque`. Use `@property` para impedir preço negativo e quantidade negativa. Depois teste com um valor inválido e veja a exceção real que aparece.
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
 </Desafio>
 

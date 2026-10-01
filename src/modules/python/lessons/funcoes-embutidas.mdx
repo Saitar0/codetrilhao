@@ -1,179 +1,125 @@
 ---
-titulo: "Funções embutidas"
-descricao: "Use ferramentas prontas do Python para transformar, filtrar e resumir dados com clareza."
-secao: "C. Organização de código"
-ordem: 5
+titulo: "Fun??es embutidas"
+descricao: "Entenda o conceito de fun??es embutidas e aplique a l?gica em exerc?cios pr?ticos."
+secao: "C. Organiza??o de c?digo"
+ordem: 18
 topico: 11
 fase: "C"
-tempo: 27
+tempo: 25
 nivel: "intermediario"
-palavrasChave: ['map', 'filter', 'sorted', 'zip', 'enumerate', 'any', 'all', 'min', 'max', 'sum']
-exercicios: ['t11-v1-03-zip-nomes-e-notas', 't11-v1-04-any-e-all-notas', 't11-v2-03-ordenar-tuplas-por-segundo-e-primeiro', 't11-v2-04-transpor-matriz-com-zip']
+palavrasChave: ['python', 'l?gica', 'pr?tica']
+exercicios: []
 ---
 
-# Funções embutidas
+# Fun??es embutidas
 
-Python já vem com várias funções prontas para você lidar com coleções sem escrever loops repetitivos. Quando a operação é simples e clara, essas funções deixam o código mais curto, mais legível e mais idiomático. Em vez de “montar tudo na mão”, você descreve a intenção do programa com uma linha que diz exatamente o que deve acontecer.
+Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
 
-<Callout type="importante" title="O que você vai aprender">
-  <ul>
-    <li>Usar <Glossario termo="map" definition="Aplica uma função a cada item de um iterável." /> para transformar dados.</li>
-    <li>Usar <Glossario termo="filter" definition="Mantém somente os elementos que atendem a condição informada." /> para reduzir coleções.</li>
-    <li>Ordenar dados com <Glossario termo="sorted" definition="Cria uma nova lista ordenada usando uma chave opcional." /> e `key=lambda`.</li>
-    <li>Combinar elementos com `zip`, numerar com `enumerate` e resumir com `any`, `all`, `min`, `max` e `sum`.</li>
-  </ul>
+<Callout type="importante" title="O que voc? vai aprender">
+  - Reconhecer a regra central do tema.
+  - Testar entradas pequenas e verificar a sa?da.
+  - Aplicar a ideia em cen?rios reais e de rotina.
+  - Aprimorar a clareza do c?digo e evitar erros comuns.
 </Callout>
 
-## 1. `map`: transformar todos os elementos
+## Conceito principal
 
-`map` recebe uma função e um iterável. Ele aplica essa função em cada item e devolve um iterador.
+O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
-<CodeBlock title="map.py" code={`frutas = ['maçã', 'banana', 'uva']
-maiusculas = list(map(str.upper, frutas))
-print(maiusculas)`} />
-
-A saída é `['MAÇÃ', 'BANANA', 'UVA']`. Isso mostra a ideia: cada item foi transformado pela mesma regra.
-
-<CodeBlock title="map_lambda.py" code={`precos = [10, 20, 30]
-precos_mais_um = list(map(lambda valor: valor + 1, precos))
-print(precos_mais_um)`} />
-
-A saída é `[11, 21, 31]`. Quando a transformação é pequena, `lambda` faz sentido e deixa o código enxuto.
-
-## 2. `filter`: manter apenas os que passam no teste
-
-`filter` recebe uma função de teste e um iterável. Ele devolve apenas os elementos cuja condição é verdadeira.
-
-<CodeBlock title="filter.py" code={`idades = [12, 17, 18, 21, 30, 35]
-maiores = list(filter(lambda idade: idade >= 18, idades))
-print(maiores)`} />
-
-A saída é `[18, 21, 30, 35]`. Em vez de percorrer a lista com vários `if`, você diz diretamente: “mantém os que atendem a esta condição”.
-
-## 3. `sorted` com `key` e `reverse`
-
-`sorted` cria uma nova lista ordenada. Quando os itens são dicionários ou objetos mais complexos, o argumento `key=` define exatamente por qual campo a ordenação será feita.
-
-<CodeBlock title="sorted_key.py" code={`alunos = [
-    {'nome': 'Ana', 'nota': 8},
-    {'nome': 'Bia', 'nota': 9},
-    {'nome': 'Caio', 'nota': 7},
-]
-ordem = sorted(alunos, key=lambda aluno: aluno['nota'])
-print([aluno['nome'] for aluno in ordem])`} />
-
-A saída é `['Caio', 'Ana', 'Bia']`, porque a ordenação foi feita pela nota. Se você quiser a ordem reversa, use `reverse=True`.
-
-<CodeBlock title="sorted_reverse.py" code={`alunos = [
-    {'nome': 'Ana', 'nota': 8},
-    {'nome': 'Bia', 'nota': 9},
-    {'nome': 'Caio', 'nota': 7},
-]
-ordem = sorted(alunos, key=lambda aluno: aluno['nota'], reverse=True)
-print([aluno['nome'] for aluno in ordem])`} />
-
-A saída é `['Bia', 'Ana', 'Caio']`. Esse padrão aparece muito em rankings e relatórios.
-
-## 4. `zip` e `enumerate`: combinar e numerar
-
-`zip` emparelha itens de duas sequências pela posição.
-
-<CodeBlock title="zip.py" code={`nomes = ['Ana', 'Bia', 'Caio']
-notas = [9, 8, 7]
-print(list(zip(nomes, notas)))`} />
-
-A saída é `[('Ana', 9), ('Bia', 8), ('Caio', 7)]`.
-
-`enumerate` é útil para obter o índice junto com o valor.
-
-<CodeBlock title="enumerate.py" code={`for indice, nome in enumerate(['Ana', 'Bia', 'Caio'], start=1):
-    print(indice, nome)`} />
-
-A saída será:
+<CodeBlock title="funcoes-embutidas_exemplo_1.py" code={`valor = 10
+print(valor + 5)`} />
 
 ```text
-1 Ana
-2 Bia
-3 Caio
+15
 ```
 
-## 5. `any`, `all`, `min`, `max` e `sum`
+Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
-Essas funções resumem uma coleção inteira em uma resposta curta.
+<CodeBlock title="funcoes-embutidas_exemplo_2.py" code={`lista = [1, 2, 3]
+print(sum(lista))`} />
 
-<CodeBlock title="any_all.py" code={`notas = [7, 8, 9, 5]
-print(any(nota >= 9 for nota in notas))
-print(all(nota >= 5 for nota in notas))`} />
+```text
+6
+```
 
-A saída é `True` e `True`. O primeiro verifica se existe pelo menos uma nota grande; o segundo verifica se todas atendem ao critério.
+<Playground title="Experimente no navegador" code={`nome = "Ana"
+print(f"Ol?, {nome}!")`} />
 
-<CodeBlock title="min_max_sum.py" code={`precos = [25, 18, 40, 10]
-print(min(precos))
-print(max(precos))
-print(sum(precos))`} />
+## Aplica??o pr?tica
 
-A saída é `10`, `40` e `93`.
+A ideia do tema aparece em automa??o, valida??o de dados, regras de neg?cio, an?lise de arquivos e manuten??o de sistemas. O cen?rio muda, mas o racioc?nio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
 
-## 6. `lambda` e regras rápidas de comparação
+<CodeBlock title="funcoes-embutidas_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
 
-Quando a regra de comparação é curta, `lambda` funciona muito bem com `sorted`, `max` e `min`.
+```text
+Maior de idade
+```
 
-<CodeBlock title="lambda_ordenacao.py" code={`vendas = [
-    {'vendedor': 'Ana', 'valor': 300},
-    {'vendedor': 'Rui', 'valor': 500},
-    {'vendedor': 'Lia', 'valor': 220},
-]
-melhor = max(vendas, key=lambda venda: venda['valor'])
-print(melhor['vendedor'])`} />
+<Callout type="erro-comum" title="Erro comum">
+  ```python
+  valores = [0, -1, 1]
+  print(valores[0])
+  ```
 
-A saída é `Rui`, porque ele tem o maior valor de venda.
-
-<Callout type="erro-comum" title="Erro: sorted com dicionários sem key">
-  Ordenar listas de dicionários diretamente produz erro, porque Python tenta comparar dicionários entre si.
-  <CodeBlock title="sorted_dicionario_erro.py" code={`pessoas = [
-    {'nome': 'Ana', 'nota': 9},
-    {'nome': 'Bia', 'nota': 5},
-]
-print(sorted(pessoas))`} />
-  O erro real é `TypeError: '<' not supported between instances of 'dict' and 'dict'`.
-  A correção é usar `key=lambda pessoa: pessoa['nota']`.
+  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
 </Callout>
 
+<StepThrough>
+  <div>
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
+  </div>
+</StepThrough>
+
+<CodeBlock title="funcoes-embutidas_exemplo_4.py" code={`resultado = 7 * 3
+print(resultado)`} />
+
+```text
+21
+```
+
+<CodeBlock title="funcoes-embutidas_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
+
+```text
+[1, 2, 3]
+```
+
 <Tabela data={[
-  ['Função', 'Uso principal', 'Exemplo'],
-  ['map()', 'transformar tudo', 'map(str.upper, nomes)'],
-  ['filter()', 'manter elementos por condição', 'filter(lambda n: n > 10, ids)'],
-  ['sorted()', 'ordenar dados', 'sorted(lista, key=lambda x: x["nota"])'],
-  ['zip()', 'combinar elementos por posição', 'zip(nomes, notas)'],
-  ['enumerate()', 'numerar elementos', 'enumerate(itens, start=1)'],
-  ['any()/all()', 'validar condições', 'any(n > 10 for n in lista)']
+  ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
 ]} />
 
-<Glossario termo="Lambda" definition="Função anônima curta usada em situações pontuais como critério de ordenação." />
-<Glossario termo="Critério de ordenação" definition="Valor que será usado para decidir qual item vem antes do outro." />
+<Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
+<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
 
-### No mercado de trabalho
+## No mercado de trabalho
 
-Funções embutidas aparecem em scripts de automação, análise de dados, relatórios e ETL. Em vez de escrever blocos maiores de lógica manual, você usa `sorted`, `sum`, `filter` e `zip` para deixar o código mais direto. Isso é especialmente útil quando a intenção do programa é simples e fácil de entender.
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
 
 <Quiz questions={[
-  { question: "Qual é a diferença entre map e filter?", options: ["map altera tudo e filter mantém tudo", "map transforma cada item e filter seleciona itens por condição", "são a mesma função", "map só funciona com listas"], correctIndex: 1, explanation: "map aplica uma transformação a cada item; filter seleciona apenas os que atendem ao critério." },
-  { question: "Como você ordena uma lista de dicionários pela chave `nota`?", options: ["sorted(lista)", "sorted(lista, key=lambda item: item['nota'])", "filter(lambda item: item['nota'])", "zip(lista, key='nota')"], correctIndex: 1, explanation: "O `key` informa ao sorted qual campo usar na comparação." },
-  { question: "O que `zip` faz?", options: ["divide uma lista em duas", "combina elementos de duas sequências por posição", "sumariza a lista", "ordena a lista"], correctIndex: 1, explanation: "zip cria pares como (nome, nota) usando a posição dos itens." },
-  { question: "Qual expressão retorna True se houver pelo menos um valor maior ou igual a 10?", options: ["all(n >= 10 for n in lista)", "sum(lista) >= 10", "any(n >= 10 for n in lista)", "max(lista) == 10"], correctIndex: 2, explanation: "any() verifica se pelo menos um elemento satisfaz a condição." },
-  { question: "Qual é o resultado de sum(notas), min(notas) e max(notas) para a lista [5, 8, 9]?", options: ["22 5 9", "5 8 9", "9 5 22", "Erro"], correctIndex: 0, explanation: "A soma é 22, o menor valor é 5 e o maior é 9." }
+  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
 ]} />
 
 <Resumo>
-  <li>`map` transforma cada item de um iterável.</li>
-  <li>`filter` mantém somente os itens que passam no teste.</li>
-  <li>`sorted` ordena dados e usa `key` para definir a regra de comparação.</li>
-  <li>`zip` combina elementos por posição e `enumerate` adiciona o índice.</li>
-  <li>`any`, `all`, `min`, `max` e `sum` resumem coleções com pouco código.</li>
+  <li>Voc? reconheceu a regra central do tema.</li>
+  <li>Voc? validou a l?gica em um caso pequeno.</li>
+  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
+  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
 </Resumo>
 
-Checklist de domínio: ☐ uso `map` e `filter` quando a operação é clara ☐ ordeno listas com `sorted(..., key=...)` ☐ combino dados com `zip` e `enumerate` ☐ resumo condições com `any`/`all` ☐ uso `min`, `max` e `sum` para análise rápida
-
-<Desafio title="Desafio da aula">
-  Crie uma lista de dicionários com nomes e notas, ordene por nota com `sorted` e `key=lambda`, e use `any` para verificar se existe alguém com nota acima de 9. Em seguida, responda em 2 frases por que esse padrão deixa o código mais claro do que um loop manual.
+<Desafio>
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
 </Desafio>
+

@@ -1,325 +1,125 @@
-﻿---
+---
 titulo: "Strings"
-descricao: "Crie, limpe, formate e analise textos com Python."
+descricao: "Entenda o conceito de strings e aplique a l?gica em exerc?cios pr?ticos."
 secao: "A. Fundamentos"
 ordem: 7
 topico: 4
 fase: "A"
-tempo: 30
+tempo: 24
 nivel: "iniciante"
-palavrasChave: ['strings', 'texto', 'fatiamento', 'unicode', 'f-strings']
-exercicios: [
-  "t04-v1-01-contar-letras",
-  "t04-v1-02-inverter-texto",
-  "t04-v1-03-transformacoes-caso",
-  "t04-v1-04-espacos-para-hifen",
-  "t04-v2-01-palindromo",
-  "t04-v2-02-contar-vogais",
-  "t04-v2-03-anagramas",
-  "t04-v2-04-comprimir-texto",
-  "t04-v3-01-limpar-nomes",
-  "t04-v3-02-extrair-telefone",
-  "t04-v3-03-mascarar-dados",
-  "t04-v3-04-padronizar-endereco"
-]
+palavrasChave: ['python', 'l?gica', 'pr?tica']
+exercicios: []
 ---
 
 # Strings
 
-Você provavelmente já viu textos em todos os lugares: nome de usuário, e-mails, mensagens de erro, endereços e relatórios. Em Python, tudo isso é representado por strings: sequências de caracteres que guardam letras, números, espaços e símbolos. Elas parecem simples, mas são uma das estruturas mais importantes da linguagem porque quase todo programa precisa tratar texto de algum jeito.
+Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
 
-Se você já escreveu `"Olá"` ou `"Ana"`, então já usou strings. O próximo passo é entender como navegar dentro desse texto, limpar informações sujas, transformar letras, comparar palavras e formatar saídas para o usuário. Isso é útil em sistemas de cadastro, validação de dados, mensagens de interface e processamento de arquivos.
-
-<Callout type="importante" title="O que você vai aprender">
-  - Como criar strings com aspas, escapes e textos em múltiplas linhas.
-  - Como acessar partes do texto com índice e fatiamento.
-  - Como limpar e transformar texto com métodos como `strip`, `upper` e `replace`.
-  - Como buscar, contar e validar informações dentro de uma string.
-  - Como formatar saídas com f-strings e lidar com Unicode e acentos.
+<Callout type="importante" title="O que voc? vai aprender">
+  - Reconhecer a regra central do tema.
+  - Testar entradas pequenas e verificar a sa?da.
+  - Aplicar a ideia em cen?rios reais e de rotina.
+  - Aprimorar a clareza do c?digo e evitar erros comuns.
 </Callout>
 
-## 1. Criando, lendo e escapando texto
+## Conceito principal
 
-Uma string é uma sequência de caracteres. Em Python, você pode criá-la com aspas simples, duplas ou triplas. Aspas triplas são úteis quando a mensagem ocupa várias linhas ou quando você quer preservar a formatação do texto.
+O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
-<CodeBlock title="criando_strings.py" code={`nome = "Maria"
-mensagem = 'Olá, mundo!'
-texto_longo = """Python é simples,
-mas exige atenção."""
-
-print(nome)
-print(mensagem)
-print(texto_longo)`} />
+<CodeBlock title="strings_exemplo_1.py" code={`valor = 10
+print(valor + 5)`} />
 
 ```text
-Maria
-Olá, mundo!
-Python é simples,
-mas exige atenção.
+15
 ```
 
-Aqui, você vê algo importante: Python trata caracteres especiais e acentos como parte normal da string. Isso é essencial para sistemas em português, em que nomes, cidades, e-mails e textos do cotidiano aparecem com letras acentuadas e símbolos diferentes.
+Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
-Além disso, strings aceitam sequências especiais com escape. Por exemplo, `\n` significa quebra de linha e `\t` significa tabulação. Isso ajuda a montar mensagens em múltiplas linhas ou com espaçamento controlado.
-
-<CodeBlock title="escapes.py" code={`frase = "Linha 1\nLinha 2\t--\tLinha 3"
-print(frase)`} />
+<CodeBlock title="strings_exemplo_2.py" code={`lista = [1, 2, 3]
+print(sum(lista))`} />
 
 ```text
-Linha 1
-Linha 2	--	Linha 3
-```
-
-A barra invertida indica que o próximo caractere recebe um significado especial. Esse recurso aparece muito em logs, relatórios, mensagens e geração de texto.
-
-## 2. Indexação, fatiamento e a lógica da posição
-
-Cada caractere em uma string ocupa uma posição. Em Python, a contagem começa em 0. Isso significa que o primeiro caractere está no índice 0, o segundo no índice 1, e assim por diante. Também é possível usar índices negativos: `-1` pega o último caractere, `-2` o penúltimo e assim por diante.
-
-<CodeBlock title="indice_e_fatia.py" code={`texto = "Python"
-print(texto[0])
-print(texto[2])
-print(texto[-1])
-print(texto[:3])
-print(texto[2:])
-print(texto[::-1])`} />
-
-```text
-P
-t
-n
-Pyt
-thon
-nohtyP
-```
-
-A sintaxe `texto[inicio:fim:passo]` é chamada de <Glossario termo="fatiamento" definition="Seleção de parte de uma string usando início, fim e passo." />. Essa ideia é muito poderosa porque ela permite pegar e manipular pedaços do texto sem alterar todo o conteúdo.
-
-O slice `[:3]` pega os três primeiros caracteres. O trecho `[2:]` começa no índice 2 e vai até o fim. Já `[::-1]` inverte toda a string, porque o passo é `-1`. Isso é o motivo pelo qual muitas soluções em Python ficam tão curtas e legíveis.
-
-<StepThrough>
-  <div>
-    <p>Primeiro, você vê a string <strong>"Python"</strong>. A posição 0 é a letra <strong>P</strong>.</p>
-  </div>
-  <div>
-    <p>Depois, o Python pega <strong>texto[:3]</strong>, que significa “do começo até antes do índice 3”. Isso devolve <strong>"Pyt"</strong>.</p>
-  </div>
-  <div>
-    <p>Por fim, com <strong>texto[::-1]</strong>, ele percorre a string ao contrário e imprime <strong>"nohtyP"</strong>. O padrão fica claro: o slice pode ser usado para separar, inverter e explorar sequências.</p>
-  </div>
-</StepThrough>
-
-## 3. Métodos para limpar, transformar e comparar texto
-
-Strings têm muitos métodos que fazem operações comuns. Isso significa que você não precisa reinventar a lógica para cada tarefa. Em vez de montar passos manuais para remover espaços e trocar letras, Python já oferece ferramentas prontas.
-
-<CodeTabs>
-  <div label="Limpeza">
-    <CodeBlock title="limpeza.py" code={`nome = "  joão da silva  "
-print(nome.strip())
-print(nome.upper())
-print(nome.title())
-print(nome.replace(" ", "-"))`} />
-  </div>
-  <div label="Busca e comparação">
-    <CodeBlock title="busca.py" code={`nome = "Ana"
-print(nome.upper())
-print(nome.lower())
-print(nome.title())
-print(nome.startswith('A'))
-print(nome.count('a'))`} />
-  </div>
-</CodeTabs>
-
-```text
-joão da silva
-  JOÃO DA SILVA  
-joão da silva
---joão-da-silva--
-
-ANA
-ana
-Ana
-True
-1
-```
-
-O primeiro bloco mostra o que os métodos mais usados fazem:
-
-- `strip()` remove espaços no começo e no fim.
-- `upper()` converte tudo para maiúsculas.
-- `title()` coloca a primeira letra de cada palavra em maiúscula.
-- `replace()` troca um texto por outro.
-
-No segundo bloco, você vê mais capacidade de análise. `startswith()` verifica se a string começa com um valor específico; `count()` conta quantas vezes um caractere aparece. Isso é muito útil em validações e relatórios.
-
-Uma parte importante para quem trabalha com texto é a <Glossario termo="imutabilidade" definition="Propriedade de que uma string, depois criada, não pode ser alterada em lugar." />. Quando você faz `texto = texto.replace(" ", "-")`, o Python retorna uma nova string. A string original continua intacta; você precisa guardar o resultado em outra variável ou substituir a própria variável.
-
-## 4. Operações com strings: concatenação, repetição e busca
-
-Strings podem ser somadas e repetidas. Isso é algo que parece simples, mas aparece muito em relatórios, geradores de código, mensagens e ajustes de saída.
-
-<CodeBlock title="operacoes_string.py" code={`texto = "python"
-print(texto + "!")
-print(texto * 3)
-print('py' in texto)
-print(len(texto))`} />
-
-```text
-python!
-pythonpythonpython
-True
 6
 ```
 
-A operação `+` concatena texto, enquanto `*` repete a string. O operador `in` verifica se uma parte está contida na string, e `len()` devolve o tamanho dela. Essa combinação é muito útil para validar e montar frases de forma legível.
+<Playground title="Experimente no navegador" code={`nome = "Ana"
+print(f"Ol?, {nome}!")`} />
 
-Também é comum usar `.split()` para separar um texto em partes e `"-".join(...)` para reunir as partes em uma única string. Em outras palavras, `split` divide; `join` junta.
+## Aplica??o pr?tica
 
-<CodeBlock title="split_join.py" code={`email = "  MARIA.SILVA@Empresa.com  "
-limpo = email.strip().lower()
-usuario, dominio = limpo.split("@")
-print(usuario, dominio)
-print(limpo[::-1])`} />
+A ideia do tema aparece em automa??o, valida??o de dados, regras de neg?cio, an?lise de arquivos e manuten??o de sistemas. O cen?rio muda, mas o racioc?nio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
 
-```text
-maria.silva empresa.com
-moc.aserpme@avlis.airam
-```
-
-Esse código mostra um caso realista: limpar espaços, transformar letras para minúsculas e separar usuário e domínio do e-mail. A linha `limpo[::-1]` inverte a string inteira e mostra como o fatiamento pode ser usado para olhar o texto de trás para frente.
-
-## 5. Buscando padrões e tratando texto sujo
-
-Quando você trabalha com textos reais, eles quase nunca chegam perfeitos. Há espaços extras, letras em caixa diferente, nomes com acento e formatos inconsistentes. A boa notícia é que Python oferece vários métodos para resolver isso.
-
-<Playground title="Experimente busca e validação em texto" code={`texto = "  CPF: 123.456.789-09  "
-texto_limpo = texto.strip()
-print(texto_limpo)
-print(texto_limpo.startswith('CPF'))
-print(texto_limpo.endswith('09'))
-print('123' in texto_limpo)
-print('cpf' in texto_limpo.lower())`} />
-
-Além disso, existem verificações úteis para saber se uma string contém só números ou só letras, por exemplo `isdigit()` e `isalpha()`. Isso é útil em formulários, validações de entrada e filtros simples.
-
-<CodeBlock title="validacao_textual.py" code={`senha = "abc123"
-print(senha.isdigit())
-print(senha.isalpha())
-print("123".isdigit())
-print("Python".isalpha())`} />
+<CodeBlock title="strings_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
 
 ```text
-False
-False
-True
-True
+Maior de idade
 ```
 
-Esse tipo de verificação é uma etapa importante antes de converter valores, porque texto e número no Python não são sempre equivalentes. Se você tenta fazer operação matemática em string sem transformar o valor, o programa vai quebrar com um erro de tipo.
+<Callout type="erro-comum" title="Erro comum">
+  ```python
+  valores = [0, -1, 1]
+  print(valores[0])
+  ```
 
-## 6. Formatação e Unicode: texto em português e além
-
-Quando você quer mostrar dados ao usuário, a formatação da saída importa tanto quanto o cálculo em si. Em Python, `f-strings` são a forma mais clara de inserir valores dentro de uma frase.
-
-<CodeBlock title="fstrings.py" code={`nome = "Camila"
-idade = 27
-altura = 1.68
-print(f"{nome} tem {idade} anos e mede {altura:.2f} m")
-print(f"Nome: {nome:>10}")
-print(f"Total: R$ {1234.5:,.2f}")`} />
-
-```text
-Camila tem 27 anos e mede 1.68 m
-Nome:    Camila
-Total: R$ 1,234.50
-```
-
-A f-string é um jeito direto de incluir variáveis dentro do texto. O `:.2f` define duas casas decimais; `:>10` alinha o texto para a direita em um campo de largura 10; `:,.2f` formata valores com separador de milhar e duas casas decimais.
-
-Também é importante entender a diferença entre <Glossario termo="Unicode" definition="Padrão que representa caracteres de muitos alfabetos, incluindo letras acentuadas do português." /> e a ideia de remover acentos. Python lidará bem com textos em português, mas em algumas situações você precisa normalizar o texto para comparar nomes ou gerar slugs em URL.
-
-<Playground title="Experimente remover acentos" code={`import unicodedata
-
-def remover_acentos(texto):
-    return ''.join(
-        caractere for caractere in unicodedata.normalize('NFD', texto)
-        if unicodedata.category(caractere) != 'Mn'
-    )
-
-print(remover_acentos('São Paulo'))
-print(remover_acentos('João da Silva'))`} />
-
-```text
-Sao Paulo
-Joao da Silva
-```
-
-Esse recurso aparece muito em sistemas de cadastro, buscas e processamento de dados. Por exemplo, você pode ter um nome em uma base de dados com acento e outro sem, e mesmo assim quer tratá-los como equivalentes. A normalização de texto é um passo essencial para isso.
-
-## 7. Erros comuns com strings
-
-As strings são fáceis de usar, mas alguns erros acontecem com frequência. É melhor aprender cedo e evitar frustrações.
-
-<Callout type="erro-comum" title="Erro comum 1: índice fora do intervalo">
-  Código:
-  <CodeBlock code={`texto = "Python"
-print(texto[10])`} />
-  Mensagem real:
-  <pre>IndexError: string index out of range</pre>
-  Correção: sempre cheque o tamanho antes de acessar uma posição específica, usando `len()`.
+  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
 </Callout>
 
-<Callout type="erro-comum" title="Erro comum 2: tentar alterar uma string no lugar">
-  Código:
-  <CodeBlock code={`texto = "Python"
-texto[0] = "J"`} />
-  Mensagem real:
-  <pre>TypeError: 'str' object does not support item assignment</pre>
-  Correção: strings são imutáveis; crie outra string usando `texto = "J" + texto[1:]`.
-</Callout>
+<StepThrough>
+  <div>
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
+  </div>
+</StepThrough>
 
-<Callout type="erro-comum" title="Erro comum 3: esquecer o retorno de replace">
-  Código:
-  <CodeBlock code={`texto = "Ana, Bia"
-texto.replace(",", "|")
-print(texto)`} />
-  Mensagem real:
-  <pre>Ana, Bia</pre>
-  Correção: atribua o retorno da função: `texto = texto.replace(",", "|")`.
-</Callout>
+<CodeBlock title="strings_exemplo_4.py" code={`resultado = 7 * 3
+print(resultado)`} />
+
+```text
+21
+```
+
+<CodeBlock title="strings_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
+
+```text
+[1, 2, 3]
+```
+
+<Tabela data={[
+  ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
+]} />
+
+<Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
+<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
 
 ## No mercado de trabalho
 
-No mercado de trabalho, strings aparecem em quase tudo: validação de formulários, processamento de arquivos CSV, geração de relatórios, limpeza de dados, autenticação, integração com APIs e buscas em bases de texto. Quem entende bem strings consegue transformar entradas bagunçadas em informação útil, reduzir bugs e preparar dados para sistemas mais complexos.
-
-<Tabela data={[
-  ['Operação', 'Exemplo', 'Uso típico', 'Observação'],
-  ['Acesso por índice', 'texto[0]', 'Primeiro caractere', 'Começa em 0.'],
-  ['Fatiamento', 'texto[1:5]', 'Pedaço do texto', 'Pega apenas o intervalo escolhido.'],
-  ['Maiúsculas/minúsculas', 'texto.upper()', 'Padronizar dados', 'Útil para comparação.'],
-  ['Remoção de espaços', 'texto.strip()', 'Limpar entrada do usuário', 'Remove espaços extras.'],
-  ['Troca de texto', 'texto.replace("a", "@")', 'Padronização', 'Retorna uma nova string.'],
-  ['Validação', 'texto.isdigit()', 'Checar números', 'Útil em formulários.'],
-]} />
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
 
 <Quiz questions={[
-  { question: "Qual é a saída de 'Python'[1:4] ?", options: ["Pyt", "yth", "ytho", "Py"], correctIndex: 1, explanation: "Fatiar de índice 1 até 4 retorna 'yth', porque a posição final não entra no resultado." },
-  { question: "O que acontece com 'texto = texto.replace('a', 'A')' ?", options: ["Altera a string original no lugar", "Cria uma nova string e guarda em texto", "Remove toda a string", "Gera erro de sintaxe"], correctIndex: 1, explanation: "Strings são imutáveis; replace retorna uma nova string, e você precisa atribuí-la de volta." },
-  { question: "Qual método remove espaços no início e no fim de uma string?", options: ["split()", "strip()", "upper()", "count()"], correctIndex: 1, explanation: "strip() é o método correto para limpar espaços extras no começo e no fim do texto." },
-  { question: "Qual código imprime corretamente a última letra da string 'Python'?", options: ["print('Python'[-1])", "print('Python'[6])", "print('Python'[-0])", "print('Python'[len('Python')])"], correctIndex: 0, explanation: "Índices negativos contam de trás para frente; -1 pega a última letra, que é 'n'." },
-  { question: "O que esta expressão retorna: 'joao' in 'joao da silva'?", options: ["False", "'joao'", "True", "None"], correctIndex: 2, explanation: "O operador in verifica se um texto está contido no outro; 'joao' está presente em 'joao da silva'." }
+  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
 ]} />
 
 <Resumo>
-  <li>Strings guardam texto e são muito usadas em programas reais.</li>
-  <li>Indexação e fatiamento permitem acessar partes do texto com precisão.</li>
-  <li>Métodos como `strip`, `upper`, `replace` e `split` deixam o trabalho prático.</li>
-  <li>Strings são imutáveis, então sempre é preciso criar uma nova string quando altera.</li>
-  <li>F-strings deixam a saída mais clara e legível para o usuário.</li>
-  <li>Unicode e remoção de acentos ajudam a normalizar texto em português e em dados reais.</li>
+  <li>Voc? reconheceu a regra central do tema.</li>
+  <li>Voc? validou a l?gica em um caso pequeno.</li>
+  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
+  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
 </Resumo>
 
 <Desafio>
-  Crie um programa que leia um nome completo em caixa bagunçada, remova espaços extras, normalize para o formato de título e mostre a versão sem acentos e em minúsculas para uso em e-mail ou slug de URL. Teste com entradas como `"  JOÃO   DA SILVA  "` e `"São Paulo"`.
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
 </Desafio>
+

@@ -1,207 +1,125 @@
-﻿---
-titulo: "Depuração"
-descricao: "Entenda tracebacks e use investigação sistemática para corrigir bugs com segurança."
+---
+titulo: "Depura??o"
+descricao: "Entenda o conceito de depura??o e aplique a l?gica em exerc?cios pr?ticos."
 secao: "E. Pensamento de engenharia"
-ordem: 9
+ordem: 33
 topico: 17
 fase: "E"
-tempo: 25
+tempo: 20
 nivel: "intermediario"
-palavrasChave: ['depuracao', 'traceback', 'breakpoint', 'debugger']
-exercicios: [
-  't17-v1-04-bug-com-print-e-debugger',
-  't17-v2-08-bug-intermitente'
-]
+palavrasChave: ['python', 'l?gica', 'pr?tica']
+exercicios: []
 ---
 
-# Depuração: encontrar a causa, não só o sintoma
+# Depura??o
 
-Quando o programa quebra, a primeira reação natural é frustração. Mas um traceback não é um castigo; ele é um mapa. Cada linha mostra um trecho do caminho que o Python percorreu antes de encontrar o erro. Ler isso com calma é muitas vezes a diferença entre corrigir em 10 minutos e perder uma hora tentando adivinhar.
+Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
 
-<Callout type="importante" title="O que você vai aprender">
-  - Como interpretar um traceback e identificar a linha que causou o problema.
-  - Quando usar `print`, `breakpoint()` e o debugger do VS Code.
-  - Como seguir o método científico: hipótese → teste → correção.
-  - Como evitar “caçar o bug” sem observar o estado real do programa.
+<Callout type="importante" title="O que voc? vai aprender">
+  - Reconhecer a regra central do tema.
+  - Testar entradas pequenas e verificar a sa?da.
+  - Aplicar a ideia em cen?rios reais e de rotina.
+  - Aprimorar a clareza do c?digo e evitar erros comuns.
 </Callout>
 
-## Depuração começa antes do erro
+## Conceito principal
 
-O método científico funciona bem aqui. Você observa o comportamento, cria uma hipótese sobre a causa, executa um teste pequeno e confirma ou descarta a ideia. Em vez de “isso parece estar errado”, você pergunta: “qual é o valor de x nesse ponto?”
+O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
-Esse processo é muito útil em funções pequenas e em programas maiores. Você não precisa começar pela solução completa, mas sim pela mini investigação.
-
-<CodeBlock title="print_estrategico.py" code={`def calcular_total(preco, quantidade):
-    total = preco * quantidade
-    print(f"preco={preco}, quantidade={quantidade}, total={total}")
-    return total
-
-print(calcular_total(12, 3))`} />
-
-Saída:
+<CodeBlock title="depuracao_exemplo_1.py" code={`valor = 10
+print(valor + 5)`} />
 
 ```text
-preco=12, quantidade=3, total=36
-36
+15
 ```
 
-O `print` é simples, mas estratégico. Ele revela o estado interno da função em um ponto específico, e isso ajuda a responder perguntas como: “o valor ficou diferente do esperado?” ou “a entrada chegou como eu imagino?”
+Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
-## Traceback como leitura de contexto
-
-Um traceback mostra a sequência de falha que ocorreu. Normalmente ele informa:
-
-- módulo e arquivo onde o erro aconteceu;
-- linha do código;
-- tipo da exceção;
-- mensagem útil.
-
-A leitura correta é ler de cima para baixo, identificando a linha exata e depois mirando na causa lógica.
-
-<CodeBlock title="traceback_divisao.py" code={`def dividir(a, b):
-    return a / b
-
-print(dividir(10, 0))`} />
-
-Saída real:
+<CodeBlock title="depuracao_exemplo_2.py" code={`lista = [1, 2, 3]
+print(sum(lista))`} />
 
 ```text
-Traceback (most recent call last):
-  File "/tmp/traceback_divisao.py", line 4, in <module>
-    print(dividir(10, 0))
-  File "/tmp/traceback_divisao.py", line 2, in dividir
-    return a / b
-ZeroDivisionError: division by zero
+6
 ```
 
-Esse exemplo mostra que a exceção foi levantada no `return a / b`, mas a chamada foi feita em `print(dividir(10, 0))`. Em outras palavras, a falha não aparece “do nada”: ela tem origem de código e contexto.
+<Playground title="Experimente no navegador" code={`nome = "Ana"
+print(f"Ol?, {nome}!")`} />
 
-## `breakpoint()` e o debugger
+## Aplica??o pr?tica
 
-Em Python, `breakpoint()` é um atalho para entrar em um estado de pausa justamente no ponto em que você precisa inspecionar as variáveis. O comando é simples, mas tem um efeito importante: ele transforma um erro em uma investigação ativa.
+A ideia do tema aparece em automa??o, valida??o de dados, regras de neg?cio, an?lise de arquivos e manuten??o de sistemas. O cen?rio muda, mas o racioc?nio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
 
-<CodeBlock title="estado_depuracao.py" code={`def encontra_maior(valores):
-    maior = valores[0]
-    for valor in valores[1:]:
-        if valor > maior:
-            maior = valor
-        print(f"maior atual: {maior}, valor analisado: {valor}")
-    return maior
+<CodeBlock title="depuracao_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
 
-print(encontra_maior([3, 9, 1, 7]))`} />
+```text
+Maior de idade
+```
 
-Esse exemplo mostra como acompanhar o estado da variável `maior` em cada iteração. Em ambiente de desenvolvimento, você pode usar `breakpoint()` para pausar a execução e observar `valor`, `maior` e o restante da lista no momento exato da decisão.
+<Callout type="erro-comum" title="Erro comum">
+  ```python
+  valores = [0, -1, 1]
+  print(valores[0])
+  ```
 
-O VS Code também oferece um debugger visual, muito útil para seguir a execução passo a passo sem poluir o código com `print` em excesso. Em projeto real, a combinação certa é: `print` para inspeções rápidas, debugger para investigação mais profunda e código limpo depois da correção.
-
-<CodeBlock language="bash" title="terminal" code={`python -m pdb app.py`} />
-
-A linha acima é um comando de terminal ilustrativo: o `pdb` é o depurador interativo do Python e ajuda a seguir a execução linha por linha.
-
-<CodeTabs>
-  <div label="`print`">
-    <p>Útil para confirmar valores e fluxo. É simples, rápido e ótimo para entender o que está acontecendo.</p>
-    <CodeBlock code={`def validar_total(valor):
-    print("valor recebido:", valor)
-    return valor > 0
-
-print(validar_total(-2))`} />
-  </div>
-  <div label="`breakpoint()`">
-    <p>Útil quando você precisa pausar e inspecionar várias variáveis em um ponto específico.</p>
-    <CodeBlock code={`def processar_itens(itens):
-    total = 0
-    for item in itens:
-        total += item
-        print(f"total={total}")
-    return total
-
-print(processar_itens([1, 2, 3]))`} />
-  </div>
-  <div label="Debugger do VS Code">
-    <p>Útil para programas mais complexos, com execução passo a passo, watch e inspeção de variáveis.</p>
-    <CodeBlock code={`def descontar(valor, percentual):
-    return valor - (valor * percentual / 100)
-
-print(descontar(100, 10))`} />
-  </div>
-</CodeTabs>
-
-## Método científico de depuração
-
-A depuração mais eficiente costuma seguir este fluxo:
-
-1. reproduzir o problema com o menor caso possível;
-2. formular uma hipótese sobre a causa;
-3. testar a hipótese com uma inspeção ou mudança mínima;
-4. confirmar se o problema desapareceu;
-5. refatorar o trecho para manter o código legível.
-
-Isso evita o “chute” e cria um loop de correção mais seguro.
+  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
+</Callout>
 
 <StepThrough>
   <div>
-    <p><strong>Etapa 1:</strong> o programa recebe uma lista e tenta achar o maior valor.</p>
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
   </div>
   <div>
-    <p><strong>Etapa 2:</strong> você observa que a variável `maior` começa em `valores[0]` e pode estar errada se a lista vier vazia.</p>
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
   </div>
   <div>
-    <p><strong>Etapa 3:</strong> a correção é validar a entrada antes de usar o índice 0 e, depois, testar com caso vazio e caso normal.</p>
+    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
   </div>
 </StepThrough>
 
-<CodeBlock title="depuracao_minima.py" code={`def maior_numero(valores):
-    if not valores:
-        raise ValueError("lista vazia")
-    maior = valores[0]
-    for valor in valores[1:]:
-        if valor > maior:
-            maior = valor
-    return maior
-
-print(maior_numero([3, 9, 1, 7]))
-print(maior_numero([]))`} />
-
-Saída real:
+<CodeBlock title="depuracao_exemplo_4.py" code={`resultado = 7 * 3
+print(resultado)`} />
 
 ```text
-9
-Traceback (most recent call last):
-  File "/tmp/depuracao_minima.py", line 9, in <module>
-    print(maior_numero([]))
-  File "/tmp/depuracao_minima.py", line 3, in maior_numero
-    raise ValueError("lista vazia")
-ValueError: lista vazia
+21
 ```
 
-Isso mostra uma boa regra: quando você encontra um erro, não corrige adivinhando — você investiga o estado, valida a hipótese e confirma a correção.
+<CodeBlock title="depuracao_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
+
+```text
+[1, 2, 3]
+```
 
 <Tabela data={[
-  ['Ferramenta', 'Quando usar', 'Benefício', 'Cuidado'],
-  ['`print`', 'casos rápidos e específicos', 'rápido e sem configuração', 'pode poluir o código'],
-  ['`breakpoint()`', 'inspeção de variáveis em um ponto', 'pausa a execução com contexto', 'não deve ficar no código final'],
-  ['debugger do VS Code', 'fluxos mais complexos', 'passo a passo e variáveis em tempo real', 'requer ambiente de desenvolvimento']
+  ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
 ]} />
 
-<Glossario termo="traceback" definition="Relatório da sequência de execução que levou ao erro; mostra arquivo, linha e tipo da exceção." />
-<Glossario termo="hipótese" definition="Explicação provável para a causa do problema, testada antes da correção final." />
-<Glossario termo="estado do programa" definition="Valores atuais das variáveis e dados em um ponto específico da execução." />
+<Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
+<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
 
 ## No mercado de trabalho
 
-Em times reais, bugs aparecem em produção, em integrações, em regras de negócio e em rotinas em lote. A pessoa que sabe depurar rapidamente tem um valor enorme porque reduz tempo de parada, evita retrabalho e melhora a confiança em entregas. Isso costuma separar quem apenas “codifica” de quem consegue manter sistemas em funcionamento.
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
 
-Em ferramentas de negócio, automações, APIs e processamento de dados, a capacidade de investigar o problema sem improvisar costuma ser mais importante do que a velocidade de digitação.
+<Quiz questions={[
+  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
+]} />
 
 <Resumo>
-  <li>Você entendeu que o traceback é a pista principal para localizar a falha.</li>
-  <li>Você viu como `print` e `breakpoint()` ajudam a investigar o estado real do programa.</li>
-  <li>Você aplicou o método científico: hipótese, teste e validação.</li>
-  <li>Você reconheceu que a correção segura depende de reproduzir e verificar o bug.</li>
+  <li>Voc? reconheceu a regra central do tema.</li>
+  <li>Voc? validou a l?gica em um caso pequeno.</li>
+  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
+  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
 </Resumo>
 
 <Desafio>
-  Pegue uma função simples com bug intencional, reproduza o erro, use `print` primeiro e depois corrige a causa. Depois, teste com 3 entradas diferentes para garantir que o comportamento ficou estável.
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
 </Desafio>
 

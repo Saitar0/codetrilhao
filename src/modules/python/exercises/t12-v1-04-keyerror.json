@@ -12,11 +12,11 @@
     "Você pode também usar `dict.get` como alternativa (LBYL).",
     "Ao capturar `KeyError`, imprima 'Chave ausente.' e termine o programa."
   ],
-  "solucao": "def acessar_chave():\n    import sys\n    try:\n        chave = input().strip()\n        import json\n        d = json.loads(input())\n        print(d[chave])\n    except KeyError:\n        print(\"Chave ausente.\")\n",
+  "solucao": "import json\nchave = input().strip()\ndados = json.loads(input())\ntry:\n    print(dados[chave])\nexcept KeyError:\n    print(\"Chave ausente.\")\n",
   "tags": ["KeyError", "dicionario", "entrada"],
   "aulaRelacionada": "excecoes",
   "enunciado": "Primeira linha: chave a consultar. Segunda linha: JSON que representa um dicionário. Imprima o valor da chave. Se a chave não existir, capture `KeyError` e imprima 'Chave ausente.'",
-  "starterCode": "def acessar_chave():\n    pass\n",
+  "starterCode": "import json\nchave = input().strip()\ndados = json.loads(input())\nprint(dados[chave])\n",
   "testes": [
     { "entrada": "nome\n{\"nome\": \"Ana\", \"idade\": 30}\n", "esperado": "Ana\n", "oculto": false },
     { "entrada": "idade\n{\"nome\": \"Ana\", \"idade\": 30}\n", "esperado": "30\n", "oculto": false },

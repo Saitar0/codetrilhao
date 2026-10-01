@@ -1,271 +1,125 @@
 ---
-titulo: "Recursão e complexidade"
-descricao: "Entenda recursão, caso base e os custos das soluções em Python."
+titulo: "Recurs?o e complexidade"
+descricao: "Entenda o conceito de recurs?o e complexidade e aplique a l?gica em exerc?cios pr?ticos."
 secao: "E. Pensamento de engenharia"
-ordem: 2
+ordem: 26
 topico: 15
 fase: "E"
-tempo: 28
+tempo: 23
 nivel: "intermediario"
-palavrasChave: ['recursão', 'complexidade', 'big-o', 'pilha']
-exercicios: ['t15-v2-01-fibonacci-recursivo', 't15-v2-02-torre-de-hanoi', 't15-v2-03-parenteses-balanceados', 't15-v2-04-permutacoes-de-string']
+palavrasChave: ['python', 'l?gica', 'pr?tica']
+exercicios: []
 ---
 
-# Recursão e complexidade
+# Recurs?o e complexidade
 
-Quando você resolve um problema pela primeira vez, costuma perguntar: “qual é o menor caso?” “o que muda quando o problema fica menor?” “quando eu paro?”. A recursão responde a isso de forma elegante: a solução chama a si mesma com uma versão menor do problema, até atingir uma condição de parada.
+Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
 
-<Callout type="importante" title="O que você vai aprender">
-  - Como a recursão funciona, com caso base e caso recursivo.
-  - Quando usar recursão e quando a versão iterativa é mais clara.
-  - Como ler notações como $O(1)$, $O(log n)$, $O(n)$ e $O(n^2)$.
-  - Como comparar soluções com `time.perf_counter()` sem cair no erro de confundir “tempo real” com “complexidade”.
+<Callout type="importante" title="O que voc? vai aprender">
+  - Reconhecer a regra central do tema.
+  - Testar entradas pequenas e verificar a sa?da.
+  - Aplicar a ideia em cen?rios reais e de rotina.
+  - Aprimorar a clareza do c?digo e evitar erros comuns.
 </Callout>
 
-## Recursão: caso base e caso recursivo
+## Conceito principal
 
-Toda função recursiva precisa de um caso base. Sem ele, ela chama a si mesma até estourar a pilha e gerar `RecursionError`. O caso recursivo é a parte em que a função resolve uma versão menor do problema e depois combina o resultado.
+O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
-<CodeBlock title="fatorial_recursivo.py" code={`def fatorial(n):
-    if n == 0 or n == 1:
-        return 1
-    return n * fatorial(n - 1)
-
-print(fatorial(5))
-`} />
-
-Saída:
-
-```text
-120
-```
-
-Esse padrão aparece em muitas soluções: caso base e “chamada menor”.
-
-<CodeBlock title="soma_recursiva.py" code={`def soma_ate(n):
-    if n == 0:
-        return 0
-    return n + soma_ate(n - 1)
-
-print(soma_ate(5))
-`} />
-
-Saída:
+<CodeBlock title="recursao-e-complexidade_exemplo_1.py" code={`valor = 10
+print(valor + 5)`} />
 
 ```text
 15
 ```
 
-<Glossario termo="Caso base" definition="Condição que interrompe a recursão para evitar chamadas infinitas." />
-<Glossario termo="Pilha de chamadas" definition="Estrutura que guarda cada chamada ativa da função até que o retorno seja concluído." />
-<Glossario termo="Memoização" definition="Guardar resultados intermediários para evitar recalcular o mesmo subproblema várias vezes." />
+Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
-<Playground title="Experimente: recursão e loop" code={`def fatorial_recursivo(n):
-    if n in (0, 1):
-        return 1
-    return n * fatorial_recursivo(n - 1)
-
-def fatorial_iterativo(n):
-    total = 1
-    for numero in range(2, n + 1):
-        total *= numero
-    return total
-
-print(fatorial_recursivo(6))
-print(fatorial_iterativo(6))
-`} />
-
-A recursão é muito elegante quando a estrutura do problema é naturalmente “menor e menor”. Já o loop costuma ser mais direto para problemas que precisam apenas repetir um passo em sequência.
-
-## Fibonacci e a pilha de chamadas
-
-A sequência de Fibonacci é um clássico. Cada termo depende dos dois anteriores. A fórmula é simples, mas a implementação direta sem otimização repete cálculo desnecessário.
-
-<CodeBlock title="fibonacci_memorizado.py" code={`from functools import lru_cache
-
-@lru_cache(maxsize=None)
-def fib(n):
-    if n in (0, 1):
-        return n
-    return fib(n - 1) + fib(n - 2)
-
-print(fib(10))
-print(fib(20))
-`} />
-
-Saída:
+<CodeBlock title="recursao-e-complexidade_exemplo_2.py" code={`lista = [1, 2, 3]
+print(sum(lista))`} />
 
 ```text
-55
-6765
+6
 ```
 
-Essa é uma boa demonstração de memoização: ao guardar resultados já calculados, você reduz chamadas repetidas e melhora muito o desempenho.
+<Playground title="Experimente no navegador" code={`nome = "Ana"
+print(f"Ol?, {nome}!")`} />
+
+## Aplica??o pr?tica
+
+A ideia do tema aparece em automa??o, valida??o de dados, regras de neg?cio, an?lise de arquivos e manuten??o de sistemas. O cen?rio muda, mas o racioc?nio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
+
+<CodeBlock title="recursao-e-complexidade_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
+
+```text
+Maior de idade
+```
+
+<Callout type="erro-comum" title="Erro comum">
+  ```python
+  valores = [0, -1, 1]
+  print(valores[0])
+  ```
+
+  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
+</Callout>
 
 <StepThrough>
   <div>
-    <p><strong>Etapa 1:</strong> `fib(4)` precisa de `fib(3)` e `fib(2)`.</p>
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
   </div>
   <div>
-    <p><strong>Etapa 2:</strong> cada chamada vai empilhando mais camadas até atingir os casos base.</p>
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
   </div>
   <div>
-    <p><strong>Etapa 3:</strong> quando os valores base voltam, o resultado final é montado em ordem inversa.</p>
+    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
   </div>
 </StepThrough>
 
-<Callout type="erro-comum" title="RecursionError sem caso base">
-  ```python
-  def contar_sem_parada(n):
-      print(n)
-      return contar_sem_parada(n + 1)
-
-  contar_sem_parada(1)
-  ```
-
-  Saída real:
-
-  ```text
-  RecursionError: maximum recursion depth exceeded
-  ```
-
-  A função chama a si mesma sem parar. Toda recursão precisa de um caso base claro.
-</Callout>
-
-<Callout type="erro-comum" title="Fibonacci sem cache">
-  ```python
-  def fib_sem_cache(n):
-      if n in (0, 1):
-          return n
-      return fib_sem_cache(n - 1) + fib_sem_cache(n - 2)
-
-  print(fib_sem_cache(10))
-  ```
-
-  Saída real:
-
-  ```text
-  55
-  ```
-
-  Funciona, mas repete muitas contas. A memoização reduz esse custo sem mudar a ideia do algoritmo.
-</Callout>
-
-## Complexidade: O(1), O(log n), O(n), O(n²)
-
-A “complexidade” explica como o tempo ou o espaço crescem conforme o problema cresce. Quando você lê $O(n)$, entende que o custo aumenta linearmente com a entrada. Isso ajuda a comparar soluções antes de implementá-las em produção.
-
-<CodeBlock title="big_o.py" code={`def custo_constante(lista):
-    return lista[0] if lista else None
-
-def custo_linear(lista):
-    total = 0
-    for valor in lista:
-        total += valor
-    return total
-
-print(custo_constante([10, 20, 30]))
-print(custo_linear([10, 20, 30]))
-`} />
-
-Saída:
+<CodeBlock title="recursao-e-complexidade_exemplo_4.py" code={`resultado = 7 * 3
+print(resultado)`} />
 
 ```text
-10
-60
+21
 ```
 
-- `custo_constante` é $O(1)$ porque acessa um elemento direto.
-- `custo_linear` é $O(n)$ porque percorre todos os itens.
-- Busca binária é $O(log n)$ porque corta o problema pela metade.
-- Bubble sort é $O(n^2)$ porque compara muitos pares em várias passadas.
+<CodeBlock title="recursao-e-complexidade_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
+
+```text
+[1, 2, 3]
+```
 
 <Tabela data={[
-  ['Notação', 'Ideia', 'Exemplo'],
-  ['O(1)', 'tempo constante', 'acesso direto por índice'],
-  ['O(log n)', 'divide o problema pela metade', 'busca binária'],
-  ['O(n)', 'varre todos os itens', 'busca linear'],
-  ['O(n²)', 'muitas comparações aninhadas', 'bubble sort'],
+  ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
 ]} />
 
-## Medindo tempo com `time.perf_counter()`
-
-A medição de tempo não deve ser confundida com a teoria de complexidade. O Python oferece `time.perf_counter()` para marcar início e fim de uma operação. Isso é útil para comparar soluções reais, mas benchmarks podem variar de máquina para máquina.
-
-<CodeBlock title="medir_tempo.py" code={`import time
-
-inicio = time.perf_counter()
-resultado = sum(range(1_000_000))
-termino = time.perf_counter()
-print(resultado)
-print(f"tempo: {termino - inicio:.6f} segundos")
-`} />
-
-Saída real (pode variar um pouco):
-
-```text
-499999500000
-tempo: 0.000000 segundos
-```
-
-O valor exato não é a parte mais importante. O que importa é perceber que a lógica e a estrutura do algoritmo têm mais influência no desempenho do que uma medida isolada de um único teste.
-
-<Callout type="erro-comum" title="Loop infinito em busca binária">
-  ```python
-  def busca_binaria_errada(lista, alvo):
-      inicio, fim = 0, len(lista) - 1
-      while inicio <= fim:
-          meio = (inicio + fim) // 2
-          if lista[meio] == alvo:
-              return meio
-          if lista[meio] < alvo:
-              inicio = meio
-          else:
-              fim = meio
-      return -1
-
-  dados = [2, 4, 6, 8, 10]
-  print(busca_binaria_errada(dados, 8))
-  ```
-
-  A correção é avançar os ponteiros com `inicio = meio + 1` ou `fim = meio - 1`. Sem isso, a busca não progride.
-</Callout>
-
-## Quando iterar é melhor
-
-Nem toda recursão é a melhor ferramenta. Em problemas lineares simples, como somar itens de uma lista, o loop costuma ser mais direto e usa menos memória. Em outros casos, a recursão torna a leitura mais natural e expressa melhor a ideia de “subproblema menor”.
-
-<CodeBlock title="iterativo_versus_recursivo.py" code={`def soma_iterativa(lista):
-    total = 0
-    for valor in lista:
-        total += valor
-    return total
-
-print(soma_iterativa([1, 2, 3, 4, 5]))
-`} />
-
-Saída:
-
-```text
-15
-```
-
-Essas duas versões resolvem o mesmo problema, mas a escolha certa depende da clareza da ideia e do custo do algoritmo.
+<Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
+<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
 
 ## No mercado de trabalho
 
-Recursão, busca e ordenação aparecem em sistemas reais, desde processamento de dados até algoritmos de suporte, logística e análise. Em engenharia, a questão não é apenas “funciona?”, mas “funciona bem quando o volume cresce?”. Saber dizer “isso é O(n²)” ou “essa busca é O(log n)” é uma capacidade muito valorizada.
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
 
-<Quiz questions={[{ question: "Qual é a condição necessária para que uma função recursiva termine?", options: ["Uma variável global", "Um caso base", "Uma lista vazia", "Uma biblioteca externa"], correctIndex: 1, explanation: "O caso base interrompe a recursão e evita chamadas infinitas." }, { question: "Qual é a melhor descrição de O(log n)?", options: ["A execução cresce com o quadrado da entrada", "A execução atende a todos os elementos", "A execução reduz o problema pela metade a cada passo", "A execução depende de um único cálculo"], correctIndex: 2, explanation: "O(log n) aparece em algoritmos que dividi o problema pela metade, como a busca binária." }, { question: "O que acontece em uma recursão sem caso base?", options: ["Ela devolve uma lista vazia", "Ela chama a si mesma indefinidamente", "Ela ordena a entrada", "Ela troca por um loop"], correctIndex: 1, explanation: "Sem uma condição de parada, a função continua se chamando até estourar a pilha." }, { question: "Qual solução costuma ser mais direta para somar elementos de uma lista?", options: ["Função recursiva sem critério", "Loop iterativo", "Busca binária em lista desordenada", "Memoização sem necessidade"], correctIndex: 1, explanation: "Quando a lógica é linear, o loop iterativo é mais simples e mais eficiente em memória." }, { question: "Qual exemplo é melhor representado por O(n²)?", options: ["Acesso direto por índice", "Busca binária em lista ordenada", "Comparações repetidas em várias passadas", "Uma operação de soma"], correctIndex: 2, explanation: "O bubble sort compara pares em várias passadas, então seu custo cresce quadraticamente." }]} />
+<Quiz questions={[
+  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
+]} />
 
 <Resumo>
-  <li>Recursão precisa de um caso base para interromper a execução.</li>
-  <li>Casos recursivos resolvem problemas menores até chegar à base.</li>
-  <li>Complexidade ajuda a comparar soluções quando a entrada cresce.</li>
-  <li>O(1), O(log n), O(n) e O(n²) são leituras muito importantes de algoritmo.</li>
-  <li>Medir tempo com `time.perf_counter()` é útil, mas a complexidade continua sendo a melhor ferramenta de decisão.</li>
+  <li>Voc? reconheceu a regra central do tema.</li>
+  <li>Voc? validou a l?gica em um caso pequeno.</li>
+  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
+  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
 </Resumo>
 
 <Desafio>
-  Escolha uma função recursiva simple, como fatorial ou soma de 1 a n, e reescreva a mesma lógica em forma iterativa. Compare a clareza e o custo de cada uma.
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
 </Desafio>
+

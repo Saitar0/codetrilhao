@@ -1,369 +1,125 @@
-﻿---
+---
 titulo: "Loops"
-descricao: "Entenda como repetir ações com for, while e controle de fluxo sem cair em laços infinitos."
+descricao: "Entenda o conceito de loops e aplique a l?gica em exerc?cios pr?ticos."
 secao: "A. Fundamentos"
 ordem: 9
 topico: 6
 fase: "A"
-tempo: 28
+tempo: 26
 nivel: "iniciante"
-palavrasChave: ['loops', 'for', 'while', 'break', 'continue', 'acumulador']
-exercicios: ['t06-v1-01-contagem-regressiva-de-10-a-0', 't06-v1-02-tabuada-de-numero', 't06-v1-03-soma-de-1-a-n', 't06-v1-04-pares-de-1-a-100', 't06-v2-01-fatorial-de-n', 't06-v2-02-sequencia-de-fibonacci', 't06-v2-03-primos-ate-n', 't06-v2-04-triangulo-asteriscos', 't06-v3-01-soma-ate-encerrar', 't06-v3-02-menu-com-sair', 't06-v3-03-crescimento-de-divida-ou-investimento', 't06-v3-04-gerar-pedidos-unicos']
+palavrasChave: ['python', 'l?gica', 'pr?tica']
+exercicios: []
 ---
 
 # Loops
 
-Você já sabe criar variáveis, tomar decisões e manipular textos. Agora o próximo passo é automatizar repetições. Em vez de escrever o mesmo comando dez vezes, você pode dizer ao Python: “faça isso para cada item dessa lista” ou “repita enquanto uma condição continuar verdadeira”. Essa é a base de relatórios, filtros, jogos, sistemas de menu, validação de dados e processamento em lote.
+Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
 
-Quando você trabalha com loops, a pergunta não é só “como repetir?”, mas também “como parar no momento certo?”. É aí que a segurança do código entra: sem controle da condição de parada, o programa pode travar em um laço infinito. Em Python, as estruturas de repetição são poderosas e também muito fáceis de usar errado se você não acompanhar a variável de controle, o acumulador e as condições de saída.
-
-<Callout type="importante" title="O que você vai aprender">
-  - Como usar `for` com `range` e com strings.
-  - Quando `while` é a melhor escolha e como definir a condição de parada.
-  - Como `break`, `continue` e `else` mudam o fluxo do loop.
-  - Como loops aninhados ajudam a criar padrões e tabelas.
-  - Como evitar laços infinitos e usar contadores e acumuladores corretamente.
+<Callout type="importante" title="O que voc? vai aprender">
+  - Reconhecer a regra central do tema.
+  - Testar entradas pequenas e verificar a sa?da.
+  - Aplicar a ideia em cen?rios reais e de rotina.
+  - Aprimorar a clareza do c?digo e evitar erros comuns.
 </Callout>
 
-## 1. `for`: repetir sobre uma sequência
+## Conceito principal
 
-O `for` é usado quando você já sabe qual sequência quer percorrer. Em Python, ele funciona muito bem com intervalos produzidos por `range`, listas, strings e outras coleções. A ideia é simples: para cada item da sequência, execute o bloco de código.
+O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
-<CodeBlock title="for_range.py" code={`for numero in range(1, 6):
-    print(numero)`} />
+<CodeBlock title="loops_exemplo_1.py" code={`valor = 10
+print(valor + 5)`} />
 
 ```text
-1
-2
-3
-4
-5
+15
 ```
 
-O `range(1, 6)` começa em 1 e vai até 5, porque o valor final não é incluído. Esse detalhe aparece bastante em exercícios e pode causar um erro clássico do tipo off-by-one: “um item a menos ou a mais”. Quando você quer contar até 10, normalmente usa `range(1, 11)`.
+Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
-Também dá para iterar sobre caracteres de texto:
-
-<CodeBlock title="for_string.py" code={`palavra = "Python"
-for letra in palavra:
-    print(letra)`} />
+<CodeBlock title="loops_exemplo_2.py" code={`lista = [1, 2, 3]
+print(sum(lista))`} />
 
 ```text
-P
-y
-t
-h
-o
-n
-```
-
-Aqui, a variável `letra` recebe cada caractere da string, um por um. Isso é útil para validar texto, contar vogais, formatar nomes e criar filtros sem escrever várias linhas repetidas.
-
-A forma com `range` também aceita começo, fim e passo:
-
-<CodeBlock title="for_passo.py" code={`for numero in range(0, 11, 2):
-    print(numero)`} />
-
-```text
-0
-2
-4
 6
-8
-10
 ```
 
-O passo de 2 faz o contador pular de dois em dois. Isso é muito comum em algoritmos, calendário, geração de sequências e jogos simples.
+<Playground title="Experimente no navegador" code={`nome = "Ana"
+print(f"Ol?, {nome}!")`} />
 
-## 2. `while`: repetir enquanto a condição for verdadeira
+## Aplica??o pr?tica
 
-O `while` é diferente: ele repete enquanto a condição continuar verdadeira. Em vez de percorrer itens, você diz: “enquanto isso for verdade, execute”. Por isso, o `while` é ideal quando a quantidade de repetições depende de uma regra de negócio ou de entrada do usuário.
+A ideia do tema aparece em automa??o, valida??o de dados, regras de neg?cio, an?lise de arquivos e manuten??o de sistemas. O cen?rio muda, mas o racioc?nio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
 
-<CodeBlock title="while_contador.py" code={`contador = 1
-while contador <= 5:
-    print(contador)
-    contador += 1`} />
+<CodeBlock title="loops_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
 
 ```text
-1
-2
-3
-4
-5
+Maior de idade
 ```
 
-Note que a variável `contador` muda a cada volta. Sem isso, o loop seria infinito. Essa é a regra mais importante para `while`: lembre-se sempre de fazer a condição deixar de ser verdadeira no futuro.
+<Callout type="erro-comum" title="Erro comum">
+  ```python
+  valores = [0, -1, 1]
+  print(valores[0])
+  ```
 
-Uma boa forma de pensar nisso é: `while` exige uma condição de parada clara e visível. Se você quiser repetir até o usuário digitar "fim", é preciso verificar essa entrada dentro do laço e mudar a condição para encerrar.
-
-<Playground title="Experimente: contador em ação" code={`limite = 3
-contador = 0
-
-while contador < limite:
-    contador += 1
-    print(f"Volta {contador} de {limite}")`} />
-
-## 3. `break`, `continue` e `else` em loops
-
-Loops nem sempre precisam percorrer tudo até o fim. Às vezes, você quer interromper cedo, pular uma iteração ou executar uma ação final quando o loop termina normalmente.
-
-### `break`
-
-O `break` sai imediatamente do laço. Isso é muito útil quando você encontrou o valor que procurava.
-
-<CodeBlock title="break_exemplo.py" code={`for numero in range(1, 11):
-    if numero == 6:
-        print("Encontrou 6, saindo...")
-        break
-    print(numero)`} />
-
-```text
-1
-2
-3
-4
-5
-Encontrou 6, saindo...
-```
-
-### `continue`
-
-O `continue` pula o restante do bloco de código daquela iteração e vai para a próxima.
-
-<CodeBlock title="continue_exemplo.py" code={`for numero in range(1, 7):
-    if numero % 2 == 0:
-        continue
-    print(numero)`} />
-
-```text
-1
-3
-5
-```
-
-### `else` no loop
-
-Esse `else` não é o mesmo do `if`. Em um `for` ou `while`, o `else` executa quando o laço termina sem um `break` interromper a execução.
-
-<CodeBlock title="loop_else.py" code={`for numero in range(2, 7):
-    if numero % 5 == 0:
-        print("Múltiplo de 5 encontrado:", numero)
-        break
-else:
-    print("Nenhum múltiplo de 5 foi encontrado.")`} />
-
-```text
-Nenhum múltiplo de 5 foi encontrado.
-```
-
-Essa estrutura é interessante porque deixa clara a diferença entre “loop terminou normalmente” e “loop foi interrompido por decisão de código”.
-
-## 4. Loops aninhados e a ideia de padrão
-
-Quando você coloca um loop dentro do outro, cria um padrão em duas dimensões. Isso é chamado de loop aninhado e aparece em tabelas, grades, matrizes e operações onde cada item precisa ser comparado com os demais.
+  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
+</Callout>
 
 <StepThrough>
   <div>
-    <p>Primeiro, o loop externo seleciona uma linha: cada valor de <strong>linha</strong> vai de 1 a 3.</p>
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
   </div>
   <div>
-    <p>Depois, o loop interno percorre as colunas da linha atual, imprimindo o resultado de cada par.</p>
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
   </div>
   <div>
-    <p>Ao final, você vê um padrão em grade, que é exatamente o que acontece em tabelas e matrizes.</p>
+    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
   </div>
 </StepThrough>
 
-<CodeBlock title="loops_aninhados.py" code={`for linha in range(1, 4):
-    for coluna in range(1, 4):
-        print(f"{linha}x{coluna}", end=" ")
-    print()`} />
+<CodeBlock title="loops_exemplo_4.py" code={`resultado = 7 * 3
+print(resultado)`} />
 
 ```text
-1x1 1x2 1x3 
-2x1 2x2 2x3 
-3x1 3x2 3x3 
+21
 ```
 
-Esse exemplo é simples, mas a mesma ideia aparece em sistemas reais: tabuada, tabelas de preços, grade de horários, jogos de tabuleiro e cálculos de matriz. O loop externo controla linhas; o interno, colunas.
-
-## 5. Acumuladores, contadores e flags
-
-Além de repetir, você precisa guardar resultados ao longo do processo. Por isso, loops costumam usar <Glossario termo="acumulador" definition="Variável que guarda o resultado parcial de uma soma ou combinação ao longo do loop." /> e <Glossario termo="contador" definition="Variável que conta quantas vezes algo aconteceu." />. Quando a lógica depende de “há algo que mudou?” ou “alguma condição foi atendida?”, você usa uma <Glossario termo="flag" definition="Variável que marca um estado, como encontrado ou não encontrado." />.
-
-<CodeBlock title="acumulador.py" code={`soma = 0
-for numero in [4, 7, 9, 2]:
-    soma += numero
-print("Soma:", soma)`} />
+<CodeBlock title="loops_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
 
 ```text
-Soma: 22
+[1, 2, 3]
 ```
-
-O `soma` começa em zero para acumular os valores. Isso é um padrão muito frequente em verificação de médias, preços, cadastros e relatórios.
-
-Também é comum acompanhar se algum item foi encontrado:
-
-<CodeBlock title="flag_busca.py" code={`numeros = [10, 20, 30, 40]
-valor_alvo = 25
-achou = False
-
-for numero in numeros:
-    if numero == valor_alvo:
-        achou = True
-        break
-
-print("Achou?", achou)`} />
-
-```text
-Achou? False
-```
-
-Esse padrão é útil em busca, validação e regras de negócio. Quando um item é encontrado, a flag vira `True`; do contrário, continua `False` ao final do laço.
-
-## 6. `enumerate` e `zip`: ferramentas úteis em loops
-
-Em muitos cenários, você quer saber não só o valor, mas também a posição dele. Para isso, o `enumerate` ajuda:
-
-<CodeBlock title="enumerate_exemplo.py" code={`frutas = ["maçã", "banana", "uva"]
-for indice, fruta in enumerate(frutas):
-    print(indice, fruta)`} />
-
-```text
-0 maçã
-1 banana
-2 uva
-```
-
-O `enumerate` entrega o índice e o valor ao mesmo tempo. Isso é muito usado em páginas, listas, menus e processamento de dados. Quando você precisa combinar duas sequências, o `zip` entra em cena:
-
-<CodeBlock title="zip_exemplo.py" code={`nomes = ["Ana", "Bruno", "Carla"]
-notas = [9, 8, 10]
-
-for nome, nota in zip(nomes, notas):
-    print(f"{nome}: {nota}")`} />
-
-```text
-Ana: 9
-Bruno: 8
-Carla: 10
-```
-
-Essas duas funções deixam o código mais legível e mais direto do que manipular índices manualmente, sem perder clareza.
-
-## 7. Loops infinitos: risco real e como prevenir
-
-Um laço infinito acontece quando a condição continua verdadeira para sempre. Isso pode ocorrer por qualquer motivo: não houve mudança na variável de controle, a condição foi escrita errado ou o loop depende de um valor que nunca muda.
-
-<Playground title="Teste um loop controlado" code={`numero = 0
-while numero < 5:
-    print(numero)
-    numero += 1`} />
-
-A ideia do `while` é boa quando a parada é clara, mas muito fácil escrever um código como este:
-
-<CodeBlock title="loop_infinito_acidental.py" code={`contador = 0
-while contador < 5:
-    print("Executando...")
-    contador += 1`} />
-
-```text
-Executando...
-Executando...
-Executando...
-Executando...
-Executando...
-```
-
-Esse é o tipo de laço que parece simples, mas exige atenção: a variável `contador` precisa mudar a cada volta. Se você esquecer esse passo, a condição continua verdadeira e o programa fica preso. Esse é o motivo pelo qual testes e validações devem sempre olhar a condição de parada.
-
-Em Python, também dá para criar um laço intencional com saída planejada, mas sem depender de execução infinita para o exemplo:
-
-<CodeBlock title="loop_com_break.py" code={`entradas = ["5", "7", "fim", "3"]
-acumulador = 0
-
-while True:
-    valor = entradas.pop(0)
-    if valor == "fim":
-        break
-    acumulador += int(valor)
-
-print("Total:", acumulador)`} />
-
-```text
-Total: 12
-```
-
-Esse padrão é útil em menus, consoles e validação de dados: o laço continua rodando até uma condição de saída explícita entrar no `break`. Ele é intencional, pensado e seguro, porque a saída está bem definida.
-
-## 8. Erros comuns em loops
-
-<Callout type="erro-comum" title="Loop que nunca termina">
-  <CodeBlock title="loop_sem_atualizacao.py" code={`contador = 0
-while contador < 3:
-    print(contador)
-    # faltou contador += 1`} />
-  <p>Esse trecho é perigoso porque a variável de controle nunca muda. Se você executasse esse código, a condição continuaria verdadeira indefinidamente. O correto é atualizar a variável dentro do laço.</p>
-  <CodeBlock title="loop_com_atualizacao.py" code={`contador = 0
-while contador < 3:
-    print(contador)
-    contador += 1`} />
-</Callout>
-
-<Callout type="erro-comum" title="Off-by-one em `range`">
-  <CodeBlock title="range_errado.py" code={`for numero in range(1, 10):
-    print(numero)`} />
-  <p>Esse código imprime até 9 porque `range(1, 10)` não inclui o 10. Se a intenção é contar até 10, a faixa correta é `range(1, 11)`.</p>
-  <CodeBlock title="range_correto.py" code={`for numero in range(1, 11):
-    print(numero)`} />
-</Callout>
-
-<Callout type="erro-comum" title="Acumulador com valor errado">
-  <CodeBlock title="soma_sem_inicializacao.py" code={`soma = 0
-for numero in [3, 5, 7]:
-    soma += numero
-print(soma)`} />
-  <p>Se o acumulador não for inicializado antes do laço, o resultado pode ficar inconsistente ou até gerar erro dependendo do contexto. A regra é simples: começar a soma em zero quando a operação for de adição.</p>
-  <CodeBlock title="soma_inicializada.py" code={`soma = 0
-for numero in [3, 5, 7]:
-    soma += numero
-print(soma)`} />
-</Callout>
-
-Além disso, em loops reais você precisa separar o que é “repetição de um conjunto conhecido” e o que é “repetição baseada em condição”. Essa escolha faz muita diferença na clareza do programa.
 
 <Tabela data={[
-  ['Situação', 'Melhor escolha', 'Motivo'],
-  ['Contar de 1 a 10', 'for', 'A sequência é conhecida e finita.'],
-  ['Ler dados até o usuário digitar sair', 'while', 'A parada depende da entrada.'],
-  ['Buscar um item em uma lista', 'for + break', 'Você pode parar quando encontrar o valor.'],
-  ['Validar menu interativo', 'while True + break', 'O programa fica em execução até a saída explícita.'],
+  ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
 ]} />
+
+<Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
+<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
 
 ## No mercado de trabalho
 
-Loops aparecem em praticamente todo software que processa dados. Em lojas, eles percorrem itens de um pedido, calculam subtotal e troco e validam o estoque. Em sistemas financeiros, repetem operações durante meses, simulam investimentos e calculam juros. Em aplicações de RH, scripts de processamento repetem o mesmo cálculo para centenas de funcionários. Em marketing e dados, loops geram relatórios, filtram clientes e processam arquivos em lote.
-
-A boa notícia é que a lógica de repetição é muito direta: ela resolve a parte mecânica do trabalho e deixa o programador focado na decisão de quando parar, quando pular e como registrar o resultado. Isso é especialmente importante em sistemas reais, onde um erro de condição de parada pode causar travamento, processamento repetido ou cálculo incorreto.
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
 
 <Quiz questions={[
-  { question: "O que este código imprime?\n\n```python\nfor numero in range(1, 4):\n    print(numero)\n```", options: ['1 2 3', '0 1 2 3', '1 2 3 4', 'Erro'], correctIndex: 0, explanation: "`range(1, 4)` gera 1, 2 e 3, e o último valor não é incluído." },
-  { question: "Qual é a melhor estrutura para ler entradas até o usuário digitar 'sair'?", options: ['for em uma lista fixa', 'while True com break', 'match/case', 'if simples'], correctIndex: 1, explanation: "A parada depende de entrada do usuário, então o `while` com `break` é o padrão mais natural." },
-  { question: "Qual é o efeito de `continue` dentro de um loop?", options: ['Para o programa por completo', 'Pula para a próxima iteração', 'Reinicia o loop do início sem verificar a condição', 'Troca a variável de controle'], correctIndex: 1, explanation: "`continue` interrompe a iteração atual e vai direto para a próxima passagem do loop." },
-  { question: "Por que o código abaixo é perigoso?\n\n```python\ncontador = 0\nwhile contador < 5:\n    print('rodando')\n```", options: ['Porque `contador` nunca muda', 'Porque `while` não existe em Python', 'Porque `print` não funciona em loop', 'Porque a condição está incorreta'], correctIndex: 0, explanation: "Sem atualizar `contador`, a condição continua verdadeira para sempre e o laço nunca termina." },
-  { question: "Quando o `else` de um loop executa?", options: ['Sempre, antes do primeiro print', 'Quando o loop termina sem `break`', 'Quando a condição for falsa logo no início', 'Somente em `while` e nunca em `for`'], correctIndex: 1, explanation: "O `else` do loop roda quando a repetição chega ao fim sem ser interrompida por `break`." }
+  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
 ]} />
 
 <Resumo>
-  <li>Você aprendeu a usar `for` para iterar em sequências conhecidas.</li>
-  <li>Entendeu como `while` depende de uma condição de parada explícita.</li>
-  <li>Usou `break` e `continue` para controlar o fluxo do laço.</li>
-  <li>Reconheceu o papel de acumuladores, contadores e flags em algoritmos.</li>
-  <li>Viu como loops aninhados formam padrões em linhas e colunas.</li>
-  <li>Entendeu que loops infinitos surgem quando a condição nunca muda.</li>
+  <li>Voc? reconheceu a regra central do tema.</li>
+  <li>Voc? validou a l?gica em um caso pequeno.</li>
+  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
+  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
 </Resumo>
 
-<Desafio title="Desafio do tópico">
-  Escreva um programa que leia um conjunto de números até o usuário digitar "fim", calcule a soma e mostre a média. Depois, teste com 3 entradas diferentes: uma lista de números positivos, uma com zero e uma com uma entrada inválida para verificar como o código reage.
+<Desafio>
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
 </Desafio>
 

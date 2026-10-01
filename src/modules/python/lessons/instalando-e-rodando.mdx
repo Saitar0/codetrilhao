@@ -1,166 +1,125 @@
 ---
 titulo: "Instalando e rodando Python"
-descricao: "Veja como instalar Python, abrir o terminal e executar o seu primeiro programa no computador."
+descricao: "Entenda o conceito de instalando e rodando python e aplique a l?gica em exerc?cios pr?ticos."
 secao: "A. Fundamentos"
 ordem: 2
 topico: 1
 fase: "A"
-tempo: 20
+tempo: 19
 nivel: "iniciante"
-palavrasChave: ['python', 'instalação', 'terminal', 'vscode', 'repl']
+palavrasChave: ['python', 'l?gica', 'pr?tica']
 exercicios: []
 ---
 
 # Instalando e rodando Python
 
-A etapa mais prática de qualquer linguagem começa quando você consegue escrever um código e executá-lo. Em Python, isso costuma ser simples: instalar o interpretador, abrir o terminal e rodar um arquivo com comandos. Esse processo é o primeiro passo para transformar o conhecimento em algo real.
+Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
 
-<Callout type="importante" title="O que você vai aprender">
-  - Como verificar se Python está instalado.
-  - Como abrir o terminal e executar um script.
-  - Como usar o VS Code para escrever e rodar arquivos.
-  - Como entender a diferença entre terminal e REPL.
+<Callout type="importante" title="O que voc? vai aprender">
+  - Reconhecer a regra central do tema.
+  - Testar entradas pequenas e verificar a sa?da.
+  - Aplicar a ideia em cen?rios reais e de rotina.
+  - Aprimorar a clareza do c?digo e evitar erros comuns.
 </Callout>
 
-## 1. Instalando Python
+## Conceito principal
 
-Primeiro, você precisa ter o Python instalado no computador. Em muitos sistemas, a instalação é bem direta, e o processo principal é o mesmo: baixar o instalador oficial, seguir os passos e confirmar que o programa foi instalado corretamente.
+O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
-No terminal, o primeiro teste costuma ser:
-
-<CodeBlock title="terminal" code={`python --version`} />
-
-Se estiver tudo certo, o terminal deve mostrar algo como:
+<CodeBlock title="instalando-e-rodando_exemplo_1.py" code={`valor = 10
+print(valor + 5)`} />
 
 ```text
-Python 3.11.9
+15
 ```
 
-Esse comando pergunta: "Qual versão do Python está disponível no seu computador?" Se aparecer um número como `3.11.x`, você já está pronto para começar.
+Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
-<Callout type="atencao" title="Se o comando não funcionar">
-  Em alguns computadores, o comando é `python3` em vez de `python`. Isso é comum em Linux e macOS. Se `python --version` falhar, teste `python3 --version`.
+<CodeBlock title="instalando-e-rodando_exemplo_2.py" code={`lista = [1, 2, 3]
+print(sum(lista))`} />
+
+```text
+6
+```
+
+<Playground title="Experimente no navegador" code={`nome = "Ana"
+print(f"Ol?, {nome}!")`} />
+
+## Aplica??o pr?tica
+
+A ideia do tema aparece em automa??o, valida??o de dados, regras de neg?cio, an?lise de arquivos e manuten??o de sistemas. O cen?rio muda, mas o racioc?nio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
+
+<CodeBlock title="instalando-e-rodando_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
+
+```text
+Maior de idade
+```
+
+<Callout type="erro-comum" title="Erro comum">
+  ```python
+  valores = [0, -1, 1]
+  print(valores[0])
+  ```
+
+  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
 </Callout>
-
-## 2. Rodando um script em arquivo
-
-Depois de instalar, você escreve o código em um arquivo com extensão `.py` e roda esse arquivo a partir do terminal.
-
-Vamos usar um exemplo simples:
-
-<CodeBlock title="hello.py" code={`print("Olá, CodeTrilha!")`} />
-
-Agora, no terminal, o comando é:
-
-<CodeBlock title="terminal" code={`python hello.py`} />
-
-Saída ilustrativa:
-
-```text
-Olá, CodeTrilha!
-```
-
-Esse padrão é o mais importante do começo: você cria um arquivo, manda o Python executá-lo e observa a saída. Essa rotina se repete em quase toda a programação prática.
-
-## 3. Rodando no VS Code
-
-O VS Code é um editor muito útil para programar em Python porque ele mostra o código de forma organizada, ajuda a identificar erros e facilita abrir o terminal ao lado do arquivo. Em geral, o fluxo é:
 
 <StepThrough>
   <div>
-    <strong>Passo 1: criar o arquivo</strong>
-    <p>Crie um arquivo com o nome, por exemplo, <code>bem_vindo.py</code>.</p>
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
   </div>
   <div>
-    <strong>Passo 2: escrever o código</strong>
-    <p>Digite o comando <code>print("Bem-vindo ao Python!")</code>.</p>
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
   </div>
   <div>
-    <strong>Passo 3: abrir o terminal</strong>
-    <p>Use o terminal do editor e execute: <code>python bem_vindo.py</code>.</p>
-  </div>
-  <div>
-    <strong>Passo 4: conferir a saída</strong>
-    <p>Você verá o resultado no terminal e saberá se o programa funcionou.</p>
+    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
   </div>
 </StepThrough>
 
-Essa sequência é uma rotina simples, mas essencial. É assim que você vai testar quase todos os exercícios da trilha.
-
-## 4. REPL: modo interativo
-
-Além de rodar arquivos, Python também pode ser usado em modo interativo. Isso é chamado de <Glossario termo="REPL" definition="Ambiente em que você digita comandos e o Python executa imediatamente." />.
-
-No terminal, você pode digitar:
-
-<CodeBlock title="terminal" code={`python`} />
-
-Depois disso, a interface muda e você pode testar expressões diretamente:
+<CodeBlock title="instalando-e-rodando_exemplo_4.py" code={`resultado = 7 * 3
+print(resultado)`} />
 
 ```text
->>> print("Oi!")
-Oi!
->>> 2 + 3
-5
+21
 ```
 
-Esse ambiente é ótimo para aprender rapidamente, testar uma ideia ou checar o que uma expressão retorna. Por exemplo, se você quer saber o resultado de `10 / 2`, o REPL responde de imediato.
-
-## 5. Como pensar no fluxo de execução
-
-Um programa Python não precisa ser complexo para ensinar muito. Um script simples já introduz os passos fundamentais:
-
-- você escreve um comando;
-- o interpretador lê esse comando;
-- a instrução produz um efeito;
-- a saída aparece no terminal.
-
-Isso parece básico, mas é a base de tudo que vem depois: condicionais, loops, funções, listas e muito mais. Sem entender esse fluxo, fica difícil construir programas mais sofisticados.
-
-<CodeBlock title="fluxo.py" code={`nome = "Lia"
-print("Olá,", nome)`} />
-
-Saída ilustrativa:
+<CodeBlock title="instalando-e-rodando_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
 
 ```text
-Olá, Lia
+[1, 2, 3]
 ```
 
-Aqui, a variável `nome` guarda uma informação; depois, o `print` usa essa informação e mostra no terminal. Esse é um dos primeiros exemplos de como o código transforma dados em resultado.
+<Tabela data={[
+  ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
+]} />
+
+<Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
+<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
 
 ## No mercado de trabalho
 
-Em ambiente profissional, instalar e rodar o Python corretamente é quase o primeiro passo de qualquer tarefa de desenvolvimento. Seja em automação, análise de dados, inteligência artificial, scripts de servidores, ou ferramentas internas, a pessoa precisa conseguir abrir um terminal, rodar um script e interpretar a saída.
-
-É uma habilidade fundamental, até mesmo para quem trabalha com infraestrutura, dados ou suporte técnico. Quando a pessoa entende esse fluxo, ela consegue investigar problemas, testar ideias e validar soluções com muita mais autonomia.
-
-<Tabela data={[
-  ['Situação', 'Como Python ajuda'],
-  ['Automação', 'Executa tarefas repetitivas e reduz tempo manual'],
-  ['Web', 'Cria APIs e páginas dinâmicas'],
-  ['Dados', 'Leitura, transformação e relatórios'],
-  ['IA', 'Processamento de dados e treinamento de modelos']
-]} />
-
-<Glossario termo="Terminal" definition="Janela de texto onde você digita comandos para o sistema ou para o Python." />
-<Glossario termo="Script" definition="Arquivo com código que pode ser executado de forma repetida." />
-<Glossario termo="Versão" definition="Número que indica a build do Python instalada no computador." />
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
 
 <Quiz questions={[
-  { question: "Qual comando verifica a versão do Python instalada?", options: ["run python", "python --version", "print(version)", "python install"], correctIndex: 1, explanation: "O comando `python --version` mostra a versão do Python disponível no sistema." },
-  { question: "O que é o arquivo `.py`?", options: ["Uma imagem do Python", "Um arquivo de código Python", "Um documento de texto sem lógica", "Uma pasta de configurações"], correctIndex: 1, explanation: "Arquivos `.py` contêm código Python que pode ser executado." },
-  { question: "Qual a diferença principal entre escrever um script e usar o REPL?", options: ["O REPL executa sempre em navegador", "O script salva instruções em um arquivo e o REPL executa imediatamente", "O script não pode mostrar algo na tela", "Não há diferença"], correctIndex: 1, explanation: "O REPL executa comandos instantaneamente; um script preserva a lógica em um arquivo para rodar depois." }
+  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
 ]} />
 
 <Resumo>
-  <li>Python precisa ser instalado e acessível por linha de comando.</li>
-  <li>Você roda scripts com `python nome_do_arquivo.py`.</li>
-  <li>O VS Code facilita a escrita e a execução do código.</li>
-  <li>O REPL permite testar comandos rapidamente.</li>
-  <li>Entender esse fluxo é a base de tudo o que vem depois.</li>
+  <li>Voc? reconheceu a regra central do tema.</li>
+  <li>Voc? validou a l?gica em um caso pequeno.</li>
+  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
+  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
 </Resumo>
 
 <Desafio>
-  Instale ou confirme o Python no seu computador, crie um arquivo com `print("Meu primeiro programa")` e execute esse arquivo no terminal. Depois, repita o mesmo passo usando o REPL para testar uma operação simples como `2 + 2`.
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
 </Desafio>
 

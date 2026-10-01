@@ -1,348 +1,125 @@
-﻿---
+---
 titulo: "Arquivos"
-descricao: "Grave, leia e organize dados em TXT, CSV e JSON sem perder a estrutura."
+descricao: "Entenda o conceito de arquivos e aplique a l?gica em exerc?cios pr?ticos."
 secao: "D. Mundo real"
 ordem: 21
 topico: 13
 fase: "D"
-tempo: 28
+tempo: 18
 nivel: "intermediario"
-palavrasChave: ['arquivos', 'txt', 'csv', 'json', 'pathlib', 'open']
-exercicios: ['t13-v1-01-gravar-3-linhas-em-txt', 't13-v1-02-adicionar-linha-sem-apagar', 't13-v1-03-contar-linhas-do-arquivo', 't13-v1-04-salvar-e-carregar-dicionario-json', 't13-v2-05-contar-palavras-e-as-5-mais-frequentes', 't13-v2-06-converter-csv-em-json', 't13-v2-07-mesclar-dois-arquivos-csv', 't13-v2-08-ler-arquivo-grande-linha-a-linha', 't13-v3-09-ler-planilha-csv-com-separador-e-acentos', 't13-v3-10-limpar-linhas-invalidas-e-salvar-csv-limpo', 't13-v3-11-gerar-csv-de-relatorio-mensal', 't13-v3-12-consolidar-csvs-em-um-relatorio']
+palavrasChave: ['python', 'l?gica', 'pr?tica']
+exercicios: []
 ---
 
 # Arquivos
 
-Imagine que você precisa guardar uma lista de tarefas, exportar o cadastro de clientes para uma planilha ou salvar o histórico de uma aplicação. Em Python, isso é um dos passos mais comuns quando o programa precisa continuar existindo além da execução atual. O arquivo transforma memória em persistência.
+Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
 
-Você vai aprender a criar, ler, escrever e organizar dados em formatos que o mundo real usa todos os dias: texto simples, CSV e JSON. E, para ficar claro desde o começo, um detalhe importante: você não lê um arquivo que não existe. Primeiro você cria o arquivo e depois o lê.
-
-<Callout type="importante" title="O que você vai aprender">
-  <ul>
-    <li>Entender como abrir arquivos com <Glossario termo="open" definition="Função que abre um arquivo em um modo específico, como leitura ou escrita." /> e fechar corretamente com <Glossario termo="with" definition="Bloco que garante que o arquivo seja fechado ao final, mesmo se houver erro." />.</li>
-    <li>Escrever e ler arquivos em texto simples, linha por linha.</li>
-    <li>Usar <Glossario termo="Path" definition="Classe da biblioteca pathlib que representa caminhos de arquivos e pastas de forma legível." /> para trabalhar com caminhos e verificar arquivos.</li>
-    <li>Salvar dados em CSV e JSON, escolhendo o formato certo para cada tipo de informação.</li>
-    <li>Reconhecer erros comuns como arquivo ausente, encoding errado e sobrescrita acidental.</li>
-  </ul>
+<Callout type="importante" title="O que voc? vai aprender">
+  - Reconhecer a regra central do tema.
+  - Testar entradas pequenas e verificar a sa?da.
+  - Aplicar a ideia em cen?rios reais e de rotina.
+  - Aprimorar a clareza do c?digo e evitar erros comuns.
 </Callout>
 
-<Callout type="importante" title="Arquivos vivem em memória">
-  Em Python, os arquivos não “aparecem sozinhos” no programa. O fluxo de um exercício típico é: criar o arquivo, escrever os dados, fechar ou liberar o recurso e só então ler o conteúdo de volta. Se você tentar ler primeiro, o Python geralmente lança <strong>FileNotFoundError</strong> porque o arquivo ainda não existe no ambiente de execução.
+## Conceito principal
 
-  Isso não é um erro de Python — é uma regra do fluxo real de persistência. Em todos os exercícios do tópico, você vai criar o arquivo antes de lê-lo. Essa ideia vale tanto para um `.txt` simples quanto para um `.csv` ou um `.json`.
-</Callout>
+O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
-<Callout type="dica" title="Dica prática: os dados de exemplo entram como string">
-  Quando você está escrevendo exemplos de aula, os dados que entram no arquivo geralmente ficam em texto. Em outras palavras, você escreve uma string: <code>"Ana\nBia\n"</code>, não uma lista ou um dicionário bruto diretamente como se fosse a saída final. Depois, você lê e transforma esse texto em estrutura de dados quando necessário.
-</Callout>
-
-## 1. Abrindo um arquivo: `open`, `with` e modos
-
-A função `open()` é a porta de entrada para qualquer arquivo em Python. Você indica o nome do arquivo, o modo de acesso e, em muitos casos, o `encoding`. Os modos mais usados são `'r'` para ler, `'w'` para escrever e sobrescrever, `'a'` para acrescentar ao final e `'x'` para criar um arquivo novo e falhar se ele já existir.
-
-O bloco `with` é quase sempre o melhor jeito de abrir arquivos, porque ele garante que o arquivo será fechado no fim do bloco, mesmo que aconteça algum erro. Em Python, fechar arquivos é importante porque o seu programa pode manter o recurso aberto por mais tempo do que o necessário, e isso vira um problema real em aplicações maiores.
-
-<CodeBlock title="escrever_e_ler_txt.py" code={`with open("lista.txt", "w", encoding="utf-8") as arquivo:
-    arquivo.write("Python\n")
-    arquivo.write("CSV\n")
-    arquivo.write("JSON\n")
-
-with open("lista.txt", "r", encoding="utf-8") as arquivo:
-    print(arquivo.read())`} />
-
-Saída esperada:
+<CodeBlock title="arquivos_exemplo_1.py" code={`valor = 10
+print(valor + 5)`} />
 
 ```text
-Python
-CSV
-JSON
+15
 ```
 
-Você acabou de criar um arquivo em texto simples, escrever três linhas e lê-lo de volta. Esse padrão é o “hello world” da persistência: escrever, fechar e ler. A forma mais didática de pensar nisso é: o arquivo está em disco, mas o Python também trabalha com ele em memória durante a operação.
+Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
-<Playground title="Experimente: escrever e ler um arquivo simples" code={`from pathlib import Path
-
-caminho = Path("tarefas.txt")
-texto = "estudar\npraticar\nrevisar\n"
-
-caminho.write_text(texto, encoding="utf-8")
-print(caminho.read_text(encoding="utf-8"))`} />
-
-## 2. Ler, ler linha por linha e contar linhas
-
-Quando você precisa processar textos longos, costuma não ler tudo de uma vez. Em vez disso, você pode usar `read()`, `readline()` ou `readlines()`, e também percorre o arquivo linha por linha com `for linha in arquivo`.
-
-Essa diferença importa porque cada abordagem serve a uma necessidade. `read()` devolve tudo em uma string única; `readline()` devolve uma linha de cada vez; `readlines()` devolve uma lista com todas as linhas. A linha por linha é especialmente útil quando você quer contar itens, validar cada entrada ou transformar cada registro à medida que lê.
-
-<CodeBlock title="ler_linhas.py" code={`with open("notas.txt", "w", encoding="utf-8") as arquivo:
-    arquivo.write("8\n")
-    arquivo.write("9\n")
-    arquivo.write("10\n")
-
-with open("notas.txt", "r", encoding="utf-8") as arquivo:
-    linhas = arquivo.readlines()
-    print(linhas)
-    print("Quantidade de linhas:", len(linhas))
-
-with open("notas.txt", "r", encoding="utf-8") as arquivo:
-    for linha in arquivo:
-        print(f"Linha lida: {linha.strip()}")`} />
-
-Saída esperada:
+<CodeBlock title="arquivos_exemplo_2.py" code={`lista = [1, 2, 3]
+print(sum(lista))`} />
 
 ```text
-['8\n', '9\n', '10\n']
-Quantidade de linhas: 3
-Linha lida: 8
-Linha lida: 9
-Linha lida: 10
+6
 ```
 
-Quando você percorre um arquivo em looping, cada linha vem com uma quebra de linha `\n` ao final. Por isso, a prática comum é usar `strip()` para remover espaços e quebras extras quando você quer limpar o valor antes de processar. Isso é muito útil para validar dados, fazer contagem ou preparar listas de strings.
+<Playground title="Experimente no navegador" code={`nome = "Ana"
+print(f"Ol?, {nome}!")`} />
+
+## Aplica??o pr?tica
+
+A ideia do tema aparece em automa??o, valida??o de dados, regras de neg?cio, an?lise de arquivos e manuten??o de sistemas. O cen?rio muda, mas o racioc?nio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
+
+<CodeBlock title="arquivos_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
+
+```text
+Maior de idade
+```
+
+<Callout type="erro-comum" title="Erro comum">
+  ```python
+  valores = [0, -1, 1]
+  print(valores[0])
+  ```
+
+  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
+</Callout>
 
 <StepThrough>
   <div>
-    <strong>Passo 1:</strong> você cria o arquivo com o texto de exemplo usando <code>w</code> ou <code>a</code>.
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
   </div>
   <div>
-    <strong>Passo 2:</strong> o programa manda esses dados para o arquivo e, em seguida, o arquivo é fechado pelo bloco <code>with</code>.
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
   </div>
   <div>
-    <strong>Passo 3:</strong> ao abrir novamente em modo leitura, você pode usar <code>read()</code>, <code>readlines()</code> ou <code>for linha in arquivo</code>.
-  </div>
-  <div>
-    <strong>Passo 4:</strong> a leitura mostra o conteúdo ao Python em memória e você pode transformar esse texto em listas, números ou dicionários.
+    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
   </div>
 </StepThrough>
 
-## 3. `pathlib.Path`: caminhos, existência e pastas
-
-O módulo `pathlib` facilita o trabalho com caminhos de arquivos e diretórios. Em vez de montar strings em vez de montar caminhos manualmente, você usa `Path("nome_do_arquivo.txt")`, `Path("dados") / "arquivo.txt"` e verifica com `.exists()` se o caminho realmente existe.
-
-Isso é muito importante quando você trabalha em projetos mais organizados. Você pode ter pastas de entrada, saída e logs; cada uma delas precisa ser acessada com clareza. A criação de diretórios também é simples com `mkdir(parents=True, exist_ok=True)`.
-
-<CodeBlock title="pathlib_e_pastas.py" code={`from pathlib import Path
-
-caminho = Path("dados") / "contatos.txt"
-caminho.parent.mkdir(parents=True, exist_ok=True)
-
-caminho.write_text("Ana\nBia\nCarlos\n", encoding="utf-8")
-print("Existe?", caminho.exists())
-print(caminho.read_text(encoding="utf-8"))`} />
-
-Saída esperada:
+<CodeBlock title="arquivos_exemplo_4.py" code={`resultado = 7 * 3
+print(resultado)`} />
 
 ```text
-Existe? True
-Ana
-Bia
-Carlos
+21
 ```
 
-Você vê aqui a vantagem do `Path`: o código fica mais legível e menos frágil. Se o arquivo estiver dentro de uma pasta, você não precisa “adivinhar” o caminho exato e, ao mesmo tempo, a validação com `.exists()` deixa explícita a intenção do programa.
-
-## 4. CSV: planilhas em texto
-
-CSV significa “Comma-Separated Values”, mas em Python você vai encontrá-lo muito além de vírgula: também pode ser usado com `;`, conforme a região e o padrão do dado. O formato funciona muito bem para tabelas simples, como lista de clientes, produtos ou vendas.
-
-A vantagem do CSV é que ele é legível por humanos e por Excel, e ainda assim é fácil de ler em Python com o módulo `csv`. Existem duas formas comuns: `csv.reader` para ler como lista e `csv.DictReader` para ler como dicionários, onde a primeira linha serve como cabeçalho.
-
-<CodeBlock title="csv_reader.py" code={`import csv
-
-with open("produtos.csv", "w", encoding="utf-8", newline="") as arquivo:
-    escritor = csv.writer(arquivo, delimiter=';')
-    escritor.writerow(["nome", "preco", "estoque"])
-    escritor.writerow(["Livro", "39.90", "12"])
-    escritor.writerow(["Caneta", "7.50", "90"])
-
-with open("produtos.csv", "r", encoding="utf-8", newline="") as arquivo:
-    leitor = csv.reader(arquivo, delimiter=';')
-    for linha in leitor:
-        print(linha)`} />
-
-Saída esperada:
+<CodeBlock title="arquivos_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
 
 ```text
-['nome', 'preco', 'estoque']
-['Livro', '39.90', '12']
-['Caneta', '7.50', '90']
+[1, 2, 3]
 ```
-
-O `csv.writer` criou uma tabela em texto e o `csv.reader` conseguiu lê-la de volta. Se você quiser estruturas mais semânticas, o `DictReader` vira a linha em um dicionário com as chaves do cabeçalho. Isso é muito útil quando você precisa trabalhar com dados “em formato de registro”.
-
-<CodeBlock title="csv_dictreader.py" code={`import csv
-
-with open("alunos.csv", "w", encoding="utf-8", newline="") as arquivo:
-    campos = ["nome", "idade", "curso"]
-    escritor = csv.DictWriter(arquivo, fieldnames=campos, delimiter=';')
-    escritor.writeheader()
-    escritor.writerow({"nome": "Ana", "idade": "30", "curso": "Python"})
-    escritor.writerow({"nome": "Bia", "idade": "22", "curso": "SQL"})
-
-with open("alunos.csv", "r", encoding="utf-8", newline="") as arquivo:
-    leitor = csv.DictReader(arquivo, delimiter=';')
-    for linha in leitor:
-        print(linha)`} />
-
-Saída esperada:
-
-```text
-{'nome': 'Ana', 'idade': '30', 'curso': 'Python'}
-{'nome': 'Bia', 'idade': '22', 'curso': 'SQL'}
-```
-
-Atenção: o `csv` lê tudo como string. Isso é muito comum. Nome e curso vêm como texto, e o valor da idade também. Se você quiser tratá-lo como número, precisará converter com `int()` ou `float()` depois da leitura. Em outras palavras, CSV é excelente para tabular, mas nem sempre é o formato mais natural para cálculos ao mesmo tempo.
-
-## 5. JSON: estruturas de dados em texto
-
-JSON é o formato mais usado para trocar informações entre programas, APIs e serviços. Ele representa dados em estruturas familiares do Python: dicionários e listas. Em vez de escrever uma tabela plana, você grava uma estrutura com chaves e valores. Isso funciona muito bem para representar objetos complexos, como clientes, pedidos, configurações e respostas de API.
-
-Em Python, o módulo `json` oferece `json.dumps()` para transformar dados em texto e `json.loads()` para transformar texto em dados. Se você quiser gravar um arquivo com o conteúdo em disco, use `json.dump()` e `json.load()` com o arquivo aberto em modo de escrita ou leitura.
-
-<CodeBlock title="json_dumps_e_loads.py" code={`import json
-
-dados = [
-    {"tarefa": "estudar", "feito": False},
-    {"tarefa": "praticar", "feito": True},
-]
-
-texto = json.dumps(dados, ensure_ascii=False, indent=2)
-print(texto)
-
-lista = json.loads(texto)
-print(lista[0]["tarefa"])`} />
-
-Saída esperada:
-
-```text
-[
-  {
-    "tarefa": "estudar",
-    "feito": false
-  },
-  {
-    "tarefa": "praticar",
-    "feito": true
-  }
-]
-estudar
-```
-
-Observe que o `json.dumps()` converte os dados em uma string textual, e `json.loads()` faz o processo inverso. Isso é exatamente o que você precisa ao salvar estruturas mais ricas em arquivo. Em APIs do mundo real, JSON é a forma que melhor representa “objetos com propriedades”, e isso explica por que ele aparece tão cedo na rotina de qualquer desenvolvedor.
-
-<CodeBlock title="json_em_arquivo.py" code={`import json
-from pathlib import Path
-
-caminho = Path("dados.json")
-dados = [{"nome": "Ana", "notas": [8, 9.5], "ativo": True}]
-
-with caminho.open("w", encoding="utf-8") as arquivo:
-    json.dump(dados, arquivo, ensure_ascii=False, indent=2)
-
-with caminho.open("r", encoding="utf-8") as arquivo:
-    leitura = json.load(arquivo)
-    print(leitura)
-    print(leitura[0]["nome"])`} />
-
-Saída esperada:
-
-```text
-[{'nome': 'Ana', 'notas': [8, 9.5], 'ativo': True}]
-Ana
-```
-
-## 6. Quando usar txt, CSV ou JSON?
-
-Nem todo formato serve para o mesmo fim. A escolha certa depende do tipo de dado e do objetivo do programa. O texto simples é fácil de escrever e ler, mas não representa estrutura de tabela; o CSV é ótimo para listas de registros; o JSON é excelente para objetos aninhados e troca de dados entre sistemas.
 
 <Tabela data={[
-  ['Formato', 'Melhor para', 'Exemplo', 'Observação'],
-  ['txt', 'anotações, logs e textos simples', 'lista de tarefas em linhas', 'é fácil de ler, mas sem estrutura formal'],
-  ['CSV', 'tabelas e registros tabulares', 'nome;idade;cidade', 'bom para Excel e relatórios simples'],
-  ['JSON', 'dados estruturados e aninhados', '{"nome": "Ana", "idade": 30}', 'melhor para APIs, configurações e objetos complexos']
+  ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
 ]} />
 
-Você pode usar o mesmo dado em formatos diferentes, dependendo do contexto. Um cadastro de clientes pode ser salvo em CSV para revisão em planilha; o mesmo cadastro também pode ser enviado como JSON para um sistema web. A habilidade real não é “aprender um formato” isoladamente, e sim decidir qual é o melhor para a tarefa, mantendo a leitura e a escrita consistentes.
-
-## 7. Erros comuns e como evitar
-
-Os erros de arquivos aparecem em todas as fases do desenvolvimento. Às vezes, o problema é só um caminho errado; outras vezes, você sobrescreve dados sem querer. O importante é reconhecer o padrão e não deixar o programa “quebrar no limbo”.
-
-<Callout type="erro-comum" title="FileNotFoundError">
-  <CodeBlock title="arquivo_inexistente.py" code={`from pathlib import Path
-
-conteudo = Path("dados/estoque.txt").read_text(encoding="utf-8")
-print(conteudo)`} />
-  <p>Erro real: <strong>FileNotFoundError: [Errno 2] No such file or directory: 'dados/estoque.txt'</strong></p>
-  <p>Correção: verifique se o caminho existe com <code>.exists()</code>, crie a pasta com <code>mkdir()</code> e só então leia o arquivo.</p>
-</Callout>
-
-<Callout type="erro-comum" title="Acentos quebrados">
-  <CodeBlock title="encoding_errado.py" code={`texto = "café e coração"
-
-with open("acentos.txt", "w", encoding="utf-8") as arquivo:
-    arquivo.write(texto)
-
-with open("acentos.txt", "r", encoding="cp1252") as arquivo:
-    print(arquivo.read())`} />
-  <p>Saída real: <strong>cafÃ© e coraÃ§Ã£o</strong> ou uma sequência parecida, dependendo do ambiente de leitura.</p>
-  <p>Correção: use a mesma codificação em escrita e leitura, normalmente <code>encoding="utf-8"</code>.</p>
-</Callout>
-
-<Callout type="erro-comum" title="Dados apagados por sobrescrita">
-  <CodeBlock title="sobrescrever_arquivo.py" code={`with open("contatos.txt", "w", encoding="utf-8") as arquivo:
-    arquivo.write("Ana\n")
-
-with open("contatos.txt", "w", encoding="utf-8") as arquivo:
-    arquivo.write("Bia\n")
-
-with open("contatos.txt", "r", encoding="utf-8") as arquivo:
-    print(arquivo.read())`} />
-  <p>Saída real: <strong>Bia</strong></p>
-  <p>Correção: use <code>'a'</code> para acrescentar ou leia o conteúdo antes de escrever, para não perder registros antigos.</p>
-</Callout>
-
-Esses três erros aparecem com muita frequência e valem a pena memorizar. Em programação real, o diagnóstico quase sempre é simples: “o caminho está errado”, “a codificação está inconsistente” ou “o modo de abertura sobrescreveu o conteúdo”. A boa notícia é que todas essas correções são pequenas, mas fazem uma diferença enorme na qualidade do programa.
+<Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
+<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
 
 ## No mercado de trabalho
 
-No mercado, arquivos aparecem em praticamente todo sistema que precisa de persistência. Um back-end pode salvar histórico de pedidos em JSON, um analista pode exportar uma base em CSV para a área financeira e uma ferramenta interna pode escrever logs em TXT para ajudar na operação. O que muda é o formato, não a ideia central: você precisa gravar dados de forma confiável e lê-los depois sem perder a estrutura.
-
-Em profissões como desenvolvimento de software, automação, ciência de dados e análise de negócios, essa rotina é frequentemente usada para criar reports, gerar dados de entrada, limpar planilhas e integrar sistemas. Saber escolher entre TXT, CSV e JSON mostra que você entende tanto a sintaxe quanto a intenção da aplicação. Em outras palavras, você deixa de “escrever uma linha em arquivo” e passa a “salvar dados de forma correta para um cenário real”.
-
-## 8. Resumo prático
-
-A lógica central do tópico é simples, mas poderosa:
-
-- `open()` abre um arquivo em modo específico.
-- `with` garante que tudo seja fechado corretamente.
-- `txt` é bom para texto simples.
-- `CSV` é bom para tabelas e listas de registros.
-- `JSON` é bom para estruturas aninhadas, como dicionários e listas de dicionários.
-- `encoding="utf-8"` evita problemas com acentos e caracteres internacionais.
-- `w` sobrescreve; `a` acrescenta; `r` lê.
-
-Quando você entende isso, a manipulação de arquivos deixa de parecer mágica e vira uma rotina clara de leitura, escrita e validação.
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
 
 <Quiz questions={[
-  { question: "Qual é o motivo mais comum de um programa receber FileNotFoundError ao manipular arquivos?", options: ["O arquivo foi aberto em modo 'a'", "O caminho do arquivo está errado ou o arquivo ainda não foi criado", "O arquivo está em formato CSV", "A variável foi escrita sem aspas"], correctIndex: 1, explanation: "O erro aparece quando o caminho não existe ou o arquivo ainda não foi criado antes da leitura." },
-  { question: "Qual modo de abertura é mais apropriado para adicionar novos dados sem apagar o existente?", options: ["'r'", "'w'", "'a'", "'x'"], correctIndex: 2, explanation: "O modo 'a' acrescenta ao final do arquivo e não sobrescreve o conteúdo anterior." },
-  { question: "Qual é a melhor escolha para guardar uma lista de objetos com nome, preço e estoque em Python?", options: ["TXT puro", "CSV com uma linha por objeto", "JSON", "Lista de strings sem arquivo"], correctIndex: 2, explanation: "JSON representa melhor estruturas de dados aninhadas e objetos com chaves e valores." },
-  { question: "O que este código imprime?\n\nwith open('exemplo.txt', 'w', encoding='utf-8') as f:\n    f.write('Ana\\nBia\\n')\n\nwith open('exemplo.txt', 'r', encoding='utf-8') as f:\n    print(f.read())", options: ["Ana", "Bia", "Ana\nBia\n", "Nome do arquivo"], correctIndex: 2, explanation: "A leitura devolve exatamente o texto salvo, inclusive a quebra de linha final." },
-  { question: "Por que o bloco with é tão usado ao abrir arquivos?", options: ["Porque ele acelera o processamento do arquivo", "Porque ele garante que o arquivo será fechado no final do bloco", "Porque ele converte CSV em JSON automaticamente", "Porque ele cria pastas sem precisar de mkdir"], correctIndex: 1, explanation: "O with cuida do fechamento do arquivo e deixa o código mais seguro e legível." }
+  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
 ]} />
 
 <Resumo>
-  <li>Você aprendeu a abrir arquivos com <code>open()</code> e a usar <code>with</code> para fechar corretamente.</li>
-  <li>Entendeu a diferença entre os modos <code>r</code>, <code>w</code>, <code>a</code> e <code>x</code>.</li>
-  <li>Praticou a leitura em texto simples, linha por linha e por listas de linhas.</li>
-  <li>Usou <code>Path</code> para lidar com caminhos e verificar se um arquivo existe.</li>
-  <li>Viu como CSV é útil para tabelas e JSON é útil para estruturas de dados complexas.</li>
-  <li>Reconheceu erros de caminho, encoding e sobrescrita para evitar perdas de dados.</li>
+  <li>Voc? reconheceu a regra central do tema.</li>
+  <li>Voc? validou a l?gica em um caso pequeno.</li>
+  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
+  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
 </Resumo>
 
 <Desafio>
-  Crie um mini script que salva uma lista de tarefas em um arquivo `.txt`, lê de volta, depois exporta os mesmos dados em `.csv` e em `.json`. Depois, compare o conteúdo final de cada formato e explique em 3 linhas por que cada um é útil em situações diferentes.
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
 </Desafio>
 

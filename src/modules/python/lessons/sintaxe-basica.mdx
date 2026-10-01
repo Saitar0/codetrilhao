@@ -1,189 +1,125 @@
 ---
-titulo: "Sintaxe básica do Python"
-descricao: "Aprenda a escrever código em Python com atenção à indentação, comentários e estrutura mínima de um programa."
+titulo: "Sintaxe b?sica"
+descricao: "Entenda o conceito de sintaxe b?sica e aplique a l?gica em exerc?cios pr?ticos."
 secao: "A. Fundamentos"
 ordem: 3
 topico: 1
 fase: "A"
-tempo: 24
+tempo: 20
 nivel: "iniciante"
-palavrasChave: ['python', 'sintaxe', 'indentação', 'comentários', 'print']
-exercicios: ['t01-v1-01-nome-cidade-hobby', 't01-v1-02-separador-e-quebra-linha', 't01-v1-04-moldura-de-nome', 't01-v2-01-indentacao-correcao', 't01-v3-01-tabela-de-produtos', 't01-v3-02-cabecalho-relatorio']
+palavrasChave: ['python', 'l?gica', 'pr?tica']
+exercicios: []
 ---
 
-# Sintaxe básica do Python
+# Sintaxe b?sica
 
-A sintaxe de uma linguagem é a forma correta de escrever instruções para que o computador entenda. Em Python, a leitura do código é simples e direta, mas existem elementos muito importantes: a indentação, os comentários e a estrutura de blocos. Entender isso logo no início evita muitos erros frustrantes.
+Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
 
-<Callout type="importante" title="O que você vai aprender">
-  - Entender a estrutura básica de um programa Python.
-  - Usar `print()` com argumentos, `sep` e `end`.
-  - Aprender a importância da indentação e dos comentários.
-  - Identificar e corrigir erros comuns de sintaxe.
+<Callout type="importante" title="O que voc? vai aprender">
+  - Reconhecer a regra central do tema.
+  - Testar entradas pequenas e verificar a sa?da.
+  - Aplicar a ideia em cen?rios reais e de rotina.
+  - Aprimorar a clareza do c?digo e evitar erros comuns.
 </Callout>
 
-## 1. A estrutura mínima de um programa
+## Conceito principal
 
-Todo programa em Python começa com instruções em sequência. Uma instrução simples pode ser apenas um comando de saída:
+O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
-<CodeBlock title="ola.py" code={`print("Olá, mundo!")`} />
-
-Saída esperada:
-
-```text
-Olá, mundo!
-```
-
-O `print()` é o comando mais clássico para exibir texto na tela. Ele é tão importante porque ajuda você a ver se o programa está funcionando e o que cada parte do código está fazendo.
-
-## 2. `print()` com vários argumentos, `sep` e `end`
-
-O `print()` aceita mais de um valor ao mesmo tempo. Isso é útil quando você quer mostrar várias informações em uma linha.
-
-<CodeBlock title="print_variados.py" code={`print("Python", "é", "legível")
-print("A", "B", "C", sep=" | ")
-print("Olá,", "mundo!", end="\n\n")
-print("Fim")`} />
-
-Saída esperada:
+<CodeBlock title="sintaxe-basica_exemplo_1.py" code={`valor = 10
+print(valor + 5)`} />
 
 ```text
-Python é legível
-A | B | C
-Olá, mundo!
-
-Fim
+15
 ```
 
-Aqui você vê três nuances importantes:
+Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
-- `print("Python", "é", "legível")` imprime vários argumentos separados por espaço;
-- `sep=" | "` troca o separador padrão por uma string que você escolhe;
-- `end="\n\n"` altera o caractere final da linha, o que pode criar espaços extras.
-
-Essa é uma das primeiras formas de deixar a saída mais legível e profissional.
-
-## 3. Comentários e docstrings de uma linha
-
-Comentários são trechos ignorados pelo Python, mas muito úteis para explicar o código. Eles começam com `#`.
-
-<CodeBlock title="comentarios.py" code={`# Isso é um comentário
-nome = "Ana"
-print("Bem-vinda,", nome)`} />
-
-Saída esperada:
+<CodeBlock title="sintaxe-basica_exemplo_2.py" code={`lista = [1, 2, 3]
+print(sum(lista))`} />
 
 ```text
-Bem-vinda, Ana
+6
 ```
 
-Uma docstring de uma linha funciona como uma descrição curta do código e pode ser usada em alguns contextos, mas o mais comum no começo da jornada é o comentário com `#`.
+<Playground title="Experimente no navegador" code={`nome = "Ana"
+print(f"Ol?, {nome}!")`} />
 
-<CodeBlock title="docstring.py" code={`"""Programa de boas-vindas."""
-print("Olá, estudante!")`} />
+## Aplica??o pr?tica
 
-Saída esperada:
+A ideia do tema aparece em automa??o, valida??o de dados, regras de neg?cio, an?lise de arquivos e manuten??o de sistemas. O cen?rio muda, mas o racioc?nio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
+
+<CodeBlock title="sintaxe-basica_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
 
 ```text
-Olá, estudante!
+Maior de idade
 ```
 
-Comentários e descrições ajudam você e outras pessoas a entender a lógica do código sem precisar “adivinhar” o que cada parte faz.
+<Callout type="erro-comum" title="Erro comum">
+  ```python
+  valores = [0, -1, 1]
+  print(valores[0])
+  ```
 
-## 4. Indentação como parte da sintaxe
-
-Uma das regras mais importantes de Python é a indentação. Em outras linguagens, chaves `{}` e blocos de código marcam a estrutura. Em Python, o que define um bloco é a quantidade de espaços da linha.
-
-Veja um exemplo simples:
-
-<CodeBlock title="indentacao.py" code={`idade = 18
-if idade >= 18:
-    print("Você é maior de idade")
-    print("Pode entrar")
-print("Programa finalizado")`} />
-
-Saída esperada:
-
-```text
-Você é maior de idade
-Pode entrar
-Programa finalizado
-```
-
-Veja que as linhas dentro do `if` ficam com 4 espaços de indentação. Isso é obrigatório. Se você misturar espaços e tabs, ou se a indentação estiver errada, o Python vai acusar um erro.
+  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
+</Callout>
 
 <StepThrough>
   <div>
-    <strong>Passo 1</strong>
-    <p>O Python lê a linha com o comando <code>if idade >= 18:</code>.</p>
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
   </div>
   <div>
-    <strong>Passo 2</strong>
-    <p>Ele entende que o bloco seguinte pertence ao `if` porque está recuado em 4 espaços.</p>
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
   </div>
   <div>
-    <strong>Passo 3</strong>
-    <p>Quando termina o bloco, o programa continua e imprime a linha final.</p>
+    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
   </div>
 </StepThrough>
 
-A indentação não é só estética; ela é parte da estrutura do programa. Isso é um detalhe que parece simples, mas é essencial para escrever código em Python corretamente.
+<CodeBlock title="sintaxe-basica_exemplo_4.py" code={`resultado = 7 * 3
+print(resultado)`} />
 
-## 5. Erros comuns de sintaxe
+```text
+21
+```
 
-A primeira coisa que você vai aprender ao programar é que erro não é fracasso; é informação. Python costuma mostrar uma mensagem clara que ajuda a localizar o problema. Os erros mais comuns neste início são `SyntaxError`, `IndentationError` e `NameError`.
+<CodeBlock title="sintaxe-basica_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
 
-<Callout type="erro-comum" title="SyntaxError: unterminated string">
-  <CodeBlock title="erro_string.py" code={`print("Olá, mundo!)`} />
-  <p>Mensagem real do erro no Python 3:</p>
-  <pre>SyntaxError: unterminated string literal (detected at line 1)</pre>
-  <p>Correção: feche a aspa antes de encerrar a string.</p>
-</Callout>
+```text
+[1, 2, 3]
+```
 
-<Callout type="erro-comum" title="IndentationError">
-  <CodeBlock title="erro_indentacao.py" code={`idade = 18
-if idade >= 18:
-print("Maior de idade")`} />
-  <p>Mensagem real do erro no Python 3:</p>
-  <pre>IndentationError: expected an indented block after 'if' statement on line 2</pre>
-  <p>Correção: use 4 espaços de indentação dentro do bloco.</p>
-</Callout>
+<Tabela data={[
+  ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
+]} />
 
-<Callout type="erro-comum" title="NameError: name 'Print' is not defined">
-  <CodeBlock title="erro_nome.py" code={`Print("Olá")`} />
-  <p>Mensagem real do erro no Python 3:</p>
-  <pre>NameError: name 'Print' is not defined</pre>
-  <p>Correção: use a função correta, que é `print` em minúsculas.</p>
-</Callout>
-
-Esse conjunto de erros vai aparecer bastante no começo. Você não precisa decorar tudo; o que importa é aprender a ler a mensagem de baixo para cima no traceback e entender que a última linha geralmente mostra a causa mais direta.
+<Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
+<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
 
 ## No mercado de trabalho
 
-Na prática profissional, a sintaxe correta é o que permite a equipe entender e manter um projeto. Quem escreve Python de forma legível e organizada reduz retrabalho, facilita revisão e evita bugs simples. A indentação, por exemplo, não é um detalhe de gosto: ela faz parte da linguagem e impacta diretamente a execução do programa.
-
-Além disso, a capacidade de ler erros e mensagens do interpretador é parte do processo real de desenvolvimento. Em qualquer ambiente de trabalho, você vai encontrar mensagens de erro, e a habilidade de interpretá-las é um sinal de maturidade técnica.
-
-<Glossario termo="Indentação" definition="Recuo que organiza blocos de código em Python." />
-<Glossario termo="Traceback" definition="Mensagem de erro que mostra a sequência de execução e o ponto onde o problema apareceu." />
-<Glossario termo="Sintaxe" definition="Conjunto de regras que definem como o código deve ser escrito." />
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
 
 <Quiz questions={[
-  { question: "Qual é a principal função do `print()`?", options: ["Definir uma variável", "Imprimir texto na tela", "Guardar uma frase em disco", "Criar um bloco de código"], correctIndex: 1, explanation: "`print()` mostra informações no terminal para o usuário ver." },
-  { question: "Por que a indentação é importante em Python?", options: ["Porque deixa o texto mais bonito", "Porque define blocos de código", "Porque remove a necessidade de comentários", "Porque impede a execução do programa"], correctIndex: 1, explanation: "Em Python, a indentação organiza a estrutura lógica do código." },
-  { question: "Qual erro aparece se você escrever `Print` em vez de `print`?", options: ["SyntaxError", "IndentationError", "NameError", "TypeError"], correctIndex: 2, explanation: "O Python diferencia letras maiúsculas de minúsculas, então `Print` não é a função definida." },
-  { question: "O que acontece se a string for aberta e não fechada?", options: ["O programa ignora", "O Python mostra `SyntaxError`", "Ele cria uma variável", "Ele repete a frase"], correctIndex: 1, explanation: "Cuidado com aspas abertas sem fechamento: isso gera `SyntaxError`." }
+  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
 ]} />
 
 <Resumo>
-  <li>Python exige sintaxe correta para que o programa rode.</li>
-  <li>`print()` é a forma mais simples de mostrar resultado no terminal.</li>
-  <li>Comentários ajudam a explicar o código sem afetar a execução.</li>
-  <li>Indentação não é opcional: ela define blocos.</li>
-  <li>Ler erros corretamente é parte essencial do aprendizado.</li>
+  <li>Voc? reconheceu a regra central do tema.</li>
+  <li>Voc? validou a l?gica em um caso pequeno.</li>
+  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
+  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
 </Resumo>
 
 <Desafio>
-  Crie um programa com duas linhas de comentário, uma variável com seu nome e um `print()` que usa `sep` e `end` para formatar a saída. Depois, ajuste a indentação para garantir que o código continue correto.
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
 </Desafio>
 

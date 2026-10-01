@@ -12,11 +12,11 @@
     "Use `logging.warning` para registrar o motivo de cada item inválido.",
     "Retorne uma lista apenas com os valores válidos convertidos." 
   ],
-  "solucao": "import logging\nimport sys\nlogging.basicConfig(level=logging.INFO, format='%(levelname)s:%(message)s', stream=sys.stdout)\n\ndef processar_valores(lista):\n    validos = []\n    for i, s in enumerate(lista):\n        try:\n            v = float(s)\n            validos.append(v)\n        except Exception as e:\n            logging.warning(f\"Índice {i}: valor inválido '{s}': {e}\")\n    return validos\n",
+  "solucao": "import logging\nimport math\nimport sys\nlogging.basicConfig(level=logging.WARNING, format='%(levelname)s:%(message)s', stream=sys.stderr)\n\ndef processar_valores(lista):\n    validos = []\n    for i, s in enumerate(lista):\n        try:\n            v = float(s)\n            if not math.isfinite(v):\n                raise ValueError('valor não finito')\n            validos.append(v)\n        except Exception as e:\n            logging.warning(f\"Índice {i}: valor inválido '{s}': {e}\")\n    return validos\n",
   "tags": ["lista", "logging", "processamento"],
   "aulaRelacionada": "excecoes",
   "enunciado": "Implemente `processar_valores(lista)` que recebe uma lista de strings. Converta cada item para `float` e retorne uma lista com os valores válidos. Se uma entrada for inválida, registre com `logging.warning` o índice e a causa e continue sem interromper o processamento.",
-  "starterCode": "import logging\nimport sys\nlogging.basicConfig(level=logging.INFO, format='%(levelname)s:%(message)s', stream=sys.stdout)\n\ndef processar_valores(lista):\n    pass\n",
+  "starterCode": "import logging\nimport sys\nlogging.basicConfig(level=logging.WARNING, format='%(levelname)s:%(message)s', stream=sys.stderr)\n\ndef processar_valores(lista):\n    pass\n",
   "testes": [
     { "chamada": "processar_valores(['1', '2.5', '3'])", "esperado": "[1.0, 2.5, 3.0]", "oculto": false },
     { "chamada": "processar_valores(['a', '4', 'b'])", "esperado": "[4.0]", "oculto": false },

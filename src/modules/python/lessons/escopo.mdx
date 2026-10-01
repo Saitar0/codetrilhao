@@ -1,210 +1,125 @@
-﻿---
+---
 titulo: "Escopo"
-descricao: "Entenda como Python resolve variáveis em funções, blocos e módulos."
-secao: "C. Organização de código"
-ordem: 17
+descricao: "Entenda o conceito de escopo e aplique a l?gica em exerc?cios pr?ticos."
+secao: "C. Organiza??o de c?digo"
+ordem: 16
 topico: 10
 fase: "C"
-tempo: 26
+tempo: 23
 nivel: "intermediario"
-palavrasChave: ['escopo', 'global', 'LEGB', 'closure']
+palavrasChave: ['python', 'l?gica', 'pr?tica']
 exercicios: []
 ---
 
 # Escopo
 
-Ao definir funções, você logo percebe que nem toda variável funciona do mesmo jeito em todos os lugares. Isso acontece porque Python organiza o acesso a nomes em camadas. Uma variável pode ser local a uma função, global ao módulo, ou capturada de um bloco externo. Esse comportamento é o que chamamos de escopo.
+Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
 
-Sem entender escopo, você pode tentar alterar uma variável em um lugar que o Python interpreta de forma diferente, e isso leva a erros como `UnboundLocalError` ou a comportamentos estranhos. Mas o bom é que o mecanismo é previsível. Em Python, o acesso a nomes segue a regra LEGB: Local, Enclosing, Global, Built-in.
-
-<Callout type="importante" title="O que você vai aprender">
-  <ul>
-    <li>Entender o ciclo <Glossario termo="LEGB" definition="Regra de busca de nomes em Python: Local, Enclosing, Global, Built-in." />.</li>
-    <li>Reconhecer o efeito de variáveis <Glossario termo="local" definition="Definidas dentro de uma função e acessíveis apenas ali." /> e <Glossario termo="global" definition="Definidas no módulo e visíveis em todo o arquivo." />.</li>
-    <li>Compreender quando usar `global` e quando evitar.</li>
-    <li>Entender <Glossario termo="closure" definition="Função que lembra o ambiente em que foi criada e captura variáveis externas." />.</li>
-  </ul>
+<Callout type="importante" title="O que voc? vai aprender">
+  - Reconhecer a regra central do tema.
+  - Testar entradas pequenas e verificar a sa?da.
+  - Aplicar a ideia em cen?rios reais e de rotina.
+  - Aprimorar a clareza do c?digo e evitar erros comuns.
 </Callout>
 
-## 1. Escopo local e global
+## Conceito principal
 
-Quando você cria uma variável dentro de uma função, ela normalmente é local a essa função. Quando você cria no nível do módulo, ela é global.
+O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
-<CodeBlock title="escopo_local_global.py" code={`valor = "global"
+<CodeBlock title="escopo_exemplo_1.py" code={`valor = 10
+print(valor + 5)`} />
 
-def mostrar():
-    valor = "local"
-    print("Dentro da função:", valor)
+```text
+15
+```
 
-mostrar()
-print("Fora da função:", valor)`} />
+Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
-A saída mostra que a variável `valor` dentro da função não mexe na variável externa. Isso ocorre porque a função cria um novo espaço de nomes. Em Python, nomes locais têm prioridade sobre nomes globais dentro da função.
+<CodeBlock title="escopo_exemplo_2.py" code={`lista = [1, 2, 3]
+print(sum(lista))`} />
 
-Mas se uma função tenta modificar uma variável global sem avisar explicitamente, isso muda o quadro. O Python então assume que a variável é local se você houver uma atribuição dentro dela. Isso é a causa da famosa `UnboundLocalError`.
+```text
+6
+```
 
-## 2. O que a regra LEGB faz
+<Playground title="Experimente no navegador" code={`nome = "Ana"
+print(f"Ol?, {nome}!")`} />
 
-Python resolve nomes seguindo essa ordem:
+## Aplica??o pr?tica
 
-1. Local: nomes definidos dentro da função atual.
-2. Enclosing: nomes das funções externas que envolvem a função atual.
-3. Global: nomes definidos no módulo.
-4. Built-in: nomes já disponíveis como `print`, `len`, `sum` e outros.
+A ideia do tema aparece em automa??o, valida??o de dados, regras de neg?cio, an?lise de arquivos e manuten??o de sistemas. O cen?rio muda, mas o racioc?nio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
 
-<CodeBlock title="legb.py" code={`mensagem = "global"
+<CodeBlock title="escopo_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
 
-def externa():
-    mensagem = "enclosing"
+```text
+Maior de idade
+```
 
-    def interna():
-        print(mensagem)
+<Callout type="erro-comum" title="Erro comum">
+  ```python
+  valores = [0, -1, 1]
+  print(valores[0])
+  ```
 
-    interna()
-
-externa()`} />
-
-Nesse exemplo, a função `interna` encontra `mensagem` no escopo da função `externa` antes de procurar no módulo. Isso é o nível “enclosing”. Quando você entende essa ordem, fica mais fácil prever como o Python acessa os nomes.
-
-<Playground title="Experimente o LEGB" code={`valor = "global"
-
-def funcao():
-    valor = "local"
-    print("local:", valor)
-
-funcao()
-print("global:", valor)`} />
-
-## 3. Quando `global` faz sentido — e quando não faz
-
-Você pode usar `global` para sinalizar que uma variável definida fora da função deve ser modificada no próprio escopo global. Isso é útil em scripts pequenos, mas em programas organizados isso costuma ser evitado.
-
-<CodeBlock title="global.py" code={`contador = 0
-
-def aumentar():
-    global contador
-    contador += 1
-    print(contador)
-
-aumentar()
-aumentar()
-print(contador)`} />
-
-A linha `global contador` informa ao Python: “não crie uma variável local; use a global”. Isso funciona, mas é uma prática que pode dificultar a leitura e o raciocínio. Em código modular e organizado, o melhor é passar valores como parâmetros e devolver resultados como retorno. Isso reduz efeitos colaterais e torna a função mais previsível.
+  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
+</Callout>
 
 <StepThrough>
   <div>
-    <strong>Passo 1:</strong> `contador` começa com 0 no escopo global.
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
   </div>
   <div>
-    <strong>Passo 2:</strong> quando `aumentar()` é chamada, `global contador` aponta para a variável global e a incrementa.
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
   </div>
   <div>
-    <strong>Passo 3:</strong> depois da segunda chamada, o valor global foi modificado e continua visível fora da função.
+    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
   </div>
 </StepThrough>
 
-A recomendação mais segura é evitar `global` quando a função pode receber o valor por parâmetro e devolver um resultado. Isso deixa a relação entre entrada e saída muito mais clara.
+<CodeBlock title="escopo_exemplo_4.py" code={`resultado = 7 * 3
+print(resultado)`} />
 
-## 4. Closures
+```text
+21
+```
 
-Uma closure é uma função que “lembra” variáveis do escopo em que foi criada, mesmo depois que essa função externa terminou de executar. Isso cria um comportamento interessante: a função interna continua acessando valores de fora.
+<CodeBlock title="escopo_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
 
-<CodeBlock title="closure.py" code={`def multiplicar_por(fator):
-    def interno(numero):
-        return numero * fator
-    return interno
-
-triplicar = multiplicar_por(3)
-print(triplicar(4))
-print(triplicar(7))`} />
-
-A função `interno` lembra o valor `fator` do ambiente em que foi criada. Em outras palavras, `triplicar` continua usando `3` mesmo depois que `multiplicar_por` concluiu. Isso é útil para criar funções especializadas e simplificar padrões de configuração.
-
-Você encontra closures em bibliotecas e em código que encapsula comportamento recorrente. Elas são um conceito importante para entender como o Python preserva estado em um ambiente menor sem depender de variáveis globais.
-
-## 5. Por que evitar `global`?
-
-Além de dificultar leitura, `global` torna a função menos reutilizável e mais dependente do ambiente externo. Quando a função depende de estado global, você precisa lembrar de toda a história da variável para entender o comportamento dela. Em projetos reais, isso torna testes e depuração mais complexos.
-
-O melhor design é: a função recebe dados e retorna um valor. Em vez de você mexer em um estado escondido no módulo, você produz um resultado explícito. Essa clareza é valiosa porque facilita revisão de código e ajuda durante a manutenção.
-
-<Callout type="erro-comum" title="Erro: `UnboundLocalError` ao alterar variável global">
-  O problema aparece quando a função tenta modificar uma variável global sem declarar `global`.
-  <CodeBlock title="erro_unbound_escopo.py" code={`total = 0
-
-def adicionar(valor):
-    total = total + valor
-    return total
-
-print(adicionar(5))`} />
-  A mensagem real é `UnboundLocalError: local variable 'total' referenced before assignment`. O Python assume que `total` dentro da função é local, então tenta usar antes de atribuir. A correção é declarar `global total` ou, melhor ainda, receber o valor e devolver o resultado.
-</Callout>
-
-<Callout type="erro-comum" title="Erro: usar `global` em excesso">
-  A função fica acoplada ao estado do módulo e até difícil de testar isoladamente.
-  <CodeBlock title="erro_global_excesso.py" code={`saldo = 100
-
-def sacar(valor):
-    global saldo
-    saldo = saldo - valor
-
-sacar(30)
-print(saldo)`} />
-  Isso funciona, mas o efeito colateral fica menos transparente. A forma mais previsível é `def sacar(saldo, valor): return saldo - valor` e então decidir no código externo como atualizar a variável.
-</Callout>
-
-<Callout type="erro-comum" title="Erro: esperar que closure use variável local depois do fim">
-  Closure funciona com variáveis capturadas, mas isso depende do ambiente em que a função foi criada.
-  <CodeBlock title="erro_closure.py" code={`def criar_contador():
-    contador = 0
-    def incrementar():
-        contador += 1
-        return contador
-    return incrementar
-
-c = criar_contador()
-print(c())`} />
-  A mensagem real é `UnboundLocalError: local variable 'contador' referenced before assignment`. O problema é que `contador += 1` cria uma variável local dentro da closure. Para corrigir, use `nonlocal contador`.
-</Callout>
+```text
+[1, 2, 3]
+```
 
 <Tabela data={[
-  ['Tipo de escopo', 'Onde vive', 'Comportamento'],
-  ['Local', 'Dentro de uma função', 'Só é acessível ali'],
-  ['Global', 'No módulo', 'Acessível em várias partes do arquivo'],
-  ['Enclosing', 'Função externa', 'A função interna pode captar esse nome'],
-  ['Built-in', 'Python', 'Nomes prontos como print e len']
+  ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
 ]} />
 
-<Glossario termo="LEGB" definition="Regra de prioridade para resolver nomes em Python: Local, Enclosing, Global, Built-in." />
-<Glossario termo="Estado global" definition="Dados compartilhados pelo módulo e acessíveis em vários pontos do programa." />
-<Glossario termo="Effectful" definition="Função que produz mudança fora do seu retorno, como alterar variáveis globais ou arquivos." />
+<Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
+<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
 
-### No mercado de trabalho
+## No mercado de trabalho
 
-Escopo é um assunto que aparece em qualquer linguagem com funções e módulos. Em projetos de backend, automação, scripts de processamento e sistemas de dados, você precisa pensar sobre quando uma variável pertence ao módulo e quando pertence à função. Isso impacta facilmente a manutenção, os testes e a qualidade do código.
-
-Programadores experientes evitam depender de estado global porque isso cria acoplamento. Em vez disso, eles preferem funções que recebem entrada e devolvem saída. O domínio de escopo é parte do que separa código funcionalmente previsível de código que funciona “por acaso” dentro de um arquivo pequeno.
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
 
 <Quiz questions={[
-  { question: "Qual ordem Python usa para resolver nomes?", options: ["Global, Local, Enclosing, Built-in", "Local, Enclosing, Global, Built-in", "Built-in, Local, Enclosing, Global", "Enclosing, Built-in, Global, Local"], correctIndex: 1, explanation: "A regra é LEGB: Local, Enclosing, Global, Built-in." },
-  { question: "O que acontece quando uma função cria uma variável com o mesmo nome de uma variável global?", options: ["Python usa sempre a global", "Python cria uma local e a global continua intacta", "O programa encerra", "A variável global vira local global"], correctIndex: 1, explanation: "A variável local da função tem prioridade no escopo local, e a global continua existindo por fora." },
-  { question: "Quando usar global é mais perigoso?", options: ["Quando a função recebe poucos parâmetros", "Quando a função depende de estado compartilhado e não fica clara", "Quando ela usa lambda", "Quando sua função não retorna nada"], correctIndex: 1, explanation: "Variáveis globais tornam o comportamento mais escondido e mais difícil de testar." },
-  { question: "Qual das opções descreve melhor uma closure?", options: ["Uma função que chama outra função no módulo principal", "Uma função que “lembra” variáveis do escopo externo", "Uma função que não usa parâmetros", "Uma função pura sem retorno"], correctIndex: 1, explanation: "Closure captura variáveis do ambiente em que a função foi criada." },
-  { question: "O que este código imprime?\n\n```python\ncontador = 3\n\ndef aumentar():\n    global contador\n    contador += 1\n\naumentar()\nprint(contador)\n```", options: ["3", "4", "Error", "None"], correctIndex: 1, explanation: "O comando global usa a variável do módulo e incrementa de 3 para 4." }
+  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
 ]} />
 
 <Resumo>
-  <li>Escopo define onde uma variável existe e onde ela pode ser acessada.</li>
-  <li>A regra LEGB explica a prioridade de busca de nomes em Python.</li>
-  <li>Variáveis locais são diferentes das globais, mesmo quando têm o mesmo nome.</li>
-  <li>`global` pode resolver alguns casos, mas costuma tornar o código menos previsível.</li>
-  <li>Closures lembram o ambiente em que foram criadas e são úteis em padrões específicos.</li>
-  <li>Boas funções recebem entradas e devolvem saídas, em vez de depender de estado oculto.</li>
+  <li>Voc? reconheceu a regra central do tema.</li>
+  <li>Voc? validou a l?gica em um caso pequeno.</li>
+  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
+  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
 </Resumo>
 
-Checklist de domínio: ☐ compreendo LEGB ☐ uso `global` com consciência ☐ separo variáveis locais e globais ☐ reconheço closure quando aparece ☐ escrevo funções com melhor previsibilidade
-
-<Desafio title="Desafio da aula">
-  Crie uma função `contador_positivo` que recebe uma lista de números, usa uma closure para contar quantos valores são maiores que zero e retorna o total. Em seguida, teste a função com duas listas diferentes e compare os resultados.
+<Desafio>
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
 </Desafio>
+

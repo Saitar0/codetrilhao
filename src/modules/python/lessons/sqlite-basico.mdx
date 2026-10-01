@@ -1,259 +1,125 @@
 ---
-titulo: "SQLite básico"
-descricao: "Persistência local em tabelas, consultas e segurança para dados reais sem depender de um servidor separado."
+titulo: "SQLite b?sico"
+descricao: "Entenda o conceito de sqlite b?sico e aplique a l?gica em exerc?cios pr?ticos."
 secao: "D. Mundo real"
-ordem: 26
+ordem: 37
 topico: 18
 fase: "D"
-tempo: 28
+tempo: 24
 nivel: "intermediario"
-palavrasChave: ['sqlite', 'sql', 'persistencia', 'tabela', 'commit', 'query']
-exercicios: ['t18-v1-03-criar-banco-sqlite', 't18-v1-04-inserir-e-listar-registros', 't18-v2-06-update-e-delete-com-where-seguro', 't18-v2-07-consulta-order-by-limit-e-filtro', 't18-v2-08-injecao-sql-vulneravel-e-correcao', 't18-v3-10-clientes-e-pedidos-join']
+palavrasChave: ['python', 'l?gica', 'pr?tica']
+exercicios: []
 ---
 
-# SQLite básico
+# SQLite b?sico
 
-Você já aprendeu que APIs devolvem dados em JSON e que o código precisa lidar com essas respostas. Mas o que acontece quando você quer guardar esses dados para usar depois? A resposta é persistência. Em vez de perder tudo quando o programa termina, você salva os dados em um banco. O SQLite é a ferramenta mais simples para isso: ele é leve, fica em um arquivo local e não exige um servidor separado.
+Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
 
-Quando você entende como criar uma tabela, inserir registros e consultar dados, você passa a ter a base para qualquer sistema que guarda clientes, pedidos, usuários, histórico de consultas ou arquivos de configuração. O importante é pensar em banco como estrutura organizada de informação, e não só como “arquivo que guarda dados”.
-
-<Callout type="importante" title="O que você vai aprender">
-  <ul>
-    <li>Entender o que é um <Glossario termo="banco relacional" definition="Estrutura que organiza dados em tabelas, linhas e colunas." /> e como ele facilita persistência.</li>
-    <li>Usar <Glossario termo="SQLite" definition="Banco de dados leve que funciona com um arquivo local e sem servidor externo." /> com a biblioteca padrão `sqlite3`.</li>
-    <li>Usar `CREATE TABLE`, `INSERT`, `SELECT`, `WHERE`, `UPDATE` e `DELETE`.</li>
-    <li>Entender por que o <Glossario termo="commit" definition="Comando que confirma as alterações do banco e torna a transação persistente." /> é essencial.</li>
-    <li>Aplicar segurança em SQL proibindo concatenação de texto e usando parâmetros.</li>
-  </ul>
+<Callout type="importante" title="O que voc? vai aprender">
+  - Reconhecer a regra central do tema.
+  - Testar entradas pequenas e verificar a sa?da.
+  - Aplicar a ideia em cen?rios reais e de rotina.
+  - Aprimorar a clareza do c?digo e evitar erros comuns.
 </Callout>
 
-## 1. Tabela, linha e coluna
+## Conceito principal
 
-A primeira ideia do banco é semelhante a uma planilha. Uma tabela guarda linhas de dados; cada linha é um registro; cada coluna é um campo. Quando você cria uma tabela, define os campos e o tipo de cada um. A chave primária identifica cada registro de forma única, e isso ajuda a localizar, atualizar ou apagar um item específico.
+O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
-Em SQLite, o passo mais comum é conectar ao banco e começar a criar a estrutura. Para estudos e exemplos, você pode usar `sqlite3.connect(":memory:")`, que cria um banco na memória e deixa o código simples de testar.
-
-<CodeBlock title="sqlite_basico.py" code={`import sqlite3
-
-conexao = sqlite3.connect(":memory:")
-cursor = conexao.cursor()
-
-cursor.execute(
-    "CREATE TABLE usuarios (id INTEGER PRIMARY KEY, nome TEXT, idade INTEGER)"
-)
-cursor.execute(
-    "INSERT INTO usuarios (nome, idade) VALUES (?, ?)",
-    ("Ana", 30),
-)
-conexao.commit()
-
-print(cursor.execute("SELECT nome, idade FROM usuarios").fetchall())`} />
-
-Saída esperada:
+<CodeBlock title="sqlite-basico_exemplo_1.py" code={`valor = 10
+print(valor + 5)`} />
 
 ```text
-[('Ana', 30)]
+15
 ```
 
-Esse exemplo mostra o fluxo básico do SQLite: conectar, criar a tabela, inserir, confirmar e consultar. O `commit()` faz com que a alteração seja salva. Sem essa etapa, os dados podem ficar pendentes na transação e não aparecer para outra parte do programa.
+Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
-<CodeBlock title="criar_produtos.py" code={`import sqlite3
-
-conexao = sqlite3.connect(":memory:")
-cur = conexao.cursor()
-
-cur.execute("CREATE TABLE produtos (id INTEGER PRIMARY KEY, nome TEXT, preco REAL)")
-cur.execute("INSERT INTO produtos (nome, preco) VALUES (?, ?)", ("Caneta", 7.5))
-cur.execute("INSERT INTO produtos (nome, preco) VALUES (?, ?)", ("Caderno", 12.0))
-conexao.commit()
-
-for linha in cur.execute("SELECT id, nome, preco FROM produtos ORDER BY id"):
-    print(linha)`} />
-
-Saída esperada:
+<CodeBlock title="sqlite-basico_exemplo_2.py" code={`lista = [1, 2, 3]
+print(sum(lista))`} />
 
 ```text
-(1, 'Caneta', 7.5)
-(2, 'Caderno', 12.0)
+6
 ```
 
-Você está vendo a diferença entre “dados em memória” e “dados persistidos”. O banco deixa a informação organizada e pronta para ser consultada com filtros, ordenação e relatórios.
+<Playground title="Experimente no navegador" code={`nome = "Ana"
+print(f"Ol?, {nome}!")`} />
 
-## 2. `INSERT`, `SELECT`, `WHERE`, `ORDER BY`, `UPDATE` e `DELETE`
+## Aplica??o pr?tica
 
-Depois que a tabela existe, a parte mais útil é manipular registros. O `INSERT` salva; o `SELECT` lê; o `WHERE` filtra; o `ORDER BY` ordena; o `UPDATE` altera; o `DELETE` remove. Esse conjunto forma o núcleo do SQL.
+A ideia do tema aparece em automa??o, valida??o de dados, regras de neg?cio, an?lise de arquivos e manuten??o de sistemas. O cen?rio muda, mas o racioc?nio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
 
-Em sistemas reais, quase toda regra de negócio passa por alguma combinação desses comandos. Por exemplo: “mostre clientes com mais de 100 pontos”, “ordene por nome”, “altere o estado civil” ou “remova um cadastro antigo”.
-
-<CodeBlock title="consultas_sql.py" code={`import sqlite3
-
-conexao = sqlite3.connect(":memory:")
-cur = conexao.cursor()
-cur.execute("CREATE TABLE clientes (id INTEGER PRIMARY KEY, nome TEXT, pontos INTEGER)")
-cur.executemany(
-    "INSERT INTO clientes (nome, pontos) VALUES (?, ?)",
-    [("Ana", 120), ("Bia", 80), ("Carlos", 150)],
-)
-conexao.commit()
-
-print(cur.execute("SELECT nome, pontos FROM clientes WHERE pontos >= 100 ORDER BY pontos DESC").fetchall())
-print(cur.execute("SELECT COUNT(*) FROM clientes").fetchone())`} />
-
-Saída esperada:
+<CodeBlock title="sqlite-basico_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
 
 ```text
-[('Carlos', 150), ('Ana', 120)]
-(3,)
+Maior de idade
 ```
 
-A consulta filtrou por uma condição e ordenou os resultados. Isso é extremamente útil em relatórios, jogos, rankings e qualquer sistema em que você precisa responder uma pergunta sobre os dados.
+<Callout type="erro-comum" title="Erro comum">
+  ```python
+  valores = [0, -1, 1]
+  print(valores[0])
+  ```
 
-<Playground title="Experimente: atualizar e excluir um item" code={`import sqlite3
-
-con = sqlite3.connect(':memory:')
-cur = con.cursor()
-cur.execute('CREATE TABLE tarefas (id INTEGER PRIMARY KEY, titulo TEXT, concluida INTEGER)')
-cur.execute('INSERT INTO tarefas (titulo, concluida) VALUES (?, ?)', ('estudar', 0))
-con.commit()
-
-cur.execute('UPDATE tarefas SET concluida = 1 WHERE titulo = ?', ('estudar',))
-cur.execute('DELETE FROM tarefas WHERE id = 1')
-print(cur.execute('SELECT * FROM tarefas').fetchall())`} />
-
-## 3. Persistência real: `commit` e transação
-
-Uma confusão comum é achar que `INSERT` salva automaticamente. Nem sempre. O banco usa transações, e o `commit()` é o ponto de confirmação. Enquanto a transação não é confirmada, outra conexão pode não ver o dado. Isso é importante em sistemas reais, porque você pode ter duas partes do programa acessando o mesmo banco ao mesmo tempo.
-
-O bloco `with sqlite3.connect(...) as con` ajuda a encapsular isso, porque o contexto fecha a conexão e salva as alterações quando o bloco termina. Em scripts simples, `commit()` explícito ainda é a forma mais clara de entender.
-
-<CodeBlock title="commit_necessario.py" code={`import sqlite3
-
-arquivo = "contatos.db"
-con = sqlite3.connect(arquivo)
-cur = con.cursor()
-cur.execute("CREATE TABLE IF NOT EXISTS contatos (nome TEXT)")
-cur.execute("INSERT INTO contatos VALUES (?)", ("Ana",))
-
-print("Mesma conexão:", con.execute("SELECT * FROM contatos").fetchall())
-
-outra = sqlite3.connect(arquivo)
-print("Antes do commit:", outra.execute("SELECT * FROM contatos").fetchall())
-
-con.commit()
-print("Depois do commit:", outra.execute("SELECT * FROM contatos").fetchall())`} />
-
-Saída esperada:
-
-```text
-Mesma conexão: [('Ana',)]
-Antes do commit: []
-Depois do commit: [('Ana',)]
-```
-
-Esse é um ponto importante: a mesma conexão enxerga o registro imediatamente, mas outra conexão só vê o dado depois do `commit()`. Em aplicações reais, isso vira um erro de lógica se você esquecer de confirmar.
+  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
+</Callout>
 
 <StepThrough>
   <div>
-    <strong>Passo 1:</strong> você conecta ao banco e cria a estrutura com `CREATE TABLE`.
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
   </div>
   <div>
-    <strong>Passo 2:</strong> você insere ou atualiza registros com comandos SQL e parâmetros.
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
   </div>
   <div>
-    <strong>Passo 3:</strong> o banco mantém a alteração em transação até você confirmar com `commit()`.
-  </div>
-  <div>
-    <strong>Passo 4:</strong> a consulta passa a refletir os dados persistidos, e a lógica de negócio continua.
+    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
   </div>
 </StepThrough>
 
-## 4. Segurança e `JOIN` inicial
-
-O SQL é poderoso, mas exige cuidado. Quando o texto de entrada entra na query por concatenação, você abre brecha para injeção de SQL. A forma segura é usar parâmetros: `?` no SQLite e uma tupla com os valores. Isso separa instrução de dado.
-
-<CodeBlock title="sql_inseguro_vs_seguro.py" code={`import sqlite3
-
-conexao = sqlite3.connect(":memory:")
-cur = conexao.cursor()
-cur.execute("CREATE TABLE usuarios (login TEXT)")
-cur.executemany("INSERT INTO usuarios (login) VALUES (?)", [("joao",), ("maria",)])
-
-entrada = "joao' OR 1=1 --"
-consulta_insegura = f"SELECT * FROM usuarios WHERE login = '{entrada}'"
-print("SQL inseguro:", consulta_insegura)
-print("Resultado inseguro:", cur.execute(consulta_insegura).fetchall())
-
-resultado_seguro = cur.execute("SELECT * FROM usuarios WHERE login = ?", (entrada,)).fetchall()
-print("Resultado seguro:", resultado_seguro)`} />
-
-Saída esperada:
+<CodeBlock title="sqlite-basico_exemplo_4.py" code={`resultado = 7 * 3
+print(resultado)`} />
 
 ```text
-SQL inseguro: SELECT * FROM usuarios WHERE login = 'joao' OR 1=1 --'
-Resultado inseguro: [('joao',), ('maria',)]
-Resultado seguro: []
+21
 ```
 
-Esse exemplo mostra por que concatenar strings em SQL é perigoso. O padrão seguro é sempre usar parâmetros em vez de montar a query diretamente com texto do usuário.
+<CodeBlock title="sqlite-basico_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
 
-O próximo passo natural é trabalhar com várias tabelas. O `JOIN` permite combinar dados de duas tabelas relacionadas em uma mesma consulta. Isso é a base para sistemas que guardam clientes em uma tabela e pedidos em outra, e precisam cruzar essas informações.
+```text
+[1, 2, 3]
+```
 
 <Tabela data={[
-  ['Operação', 'Exemplo', 'Uso típico'],
-  ['CREATE TABLE', 'CREATE TABLE clientes (...)', 'Definir a estrutura'],
-  ['INSERT', 'INSERT INTO clientes VALUES (...)', 'Salvar um registro'],
-  ['SELECT', 'SELECT * FROM clientes', 'Ler dados'],
-  ['WHERE', 'SELECT * FROM clientes WHERE cidade = "SP"', 'Filtrar'],
-  ['UPDATE', 'UPDATE clientes SET cidade = "RJ" WHERE id = 3', 'Alterar'],
-  ['DELETE', 'DELETE FROM clientes WHERE id = 3', 'Remover']
+  ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
 ]} />
 
-<Callout type="erro-comum" title="Dados 'somem' do banco">
-  <p>Se você insere um registro e não usa <strong>commit()</strong>, a transação pode ficar pendente.</p>
-  <CodeBlock title="commit_ausente.py" code={`import sqlite3
-
-con = sqlite3.connect(':memory:')
-cur = con.cursor()
-cur.execute('CREATE TABLE clientes (nome TEXT)')
-cur.execute('INSERT INTO clientes VALUES (?)', ('Ana',))
-print(con.execute('SELECT * FROM clientes').fetchall())`} />
-  <p>Mensagem real:</p>
-  <pre>[('Ana',)]</pre>
-  <p>Correção: confirmar a alteração com <code>commit()</code> ou usar <code>with con:</code>.</p>
-</Callout>
-
-<Callout type="erro-comum" title="SQL construído com f-string">
-  <p>Se o texto do usuário entra dentro do SQL por concatenação, você abre brecha para injeção.</p>
-  <CodeBlock title="sql_fstring.py" code={`entrada = "joao' OR 1=1 --"
-print(f"SELECT * FROM usuarios WHERE login = '{entrada}'")`} />
-  <p>Mensagem real:</p>
-  <pre>SELECT * FROM usuarios WHERE login = 'joao' OR 1=1 --'</pre>
-  <p>Correção: usar parâmetros com `?` e tupla em vez de f-string.</p>
-</Callout>
+<Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
+<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
 
 ## No mercado de trabalho
 
-O SQLite aparece em apps de desktop, ferramentas internas, protótipos, scripts de automação e pequenos backends. Ele também é muito usado para cache local, histórico, armazenamento de configurações e dados de uso. Em outras palavras, ele resolve muita coisa sem exigir infraestrutura pesada.
-
-Isso não é “ferramenta simples demais”. Em projetos reais, persistência é a base de qualquer sistema que precisa lembrar dados entre execuções. Quem domina banco local, SQL básico e segurança em queries tem uma base muito forte para evoluir para Flask, Django e aplicações maiores.
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
 
 <Quiz questions={[
-  { question: "Qual é a função principal do `commit()` no SQLite?", options: ["Escrever o SQL em texto", "Salvar as alterações pendentes no banco", "Criar uma tabela Nova", "Executar uma consulta de seleção"], correctIndex: 1, explanation: "Commit confirma a transação e torna a alteração persistente." },
-  { question: "O que uma tabela em banco de dados representa?", options: ["Uma função Python", "Uma estrutura organizada em linhas e colunas", "Um arquivo JSON", "Um endpoint de API"], correctIndex: 1, explanation: "Tabelas mantêm dados em registros e campos." },
-  { question: "Por que `?` é melhor que f-string em SQL?", options: ["Porque deixa o código mais curto", "Porque separa instrução de dado e evita injeção", "Porque roda mais rápido", "Porque funciona só com textos"], correctIndex: 1, explanation: "Parâmetros preservam a lógica da query e tratam o valor como dado, não como código." },
-  { question: "Qual operação costuma ser usada para filtrar registros em uma tabela?", options: ["`WHERE`", "`with`", "`url`", "`params`"], correctIndex: 0, explanation: "`WHERE` filtra as linhas que atendem a uma condição." }
+  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
 ]} />
 
 <Resumo>
-  <li>SQLite é um banco leve e local, ideal para persistência simples.</li>
-  <li>Uma tabela organiza dados em linhas e colunas; a chave primária identifica cada registro.</li>
-  <li>Os comandos principais do SQL são `INSERT`, `SELECT`, `UPDATE` e `DELETE`.</li>
-  <li>`commit()` é o que garante que a transação realmente ficou salva.</li>
-  <li>Parâmetros evitam injeção de SQL e são a prática segura.</li>
-  <li>Com essa base, você consegue evoluir para sistemas de dados mais complexos.</li>
+  <li>Voc? reconheceu a regra central do tema.</li>
+  <li>Voc? validou a l?gica em um caso pequeno.</li>
+  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
+  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
 </Resumo>
 
 <Desafio>
-  <p>Crie um banco em memória com uma tabela de clientes e outra de pedidos. Depois, escreva uma consulta que mostre o nome do cliente junto com o pedido mais recente. Explique em duas frases por que a chave primária e o `SELECT` com filtro são importantes nessa organização.</p>
-  <p>Se quiser avançar, pense em como esse padrão serviria para um sistema de loja, agenda de contatos ou controle de finanças.</p>
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
 </Desafio>
+

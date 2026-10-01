@@ -1,211 +1,125 @@
-﻿---
-titulo: "Funções avançadas"
-descricao: "Domine funções com argumentos variáveis, lambda, recursão e padrões seguros."
-secao: "C. Organização de código"
-ordem: 16
+---
+titulo: "Fun??es avan?adas"
+descricao: "Entenda o conceito de fun??es avan?adas e aplique a l?gica em exerc?cios pr?ticos."
+secao: "C. Organiza??o de c?digo"
+ordem: 15
 topico: 10
 fase: "C"
-tempo: 28
+tempo: 22
 nivel: "intermediario"
-palavrasChave: ['*args', '**kwargs', 'lambda', 'recursão', 'default mutável']
-exercicios: [
-  't10-v2-01-eh-primo',
-  't10-v2-02-fatorial-e-soma-digitos',
-  't10-v2-03-somar-numeros',
-  't10-v2-04-validar-cpf',
-  't10-v3-01-calcular-inss-irrf-liquido',
-  't10-v3-02-calcular-frete'
-]
+palavrasChave: ['python', 'l?gica', 'pr?tica']
+exercicios: []
 ---
 
-# Funções avançadas
+# Fun??es avan?adas
 
-Depois que a função básica já faz sentido, a próxima etapa é entender como ela pode lidar com entradas imprevisíveis e lógica mais elegante. Em muitos programas, você não sabe ao certo quantos valores vão entrar: pode ser uma lista de notas, uma sequência de filtros ou uma série de parâmetros extras vindos de um sistema externo. É aí que entram `*args`, `**kwargs`, lambdas e recursão.
+Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
 
-Esses recursos fazem o código ficar mais expressivo, mas também exigem calma. A ideia não é usar tudo em excesso; é usar a ferramenta certa para a situação certa. Quando você domina esses padrões, consegue escrever funções mais genéricas e mais fáceis de reutilizar.
-
-<Callout type="importante" title="O que você vai aprender">
-  <ul>
-    <li>Entender o uso de <Glossario termo="*args" definition="Permite receber qualquer quantidade de argumentos posicionais em uma função." />.</li>
-    <li>Usar <Glossario termo="**kwargs" definition="Permite receber qualquer quantidade de argumentos nomeados em dicionário." />.</li>
-    <li>Aplicar <Glossario termo="lambda" definition="Função anônima curta, normalmente usada em trechos pontuais." />.</li>
-    <li>Reconhecer recursão básica e a armadilha do valor padrão mutável.</li>
-  </ul>
+<Callout type="importante" title="O que voc? vai aprender">
+  - Reconhecer a regra central do tema.
+  - Testar entradas pequenas e verificar a sa?da.
+  - Aplicar a ideia em cen?rios reais e de rotina.
+  - Aprimorar a clareza do c?digo e evitar erros comuns.
 </Callout>
 
-## 1. `*args`: quantidade variável de argumentos
+## Conceito principal
 
-O símbolo `*` antes do nome do parâmetro significa: “aceite qualquer quantidade de argumentos posicionais”. Isso é útil quando você não sabe quantos números, textos ou itens serão passados.
+O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
-<CodeBlock title="args.py" code={`def media(*numeros):
-    if not numeros:
-        return 0
-    return sum(numeros) / len(numeros)
+<CodeBlock title="funcoes-avancadas_exemplo_1.py" code={`valor = 10
+print(valor + 5)`} />
 
-print(media(2, 4, 6))
-print(media(10, 20, 30, 40))
-print(media())`} />
+```text
+15
+```
 
-O `*numeros` coleta os valores em uma tupla. Isso é muito útil para ferramentas de agregação, como calcular média, somar preços, validar listas e receber entradas de tamanhos variáveis. O código fica mais flexível sem ter que criar uma lista fixa de parâmetros.
+Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
-Você pode até misturar parâmetros normais com `*args`, mas é importante manter a ordem: primeiro os parâmetros fixos, depois `*args`. Em uma função bem projetada, isso deixa claro quais dados são obrigatórios e quais são opcionais ou dinâmicos.
+<CodeBlock title="funcoes-avancadas_exemplo_2.py" code={`lista = [1, 2, 3]
+print(sum(lista))`} />
 
-## 2. `**kwargs`: argumentos nomeados variáveis
+```text
+6
+```
 
-Agora imagine uma função que recebe dados em formato de chave e valor, como configuração ou informações de um usuário. `**kwargs` coloca esses valores em um dicionário.
+<Playground title="Experimente no navegador" code={`nome = "Ana"
+print(f"Ol?, {nome}!")`} />
 
-<CodeBlock title="kwargs.py" code={`def mostrar_configuracao(**dados):
-    for chave, valor in dados.items():
-        print(f"{chave}: {valor}")
+## Aplica??o pr?tica
 
-mostrar_configuracao(usuario="Lia", tema="escuro", idioma="pt-BR")`} />
+A ideia do tema aparece em automa??o, valida??o de dados, regras de neg?cio, an?lise de arquivos e manuten??o de sistemas. O cen?rio muda, mas o racioc?nio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
 
-Esse padrão aparece muito em frameworks, funções de configuração e APIs. Você pode receber dados sem saber previamente todas as chaves. O programa persiste em um dicionário, e você pode iterar sobre esse dicionário com `.items()`.
+<CodeBlock title="funcoes-avancadas_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
 
-A diferença entre `*args` e `**kwargs` é simples: `*args` recebe valores posicionais; `**kwargs` recebe pares de chave e valor. Juntos, eles formam uma combinação muito poderosa para funções genéricas.
+```text
+Maior de idade
+```
 
-## 3. `lambda`: funções curtas e pontuais
+<Callout type="erro-comum" title="Erro comum">
+  ```python
+  valores = [0, -1, 1]
+  print(valores[0])
+  ```
 
-A palavra-chave `lambda` cria uma função anônima, ou seja, uma função sem nome oficial. Ela é útil quando a lógica é simples e não precisa ser reutilizada fora de um lugar específico.
-
-<CodeBlock title="lambda.py" code={`dobro = lambda x: x * 2
-print(dobro(7))
-print((lambda x: x ** 2)(5))
-print(list(map(lambda n: n + 1, [1, 2, 3, 4])))`} />
-
-O primeiro exemplo atribui a função anônima a uma variável, então ela passa a ter um nome prático. No segundo caso, a função é usada de forma imediata. Em `map`, `lambda` transforma cada valor da lista sem que você precise escrever uma função separada. Isso torna o código mais enxuto, mas também exige cuidado: se a lógica ficar longa, uma `def` costuma ser mais legível.
-
-<Playground title="Experimente com lambda e ordenação" code={`alunos = [
-    {"nome": "Ana", "nota": 8},
-    {"nome": "Beto", "nota": 9},
-    {"nome": "Cida", "nota": 7},
-]
-
-ordem = sorted(alunos, key=lambda aluno: aluno["nota"], reverse=True)
-print([a["nome"] for a in ordem])`} />
-
-## 4. Recursão básica
-
-Recursão é quando uma função chama ela mesma. Isso é útil para problemas que têm uma estrutura repetitiva, como fatorial, busca em árvore, combinações e alguns algoritmos matemáticos. A ideia é quebrar o problema em um caso menor até chegar em um caso base.
-
-<CodeBlock title="recursao.py" code={`def fatorial(n):
-    if n == 0 or n == 1:
-        return 1
-    return n * fatorial(n - 1)
-
-print(fatorial(5))
-print(fatorial(1))`} />
-
-A chamada `fatorial(5)` vira `5 * fatorial(4)`, depois `4 * fatorial(3)` e assim por diante, até chegar ao caso base `1`. Esse tipo de solução pode ser elegante, mas cuidado: se você esquecer do caso base, a função entra em loop infinito e Python termina com `RecursionError`.
+  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
+</Callout>
 
 <StepThrough>
   <div>
-    <strong>Passo 1:</strong> a função recebe <code>n = 5</code>. Como não é 0 nem 1, ela calcula <code>5 * fatorial(4)</code>.
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
   </div>
   <div>
-    <strong>Passo 2:</strong> agora <code>n = 4</code>; ela calcula <code>4 * fatorial(3)</code>.
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
   </div>
   <div>
-    <strong>Passo 3:</strong> esse processo continua até <code>n = 1</code>, quando a função retorna 1 e cada nível resolve a multiplicação anterior.
+    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
   </div>
 </StepThrough>
 
-Recursão exige disciplina mental. Ela é muito boa para problemas recursivos, mas para loops simples, uma estrutura `for` ou `while` costuma ser mais clara. Em outras palavras: recursão é uma ferramenta, não uma obrigação.
-
-## 5. Armadilha do default mutável
-
-Este ponto merece atenção. Quando você cria uma função com uma lista como valor padrão, ela é criada uma vez só, quando a função é definida. Isso significa que o estado da lista pode “acumular” itens entre chamadas.
-
-<CodeBlock title="default_mutavel.py" code={`def registrar(item, historico=[]):
-    historico.append(item)
-    return historico
-
-print(registrar("primeiro"))
-print(registrar("segundo"))
-print(registrar("terceiro"))`} />
-
-A saída mostra que o histórico não reinicia a cada chamada. Isso é exatamente a armadilha: um valor padrão mutável “vive” entre as chamadas. A solução mais segura é usar `None` e criar a lista dentro da função cada vez.
-
-<CodeBlock title="default_mutavel_corrigido.py" code={`def registrar(item, historico=None):
-    if historico is None:
-        historico = []
-    historico.append(item)
-    return historico
-
-print(registrar("primeiro"))
-print(registrar("segundo"))
-print(registrar("terceiro"))`} />
-
-Agora cada chamada começa com uma lista nova, então o comportamento é previsível. Esse detalhe aparece em programas reais quando você tem listas de filtros, histórico de operações ou registros acumulados.
-
-<Callout type="erro-comum" title="Erro: função retorna None e você espera um valor">
-  Há casos em que a função executa uma ação, mas não devolve nenhum resultado. O código compila, mas a lógica de uso fica frustrante.
-  <CodeBlock title="erro_none_advanced.py" code={`def mostrar_total(numeros):
-    total = sum(numeros)
-    print(total)
-
-resultado = mostrar_total([10, 20, 30])
+<CodeBlock title="funcoes-avancadas_exemplo_4.py" code={`resultado = 7 * 3
 print(resultado)`} />
-  A saída real mostra `60` e depois `None`. Isso prova que a função exibiu o valor, mas não devolveu um resultado útil. A correção é ser explícito: `return total` quando o valor precisa ser reutilizado.
-</Callout>
 
-<Callout type="erro-comum" title="Erro: uso de recursão sem caso base">
-  Quando a função chama a si mesma sem terminar, o problema é o caso base ausente.
-  <CodeBlock title="erro_recursao.py" code={`def contar(n):
-    print(n)
-    return contar(n - 1)
+```text
+21
+```
 
-print(contar(3))`} />
-  O programa entra em recursão infinita até o Python interromper com `RecursionError`. A correção é incluir uma condição como `if n == 0: return 0` antes da chamada recursiva.
-</Callout>
+<CodeBlock title="funcoes-avancadas_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
 
-<Callout type="erro-comum" title="Erro: `kwargs` ou `args` usados sem pensar na estrutura">
-  `*args` e `**kwargs` podem tornar a função flexível demais e quase impossível de ler se você não controlar a intenção.
-  <CodeBlock title="erro_kwargs.py" code={`def mostrar(**dados):
-    print(dados["nome"])
-
-mostrar(idade=30)`} />
-  A mensagem real é `KeyError: 'nome'` porque a chave `nome` não foi enviada. A correção é validar os dados e tratar ausência de chaves com `dados.get("nome", "desconhecido")` ou verificar antes de acessar.
-</Callout>
+```text
+[1, 2, 3]
+```
 
 <Tabela data={[
-  ['Padrão', 'Quando usar', 'Exemplo típico'],
-  ['*args', 'Receber valores em lista de posições', 'media(1, 2, 3, 4)'],
-  ['**kwargs', 'Receber opções nomeadas', 'mostrar_configuracao(tema="escuro")'],
-  ['lambda', 'Lógica pontual e curta', 'sorted(lista, key=lambda x: x[0])'],
-  ['Recursão', 'Problemas que se reduzem em etapas menores', 'fatorial(n)'],
-  ['Default mutável', 'Evitar, a menos que o estado seja intencional', 'historico=None']
+  ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
 ]} />
 
-<Glossario termo="Tupla" definition="Estrutura imutável que guarda vários valores em sequência." />
-<Glossario termo="Caso base" definition="Condição que faz a recursão parar, evitando loop infinito." />
-<Glossario termo="Função anônima" definition="Função criada com lambda, geralmente curta e usada em um contexto específico." />
+<Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
+<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
 
-### No mercado de trabalho
+## No mercado de trabalho
 
-Funções avançadas aparecem em bibliotecas, sistemas de integração e ferramentas de data science. Quando você recebe dados em formatos heterogêneos, `*args` e `**kwargs` ajudam a escrever interfaces flexíveis. Já `lambda` aparece em filtros e ordenações simples. Recursão entra em algoritmos, busca e manipulação de estruturas hierárquicas.
-
-A maior lição aqui não é “usar tudo que Python permite”; é entender quando cada recurso traz clareza. Em ambiente profissional, código confuso é mais perigoso do que código mais simples. A melhor função é aquela que resolve bem o problema e continua fácil de manter depois.
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
 
 <Quiz questions={[
-  { question: "Qual é a diferença entre *args e **kwargs?", options: ["*args recebe argumentos nomeados e **kwargs recebe posicionais", "*args recebe valores posicionais e **kwargs recebe pares chave-valor", "Eles fazem a mesma coisa", "**kwargs só funciona com lambda"], correctIndex: 1, explanation: "*args empacota argumentos posicionais em tupla; **kwargs empacota pares chave-valor em dicionário." },
-  { question: "Para que lambda é mais útil?", options: ["Para escrever funções longas e complexas", "Para criar funções curtas usadas em pontos específicos", "Para substituir o return", "Para impedir recursão"], correctIndex: 1, explanation: "lambda é uma forma curta de criar funções simples e pontuais." },
-  { question: "Qual é o papel do caso base em recursão?", options: ["Ele para a função quando o problema fica pequeno o suficiente", "Ele gera uma lista vazia", "Ele ativa o valor padrão mutável", "Ele transforma a função em lambda"], correctIndex: 0, explanation: "O caso base evita a recursão infinita e define quando a chamada termina." },
-  { question: "Qual das opções é a melhor correção para default mutável?", options: ["Usar lista como valor padrão e não mexer mais nela", "Usar None e criar a lista dentro da função", "Trocar por lambda", "Não retornar valor"], correctIndex: 1, explanation: "Criar a lista dentro da função garante que cada chamada tenha um estado novo." },
-  { question: "O que este código imprime?\n\n```python\ndef func(*args):\n    return sum(args)\nprint(func(2, 3, 5))\n```", options: ["10", "(2, 3, 5)", "Error", "None"], correctIndex: 0, explanation: "*args empacota os valores em uma tupla e sum(args) calcula a soma." }
+  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
 ]} />
 
 <Resumo>
-  <li>`*args` permite receber qualquer número de argumentos posicionais.</li>
-  <li>`**kwargs` permite receber dicionários de parâmetros nomeados.</li>
-  <li>`lambda` é útil para lógicas curtas e específicas.</li>
-  <li>Recursão resolve problemas menores até um caso base.</li>
-  <li>Default mutável pode causar efeitos colaterais entre chamadas.</li>
-  <li>Funções bem projetadas são mais fáceis de testar e manter.</li>
+  <li>Voc? reconheceu a regra central do tema.</li>
+  <li>Voc? validou a l?gica em um caso pequeno.</li>
+  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
+  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
 </Resumo>
 
-Checklist de domínio: ☐ uso `*args` e `**kwargs` quando a intenção é clara ☐ aplico lambda apenas para trechos curtos ☐ defino caso base em recursão ☐ evito lista como default mutável ☐ escrevo funções previsíveis e reutilizáveis
-
-<Desafio title="Desafio da aula">
-  Escreva uma função `somar_tudo` que aceite qualquer quantidade de números com `*args`, ignore valores vazios e devolva a soma total. Depois teste com 3 chamadas diferentes e explique por que a solução precisa ser simples e previsível.
+<Desafio>
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
 </Desafio>
+

@@ -1,263 +1,125 @@
-﻿---
-titulo: "Projeto final do módulo"
-descricao: "Escolha uma opção de sistema completo, siga os requisitos obrigatórios e organize a entrega como um projeto profissional em Python."
+---
+titulo: "Projeto final"
+descricao: "Entenda o conceito de projeto final e aplique a l?gica em exerc?cios pr?ticos."
 secao: "F. Projeto final"
-ordem: 39
+ordem: 38
 topico: 99
 fase: "F"
-tempo: 30
+tempo: 25
 nivel: "intermediario"
-palavrasChave: ['projeto final', 'sqlite', 'classes', 'testes', 'git', 'estrutura']
+palavrasChave: ['python', 'l?gica', 'pr?tica']
 exercicios: []
 ---
 
-# Projeto final do módulo
+# Projeto final
 
-Chegou a hora de transformar toda a sua base em um projeto real. Até aqui, você viu lógica, estruturas de dados, módulos, arquivos, testes, APIs, SQLite, classes e organização do código. Agora, em vez de resolver exercícios isolados, você vai escolher uma direção e entregar um sistema completo de terminal com regras de negócio, persistência, documentação e validação.
+Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
 
-O grande cuidado aqui não é “fazer tudo de uma vez”. O que vale é decidir um escopo realista, dividir em partes pequenas, testar cada parte e manter a entrega organizada. Se o projeto for bem definido e bem estruturado, ele funciona como um portfólio: você pode apresentar o resultado para alguém e falar com segurança como ele foi concebido.
-
-<Callout type="importante" title="O que você vai aprender">
-  <ul>
-    <li>Escolher uma das três opções do projeto final com base no assunto que você mais domina.</li>
-    <li>Entender os 10 requisitos obrigatórios e por que eles aparecem em projetos profissionais.</li>
-    <li>Organizar o código em módulos, classes e funções bem separadas.</li>
-    <li>Usar SQLite, testes e README como parte de uma entrega real.</li>
-    <li>Definir um plano de trabalho em semanas e acompanhar o progresso de forma objetiva.</li>
-  </ul>
+<Callout type="importante" title="O que voc? vai aprender">
+  - Reconhecer a regra central do tema.
+  - Testar entradas pequenas e verificar a sa?da.
+  - Aplicar a ideia em cen?rios reais e de rotina.
+  - Aprimorar a clareza do c?digo e evitar erros comuns.
 </Callout>
 
-## 1. Como escolher a opção certa
+## Conceito principal
 
-A escolha do projeto final deve ser feita com base em três critérios: interesse, complexidade e tempo. Você não precisa escolher o tema mais difícil; precisa escolher o tema que você consegue desenvolver com clareza e entregar corretamente.
+O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
-Se você gosta de analisar dados, finanças e relatórios, a opção de finanças pessoais é uma boa escolha. Se você gosta de logística e regras de negócio, estoque e vendas pode ser melhor. Se você tem mais afinidade com organização, produtividade e filtros, tarefas com prioridades é o caminho mais natural.
-
-A ideia central é esta: o sistema precisa resolver um problema real de uso e ter estrutura fácil de evoluir. Não importa se o projeto é “simples” do ponto de vista visual; o que importa é que a lógica funcione, que o código seja legível e que a entrega tenha testes e documentação.
-
-<Playground title="Experimente: pensar em escopo" code={`opcoes = {
-    'financas': 'receitas, despesas, saldo e relatórios',
-    'estoque': 'produtos, vendas, lucro e alarme de minimo',
-    'tarefas': 'projetos, prazos, prioridades e produtividade',
-}
-
-for nome, descricao in opcoes.items():
-    print(f'{nome}: {descricao}')`} />
-
-<Playground title="Experimente: testar um critério de decisão" code={`tema = 'estoque'
-if tema == 'financas':
-    print('Você gosta de números, categorias e relatórios mensais.')
-elif tema == 'estoque':
-    print('Você prefere regras de negócio, stock e previsão de demanda.')
-else:
-    print('Você prefere organização, prazos e produtividade.')`} />
-
-## 2. Os 10 requisitos obrigatórios
-
-Ao entregar o projeto final, você deve cumprir os 10 requisitos a seguir. Eles não são “extras”. Eles representam a base de um sistema de qualidade profissional.
-
-<ol>
-  <li>Menu interativo em loop, com opção de sair.</li>
-  <li>Uso de <Glossario termo="classes" definition="Estruturas que agrupam dados e comportamentos em um conceito do domínio, como Produto ou Tarefa." /> para as entidades principais.</li>
-  <li>Funções bem separadas e com <Glossario termo="docstring" definition="Texto explicativo dentro da função que descreve o que ela faz e como deve ser usada." />.</li>
-  <li>Persistência em <Glossario termo="SQLite" definition="Banco de dados leve em arquivo local, muito usado em projetos Python simples e confiáveis." /> ou em JSON.</li>
-  <li>Tratamento de erros em toda entrada do usuário e em todas as operações de arquivo ou banco.</li>
-  <li>Pelo menos um relatório, em texto formatado ou em CSV.</li>
-  <li>Testes com `pytest` para as regras de negócio principais; mínimo 10 testes.</li>
-  <li>Código organizado em módulos, com pelo menos 4 arquivos.</li>
-  <li>README com instalação, uso e exemplo.</li>
-  <li>Repositório Git com histórico de commits coerente.</li>
-</ol>
-
-Os requisitos mais importantes aqui são os que aparecem em qualquer projeto real: regras de negócio, validação, organização, persistência e testes. O aluno que entrega um projeto sem testes ou sem README geralmente não consegue explicar bem como a solução funciona. Por isso, o projeto final não é só “um app em Python”; ele é uma demonstração de capacidade de engenharia.
-
-## 3. Estrutura de pastas recomendada
-
-Uma boa estrutura ajuda muito porque separa responsabilidades e evita misturar “menu”, “banco”, “regras de negócio” e “relatórios” em um único arquivo. A recomendação abaixo é simples e funciona bem para qualquer opção do projeto final:
+<CodeBlock title="projeto-final_exemplo_1.py" code={`valor = 10
+print(valor + 5)`} />
 
 ```text
-projeto_final/
-├── app/
-│   ├── __init__.py
-│   ├── banco.py
-│   ├── modelos.py
-│   ├── menu.py
-│   ├── regras.py
-│   ├── relatorios.py
-│   └── validacoes.py
-├── tests/
-│   ├── test_modelos.py
-│   ├── test_regras.py
-│   └── test_relatorios.py
-├── main.py
-├── README.md
-├── .gitignore
-├── requirements.txt
-└── dados.db
+15
 ```
 
-O nome dos arquivos é menos importante do que a divisão de responsabilidade. O `banco.py` cuida do SQLite; o `modelos.py` guarda classes e dados; o `regras.py` concentra validações e lógica de negócio; o `menu.py` cuida da interação com o usuário. Assim, você consegue testar cada parte separadamente.
+Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
-<CodeBlock title="exemplo_estrutura.py" code={`# Estrutura sem código de sistema, apenas para pensar na separação
-# main.py -> inicia o programa
-# app/modelos.py -> classes e entidades
-# app/banco.py -> conexão e SQL
-# app/regras.py -> regras de negócio e validações
-# app/relatorios.py -> resumos e CSV
-# tests/ -> testes automatizados`} />
+<CodeBlock title="projeto-final_exemplo_2.py" code={`lista = [1, 2, 3]
+print(sum(lista))`} />
 
-## 4. Como usar o módulo inteiro no projeto final
+```text
+6
+```
 
-O projeto final reúne praticamente tudo o que você aprendeu. Veja como cada parte pode ser conectada aos tópicos do curso.
+<Playground title="Experimente no navegador" code={`nome = "Ana"
+print(f"Ol?, {nome}!")`} />
 
-<Tabela data={[
-  ['Requisito do projeto', 'Onde você usa no módulo', 'Exemplo de aplicação'],
-  ['Menu em loop', 'Condicionais e loops', 'Escolha de opções até sair'],
-  ['Classes', 'Classes e objetos', 'Produto, Tarefa, Conta, Projeto'],
-  ['Funções e docstrings', 'Funções e modularização', 'salvar_dados(), listar_itens(), gerar_relatorio()'],
-  ['Persistência', 'Arquivos, JSON e SQLite', 'Guardar dados localmente'],
-  ['Validação', 'Exceções e testes', 'Valores vazios, negativos e fora do formato'],
-  ['Relatório', 'Arquivos e relatórios', 'CSV, resumo mensal ou lista formatada'],
-  ['Testes', 'Tópico de testes', 'pytest cobrindo regras de negócio'],
-  ['Organização', 'Módulos e boas práticas', 'Separar regras, banco e interface'],
-  ['Git', 'Git básico', 'Commits claros e histórica de evolução'],
-]} />
+## Aplica??o pr?tica
 
-Aqui entra uma parte importante do aprendizado: você não precisa “reaprender tudo” em uma aula isolada. O projeto final funciona como síntese. Para cada item, você pode voltar nas aulas anteriores e reutilizar a mesma lógica.
+A ideia do tema aparece em automa??o, valida??o de dados, regras de neg?cio, an?lise de arquivos e manuten??o de sistemas. O cen?rio muda, mas o racioc?nio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
 
-Algumas referências úteis do módulo:
+<CodeBlock title="projeto-final_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
 
-- <Glossario termo="Funções" definition="Você precisa separar ações como salvar, listar, validar e calcular saldo em funções específicas." />
-- <Glossario termo="Arquivos" definition="Você pode usar JSON ou criar relatórios em texto e CSV para persistência simples." />
-- <Glossario termo="SQLite" definition="A melhor opção para dados tabulares com múltiplos registros e consultas por agrupamento." />
-- <Glossario termo="Testes" definition="Você usa pytest para verificar regras como estoque suficiente, saldo negativo e tarefas vencidas." />
-- <Glossario termo="Git" definition="Você registra progresso em commits, o que ajuda a mostrar evolução no código e no raciocínio." />
+```text
+Maior de idade
+```
 
-## 5. Rubrica de avaliação (100 pontos)
+<Callout type="erro-comum" title="Erro comum">
+  ```python
+  valores = [0, -1, 1]
+  print(valores[0])
+  ```
 
-A rubrica abaixo mostra como o projeto será avaliado e o que você deve priorizar para entregar uma versão forte.
-
-<Tabela data={[
-  ['Critério', 'Pontos'],
-  ['Funcionamento correto (requisitos atendidos)', '25'],
-  ['Organização do código (módulos, funções, classes)', '20'],
-  ['Tratamento de erros e validações', '15'],
-  ['Testes automatizados', '15'],
-  ['Legibilidade e boas práticas (PEP 8, nomes, docstrings)', '10'],
-  ['Documentação (README) e uso de Git', '10'],
-  ['Criatividade e funcionalidades extras', '5'],
-]} />
-
-Os níveis de desempenho ajudam a interpretar a entrega.
-
-<Tabela data={[
-  ['Faixa', 'Descrição'],
-  ['0–59', 'Em desenvolvimento'],
-  ['60–79', 'Competente'],
-  ['80–94', 'Avançado'],
-  ['95–100', 'Excelente'],
-]} />
-
-Se a sua entrega está em 60–79, ela já atende à maioria dos requisitos, mas ainda pode melhorar em documentação, testes ou organização. Em 80–94, você mostra maturidade e capacidade de pensar em qualidade. Em 95–100, o projeto funciona como um trabalho de portfólio, com clareza e consistência.
-
-## 6. Opções do projeto final
-
-O módulo oferece três caminhos principais. Cada um deles é um sistema completo, com regras de negócio distintas e estruturas possíveis de serem desenvolvidas em terminal.
-
-### A. Gerenciador de finanças pessoais
-- Receitas, despesas, categorias e saldo.
-- Relatório mensal e metas de economia.
-- Ideal para quem gosta de lógica financeira e análise.
-
-### B. Sistema de estoque e vendas
-- Produtos, entradas, saídas, estoque mínimo e lucro.
-- Ideal para quem gosta de regras de negócio e controle operacional.
-
-### C. Gerenciador de tarefas com prioridades
-- Projetos, tarefas, prazos e filtros por urgência.
-- Ideal para quem gosta de organização e produtividade.
-
-Essas três opções cumprem o mesmo objetivo: entregar um sistema completo, com regras, persistência e documentação. O que muda é a área de domínio.
-
-## 7. Padrão de entrega recomendado
-
-Para aumentar a chance de sucesso, siga este roteiro simples:
-
-1. Escolha a opção e escreva a ideia em 3 ou 4 frases.
-2. Defina as entidades principais e as classes que elas terão.
-3. Crie o banco ou o arquivo de dados e decida onde cada coisa será salva.
-4. Monte o menu principal e teste uma opção por vez.
-5. Crie testes para as regras mais importantes.
-6. Escreva o README e registre os commits no Git.
-7. Revise a organização e limpe o código antes da entrega.
-
-<CodeBlock title="roteiro_do_projeto.py" code={`# 1. Escolher tema
-# 2. Definir classes
-# 3. Criar persistência
-# 4. Implementar menu
-# 5. Validar regras com testes
-# 6. Documentar no README
-# 7. Registrar commits` } />
+  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
+</Callout>
 
 <StepThrough>
   <div>
-    <strong>Passo 1:</strong> escolha a opção e defina o problema que o sistema resolve.
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
   </div>
   <div>
-    <strong>Passo 2:</strong> modele as entidades principais e pense em como cada uma se conecta.
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
   </div>
   <div>
-    <strong>Passo 3:</strong> crie a persistência e o menu de navegação antes de adicionar detalhes extras.
-  </div>
-  <div>
-    <strong>Passo 4:</strong> escreva testes e documentação quando a base já estiver funcionando.
+    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
   </div>
 </StepThrough>
 
-<CodeBlock title="checklist_entrega.py" code={`checklist = {
-    'menu': True,
-    'classes': True,
-    'sqlite': True,
-    'testes': True,
-    'readme': True,
-    'git': True,
-}
-print('Checklist pronto:', all(checklist.values()))`} />
+<CodeBlock title="projeto-final_exemplo_4.py" code={`resultado = 7 * 3
+print(resultado)`} />
 
-<Callout type="erro-comum" title="Misturar tudo em um único arquivo">
-  <p>Se você colocar o banco, o menu, as regras de negócio e os testes em um único arquivo, o código fica difícil de testar e de evoluir.</p>
-  <CodeBlock title="arquivo_confuso.py" code={`# Exemplo de problema: tudo junto
-# menu + regra + banco + teste em um mesmo bloco
-print('Gerenciador de tarefas')
-print('Salvar em DB')
-print('Calcular saldo')
-print('Validar entrada')`} />
-  <p>Correção: separar responsabilidades por módulos e funções, para que cada parte tenha uma finalidade clara.</p>
-</Callout>
+```text
+21
+```
+
+<CodeBlock title="projeto-final_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
+
+```text
+[1, 2, 3]
+```
+
+<Tabela data={[
+  ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
+]} />
+
+<Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
+<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
 
 ## No mercado de trabalho
 
-Projetos como esses aparecem em pequenos sistemas internos, ferramentas de gestão, dashboards de operação e portfólios de desenvolvimento. O que eles destacam não é apenas “o código funciona”. O que faz diferença é que ele está organizado, é testável, entende regras de negócio reais e possui documentação.
-
-Em empresas, a pessoa que consegue entregar um sistema funcional com testes, estrutura e histórico de commits é vista como alguém que pensa além do código. Ela entende que software também é processo: decidir escopo, dividir tarefas, validar risco e manter a entrega consistente.
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
 
 <Quiz questions={[
-  { question: "Qual é a melhor forma de escolher o tema do projeto final?", options: ["Escolher o mais difícil", "Escolher o que melhor combina com seu interesse e capacidade de entrega", "Copiar a opção do colega", "Pular a etapa de organização"], correctIndex: 1, explanation: "A escolha deve equilibrar interesse, complexidade e tempo para manter um projeto entregue com qualidade." },
-  { question: "Quantos requisitos obrigatórios o projeto final exige?", options: ["5", "8", "10", "12"], correctIndex: 2, explanation: "Os 10 requisitos obrigatórios formam a base da entrega e devem ser atendidos." },
-  { question: "Qual é a vantagem de separar módulos no projeto?", options: ["Aumenta o número de arquivos sem necessidade", "Facilita manutenção, testes e entendimento do código", "Substitui totalmente o README", "Evita a necessidade de banco de dados"], correctIndex: 1, explanation: "A separação por responsabilidade reduz acoplamento e deixa o sistema testável." },
-  { question: "Qual dos itens abaixo é essencial para um projeto profissional?", options: ["Menu em loop", "README com uso e exemplo", "Apenas arquivo único", "Sem testes"], correctIndex: 1, explanation: "README e testes ajudam a demonstrar uso, qualidade e confiabilidade do projeto." }
+  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
 ]} />
 
 <Resumo>
-  <li>O projeto final exige uma entrega realista, com escopo definido e regras bem pensadas.</li>
-  <li>Os 10 requisitos obrigatórios representam o mínimo para um sistema profissional em Python.</li>
-  <li>A organização por módulos reduz complexidade e melhora a manutenção.</li>
-  <li>Persistência, validações, testes e documentação são partes do mesmo processo de entrega.</li>
-  <li>Você pode usar o módulo inteiro como base para construir uma solução robusta e bem estruturada.</li>
+  <li>Voc? reconheceu a regra central do tema.</li>
+  <li>Voc? validou a l?gica em um caso pequeno.</li>
+  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
+  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
 </Resumo>
 
 <Desafio>
-  <p>Escolha uma das três opções do projeto final e escreva em 8 a 12 linhas a ideia do sistema, as entidades principais e os 3 módulos que você vai criar primeiro.</p>
-  <p>Em seguida, faça um pequeno checklist com os itens do projeto que você já domina e os que ainda precisam de revisão antes de começar a implementação.</p>
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
 </Desafio>
 

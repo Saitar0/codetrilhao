@@ -12,11 +12,11 @@
     "Tenha mensagens diferentes para cada exceção e imprima a apropriada.",
     "Mantenha o `try` curto: apenas a operação que pode falhar."
   ],
-  "solucao": "def dividir_com_mensagens():\n    try:\n        a = float(input())\n        b = float(input())\n        print(a/b)\n    except ZeroDivisionError:\n        print(\"Divisão por zero detectada.\")\n    except ValueError:\n        print(\"Entrada inválida.\")\n",
+  "solucao": "try:\n    a = float(input())\n    b = float(input())\n    print(a / b)\nexcept ZeroDivisionError:\n    print(\"Divisão por zero detectada.\")\nexcept ValueError:\n    print(\"Entrada inválida.\")\n",
   "tags": ["except", "ZeroDivisionError", "ValueError"],
   "aulaRelacionada": "excecoes",
   "enunciado": "Leia dois valores com `input()` e tente imprimir o resultado de `a/b`. Se ocorrer `ZeroDivisionError`, imprima 'Divisão por zero detectada.'; se ocorrer `ValueError`, imprima 'Entrada inválida.'",
-  "starterCode": "def dividir_com_mensagens():\n    pass\n",
+  "starterCode": "a = float(input())\nb = float(input())\nprint(a / b)\n",
   "testes": [
     { "entrada": "10\n2\n", "esperado": "5.0\n", "oculto": false },
     { "entrada": "10\n0\n", "esperado": "Divisão por zero detectada.\n", "oculto": false },

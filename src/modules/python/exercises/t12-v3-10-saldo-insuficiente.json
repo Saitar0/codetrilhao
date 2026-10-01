@@ -12,7 +12,7 @@
     "A função `sacar` deve retornar o novo saldo quando o saque for bem sucedido.",
     "Nos testes, quando a exceção é esperada, retorne a mensagem da exceção como string."
   ],
-  "solucao": "class SaldoInsuficienteError(Exception):\n    pass\n\ndef sacar(saldo, valor):\n    if valor > saldo:\n        raise SaldoInsuficienteError(\"Saldo insuficiente para este saque.\")\n    return round(saldo - valor, 2)\n",
+  "solucao": "class SaldoInsuficienteError(Exception):\n    pass\n\ndef sacar(saldo, valor):\n    if valor > saldo:\n        raise SaldoInsuficienteError(\"Saldo insuficiente para este saque.\")\n    return round(saldo - valor, 2)\n\ndef mensagem_saldo_insuficiente(saldo, valor):\n    try:\n        return str(sacar(saldo, valor))\n    except SaldoInsuficienteError as exc:\n        return str(exc)\n",
   "tags": ["raise", "excecao-personalizada", "conta"],
   "aulaRelacionada": "excecoes",
   "enunciado": "Implemente `sacar(saldo, valor)` que lança `SaldoInsuficienteError('Saldo insuficiente para este saque.')` se `valor > saldo`. Caso contrário, retorna o novo saldo com 2 casas decimais.",
@@ -20,7 +20,7 @@
   "testes": [
     { "chamada": "sacar(100, 30)", "esperado": "70", "oculto": false },
     { "chamada": "sacar(50, 50)", "esperado": "0", "oculto": false },
-    { "chamada": "sacar(20, 25)", "esperado": "Saldo insuficiente para este saque.", "oculto": false },
+    { "chamada": "mensagem_saldo_insuficiente(20, 25)", "esperado": "Saldo insuficiente para este saque.", "oculto": false },
     { "chamada": "sacar(10.5, 0.5)", "esperado": "10.0", "oculto": true },
     { "chamada": "sacar(0, 0)", "esperado": "0", "oculto": true }
   ]

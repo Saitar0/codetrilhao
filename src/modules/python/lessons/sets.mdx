@@ -1,241 +1,125 @@
-﻿---
+---
 titulo: "Sets"
-descricao: "Use conjuntos para remover duplicatas, comparar grupos e resolver problemas de unicidade em Python."
+descricao: "Entenda o conceito de sets e aplique a l?gica em exerc?cios pr?ticos."
 secao: "B. Estruturas de dados"
 ordem: 12
 topico: 8
 fase: "B"
-tempo: 30
-nivel: "intermediario"
-palavrasChave: ['set', 'conjuntos', 'unicidade', 'interseção', 'diferença']
-exercicios: ['t08-v1-02-remover-duplicatas-com-set', 't08-v1-03-item-pertence-ao-conjunto', 't08-v2-01-letras-em-comum', 't08-v2-02-grupos-exclusivos-e-em-comum', 't08-v2-03-verificar-duplicatas', 't08-v2-04-primeiro-nao-repetido', 't08-v3-02-todos-os-itens-unicos', 't08-v3-03-caracteres-que-aparecem-em-ambas']
+tempo: 19
+nivel: "iniciante"
+palavrasChave: ['python', 'l?gica', 'pr?tica']
+exercicios: []
 ---
 
 # Sets
 
-Depois de entender listas e tuplas,Você chega a uma estrutura que muda a lógica de pensar em dados: o <Glossario termo="set" definition="Coleção não ordenada de elementos únicos em Python." />. A ideia central do conjunto é simples e muito útil: ele guarda elementos sem duplicatas e facilita comparações entre grupos. Se você quer descobrir quem está em ambos os grupos, quem está só em um deles, ou remover itens repetidos rapidamente, o set é uma ferramenta quase perfeita.
+Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
 
-Imagine que você está trabalhando com cadastro de alunos, lista de participantes de um evento ou base de e-mails. Em todos esses casos, você precisa saber o que é único, o que se repete e o que está em comum entre dois grupos. A estrutura de conjunto resolve isso com operações bem diretas e legíveis.
-
-<Callout type="importante" title="O que você vai aprender">
-  - Como criar um set e entender que ele não guarda duplicatas.
-  - Como usar `in` para testar presença rápida.
-  - Como operar com `|`, `&`, `-` e `^` para união, interseção e diferença.
-  - Como usar `add`, `discard` e `remove` para editar o conjunto.
-  - Quando usar set em vez de lista ou tupla, e como escolher a estrutura certa.
+<Callout type="importante" title="O que voc? vai aprender">
+  - Reconhecer a regra central do tema.
+  - Testar entradas pequenas e verificar a sa?da.
+  - Aplicar a ideia em cen?rios reais e de rotina.
+  - Aprimorar a clareza do c?digo e evitar erros comuns.
 </Callout>
 
-## 1. O que é um set?
+## Conceito principal
 
-Um conjunto em Python é uma coleção de elementos únicos, sem ordem garantida e sem índices. Isso significa que, ao contrário de uma lista, você não acessa elementos por posição como `lista[0]`. Em vez disso, o conjunto é pensado para pertencimento e comparação: “este item está dentro do conjunto?”
+O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
-Para criar um set, você usa chaves `{}` com elementos separados por vírgulas. Se tiver itens repetidos, o Python guarda apenas uma cópia.
-
-<CodeBlock title="set_basico.py" code={`frutas = {"maçã", "banana", "maçã", "uva"}
-print(frutas)
-print("maçã" in frutas)
-print("laranja" in frutas)`} />
+<CodeBlock title="sets_exemplo_1.py" code={`valor = 10
+print(valor + 5)`} />
 
 ```text
-{'maçã', 'uva', 'banana'}
-True
-False
+15
 ```
 
-A saída mostra duas coisas importantes: primeiro, o conjunto não preserva duplicatas; segundo, a ordem não é garantida. Em um conjunto, a organização interna não importa: o que importa é a presença ou ausência de cada item. Isso é muito diferente de lista, que preserva ordem e permite duplicata.
+Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
-## 2. Operações entre conjuntos
-
-O grande diferencial do set é a riqueza de operações para comparar grupos. Python oferece operadores bem claros para União, Interseção, Diferença e Diferença Simétrica.
-
-<CodeBlock title="operacoes_set.py" code={`turma_a = {"Ana", "Bruno", "Carla"}
-turma_b = {"Bruno", "Diego"}
-
-print(turma_a | turma_b)  # união
-print(turma_a & turma_b)  # interseção
-print(turma_a - turma_b)  # só em A
-print(turma_a ^ turma_b)  # em um ou outro, mas não nos dois`} />
+<CodeBlock title="sets_exemplo_2.py" code={`lista = [1, 2, 3]
+print(sum(lista))`} />
 
 ```text
-{'Ana', 'Bruno', 'Carla', 'Diego'}
-{'Bruno'}
-{'Ana', 'Carla'}
-{'Ana', 'Carla', 'Diego'}
+6
 ```
 
-Esses operadores são muito úteis em lógicas de comparação:
+<Playground title="Experimente no navegador" code={`nome = "Ana"
+print(f"Ol?, {nome}!")`} />
 
-- `|` cria a união: todos os elementos que aparecem em qualquer um dos conjuntos.
-- `&` cria a interseção: só os elementos que aparecem nos dois.
-- `-` cria a diferença: itens presentes em A que não estão em B.
-- `^` cria a diferença simétrica: itens presentes em um conjunto ou no outro, mas não nos dois ao mesmo tempo.
+## Aplica??o pr?tica
 
-Você pode pensar em cada operação como uma pergunta que o programa faz sobre os grupos. Isso faz do set uma estrutura ótima para análise de população, listas de amigos, deduplicação de usuários e cruzamento de dados.
+A ideia do tema aparece em automa??o, valida??o de dados, regras de neg?cio, an?lise de arquivos e manuten??o de sistemas. O cen?rio muda, mas o racioc?nio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
 
-## 3. Modificando um conjunto
-
-Além de comparar, você também pode adicionar e remover elementos. Os métodos mais comuns são `add`, `discard` e `remove`.
-
-<CodeBlock title="modificando_set.py" code={`participantes = {"Maria", "Pedro"}
-participantes.add("João")
-participantes.add("Maria")
-participantes.discard("Pedro")
-print(participantes)
-
-participantes.remove("João")
-print(participantes)`} />
+<CodeBlock title="sets_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
 
 ```text
-{'Maria', 'João'}
-{'Maria'}
+Maior de idade
 ```
 
-A diferença entre `discard` e `remove` é importante:
-
-- `add(valor)` acrescenta um item novo.
-- `discard(valor)` remove se existir, sem erro se não existir.
-- `remove(valor)` remove se existir e dispara erro se não existir.
-
-A escolha depende do tipo de relaxamento que você quer no código. `discard` é mais seguro quando o valor pode não existir; `remove` é útil quando você espera que o item esteja presente e quer detectar problema imediatamente.
-
-## 4. `frozenset`: a versão imutável do set
-
-Existe também o <Glossario termo="frozenset" definition="Versão imutável de um conjunto, que não permite alterações depois da criação." />. Ele funciona como um set normal, mas sem `add` ou `remove`.
-
-<CodeBlock title="frozenset_exemplo.py" code={`conjunto = frozenset({"A", "B", "C"})
-print(conjunto)
-print("A" in conjunto)
-# conjunto.add("D")  # isso causaria erro`} />
-
-```text
-frozenset({'A', 'B', 'C'})
-True
-```
-
-O `frozenset` aparece em cenários em que você quer uma coleção imutável para usar como chave ou como valor fixo em outra estrutura. Isso torna ainda mais clara a diferença entre "dados que podem mudar" e "dados que representam identidade ou regra estática".
-
-## 5. Quando usar lista, tupla ou set?
-
-A decisão de estrutura certa é uma parte central da programação. A tabela abaixo resume o comportamento das três estruturas que você viu até agora.
-
-<Tabela data={[
-  ['Estrutura', 'Ordenada', 'Mutável', 'Duplicatas', 'Uso típico'],
-  ['lista', 'sim', 'sim', 'sim', 'coleção que muda ao longo do tempo'],
-  ['tupla', 'sim', 'não', 'sim', 'registro fixo, coordenadas, retorno múltiplo'],
-  ['set', 'não', 'sim', 'não', 'unicidade, comparação de grupos e deduplicação'],
-]} />
-
-A diferença principal é esta:
-
-- Lista: mantém ordem e permite alterar os elementos.
-- Tupla: mantém ordem, mas não permite alteração.
-- Set: não mantém ordem e ignora duplicatas.
-
-Essa distinção é mais importante do que parece. O código fica mais legível quando a estrutura combina com a intenção do dado. Se você quer uma fila de tarefas, use lista. Se quer representar um ponto fixo, use tupla. Se quer descobrir pertencimento, interseções e exclusões, use set.
-
-<Playground title="Experimento: remover duplicatas" code={`emails = ["ana@exemplo.com", "bruno@exemplo.com", "ana@exemplo.com", "carla@exemplo.com"]
-sem_duplicatas = set(emails)
-print(sem_duplicatas)
-print(len(emails), len(sem_duplicatas))`} />
-
-<Playground title="Experimento: comparação de grupos" code={`alunos_a = {"Ana", "Bruno", "Carla"}
-alunos_b = {"Bruno", "Diego", "Eva"}
-print("Em comum:", alunos_a & alunos_b)
-print("Só em A:", alunos_a - alunos_b)
-print("Só em B:", alunos_b - alunos_a)`} />
-
-A primeira experiência mostra como set elimina duplicatas de forma nativa. A segunda mostra que o conjunto trabalha muito bem para cruzar dados e responder perguntas de comparação sem escrever código muito longo.
-
-## 6. Armadilhas comuns
-
-Mesmo com operações simples, alguns erros aparecem com frequência.
-
-<Callout type="erro-comum" title="{} vira dicionário, não set">
-  Quando você escreve `{}` vazio, o Python cria um dicionário, não um conjunto. Isso causa confusão porque a sintaxe parece parecida.
-
-  <CodeBlock title="set_vazio_ambiguidade.py" code={`vazio = {}
-print(type(vazio))
-print(vazio)
-
-conjunto_vazio = set()
-print(type(conjunto_vazio))`} />
-
-  ```text
-  <class 'dict'>
-  {}
-  <class 'set'>
-  set()
+<Callout type="erro-comum" title="Erro comum">
+  ```python
+  valores = [0, -1, 1]
+  print(valores[0])
   ```
 
-  Se você quer um conjunto vazio, use `set()`. Já `{}` significa dicionário vazio, que tem pares chave-valor em vez de valores isolados.
-</Callout>
-
-<Callout type="erro-comum" title="Esperar ordem em um set">
-  Um conjunto não garante ordem, então não faça suposições como “o primeiro elemento será o menor” ou “os itens aparecem na ordem em que foram adicionados”.
-
-  <CodeBlock title="set_ordem_inesperada.py" code={`numeros = {7, 2, 9, 1}
-print(numeros)
-print(sorted(numeros))`} />
-
-  ```text
-  {1, 2, 7, 9}
-  [1, 2, 7, 9]
-  ```
-
-  Caso você precise uma ordem previsível, transforme o conjunto em lista e ordene com `sorted()`.
+  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
 </Callout>
 
 <StepThrough>
   <div>
-    <p>Primeiro, criamos dois conjuntos com dados relacionados.</p>
-    <CodeBlock title="set_step_1.py" code={`turma_a = {"Ana", "Bruno", "Carla"}
-turma_b = {"Bruno", "Diego"}
-print(turma_a)
-print(turma_b)`} />
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
   </div>
   <div>
-    <p>Em seguida, vemos quem está em comum.</p>
-    <CodeBlock title="set_step_2.py" code={`turma_a = {"Ana", "Bruno", "Carla"}
-turma_b = {"Bruno", "Diego"}
-print(turma_a & turma_b)`} />
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
   </div>
   <div>
-    <p>Por fim, as diferenças mostram quem está em cada grupo.</p>
-    <CodeBlock title="set_step_3.py" code={`turma_a = {"Ana", "Bruno", "Carla"}
-turma_b = {"Bruno", "Diego"}
-print(turma_a - turma_b)
-print(turma_b - turma_a)`} />
+    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
   </div>
 </StepThrough>
 
+<CodeBlock title="sets_exemplo_4.py" code={`resultado = 7 * 3
+print(resultado)`} />
+
 ```text
-{'Ana', 'Bruno', 'Carla'}
-{'Bruno', 'Diego'}
-{'Bruno'}
-{'Ana', 'Carla'}
-{'Diego'}
+21
 ```
 
-Essa sequência ajuda a visualizar que o set é uma ferramenta de comparação, não de indexação. Você não vai “pegar o segundo item” de um conjunto; você vai perguntar se um item existe, quais itens são compartilhados e quais são exclusivos.
+<CodeBlock title="sets_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
 
-### No mercado de trabalho
+```text
+[1, 2, 3]
+```
 
-Conjuntos aparecem em processos de deduplicação, filtros, comparação de listas e análise de dados. Empresas usam set em campanhas de marketing, CRM, sistemas de autenticação, checagem de permissões e automações que precisam saber rapidamente se um usuário ou item já foi visto antes. Em dados, a interseção e a diferença são operações muito comuns quando você cruza informações de fontes diferentes.
+<Tabela data={[
+  ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
+]} />
 
-A velocidade de busca e a simplicidade de operações de comparação tornam o set uma estrutura extremamente útil em código que trabalha com altas quantidades de itens e precisa responder perguntas como “este valor existe?” ou “quais elementos estão em ambos os grupos?”.
+<Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
+<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
 
-<Quiz questions={[{ question: "Qual estrutura é melhor para remover duplicatas de uma lista de nomes sem preservar ordem?", options: ["dicionário", "set", "tupla", "lista"], correctIndex: 1, explanation: "Set remove duplicatas automaticamente e não preserva ordem, o que é bem adequado para deduplicação." }, { question: "Qual operação retorna apenas os elementos presentes em ambos os conjuntos?", options: ["união com |", "interseção com &", "diferença com -", "diferença simétrica com ^"], correctIndex: 1, explanation: "A interseção contém os elementos que existem nos dois conjuntos." }, { question: "Qual é a forma correta de criar um conjunto vazio em Python?", options: ["{}", "[]", "()", "set()"], correctIndex: 3, explanation: "{} cria um dicionário vazio; set() cria um conjunto vazio." }, { question: "O que acontece com este código?\n\nfrutas = {'maçã', 'banana', 'maçã'}\nprint(frutas)", options: ["Imprime duas maçãs", "Imprime {'banana', 'maçã'}", "Gera erro", "Imprime uma lista"], correctIndex: 1, explanation: "Set elimina duplicatas, então a maçã aparece uma vez." }, { question: "Quando você precisa de uma ordem previsível para os elementos de um conjunto, qual a melhor ação?", options: ["Usar set() diretamente", "Conferir o item em índices", "Converter para lista e ordenar", "Adicionar o item ao início"], correctIndex: 2, explanation: "Como set não garante ordem, converter para lista e usar sorted() produz uma sequência previsível." }]} />
+## No mercado de trabalho
+
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
+
+<Quiz questions={[
+  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
+]} />
 
 <Resumo>
-  <li>Set guarda elementos únicos e ignora duplicatas.</li>
-  <li>Ele não preserva ordem e não é indexado por posição.</li>
-  <li>Operações como `|`, `&`, `-` e `^` resolvem comparações entre grupos.</li>
-  <li>`add`, `discard` e `remove` modificam o conjunto de maneiras diferentes.</li>
-  <li>`frozenset` é uma versão imutável, útil em regras e identificadores fixos.</li>
-  <li>Use set quando a prioridade é unicidade e comparação, não ordem.</li>
+  <li>Voc? reconheceu a regra central do tema.</li>
+  <li>Voc? validou a l?gica em um caso pequeno.</li>
+  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
+  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
 </Resumo>
 
 <Desafio>
-  Faça uma rotina que recebe duas listas de e-mails e mostra: e-mails em comum, exclusivos do primeiro grupo e exclusivos do segundo. Use set para resolver esse problema sem repetir itens.
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
 </Desafio>
 

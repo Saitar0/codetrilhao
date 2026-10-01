@@ -1,165 +1,125 @@
 ---
-titulo: "Entrada e saída"
-descricao: "Aprenda a ler informações do usuário e imprimir resultados claros, usando `input`, `print` e conversão de tipos."
+titulo: "Entrada e sa?da"
+descricao: "Entenda o conceito de entrada e sa?da e aplique a l?gica em exerc?cios pr?ticos."
 secao: "A. Fundamentos"
 ordem: 4
 topico: 1
 fase: "A"
-tempo: 26
+tempo: 21
 nivel: "iniciante"
-palavrasChave: ['python', 'input', 'print', 'entrada', 'saída', 'conversão']
-exercicios: ['t01-v1-03-nome-e-idade', 't01-v2-02-operacoes-basicas', 't01-v2-03-total-do-produto', 't01-v2-04-somar-inputs-sem-conversao', 't01-v3-03-confirmacao-cadastro', 't01-v3-04-recibo-de-compra']
+palavrasChave: ['python', 'l?gica', 'pr?tica']
+exercicios: []
 ---
 
-# Entrada e saída
+# Entrada e sa?da
 
-Como programador, você precisa conversar com o usuário. Às vezes, o programa pergunta algo. Outras vezes, ele responde com mensagens ou resultados. Em Python, essa interação acontece com `input()` e `print()`. Eles são os primeiros blocos de comunicação entre o código e a pessoa que usa o sistema.
+Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
 
-<Callout type="importante" title="O que você vai aprender">
-  - Entender a diferença entre entrada e saída.
-  - Usar `input()` para receber texto do usuário.
-  - Converter valores com `int()` e `float()` quando necessário.
-  - Ler mensagens de erro e identificar a causa da falha.
+<Callout type="importante" title="O que voc? vai aprender">
+  - Reconhecer a regra central do tema.
+  - Testar entradas pequenas e verificar a sa?da.
+  - Aplicar a ideia em cen?rios reais e de rotina.
+  - Aprimorar a clareza do c?digo e evitar erros comuns.
 </Callout>
 
-## 1. Entrada: `input()`
+## Conceito principal
 
-A função `input()` serve para ler algo que a pessoa digita no terminal. O nome parece simples, mas tem uma regra importante: ela sempre retorna uma string, ou seja, texto.
+O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
-<CodeBlock title="entrada_basica.py" code={`nome = input("Digite seu nome: ")
-print("Olá,", nome)`} />
-
-Se a pessoa digitar `Maria`, a saída será:
+<CodeBlock title="entrada-e-saida_exemplo_1.py" code={`valor = 10
+print(valor + 5)`} />
 
 ```text
-Digite seu nome: Maria
-Olá, Maria
+15
 ```
 
-Perceba a regra: `input()` não devolve número, e sim texto. Isso significa que se você quiser fazer contas, precisa converter primeiro.
+Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
-<Glossario termo="String" definition="Sequência de caracteres que representa texto em Python." />
-<Glossario termo="Entrada" definition="Informação que o usuário envia para o programa." />
-<Glossario termo="Saída" definition="Resultado exibido pelo programa para o usuário." />
-
-## 2. Saída: `print()`
-
-O `print()` é o comando usado para mostrar informações na tela. Ele aceita vários argumentos e pode formatar a saída com `sep` e `end`. Isso é muito importante para deixar a mensagem clara e organizada.
-
-<CodeBlock title="saidas.py" code={`print("Código", "Python", "está", "funcionando")
-print("A", "B", "C", sep=" | ")
-print("Linha 1", end=" - ")
-print("Linha 2")`} />
-
-Saída esperada:
+<CodeBlock title="entrada-e-saida_exemplo_2.py" code={`lista = [1, 2, 3]
+print(sum(lista))`} />
 
 ```text
-Código Python está funcionando
-A | B | C
-Linha 1 - Linha 2
+6
 ```
 
-Esse exemplo mostra três formas de controlar a saída: múltiplos argumentos, separador e final da linha. Em programas mais úteis, isso deixa a interface muito mais legível.
+<Playground title="Experimente no navegador" code={`nome = "Ana"
+print(f"Ol?, {nome}!")`} />
 
-## 3. Conversão de tipos em entrada
+## Aplica??o pr?tica
 
-Como `input()` sempre devolve texto, a conversão é essencial quando você quer lidar com números. Por exemplo, se a pessoa digitar a idade, você precisa converter para `int` antes de somar ou comparar.
+A ideia do tema aparece em automa??o, valida??o de dados, regras de neg?cio, an?lise de arquivos e manuten??o de sistemas. O cen?rio muda, mas o racioc?nio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
 
-<CodeBlock title="idade.py" code={`idade = int(input("Qual sua idade? "))
-print("No próximo ano você terá", idade + 1, "anos")`} />
-
-Se a pessoa digitar `18`, a saída será:
+<CodeBlock title="entrada-e-saida_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
 
 ```text
-Qual sua idade? 18
-No próximo ano você terá 19 anos
+Maior de idade
 ```
 
-O mesmo vale para `float()`, quando o valor pode ter casas decimais:
+<Callout type="erro-comum" title="Erro comum">
+  ```python
+  valores = [0, -1, 1]
+  print(valores[0])
+  ```
 
-<CodeBlock title="altura.py" code={`altura = float(input("Qual sua altura em metros? "))
-print(f"Sua altura é {altura:.2f} m")`} />
-
-Saída esperada:
-
-```text
-Qual sua altura em metros? 1.75
-Sua altura é 1.75 m
-```
-
-A conversão é o ponto em que muita gente começa a entender a diferença entre texto e número. Isso é um passo crucial para a lógica da programação.
-
-## 4. Lendo e usando dados com cálculos simples
-
-Você pode combinar entrada, conversão e saída em um único programa. Isso é a base de programas de cálculo e interação.
-
-<CodeBlock title="soma.py" code={`numero1 = float(input("Digite o primeiro número: "))
-numero2 = float(input("Digite o segundo número: "))
-print(f"A soma é: {numero1 + numero2}")`} />
-
-Se a pessoa entrar `10` e `7.5`, a saída será:
-
-```text
-Digite o primeiro número: 10
-Digite o segundo número: 7.5
-A soma é: 17.5
-```
-
-Esse padrão aparece em praticamente todos os programas: leia dados, converta quando necessário, faça o cálculo e mostre o resultado.
-
-## 5. Anatomia de um erro e leitura do traceback
-
-Ao escrever código, você vai encontrar erros. Isso faz parte do processo. O Python tenta mostrar a causa em linguagem clara. A ideia principal é sempre ler o traceback de baixo para cima: a última linha frequentemente indica o problema mais direto, e as linhas acima apontam o contexto.
-
-<Callout type="erro-comum" title="ValueError: invalid literal for int()">
-  <CodeBlock title="erro_valor.py" code={`idade = int(input("Qual sua idade? "))`} />
-  <p>Se a pessoa digitar um valor não numérico como <code>vinte</code>, o Python mostra:</p>
-  <pre>ValueError: invalid literal for int() with base 10: 'vinte'</pre>
-  <p>Correção: garantir que a entrada seja numérica antes de converter ou tratar essa entrada em um próximo tópico.</p>
+  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
 </Callout>
 
-<Callout type="erro-comum" title="NameError: name 'nome' is not defined">
-  <CodeBlock title="erro_variavel.py" code={`print(nome)`} />
-  <p>Mensagem real do erro no Python 3:</p>
-  <pre>NameError: name 'nome' is not defined</pre>
-  <p>Correção: criar a variável antes de usar, por exemplo, <code>nome = "Maria"</code>.</p>
-</Callout>
+<StepThrough>
+  <div>
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
+  </div>
+</StepThrough>
 
-<Callout type="erro-comum" title="Sintaxe de string mal fechada">
-  <CodeBlock title="erro_string.py" code={`print("Olá, mundo!)`} />
-  <p>Mensagem real do erro no Python 3:</p>
-  <pre>SyntaxError: unterminated string literal (detected at line 1)</pre>
-  <p>Correção: fechar a aspa com <code>"</code> no fim da mensagem.</p>
-</Callout>
+<CodeBlock title="entrada-e-saida_exemplo_4.py" code={`resultado = 7 * 3
+print(resultado)`} />
 
-Esse conjunto de erros é muito comum em início de aprendizagem. O importante não é nunca errar, e sim aprender a interpretar a mensagem corretamente e ajustar o código com calma.
+```text
+21
+```
+
+<CodeBlock title="entrada-e-saida_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
+
+```text
+[1, 2, 3]
+```
+
+<Tabela data={[
+  ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
+]} />
+
+<Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
+<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
 
 ## No mercado de trabalho
 
-No mercado, `input()` e `print()` aparecem em scripts administrativos, sistemas de linha de comando, ferramentas internas e automações. Quando um sistema precisa ser executado por pessoas sem interface gráfica, a entrada e a saída do terminal são fundamentais. Eles permitem interação direta, validação rápida e geração de relatórios simples.
-
-Por exemplo, um script de cobrança, de cadastro ou de geração de recibo costuma ler dados do usuário, processá-los e devolver uma mensagem clara ao final. Isso mostra que a comunicação simples entre código e pessoa é parte de praticamente qualquer produto digital, mesmo antes de surgir uma interface visual mais sofisticada.
-
-<Playground title="Playground de entrada e saída" code={`nome = input("Seu nome: ")
-print(f"Olá, {nome}! Bem-vindo ao Python.")`} />
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
 
 <Quiz questions={[
-  { question: "O que `input()` retorna sempre?", options: ["Um número", "Uma lista", "Um texto (string)", "Um booleano"], correctIndex: 2, explanation: "`input()` lê exatamente o que o usuário digita e retorna esse valor como texto." },
-  { question: "Qual é a forma correta de transformar a idade digitada em número inteiro?", options: ["int(input('Idade: '))", "float(input('Idade: '))", "str(input('Idade: '))", "print(input('Idade: '))"], correctIndex: 0, explanation: "Para fazer cálculos com idade, o valor deve ser convertido com `int()`." },
-  { question: "Qual é a saída correta do comando print('A', 'B', 'C', sep=' | ')?", options: ["A B C", "A | B | C", "A\nB\nC", "ABC"], correctIndex: 1, explanation: "`sep=' | '` faz o Python inserir o separador entre os argumentos." },
-  { question: "Se o usuário digitar 'vinte' em `int(input())`, qual problema aparece?", options: ["SyntaxError", "IndentationError", "ValueError", "ZeroDivisionError"], correctIndex: 2, explanation: "O valor não é numérico e não pode ser convertido para inteiro." },
-  { question: "Qual é a melhor forma de ler o erro de um programa?", options: ["Ignorar e tentar outra vez sem olhar", "Ler o traceback de baixo para cima", "Apagar o código e começar do zero", "Desligar o terminal"], correctIndex: 1, explanation: "A última linha do traceback costuma indicar a causa mais direta do problema." }
+  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
 ]} />
 
 <Resumo>
-  <li>`input()` recebe texto digitado pelo usuário.</li>
-  <li>`print()` mostra a saída do programa na tela.</li>
-  <li>Para números, é preciso converter com `int()` e `float()`.</li>
-  <li>Mensagens de erro ajudam a corrigir problemas de forma objetiva.</li>
-  <li>Aplicar isso em pequenos programas é a base da lógica real.</li>
+  <li>Voc? reconheceu a regra central do tema.</li>
+  <li>Voc? validou a l?gica em um caso pequeno.</li>
+  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
+  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
 </Resumo>
 
 <Desafio>
-  Crie um programa que leia o nome e a idade de uma pessoa e imprima uma mensagem do tipo: 'Olá, Maria! Você tem 18 anos.' Use `input()` e `int()` de forma correta. Depois, teste um valor inválido e observe a mensagem de erro.
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
 </Desafio>
 
