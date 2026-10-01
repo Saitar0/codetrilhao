@@ -13,7 +13,7 @@ export const pythonModule: ModuleConfig = {
     {
       id: 'a-fundamentos',
       title: 'A. Fundamentos',
-      lessons: ['o-que-e-python', 'instalando-e-rodando', 'sintaxe-basica', 'entrada-e-saida', 'variaveis-e-tipos', 'operadores', 'strings', 'condicionais', 'loops'],
+      lessons: ['o-que-e-python', 'o-que-e-python-introducao', 'o-que-e-python-conceito', 'o-que-e-python-aplicacao', 'instalando-e-rodando', 'sintaxe-basica', 'entrada-e-saida', 'variaveis-e-tipos', 'operadores', 'strings', 'condicionais', 'loops'],
     },
     {
       id: 'b-estruturas-de-dados',
