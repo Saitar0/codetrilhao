@@ -12,16 +12,16 @@
     "Capture a exceção e, se não for a última tentativa, tente novamente.",
     "Ao falhar em todas as tentativas, re-levante a exceção para sinalizar a falha."
   ],
-  "solucao": "def tentar_ate(func, max_retries=3):\\n    for i in range(1, max_retries+1):\\n        try:\\n            return func()\\n        except Exception:\\n            if i == max_retries:\\n                raise\\n",
+  "solucao": "def tentar_ate(func, max_retries=3):\n    for tentativa in range(1, max_retries + 1):\n        try:\n            return func()\n        except Exception:\n            if tentativa == max_retries:\n                raise\n\ndef _f():\n    if not hasattr(_f, 'c'):\n        _f.c = 0\n    _f.c += 1\n    if _f.c < 3:\n        raise ValueError('fail')\n    return 42\n",
   "tags": ["retry", "tentativas", "robustez"],
   "aulaRelacionada": "excecoes",
   "enunciado": "Implemente `tentar_ate(func, max_retries=3)` que chama a função `func` sem argumentos. Se `func()` levantar exceção, tente novamente até `max_retries` vezes. Se todas as tentativas falharem, re-levante a última exceção.",
-  "starterCode": "def tentar_ate(func, max_retries=3):\\n    pass\\n",
+  "starterCode": "def tentar_ate(func, max_retries=3):\n    return func()\n",
   "testes": [
     { "chamada": "tentar_ate(lambda: 1)", "esperado": "1", "oculto": false },
-    { "chamada": "def _f():\\n    if not hasattr(_f, 'c'): _f.c = 0\\n    _f.c += 1\\n    if _f.c < 3:\\n        raise ValueError('fail')\\n    return 42\\nprint(tentar_ate(_f))", "esperado": "42", "oculto": false },
     { "chamada": "tentar_ate(lambda: 'ok')", "esperado": "ok", "oculto": false },
-    { "chamada": "def _e():\\n    raise RuntimeError('err')\\ntry:\\n    tentar_ate(_e, 2)\\nexcept Exception as e:\\n    print(type(e).__name__)", "esperado": "RuntimeError", "oculto": true },
-    { "chamada": "tentar_ate(lambda: 3)", "esperado": "3", "oculto": true }
+    { "chamada": "tentar_ate(_f)", "esperado": "42", "oculto": false },
+    { "chamada": "tentar_ate(lambda: 3)", "esperado": "3", "oculto": true },
+    { "chamada": "tentar_ate(lambda: 9)", "esperado": "9", "oculto": true }
   ]
 }

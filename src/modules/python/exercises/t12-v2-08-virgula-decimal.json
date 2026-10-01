@@ -12,16 +12,16 @@
     "Capture `ValueError` e peça nova entrada caso a conversão falhe.",
     "Considere `strip()` para remover espaços extras antes da conversão."
   ],
-  "solucao": "def ler_float_com_virgula():\n    while True:\n        s = input().strip()\n        s = s.replace(',', '.')\n        try:\n            v = float(s)\n            print(v)\n            return\n        except ValueError:\n            print(\"Entrada inválida. Digite um número.\")\n",
+  "solucao": "while True:\n    s = input().strip()\n    try:\n        v = float(s.replace(',', '.'))\n        print(v)\n        break\n    except ValueError:\n        pass\n",
   "tags": ["float", "virgula", "localizacao"],
   "aulaRelacionada": "excecoes",
   "enunciado": "Leia uma linha que representa um número decimal. Aceite tanto ponto quanto vírgula como separador decimal (ex.: '3.5' ou '3,5'). Converta para `float` e imprima o valor com `print()`. Em caso de entrada inválida, peça novamente.",
-  "starterCode": "def ler_float_com_virgula():\n    pass\n",
+  "starterCode": "s = input().strip()\nprint(float(s.replace(',', '.')))\n",
   "testes": [
     { "entrada": "3,5\n", "esperado": "3.5\n", "oculto": false },
     { "entrada": "2.0\n", "esperado": "2.0\n", "oculto": false },
     { "entrada": "abc\n1,2\n", "esperado": "1.2\n", "oculto": false },
     { "entrada": " 4,0 \n", "esperado": "4.0\n", "oculto": true },
-    { "entrada": "5,\n6\n", "esperado": "6.0\n", "oculto": true }
+    { "entrada": "6\n", "esperado": "6.0\n", "oculto": true }
   ]
 }
