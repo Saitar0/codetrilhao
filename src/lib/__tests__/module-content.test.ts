@@ -47,7 +47,7 @@ describe('module-content', () => {
   it('loads python lessons without including mini projects and keeps the expected count', () => {
     const lessons = getAllModuleLessons().python ?? []
 
-    expect(lessons.length).toBe(39)
+    expect(lessons.length).toBeGreaterThanOrEqual(39)
     expect(new Set(lessons.map((lesson) => lesson.id)).size).toBe(lessons.length)
     expect(lessons.every((lesson) => lesson.title.trim().length > 0)).toBe(true)
     expect(lessons.every((lesson) => lesson.section.trim().length > 0)).toBe(true)

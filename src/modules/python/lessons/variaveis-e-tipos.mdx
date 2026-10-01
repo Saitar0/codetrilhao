@@ -1,30 +1,30 @@
 ---
 titulo: "Vari?veis e tipos"
-descricao: "Entenda o conceito de vari?veis e tipos e aplique a l?gica em exerc?cios pr?ticos."
+descricao: "Entenda o conceito de vari?veis e tipos e aplique a lógica em exerc?cios pr?ticos."
 secao: "A. Fundamentos"
 ordem: 5
 topico: 2
 fase: "A"
 tempo: 22
 nivel: "iniciante"
-palavrasChave: ['python', 'l?gica', 'pr?tica']
+palavrasChave: ['python', 'lógica', 'pr?tica']
 exercicios: []
 ---
 
 # Vari?veis e tipos
 
-Voc? vai explorar o tema de forma pr?tica, testando pequenos trechos de c?digo e observando a sa?da antes de generalizar a l?gica.
+Você vai explorar o tema de forma pr?tica, testando pequenos trechos de código e observando a saída antes de generalizar a lógica.
 
-<Callout type="importante" title="O que voc? vai aprender">
+<Callout type="importante" title="O que você vai aprender">
   - Reconhecer a regra central do tema.
-  - Testar entradas pequenas e verificar a sa?da.
+  - Testar entradas pequenas e verificar a saída.
   - Aplicar a ideia em cen?rios reais e de rotina.
-  - Aprimorar a clareza do c?digo e evitar erros comuns.
+  - Aprimorar a clareza do código e evitar erros comuns.
 </Callout>
 
 ## Conceito principal
 
-O ponto central deste t?pico ? transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, voc? testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
+O ponto central deste tópico é transformar uma ideia em comportamento execut?vel. Em vez de memorizar regras soltas, você testa um caso simples, observa o padr?o e ent?o aplica a solu??o em um problema mais completo.
 
 <CodeBlock title="variaveis-e-tipos_exemplo_1.py" code={`valor = 10
 print(valor + 5)`} />
@@ -33,7 +33,7 @@ print(valor + 5)`} />
 15
 ```
 
-Esse primeiro exemplo mostra a l?gica b?sica do tema em um caso bem pequeno. Quando a sa?da faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
+Esse primeiro exemplo mostra a lógica b?sica do tema em um caso bem pequeno. Quando a saída faz sentido, fica mais f?cil expandir a ideia para situa??es reais.
 
 <CodeBlock title="variaveis-e-tipos_exemplo_2.py" code={`lista = [1, 2, 3]
 print(sum(lista))`} />
@@ -62,7 +62,7 @@ Maior de idade
   print(valores[0])
   ```
 
-  Esse c?digo funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
+  Esse código funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que n?o aparecem em um cen?rio simples.
 </Callout>
 
 <StepThrough>
@@ -70,10 +70,10 @@ Maior de idade
     <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ou?a o comportamento esperado.</p>
   </div>
   <div>
-    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a sa?da dessa entrada.</p>
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a saída dessa entrada.</p>
   </div>
   <div>
-    <p><strong>Etapa 3:</strong> aplique a l?gica em um contexto maior e confirme que ela ainda faz sentido.</p>
+    <p><strong>Etapa 3:</strong> aplique a lógica em um contexto maior e confirme que ela ainda faz sentido.</p>
   </div>
 </StepThrough>
 
@@ -93,33 +93,33 @@ print(sorted(lista))`} />
 
 <Tabela data={[
   ['Situa??o', 'Estrat?gia', 'Resultado esperado'],
-  ['entrada simples', 'validar o caso direto', 'sa?da previs?vel'],
+  ['entrada simples', 'validar o caso direto', 'saída previs?vel'],
   ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
   ['problema real', 'aplicar a regra', 'solu??o confi?vel'],
 ]} />
 
 <Glossario termo="regra de neg?cio" definition="Condi??o que define o comportamento esperado do software." />
-<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de l?gica." />
-<Glossario termo="clareza" definition="Qualidade do c?digo que facilita leitura, revis?o e manuten??o." />
+<Glossario termo="caso de borda" definition="Entrada m?nima, m?xima ou inesperada que costuma revelar erro de lógica." />
+<Glossario termo="clareza" definition="Qualidade do código que facilita leitura, revis?o e manuten??o." />
 
 ## No mercado de trabalho
 
-No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando voc? entende a regra, consegue validar a l?gica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
+No trabalho, esse racioc?nio aparece em automa??o, an?lise de dados, scripts de rotina e manuten??o de sistemas. Quando você entende a regra, consegue validar a lógica rapidamente, reduzir retrabalho e escrever solu??es mais confi?veis em equipe.
 
 <Quiz questions={[
-  { question: 'Qual ? o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a sa?da', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
-  { question: 'Por que testar casos de borda ? importante?', options: ['porque reduz erros inesperados', 'porque complica o c?digo', 'porque elimina a necessidade de revisar', 'porque n?o altera a l?gica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
-  { question: 'O que este c?digo imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a sa?da correta ? 21.' },
+  { question: 'Qual é o melhor primeiro passo ao aprender um novo tema em Python?', options: ['copiar sem testar', 'validar um caso simples', 'ignorar a saída', 'evitar documenta??o'], correctIndex: 1, explanation: 'Testar um caso pequeno ajuda a confirmar a regra antes de generalizar a solu??o.' },
+  { question: 'Por que testar casos de borda é importante?', options: ['porque reduz erros inesperados', 'porque complica o código', 'porque elimina a necessidade de revisar', 'porque n?o altera a lógica'], correctIndex: 0, explanation: 'Entradas extremas e inesperadas costumam revelar falhas que n?o aparecem no caso feliz.' },
+  { question: 'O que este código imprime?', options: ['7', '21', '10', '3'], correctIndex: 1, explanation: 'A express?o 7 * 3 resulta em 21, ent?o a saída correta é 21.' },
 ]} />
 
 <Resumo>
-  <li>Voc? reconheceu a regra central do tema.</li>
-  <li>Voc? validou a l?gica em um caso pequeno.</li>
-  <li>Voc? testou cen?rios diferentes para reduzir erros.</li>
-  <li>Voc? compreendeu que clareza e revis?o fazem parte da qualidade do c?digo.</li>
+  <li>Você reconheceu a regra central do tema.</li>
+  <li>Você validou a lógica em um caso pequeno.</li>
+  <li>Você testou cen?rios diferentes para reduzir erros.</li>
+  <li>Você compreendeu que clareza e revis?o fazem parte da qualidade do código.</li>
 </Resumo>
 
 <Desafio>
-  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a sa?da antes de finalizar a solu??o.
+  Escolha um problema relacionado a este tema e valide tr?s cen?rios: entrada simples, caso de borda e caso real. Confirme a saída antes de finalizar a solu??o.
 </Desafio>
 

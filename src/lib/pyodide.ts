@@ -21,8 +21,8 @@ export async function loadPyodideInstance(): Promise<PyodideLike> {
     throw new Error('Pyodide só pode ser carregado no navegador.')
   }
 
-  const base = new URL('/', import.meta.url).toString()
-  const indexURL = `${base}assets/pyodide/`
+  const origin = (globalThis as any).location?.origin ?? new URL(import.meta.url).origin
+  const indexURL = `${origin}/assets/pyodide/`
 
   const tryLoad = async (attempt = 1): Promise<PyodideLike> => {
     try {
