@@ -1,0 +1,71 @@
+---
+titulo: "aplicação prática"xpressões regulares"
+descricao: "Entenda o conceito de expressões regulares e aplique a lógica em exercícios práticos."
+secao: "F. Projeto final"
+ordem: 39
+topico: 99
+fase: "F"
+tempo: 26
+nivel: "intermediario"
+palavrasChave: ['python', 'lógica', 'prática']
+exercicios: []
+---
+
+## aplicação prática
+
+A ideia do tema aparece em automação, validação de dados, regras de negócio, análise de arquivos e manutenção de sistemas. O cenário muda, mas o raciocínio permanece: entenda a regra, teste um caso pequeno e confirme o resultado.
+
+<CodeBlock title="expressoes-regulares_exemplo_3.py" code={`idade = 18
+print("Maior de idade" if idade >= 18 else "Menor de idade")`} />
+
+```text
+Maior de idade
+```
+
+<Callout type="erro-comum" title="Erro comum">
+  ```python
+  valores = [0, -1, 1]
+  print(valores[0])
+  ```
+
+  Esse código funciona para o caso feliz, mas ignora limites e entradas inesperadas. Testar casos de borda ajuda a encontrar problemas que não aparecem em um cenário simples.
+</Callout>
+
+<StepThrough>
+  <div>
+    <p><strong>Etapa 1:</strong> identifique a regra principal do tema e ouça o comportamento esperado.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 2:</strong> teste um caso pequeno e veja a saída dessa entrada.</p>
+  </div>
+  <div>
+    <p><strong>Etapa 3:</strong> aplique a lógica em um contexto maior e confirme que ela ainda faz sentido.</p>
+  </div>
+</StepThrough>
+
+<CodeBlock title="expressoes-regulares_exemplo_4.py" code={`resultado = 7 * 3
+print(resultado)`} />
+
+```text
+21
+```
+
+<CodeBlock title="expressoes-regulares_exemplo_5.py" code={`lista = [3, 1, 2]
+print(sorted(lista))`} />
+
+```text
+[1, 2, 3]
+```
+
+<Tabela data={[
+  ['Situação', 'Estratégia', 'Resultado esperado'],
+  ['entrada simples', 'validar o caso direto', 'saída previsível'],
+  ['caso de borda', 'testar limite e vazio', 'sem surpresas'],
+  ['problema real', 'aplicar a regra', 'solução confiável'],
+]} />
+
+<Glossario termo="regra de negócio" definition="Condição que define o comportamento esperado do software." />
+<Glossario termo="caso de borda" definition="Entrada mínima, máxima ou inesperada que costuma revelar erro de lógica." />
+<Glossario termo="clareza" definition="Qualidade do código que facilita leitura, revisão e manutenção." />
+
+
