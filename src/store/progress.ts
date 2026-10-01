@@ -102,8 +102,22 @@ export const useProgressStore = create<ProgressState>()(
           return undefined
         })()
 
-        const totalLessons = moduleConfig?.trilha?.reduce((sum, section) => sum + section.lessons.length, 0) ?? 0
-        const completed = get().completedLessons.filter((lesson) => lesson.startsWith(`${moduleId}:`)).length
+        // Count unique base lesson slugs from config (ignore child pages with suffixes)
+        const totalLessons = moduleConfig?.trilha
+          ?.flatMap((section) => section.lessons)
+          ?.map((s) => String(s).split('-')[0])
+          ?.
+          reduce((set, slug) => set.add(slug), new Set())
+          ?.
+          size ?? 0
+
+        // Count completed lessons by base slug as well (lessonId has format 'module:slug' or 'module:slug-sub')
+        const completed = new Set(
+          get()
+            .completedLessons
+            .filter((lesson) => lesson.startsWith(`${moduleId}:`))
+            .map((l) => l.split(':')[1].split('-')[0]),
+        ).size
 
         if (!totalLessons) return 0
         return Math.round((completed / totalLessons) * 100)

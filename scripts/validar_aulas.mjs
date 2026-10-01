@@ -114,7 +114,6 @@ function listLessonFiles({ rootDir = root, topic = null, global = false } = {}) 
     return files
   }
 
-  const topicSlugs = topic === null ? null : getTopicSlugs(topic, rootDir)
   for (const moduleDir of fs.readdirSync(modulesRoot, { withFileTypes: true })) {
     if (!moduleDir.isDirectory()) continue
     const lessonsDir = path.join(modulesRoot, moduleDir.name, 'lessons')
@@ -127,9 +126,7 @@ function listLessonFiles({ rootDir = root, topic = null, global = false } = {}) 
         files.push(fullPath)
         continue
       }
-
-      // include files that match the topic slug or are child pages like `slug-...`
-      if (topicSlugs && (topicSlugs.has(slug) || [...topicSlugs].some((s) => slug.startsWith(`${s}-`)))) {
+      if (getTopicSlugs(topic, rootDir).has(slug)) {
         files.push(fullPath)
       }
     }
