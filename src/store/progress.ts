@@ -102,21 +102,27 @@ export const useProgressStore = create<ProgressState>()(
           return undefined
         })()
 
-        // Count unique base lesson slugs from config (ignore child pages with suffixes)
-        const totalLessons = moduleConfig?.trilha
-          ?.flatMap((section) => section.lessons)
-          ?.map((s) => String(s).split('-')[0])
-          ?.
-          reduce((set, slug) => set.add(slug), new Set())
-          ?.
-          size ?? 0
+        const normalizeLessonGroup = (lessonId: string) => {
+          const suffixes = ['-introducao', '-conceito-principal', '-aplicacao-pratica', '-no-mercado-de-trabalho']
+          for (const suffix of suffixes) {
+            if (lessonId.endsWith(suffix)) {
+              return lessonId.slice(0, -suffix.length)
+            }
+          }
+          return lessonId
+        }
 
-        // Count completed lessons by base slug as well (lessonId has format 'module:slug' or 'module:slug-sub')
+        const totalLessons = new Set(
+          moduleConfig?.trilha
+            ?.flatMap((section) => section.lessons)
+            ?.map((slug) => normalizeLessonGroup(String(slug))) ?? [],
+        ).size
+
         const completed = new Set(
           get()
             .completedLessons
             .filter((lesson) => lesson.startsWith(`${moduleId}:`))
-            .map((l) => l.split(':')[1].split('-')[0]),
+            .map((lesson) => normalizeLessonGroup(lesson.split(':')[1] ?? '')),
         ).size
 
         if (!totalLessons) return 0

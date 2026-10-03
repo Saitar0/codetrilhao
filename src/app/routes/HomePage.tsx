@@ -61,6 +61,16 @@ const learningPath = [
   },
 ]
 
+export function getCodeExampleOutput(exampleId: string): string {
+  const outputs: Record<string, string> = {
+    hello: 'Olá, CodeTrilha!',
+    loop: '2\n4\n6\n8\n10',
+    function: '15',
+  }
+
+  return outputs[exampleId] ?? ''
+}
+
 const codeExamples = [
   {
     id: 'hello',
@@ -152,6 +162,8 @@ export default function HomePage() {
   const reduceMotion = useReducedMotion()
   const [terminalStage, setTerminalStage] = useState(0)
   const [typedText, setTypedText] = useState('')
+  const [displayedOutput, setDisplayedOutput] = useState(getCodeExampleOutput(codeExamples[0].id))
+  const [outputVisible, setOutputVisible] = useState(false)
   const [selectedExample, setSelectedExample] = useState(codeExamples[0].id)
   const [editorCode, setEditorCode] = useState<Record<string, string>>({
     hello: codeExamples[0].code,
@@ -208,6 +220,8 @@ export default function HomePage() {
     const fullCode = stage.code
 
     if (typedText.length < fullCode.length) {
+      setOutputVisible(false)
+
       const timer = window.setTimeout(() => {
         setTypedText(fullCode.slice(0, typedText.length + 1))
       }, 26)
@@ -215,15 +229,25 @@ export default function HomePage() {
       return () => window.clearTimeout(timer)
     }
 
+    const revealTimer = window.setTimeout(() => {
+      setDisplayedOutput(getCodeExampleOutput(stage.id))
+      setOutputVisible(true)
+    }, 120)
+
     const totalTimer = window.setTimeout(() => {
+      setOutputVisible(false)
+      setDisplayedOutput(getCodeExampleOutput(stage.id))
       setTypedText('')
       setTerminalStage((current) => (current + 1) % codeExamples.length)
-    }, 1100)
+    }, 1200)
 
-    return () => window.clearTimeout(totalTimer)
+    return () => {
+      window.clearTimeout(revealTimer)
+      window.clearTimeout(totalTimer)
+    }
   }, [terminalStage, typedText])
 
-  const showOutput = typedText.length >= (codeExamples[terminalStage]?.code.length ?? 0) && typedText.length > 0
+  const showOutput = outputVisible
 
   const handleExampleChange = (exampleId: string) => {
     setSelectedExample(exampleId)
@@ -299,8 +323,9 @@ export default function HomePage() {
 
   return (
     <>
-      <section className="hero-section grid-bg">
-        <div className="hero-copy">
+      <div className="hero-and-stats">
+        <section className="hero-section">
+          <div className="hero-copy">
           <motion.span className="eyebrow" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             Aprenda com prática, não com teoria vazia
           </motion.span>
@@ -339,22 +364,23 @@ export default function HomePage() {
 
             <div className={`terminal-output ${showOutput ? 'is-visible' : ''}`}>
               <span className="output-label">resultado</span>
-              <code>{codeExamples[terminalStage].code.includes('print(') ? '12' : '[2, 4, 6, 8, 10]'}</code>
+              <code>{displayedOutput}</code>
             </div>
           </div>
         </motion.div>
       </section>
 
-      <section className="stats-section container section-spacing" aria-label="Números da plataforma">
-        {statItems.map((stat) => (
-          <div key={stat.label} className="stat-card glass">
-            <strong>
-              <AnimatedNumber value={stat.value} suffix={stat.suffix} />
-            </strong>
-            <span>{stat.label}</span>
-          </div>
-        ))}
-      </section>
+        <section className="stats-section container section-spacing" aria-label="Números da plataforma">
+          {statItems.map((stat) => (
+            <div key={stat.label} className="stat-card glass">
+              <strong>
+                <AnimatedNumber value={stat.value} suffix={stat.suffix} />
+              </strong>
+              <span>{stat.label}</span>
+            </div>
+          ))}
+        </section>
+      </div>
 
       <section id="modulos" className="learning-section container section-spacing">
         <div className="section-heading">

@@ -121,10 +121,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             >
               {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
-
-            <button type="button" className="button button--primary navbar-cta" onClick={() => handleNavClick('#cta')}>
-              Começar agora
-            </button>
           </div>
         </div>
 

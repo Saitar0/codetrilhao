@@ -133,6 +133,18 @@
 .header-actions {
   display: flex;
   align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.header-actions .menu-toggle[aria-label*="menu"] {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .header-actions .menu-toggle[aria-label*="menu"] {
+    display: inline-flex;
+  }
 }
 
 .theme-toggle {

@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { getExercisesByModule } from '../../lib/exercises'
 import { useProgressStore } from '../../store/progress'
 import { getModuleById, getAllModuleLessons } from '../../lib/module-content'
+import type { ModuleRouteLesson } from '../../types/lesson'
 
 const lessonMap = getAllModuleLessons()
 
@@ -21,6 +22,7 @@ export function StudyLayout({ children, title, currentLessonId }: {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [query, setQuery] = useState('')
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({})
 
   const lessons = lessonMap[modulo ?? ''] ?? []
   const currentIndex = lessons.findIndex((lesson) => lesson.id === (currentLessonId ?? aula))
@@ -93,38 +95,102 @@ export function StudyLayout({ children, title, currentLessonId }: {
   const renderSections = () => {
     if (!module) return null
 
-    return module.trilha.map((section) => (
-      <div key={section.id} className="study-section">
-        <div className="study-section__title">{section.title}</div>
-        <ul>
-          {section.lessons.map((lessonId) => {
-            const lesson = lessons.find((item) => item.id === lessonId)
-            if (!lesson) return null
+    const lessonGroupSuffixes = ['-introducao', '-conceito-principal', '-aplicacao-pratica', '-no-mercado-de-trabalho']
 
-            const isActive = lesson.id === (currentLessonId ?? aula)
-            const isDone = completedLessons.includes(`${module.id}:${lesson.id}`)
+    const getGroupId = (lessonId: string) => {
+      for (const suffix of lessonGroupSuffixes) {
+        if (lessonId.endsWith(suffix)) {
+          return lessonId.slice(0, -suffix.length)
+        }
+      }
+      return lessonId
+    }
 
-            return (
-              <li key={lesson.id} className={isActive ? 'is-active' : ''}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    localStorage.setItem('codetrilha-last-lesson', JSON.stringify({ moduleId: module.id, lessonId: lesson.id }))
-                    navigate(`/${module.id}/${lesson.id}`)
-                  }}
-                  className="study-lesson"
-                >
-                  <span className="study-lesson__status">
-                    {isDone ? <Check size={12} /> : <span className="status-dot" />}
-                  </span>
-                  <span>{lesson.title}</span>
-                </button>
-              </li>
-            )
-          })}
-        </ul>
-      </div>
-    ))
+    return module.trilha.map((section) => {
+      const groups = new Map<string, { id: string; parent: ModuleRouteLesson | undefined; children: ModuleRouteLesson[] }>()
+
+      for (const lessonId of section.lessons) {
+        const lesson = lessons.find((item) => item.id === lessonId)
+        if (!lesson) continue
+
+        const groupId = getGroupId(lessonId)
+        const parentLesson = lessons.find((item) => item.id === groupId) ?? lesson
+
+        const currentGroup = groups.get(groupId) ?? {
+          id: groupId,
+          parent: parentLesson,
+          children: [] as ModuleRouteLesson[],
+        }
+
+        currentGroup.children.push(lesson)
+        groups.set(groupId, currentGroup)
+      }
+
+      return (
+        <div key={section.id} className="study-section">
+          <div className="study-section__title">{section.title}</div>
+          <ul>
+            {[...groups.values()].map(({ id, parent, children }) => {
+              const activeLessonId = currentLessonId ?? aula
+              const isGroupActive = children.some((lesson) => lesson.id === activeLessonId)
+              const expanded = isGroupActive || Boolean(expandedGroups[id])
+              const groupTitle = parent?.title.replace(/\s*[-–]\s*índice$/i, '').trim() || id
+              const isDone = children.some((lesson) => completedLessons.includes(`${module.id}:${lesson.id}`))
+
+              return (
+                <li key={id} className={isGroupActive ? 'is-active is-group-active' : ''}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const nextExpanded = !expanded
+                      setExpandedGroups((prev) => ({ ...prev, [id]: nextExpanded }))
+
+                      if (parent) {
+                        localStorage.setItem('codetrilha-last-lesson', JSON.stringify({ moduleId: module.id, lessonId: parent.id }))
+                        navigate(`/${module.id}/${parent.id}`)
+                      }
+                    }}
+                    className="study-lesson study-lesson--group"
+                  >
+                    <span className="study-lesson__status">
+                      {isDone ? <Check size={12} /> : <span className="status-dot" />}
+                    </span>
+                    <span>{groupTitle}</span>
+                  </button>
+
+                  {expanded && (
+                    <ul className="study-lesson__children">
+                      {children.map((lesson) => {
+                        const isActive = lesson.id === activeLessonId
+                        const isDoneChild = completedLessons.includes(`${module.id}:${lesson.id}`)
+
+                        return (
+                          <li key={lesson.id} className={isActive ? 'is-active' : ''}>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                localStorage.setItem('codetrilha-last-lesson', JSON.stringify({ moduleId: module.id, lessonId: lesson.id }))
+                                navigate(`/${module.id}/${lesson.id}`)
+                              }}
+                              className="study-lesson study-lesson--child"
+                            >
+                              <span className="study-lesson__status study-lesson__status--small">
+                                {isDoneChild ? <Check size={10} /> : <span className="status-dot" />}
+                              </span>
+                              <span>{lesson.title.replace(/\s*[-–]\s*índice$/i, '').trim()}</span>
+                            </button>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  )}
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      )
+    })
   }
 
   if (!module) return null

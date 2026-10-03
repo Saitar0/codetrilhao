@@ -1,4 +1,31 @@
+.hero-and-stats {
+  position: relative;
+  padding: 0 0 1.5rem;
+  border-radius: 2rem;
+  margin: 0 0.75rem;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: center top;
+  background-repeat: repeat;
+  overflow: hidden;
+}
+
+.hero-and-stats::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 15% 15%, rgba(85, 148, 255, 0.18), transparent 28%),
+    radial-gradient(circle at 80% 25%, rgba(68, 201, 255, 0.12), transparent 22%);
+  pointer-events: none;
+}
+
 .hero-section {
+  position: relative;
+  z-index: 1;
+  width: min(1380px, calc(100% - 1.25rem));
+  margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
   gap: 2rem;
@@ -10,6 +37,7 @@
 .hero-copy {
   display: grid;
   gap: 1.25rem;
+  max-width: 40rem;
 }
 
 .hero-copy h1 {
@@ -18,6 +46,7 @@
   line-height: 0.96;
   letter-spacing: -0.07em;
   font-family: var(--font-display);
+  text-wrap: balance;
 }
 
 .hero-copy p {
@@ -25,6 +54,7 @@
   margin: 0;
   color: var(--text-secondary);
   font-size: 1.06rem;
+  line-height: 1.7;
 }
 
 .hero-actions {
@@ -72,14 +102,16 @@
 }
 
 .terminal-shell {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   min-height: 360px;
   border-radius: var(--radius-xl);
   overflow: hidden;
   border: 1px solid var(--border);
-  background: rgba(7, 19, 29, 0.9);
-  box-shadow: var(--shadow-soft);
+  background: linear-gradient(180deg, rgba(7, 19, 29, 0.96), rgba(11, 25, 38, 0.85));
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
 .terminal-header {
@@ -154,18 +186,28 @@
 }
 
 .stats-section {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1rem;
-  margin-top: 0.5rem;
+  width: min(1380px, calc(100% - 1.25rem));
+  margin: 0 auto;
+  padding: 0.6rem 0 0;
+  border-radius: 1.5rem;
+  isolation: isolate;
 }
 
 .stat-card {
+  position: relative;
+  z-index: 1;
   display: grid;
   gap: 0.35rem;
-  padding: 1.2rem 1rem;
+  padding: 1.4rem 1rem;
   border-radius: var(--radius-lg);
   text-align: center;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.72));
+  border: 1px solid rgba(148, 163, 184, 0.16);
 }
 
 .stat-card strong {

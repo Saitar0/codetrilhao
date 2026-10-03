@@ -140,11 +140,21 @@ function assertArrayString(value) {
   return value.every((item) => typeof item === 'string')
 }
 
+function isLessonIndexPage(text) {
+  const normalizedText = String(text ?? '').replace(/^\uFEFF/, '')
+  const body = normalizedText.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '')
+  return /^#\s+.+[-–]\s*índice\s*$/im.test(body) || /Escolha uma aula:/i.test(body)
+}
+
 function validateLessonFile(filePath, { strict = false } = {}) {
   const fileName = path.basename(filePath)
   const text = fs.readFileSync(filePath, 'utf8')
   const fm = parseFrontmatter(text)
   const errors = []
+
+  if (isLessonIndexPage(text)) {
+    return { file: fileName, errors }
+  }
 
   const requiredKeys = ['titulo', 'descricao', 'secao', 'ordem', 'topico', 'tempo', 'nivel', 'palavrasChave', 'exercicios']
   for (const key of requiredKeys) {
